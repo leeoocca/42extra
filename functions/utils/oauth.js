@@ -16,6 +16,6 @@ module.exports = createAuthClient({
 	auth: {
 		tokenHost: "https://api.intra.42.fr",
 		tokenPath: "https://api.intra.42.fr/oauth/token",
-		authorizePath: "https://app.intra.42.fr/oauth/authorize",
+		authorizePath: "https://api.intra.42.fr/oauth/authorize",
 	},
 });
