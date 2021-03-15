@@ -1,5 +1,5 @@
 const qs = require("querystring");
-const oauth = require("./util/oauth");
+const oauth = require("./utils/oauth");
 
 exports.handler = async (event) => {
 	if (!event.queryStringParameters) {
