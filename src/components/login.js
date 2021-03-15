@@ -1,3 +1,5 @@
+import { v4 as uuid } from "uuid";
+
 export function redirectToOAuth(returnURL) {
 	const { location, localStorage } = window;
 
