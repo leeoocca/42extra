@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useUserState } from "@context/user";
 
 export default function Nav() {
-	const { user, logoutUser } = useUserState();
+	const { user, logoutUser, redirectToOAuth } = useUserState();
 	const [profileDropdown, setProfileDropdown] = React.useState(false);
 
 	const navItems = [
@@ -99,6 +99,8 @@ export default function Nav() {
 						</div>
 					</div>
 					<div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+							{user ? (
+								<>
 						<button className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
 							<span className="sr-only">View notifications</span>
 
@@ -120,7 +122,6 @@ export default function Nav() {
 						</button>
 
 						<div className="ml-3 relative">
-							{user ? (
 								<div>
 									<button
 										type="button"
@@ -139,45 +140,46 @@ export default function Nav() {
 											className="h-8 w-8 rounded-full object-cover"
 											src={user.image_url}
 											alt=""
-										/>
+											/>
 									</button>
 								</div>
-							) : (
-								<p>Login</p>
-							)}
-
-							<div
-								className={`${
-									profileDropdown ? "" : "hidden"
-								} origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}
-								role="menu"
-								aria-orientation="vertical"
-								aria-labelledby="user-menu"
-							>
-								<a
-									href="#"
-									className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-									role="menuitem"
-								>
-									Your Profile
-								</a>
-								<a
-									href="#"
-									className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-									role="menuitem"
-								>
-									Settings
-								</a>
-								<a
-									href="#"
-									className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-									role="menuitem"
-									onClick={() => logoutUser()}
-								>
-									Sign out
-								</a>
 							</div>
-						</div>
+							</>
+							) : (
+								<button className="bg-gray-300 p-2 rounded text-sm" onClick={() => redirectToOAuth()}>Login</button>
+
+								)}
+								{/* <div
+									className={`${
+										profileDropdown ? "" : "hidden"
+									} origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}
+									role="menu"
+									aria-orientation="vertical"
+									aria-labelledby="user-menu"
+									>
+									<a
+										href="#"
+										className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+										role="menuitem"
+										>
+										Your Profile
+									</a>
+									<a
+										href="#"
+										className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+										role="menuitem"
+										>
+										Settings
+									</a>
+									<a
+										href="#"
+										className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+										role="menuitem"
+										onClick={() => logoutUser()}
+										>
+										Sign out
+									</a>
+							</div> */}
 					</div>
 				</div>
 			</div>
