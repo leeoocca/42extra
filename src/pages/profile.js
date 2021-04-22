@@ -1,21 +1,19 @@
 import Image from "next/image";
-
-import Layout from "@components/layout";
-import { useUserState } from "@context/user";
+import { useSession } from "next-auth/client";
 
 export default function Profile() {
-	const { user, status } = useUserState();
+	const [session, loading] = useSession();
 
 	return (
-		<Layout>
-			{status === "loading" ? (
+		<>
+			{loading ? (
 				<p>"Loading..."</p>
 			) : (
-				<h1 className="">Hi {user.login}</h1>
+				<h1 className="">Hi {session.name}</h1>
 			)}
 			{/* <div className="w-8">
 				<Image src={user.image_url} layout="fill" objectFit="contain" />
 			</div> */}
-		</Layout>
+		</>
 	);
 }

@@ -1,24 +1,41 @@
 import Layout from '@components/Layout';
-import { UserProvider } from '@context/user';
 import { SWRConfig } from 'swr'
-import fetch from '../lib/fetchJson'
 import "../styles/globals.css";
+import { Provider } from 'next-auth/client'
+
+const fetcherWithToken = async (url, token) => {
+	const res = await fetch(url, {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	})
+
+	if (!res.ok) {
+		const error = new Error('An error occurred while fetching the data.')
+		// Attach extra info to the error object.
+		error.info = await res.json()
+		error.status = res.status
+		throw error
+	}
+
+	return res.json()
+}
 
 function MyApp({ Component, pageProps }) {
 	return (
 		<SWRConfig
 			value={{
-				fetcher: fetch,
+				fetcher: fetcherWithToken,
 				onError: (err) => {
 					console.error(err)
 				},
 			}}
 		>
-			<UserProvider>
+			<Provider session={pageProps.session}>
 				<Layout>
 					<Component {...pageProps} />
 				</Layout>
-			</UserProvider>
+			</Provider>
 		</SWRConfig>
 	);
 }

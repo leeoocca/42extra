@@ -1,26 +1,29 @@
+import { useSession } from "next-auth/client";
+import { useRouter } from "next/router";
 import Nav from "@components/Nav";
+import Footer from "@components/Footer";
 
-export default function Layout({ children, title }) {
-	return (
-		<div className="antialiased font-sans bg-gray-100 min-h-screen">
-			<Nav />
-			{title ? (
-				<header className="bg-white shadow">
-					<div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-						<h1 className="text-3xl font-bold text-gray-900">
-							{title}
-						</h1>
-					</div>
-				</header>
-			) : (
-				""
-			)}
+export default function Layout({ children }) {
+	const router = useRouter();
+	const [session, loading] = useSession();
 
-			<div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-				<div className="px-4 py-6 sm:px-0">
-					<main>{children}</main>
-				</div>
+	if (loading)
+		return (
+			<div className="bg-black text-white grid min-h-screen w-screen place-items-center">
+				<code>Loading...</code>
 			</div>
-		</div>
-	);
+		);
+
+	if (session)
+		return (
+			<div className="antialiased font-sans bg-gray-100 min-h-screen flex flex-col">
+				<Nav />
+				<main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 flex-grow">
+					<div className="px-4 py-6 sm:px-0">{children}</div>
+				</main>
+				<Footer />
+			</div>
+		);
+
+	router.push("/api/auth/signin");
 }

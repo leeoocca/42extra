@@ -1,5 +1,4 @@
 import useSWR from "swr";
-import { useUserState } from "@context/user";
 
 export default function useAPI(uri) {
 	const { token } = useUserState();

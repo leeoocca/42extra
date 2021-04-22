@@ -1,6 +1,4 @@
 import React from "react";
-import { useUserState } from "@context/user";
-import Layout from "@components/layout";
 import useAPI from "@utils/useAPI";
 
 // const locations = [
@@ -33,7 +31,7 @@ function ClusterMap({ data }) {
 					title={fullHost}
 					className={`md:mx-2 mx-1 w-8 h-8 bg-cover bg-center rounded text
 						${data.unavailableCols.includes(col) ? "bg-gray-300" : "bg-green-600"}`}
-					// ${col % 2 ? "mb-4" : "mt-4"}
+				// ${col % 2 ? "mb-4" : "mt-4"}
 				></div>
 			);
 		}
@@ -41,9 +39,8 @@ function ClusterMap({ data }) {
 			<div
 				key={data.prefix + "r" + row}
 				id={data.prefix + "r" + row}
-				className={`flex flex-row-reverse justify-center ${
-					data.hallways.includes(row) ? "mt-10" : "md:mt-4 mt-2"
-				}`}
+				className={`flex flex-row-reverse justify-center ${data.hallways.includes(row) ? "mt-10" : "md:mt-4 mt-2"
+					}`}
 			>
 				{mapRow}
 			</div>
@@ -140,7 +137,7 @@ export default function Profile() {
 	// stats.innerHTML = availibleLocations + " / " + totalLocations + `<br><code class="font-mono ml-2">` + Math.trunc(percentage) + "%</code>";
 
 	return (
-		<Layout title="Cluster maps">
+		<>
 			<h1 className="text-3xl">Rome</h1>
 			<h2
 				id="stats"
@@ -153,6 +150,6 @@ export default function Profile() {
 				<ClusterMap data={cluster[0]} id={cluster[0].prefix} />
 				<ClusterMap data={cluster[1]} id={cluster[1].prefix} />
 			</div>
-		</Layout>
+		</>
 	);
 }
