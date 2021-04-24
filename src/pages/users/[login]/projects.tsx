@@ -21,7 +21,7 @@ function UserProjects() {
 					<th>Marked at</th>
 				</tr>
 				{user.projects_users.map((project) => {
-					const options = {
+					const options: Intl.DateTimeFormatOptions = {
 						year: "numeric",
 						month: "numeric",
 						day: "numeric",
@@ -29,7 +29,7 @@ function UserProjects() {
 						minute: "numeric",
 						hour12: false,
 					};
-					let date = new Date(project.marked_at).toLocaleString(
+					const date = new Date(project.marked_at).toLocaleString(
 						"en",
 						options
 					);
