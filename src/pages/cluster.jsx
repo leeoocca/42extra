@@ -1,6 +1,5 @@
 import React from "react";
-import useAPI from "@utils/useAPI";
-import Layout from "@components/Layout";
+import { getLayout } from "@components/layouts/MainLayout";
 
 // const locations = [
 // 	{
@@ -65,7 +64,7 @@ function ClusterMap({ data }) {
 	);
 }
 
-export default function Profile() {
+function Cluster() {
 	// const { token } = useUserState();
 	// const [locations, setLocations] = React.useState(false);
 
@@ -139,19 +138,23 @@ export default function Profile() {
 	// stats.innerHTML = availibleLocations + " / " + totalLocations + `<br><code class="font-mono ml-2">` + Math.trunc(percentage) + "%</code>";
 
 	return (
-		<Layout>
+		<>
 			<h1 className="text-3xl">Rome</h1>
 			<h2
 				id="stats"
-				className="mt-8 text-center font-xl font-medium text-gray-500"
+				className="mt-8 font-medium text-center text-gray-500 font-xl"
 			>
 				Ciao
 			</h2>
 
-			<div className="flex flex-row w-full justify-around items-center flex-wrap">
+			<div className="flex flex-row flex-wrap items-center justify-around w-full">
 				<ClusterMap data={cluster[0]} id={cluster[0].prefix} />
 				<ClusterMap data={cluster[1]} id={cluster[1].prefix} />
 			</div>
-		</Layout>
+		</>
 	);
 }
+
+Cluster.getLayout = getLayout;
+
+export default Cluster;
