@@ -45,10 +45,10 @@ export default NextAuth({
 			return token;
 		},
 		async session(_, token) {
-			if (Date.now() > token.iat + 7200)
-				fetch("http://localhost:3000/api/auth/signin/42", {
-					method: "POST",
-				});
+			// if (Date.now() > token.iat + 7200)
+			// 	fetch("http://localhost:3000/api/auth/signin/42", {
+			// 		method: "POST",
+			// 	});
 			return token; // Pass the jwt to the session
 		},
 	},

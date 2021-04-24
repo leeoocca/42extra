@@ -1,17 +1,14 @@
 import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/client";
 import useSWR from "swr";
-import Layout from "@components/Layout";
-import { LinkListNode } from "@interfaces/LinkListNode";
-import UserHeader from "@components/headers/UserHeader";
-import { getUserNavLinks } from "@utils/NavLinks";
+import { getLayout } from "@components/layouts/UserLayout";
 
 function UserOverview() {
 	const router = useRouter();
 	const { login } = router.query;
 	const [session, loading] = useSession();
 
-	if (loading) return <Layout>loading...</Layout>;
+	if (loading) return <>loading...</>;
 	const { data: user, error } = useSWR([
 		`https://api.intra.42.fr/v2/users/${login}`,
 		session.accessToken,
@@ -21,29 +18,15 @@ function UserOverview() {
 		session.accessToken,
 	]);
 
-	const breadcrumbs: LinkListNode[] = [
-		{ name: "users", uri: "/users" },
-		{ name: String(login), uri: `/users/${login}`, isActive: true },
-	];
-
 	if (error || error2) {
 		if (error && error.status === 401) signIn("42");
-		return <Layout>{error && error.status}</Layout>;
+		return <>{error && error.status}</>;
 	}
-	if (!user) return <Layout>loading...</Layout>;
+	if (!user || !coalition) return <>loading...</>;
 
 	return (
-		<Layout
-			breadcrumbs={breadcrumbs}
-			navLinks={getUserNavLinks(String(login), 0)}
-			header={
-				<UserHeader
-					login={String(login)}
-					fullName={user.usual_full_name}
-					imageUrl={user.image_url}
-				/>
-			}
-		>
+		<>
+			{/* navColor={(coalition.length && coalition[0].color) || "#01BABC"} */}
 			<code className="block">email: {user.email}</code>
 			<code className="block">phone: {user.phone}</code>
 			<code className="block">
@@ -76,8 +59,10 @@ function UserOverview() {
 			{coalition && (
 				<code className="block">coalition: {coalition[0]?.name}</code>
 			)}
-		</Layout>
+		</>
 	);
 }
+
+UserOverview.getLayout = getLayout;
 
 export default UserOverview;

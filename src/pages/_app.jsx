@@ -1,26 +1,13 @@
 import { SWRConfig } from "swr";
 import "../styles/globals.css";
 import { Provider } from "next-auth/client";
-
-const fetcherWithToken = async (url, token) => {
-	const res = await fetch(url, {
-		headers: {
-			Authorization: `Bearer ${token}`,
-		},
-	});
-
-	if (!res.ok) {
-		const error = new Error("An error occurred while fetching the data.");
-		// Attach extra info to the error object.
-		error.info = await res.json();
-		error.status = res.status;
-		throw error;
-	}
-
-	return res.json();
-};
+import fetcherWithToken from "@lib/fetcherWithToken";
+import MainLayout from "@components/layouts/MainLayout";
 
 function MyApp({ Component, pageProps }) {
+	const getLayout =
+		Component.getLayout || ((page) => <MainLayout children={page} />);
+
 	return (
 		<SWRConfig
 			value={{
@@ -31,7 +18,7 @@ function MyApp({ Component, pageProps }) {
 			}}
 		>
 			<Provider session={pageProps.session}>
-				<Component {...pageProps} />
+				{getLayout(<Component {...pageProps} />)}
 			</Provider>
 		</SWRConfig>
 	);

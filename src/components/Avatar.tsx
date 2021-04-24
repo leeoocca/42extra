@@ -5,7 +5,7 @@ export default function Avatar({ url }: { url: string }) {
 		<Image
 			src={url}
 			layout="fill"
-			className="rounded-full block object-cover object-center"
+			className="relative block object-cover object-center rounded-full"
 			priority={true}
 		/>
 	);

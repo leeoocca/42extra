@@ -1,8 +1,6 @@
 import { useRouter } from "next/router";
-import Layout from "@components/Layout";
-import { getUserNavLinks } from "@utils/NavLinks";
-import UserHeader from "@components/headers/UserHeader";
 import useAPI from "@lib/useAPI";
+import { getLayout } from "@components/layouts/UserLayout";
 
 function UserQuests() {
 	const router = useRouter();
@@ -14,19 +12,10 @@ function UserQuests() {
 	);
 
 	if (isLoading || isError || isLoading2 || isError2)
-		return <Layout>Loading or error</Layout>;
+		return <>Loading or error</>;
 
 	return (
-		<Layout
-			navLinks={getUserNavLinks(String(login), 2)}
-			header={
-				<UserHeader
-					login={String(login)}
-					fullName={user.usual_full_name}
-					imageUrl={user.image_url}
-				/>
-			}
-		>
+		<>
 			<table className="w-full">
 				<tr>
 					<th>Quest</th>
@@ -41,8 +30,10 @@ function UserQuests() {
 					</tr>
 				))}
 			</table>
-		</Layout>
+		</>
 	);
 }
+
+UserQuests.getLayout = getLayout;
 
 export default UserQuests;

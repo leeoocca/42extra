@@ -1,8 +1,6 @@
 import { useRouter } from "next/router";
-import Layout from "@components/Layout";
-import { getUserNavLinks } from "@utils/NavLinks";
-import UserHeader from "@components/headers/UserHeader";
 import useAPI from "@lib/useAPI";
+import { getLayout } from "@components/layouts/UserLayout";
 
 function UserAchievements() {
 	const router = useRouter();
@@ -10,19 +8,10 @@ function UserAchievements() {
 
 	const { data: user, isLoading, isError } = useAPI(`/v2/users/${login}`);
 
-	if (isLoading || isError) return <Layout>Loading or error</Layout>;
+	if (isLoading || isError) return <>Loading or error</>;
 
 	return (
-		<Layout
-			navLinks={getUserNavLinks(String(login), 3)}
-			header={
-				<UserHeader
-					login={String(login)}
-					fullName={user.usual_full_name}
-					imageUrl={user.image_url}
-				/>
-			}
-		>
+		<>
 			<table className="w-full">
 				<tr>
 					<th>Achievement</th>
@@ -52,8 +41,10 @@ function UserAchievements() {
 					</tr>
 				))}
 			</table>
-		</Layout>
+		</>
 	);
 }
+
+UserAchievements.getLayout = getLayout;
 
 export default UserAchievements;

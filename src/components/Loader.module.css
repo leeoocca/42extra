@@ -1,0 +1,24 @@
+.svg {
+	stroke-width: 10;
+	stroke-dasharray: 0 1000;
+	animation: dash 2s ease-in-out forwards, fill 1s ease-in-out 1.5s forwards;
+	@apply w-24 stroke-current;
+}
+
+@keyframes dash {
+	from {
+		stroke-dasharray: 0 1000;
+	}
+	to {
+		stroke-dasharray: 1000 0;
+	}
+}
+
+@keyframes fill {
+	from {
+		fill: #000;
+	}
+	to {
+		fill: #fff;
+	}
+}

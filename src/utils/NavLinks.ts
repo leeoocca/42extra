@@ -1,32 +1,30 @@
 import { LinkListNode } from "@interfaces/LinkListNode";
 
-export function getUserNavLinks(login: string, active: number) {
-	const baseUrl = "/users/" + login;
+export function getUserNavLinks(login: string) {
+	const baseUrl = "/users/[login]";
 
 	let navLinks: LinkListNode[] = [
 		{
 			name: "Overview",
-			uri: baseUrl,
+			href: baseUrl,
 		},
 		{
 			name: "Projects",
-			uri: baseUrl + "/projects",
+			href: baseUrl + "/projects",
 		},
 		{
 			name: "Quests",
-			uri: baseUrl + "/quests",
+			href: baseUrl + "/quests",
 		},
 		{
 			name: "Achievements",
-			uri: baseUrl + "/achievements",
+			href: baseUrl + "/achievements",
 		},
 		{
 			name: "Apps",
-			uri: baseUrl + "/apps",
+			href: baseUrl + "/apps",
 		},
 	];
-
-	navLinks[active].isActive = true;
 
 	return navLinks;
 }

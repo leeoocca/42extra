@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
-import Layout from "@components/Layout";
 import { getUserNavLinks } from "@utils/NavLinks";
 import UserHeader from "@components/headers/UserHeader";
 import useAPI from "@lib/useAPI";
 import Link from "next/link";
+import { getLayout } from "@components/layouts/UserLayout";
 
-function UserEvaluations() {
+function UserApps() {
 	const router = useRouter();
 	const { login } = router.query;
 
@@ -15,20 +15,10 @@ function UserEvaluations() {
 	);
 
 	if (isLoading || isError || isLoading2 || isError2)
-		return <Layout>Loading or error</Layout>;
+		return <>Loading or error</>;
 
-	console.log(apps);
 	return (
-		<Layout
-			navLinks={getUserNavLinks(String(login), 4)}
-			header={
-				<UserHeader
-					login={String(login)}
-					fullName={user.usual_full_name}
-					imageUrl={user.image_url}
-				/>
-			}
-		>
+		<>
 			<table className="w-full">
 				<tr>
 					<th>App</th>
@@ -37,23 +27,30 @@ function UserEvaluations() {
 					<th>Public</th>
 				</tr>
 				{apps.map((app) => {
-					let domain = new URL(app.website);
+					let domain;
+					if (app.website.length) {
+						domain = new URL(app.website);
+					}
 					return (
 						<tr key={app.id} className="text-center">
 							<td>{app.name}</td>
 							<td>{app.description}</td>
 							<td>
-								<Link href={app.website}>
-									<a>{domain.hostname}</a>
-								</Link>
+								{app.website && (
+									<Link href={app.website}>
+										<a>{domain.hostname}</a>
+									</Link>
+								)}
 							</td>
 							<td>{app.public ? "true" : "false"}</td>
 						</tr>
 					);
 				})}
 			</table>
-		</Layout>
+		</>
 	);
 }
 
-export default UserEvaluations;
+UserApps.getLayout = getLayout;
+
+export default UserApps;
