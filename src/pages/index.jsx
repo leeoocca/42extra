@@ -1,3 +1,4 @@
+import Layout from "@components/Layout";
 import { useSession, signIn } from "next-auth/client";
 import Head from "next/head";
 import Link from "next/link";
@@ -6,9 +7,9 @@ export default function Home() {
 	const [session, loading] = useSession();
 
 	return (
-		<>
+		<Layout>
 			<Head>
-				<title>Create Next App</title>
+				<title>42next</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			{!session ? (
@@ -24,6 +25,6 @@ export default function Home() {
 				<p>Welcome {session.user?.name}!</p>
 			)}
 			<Link href="/users/lrocca">lrocca</Link>
-		</>
+		</Layout>
 	);
 }

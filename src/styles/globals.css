@@ -4,6 +4,6 @@
 
 @layer base {
 	:root {
-		--color-nav-bg: #000;
+		--color-nav-bg: #333;
 	}
 }

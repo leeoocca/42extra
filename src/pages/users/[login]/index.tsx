@@ -1,37 +1,49 @@
 import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/client";
-import Avatar from "@components/Avatar";
 import useSWR from "swr";
+import Layout from "@components/Layout";
+import { LinkListNode } from "@interfaces/LinkListNode";
+import UserHeader from "@components/headers/UserHeader";
+import { getUserNavLinks } from "@utils/NavLinks";
 
-function User() {
+function UserOverview() {
 	const router = useRouter();
 	const { login } = router.query;
-	const [session] = useSession();
+	const [session, loading] = useSession();
 
+	if (loading) return <Layout>loading...</Layout>;
 	const { data: user, error } = useSWR([
 		`https://api.intra.42.fr/v2/users/${login}`,
 		session.accessToken,
 	]);
-	// const { data: coalition, error: error2 } = useSWR([
-	// 	`https://api.intra.42.fr/v2/users/${login}/coalitions`,
-	// 	session.accessToken,
-	// ]);
+	const { data: coalition, error: error2 } = useSWR([
+		`https://api.intra.42.fr/v2/users/${login}/coalitions`,
+		session.accessToken,
+	]);
 
-	if (error) {
-		if (error.status === 401) signIn("42");
-		return <div>{error.status}</div>;
+	const breadcrumbs: LinkListNode[] = [
+		{ name: "users", uri: "/users" },
+		{ name: String(login), uri: `/users/${login}`, isActive: true },
+	];
+
+	if (error || error2) {
+		if (error && error.status === 401) signIn("42");
+		return <Layout>{error && error.status}</Layout>;
 	}
-	if (!user) return <div>loading...</div>;
+	if (!user) return <Layout>loading...</Layout>;
 
 	return (
-		<div className="flex flex-col items-center">
-			<div className="w-32 h-32 relative">
-				<Avatar url={user.image_url} />
-			</div>
-			<h1 className="block font-semibold text-3xl mt-2 mb-1">
-				{user.login}
-			</h1>
-			<p className="block text-lg mb-2">{user.usual_full_name}</p>
+		<Layout
+			breadcrumbs={breadcrumbs}
+			navLinks={getUserNavLinks(String(login), 0)}
+			header={
+				<UserHeader
+					login={String(login)}
+					fullName={user.usual_full_name}
+					imageUrl={user.image_url}
+				/>
+			}
+		>
 			<code className="block">email: {user.email}</code>
 			<code className="block">phone: {user.phone}</code>
 			<code className="block">
@@ -61,11 +73,11 @@ function User() {
 				achievements: {user.achievements.length}
 			</code>
 			<code className="block">anonymize date: {user.anonymize_date}</code>
-			{/* <code className="block">
-				coalition: {coalition.data[0]?.attributes.name}
-			</code> */}
-		</div>
+			{coalition && (
+				<code className="block">coalition: {coalition[0]?.name}</code>
+			)}
+		</Layout>
 	);
 }
 
-export default User;
+export default UserOverview;
