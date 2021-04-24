@@ -19,8 +19,9 @@ function UserOverview() {
 	]);
 
 	if (error || error2) {
-		if (error && error.status === 401) signIn("42");
-		return <>{error && error.status}</>;
+		// if (error && error.status === 401) signIn("42");
+		// return <>{error && error.status}</>;
+		return <>error</>;
 	}
 	if (!user || !coalition) return <>loading...</>;
 
