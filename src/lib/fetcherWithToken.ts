@@ -1,8 +1,8 @@
 const fetcherWithToken = async (url: string, token: string) => {
 	const res = await fetch(url, {
+		mode: "no-cors",
 		headers: {
 			Authorization: `Bearer ${token}`,
-			"Access-Control-Allow-Origin": "*",
 		},
 	});
 
