@@ -30,12 +30,21 @@ function UserHeader() {
 			/>
 			{!isLoading && (
 				<div className="pb-1 ml-4">
+					{user.titles.length ? (
+						<p className="-mb-0.5 text-xs font-bold tracking-wider uppercase">
+							{user.titles[0].name.replace(" %login", "")}
+						</p>
+					) : null}
 					<h1 className="inline-flex text-4xl font-bold">
 						{isError ? (
 							"404"
 						) : (
 							<>
-								<span>{login}</span>
+								<span>
+									{/* maybe just always use user.login? */}
+									{/* useful when loading though */}
+									{Number(login) > 0 ? user.login : login}
+								</span>
 								{user["staff?"] && (
 									<span
 										title={`${login} is a member of the staff`}
