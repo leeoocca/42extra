@@ -24,8 +24,8 @@ function UserPatronages() {
 			{user.patroned.length === 0 && <p>Not patroned by anyone.</p>}
 			{user.patroned.map((patron) => {
 				return (
-					<div className="min-w-full">
-						<UserCard id={patron.user_id} />
+					<div key={patron.id} className="min-w-full">
+						<UserCard id={patron.godfather_id} />
 						<p>
 							<span className="mr-1 text-xs uppercase opacity-75">
 								Status
@@ -52,7 +52,7 @@ function UserPatronages() {
 			<div className="flex flex-wrap min-w-full space-x-2">
 				{user.patroning.map((patron) => {
 					return (
-						<div className="min-w-full">
+						<div key={patron.id} className="min-w-full">
 							<UserCard id={patron.user_id} />
 							<p>
 								<span className="mr-1 text-xs uppercase opacity-75">
