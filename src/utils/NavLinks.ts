@@ -1,7 +1,7 @@
 import { LinkListNode } from "@interfaces/LinkListNode";
 
 export function getUserNavLinks(login: string) {
-	const baseUrl = "/users/[login]";
+	const baseUrl = "/u/[login]";
 
 	let navLinks: LinkListNode[] = [
 		{
@@ -19,6 +19,10 @@ export function getUserNavLinks(login: string) {
 		{
 			name: "Achievements",
 			href: baseUrl + "/achievements",
+		},
+		{
+			name: "Patronages",
+			href: baseUrl + "/patronages",
 		},
 		{
 			name: "Apps",

@@ -1,0 +1,22 @@
+.container {
+	animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+	@apply bg-white rounded-full;
+}
+
+.avatar {
+	@apply object-cover object-center rounded-full;
+}
+
+.error {
+	@apply rounded-full text-white;
+}
+
+@keyframes pulse {
+	0%,
+	100% {
+		background-color: #ffffff;
+	}
+	50% {
+		background-color: #ffffff88;
+	}
+}

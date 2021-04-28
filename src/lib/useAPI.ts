@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { useSession, signIn } from "next-auth/client";
+import { useSession } from "next-auth/client";
 
 function useAPI(uri: string) {
 	const [session, loading] = useSession();
@@ -11,14 +11,7 @@ function useAPI(uri: string) {
 			isError: null,
 		};
 
-	// console.log(session);
-
-	// if (Date.now() > session.iat + 7200) signIn("42");
-
-	const { data, error } = useSWR([
-		`https://api.intra.42.fr${uri}`,
-		session.accessToken,
-	]);
+	const { data, error } = useSWR([`/api/42${uri}`, session.accessToken]);
 
 	return {
 		data,

@@ -1,4 +1,5 @@
 import Avatar from "@components/Avatar";
+import { BadgeCheckIcon } from "@heroicons/react/outline";
 import { User } from "@interfaces/User";
 import useAPI from "@lib/useAPI";
 import { useRouter } from "next/router";
@@ -15,26 +16,40 @@ function UserHeader() {
 		`/v2/users/${login}`
 	);
 
-	if (isError) return <>error</>;
-
 	return (
 		<header className="flex flex-row items-center px-4 py-2 mx-auto my-6 max-w-7xl">
-			{isLoading ? (
-				<>
-					<div className="w-32 h-32 bg-white rounded-full animate-pulse"></div>
-				</>
-			) : (
-				<>
-					<div className="relative w-32 h-32">
-						<Avatar url={user.image_url} />
-					</div>
-					<div className="pb-1 ml-4">
-						<h1 className="text-4xl font-bold">{login}</h1>
-						<p className="text-3xl font-medium">
-							{user.usual_full_name}
-						</p>
-					</div>
-				</>
+			<Avatar
+				url={
+					isError
+						? "https://cdn.intra.42.fr/users/3b3.jpg"
+						: user
+						? user.image_url
+						: null
+				}
+				size={128}
+			/>
+			{!isLoading && (
+				<div className="pb-1 ml-4">
+					<h1 className="inline-flex text-4xl font-bold">
+						{isError ? (
+							"404"
+						) : (
+							<>
+								<span>{login}</span>
+								{user["staff?"] && (
+									<span
+										title={`${login} is a member of the staff`}
+									>
+										<BadgeCheckIcon className="mt-2 ml-1.5 w-7" />
+									</span>
+								)}{" "}
+							</>
+						)}
+					</h1>
+					<p className="text-3xl font-medium">
+						{isError ? "user not found" : user.usual_full_name}
+					</p>
+				</div>
 			)}
 		</header>
 	);

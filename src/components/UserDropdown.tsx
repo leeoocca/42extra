@@ -2,7 +2,6 @@ import { useSession, signIn, signOut } from "next-auth/client";
 import Avatar from "./Avatar";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import useAPI from "@lib/useAPI";
 
 export default function UserDropdown() {
 	const [session] = useSession();
@@ -16,7 +15,10 @@ export default function UserDropdown() {
 							<Menu.Button className="rounded-full focus:outline-none focus:ring-2 focus:ring-white">
 								<span className="sr-only">Open user menu</span>
 								<div className="relative w-8 h-8">
-									<Avatar url={session.picture} />
+									<Avatar
+										url={session.user.image}
+										size={32}
+									/>
 								</div>
 							</Menu.Button>
 						</div>
@@ -44,7 +46,7 @@ export default function UserDropdown() {
 														: "text-gray-900"
 												} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
 											>
-												Hi {session.name}
+												Hi {session.user.name}
 											</button>
 										)}
 									</Menu.Item>

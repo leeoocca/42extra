@@ -2,15 +2,15 @@ import Link from "next/link";
 
 export default function Footer() {
 	return (
-		<footer className="w-full text-center text-gray-400 text-sm my-4 font-light">
+		<footer className="w-full my-4 text-sm font-light text-center text-gray-400">
 			<a
 				href="https://github.com/leeoocca"
-				className="text-gray-200 font-normal"
+				className="font-normal text-gray-200"
 			>
 				42next
 			</a>{" "}
 			— a project by{" "}
-			<Link href="/users/lrocca">
+			<Link href="/u/lrocca">
 				<a className="text-gray-200">lrocca</a>
 			</Link>
 		</footer>

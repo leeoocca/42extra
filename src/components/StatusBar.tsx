@@ -3,6 +3,8 @@ import Link from "next/link";
 import UserDropdown from "./UserDropdown";
 import { LinkListNode } from "@interfaces/LinkListNode";
 
+const menu = [{ name: "users", href: "/users" }];
+
 function StatusBar({ breadcrumbs }: { breadcrumbs?: LinkListNode[] }) {
 	return (
 		<nav className="flex items-center w-full px-4 py-2 mx-auto align-middle max-w-7xl">
@@ -39,6 +41,11 @@ function StatusBar({ breadcrumbs }: { breadcrumbs?: LinkListNode[] }) {
 							</Link>
 						</span>
 					))} */}
+				{menu.map((item) => (
+					<Link href={item.href} key={item.href}>
+						<a className="ml-2 font-medium">{item.name}</a>
+					</Link>
+				))}
 			</div>
 			<UserDropdown />
 		</nav>

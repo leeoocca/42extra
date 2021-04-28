@@ -1,33 +1,21 @@
 import { useRouter } from "next/router";
-import { signIn, useSession } from "next-auth/client";
-import useSWR from "swr";
 import { getLayout } from "@components/layouts/UserLayout";
+import useAPI from "@lib/useAPI";
 
 function UserOverview() {
 	const router = useRouter();
 	const { login } = router.query;
-	const [session, loading] = useSession();
 
-	if (loading) return <>loading...</>;
-	const { data: user, error } = useSWR([
-		`https://api.intra.42.fr/v2/users/${login}`,
-		session.accessToken,
-	]);
-	const { data: coalition, error: error2 } = useSWR([
-		`https://api.intra.42.fr/v2/users/${login}/coalitions`,
-		session.accessToken,
-	]);
+	const { data: user, isLoading, isError } = useAPI(`/v2/users/${login}`);
+	const { data: coalition } = useAPI(`/v2/users/${login}/coalitions`);
 
-	if (error || error2) {
-		// if (error && error.status === 401) signIn("42");
-		// return <>{error && error.status}</>;
+	if (isError || !user) {
 		return <>error</>;
 	}
-	if (!user || !coalition) return <>loading...</>;
+	if (isLoading) return <>loading...</>;
 
 	return (
 		<>
-			{/* navColor={(coalition.length && coalition[0].color) || "#01BABC"} */}
 			<code className="block">email: {user.email}</code>
 			<code className="block">phone: {user.phone}</code>
 			<code className="block">
@@ -57,9 +45,12 @@ function UserOverview() {
 				achievements: {user.achievements.length}
 			</code>
 			<code className="block">anonymize date: {user.anonymize_date}</code>
-			{coalition && (
-				<code className="block">coalition: {coalition[0]?.name}</code>
-			)}
+
+			<code className="block">
+				{coalition !== undefined && coalition[0] !== undefined
+					? `coalition: ${coalition[0]?.name}`
+					: "no coalition"}
+			</code>
 		</>
 	);
 }
