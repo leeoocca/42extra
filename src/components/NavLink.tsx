@@ -27,7 +27,7 @@ function NavLink({ name, href, className }: LinkListNode) {
 					active
 						? "opacity-100 border-white border-b-2"
 						: "opacity-75"
-				} hover:opacity-100 hover:text-white px-3 py-2 font-medium ease-in-out transition-opacity focus:opacity-100 ${className}`}
+				} hover:opacity-100 hover:text-white px-3 py-2 font-medium ease-in-out transition-opacity focus:opacity-100 last:mr-3 ${className}`}
 				ref={activeNavRef}
 			>
 				{name}
