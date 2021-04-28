@@ -2,6 +2,7 @@ import UserHeader from "@/components/headers/UserHeader";
 import NavLink from "@/components/NavLink";
 import useAPI from "@/lib/useAPI";
 import { getUserNavLinks } from "@/utils/NavLinks";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { getLayout as getMainLayout } from "./MainLayout";
 
@@ -14,6 +15,8 @@ function UserLayout({ children }: { children: React.ReactNode }) {
 		`/v2/users/${login}/coalitions`
 	);
 
+	/* if (isLoading) {
+	} else  */
 	if (coalition !== undefined && coalition[0] !== undefined)
 		document.documentElement.style.setProperty(
 			"--color-nav-bg",
@@ -27,6 +30,9 @@ function UserLayout({ children }: { children: React.ReactNode }) {
 
 	return (
 		<>
+			<Head>
+				<title>{login} — 42next</title>
+			</Head>
 			<div
 				className="bg-right bg-no-repeat bg-skin-nav bg-blend-soft-light"
 				style={{
@@ -38,7 +44,7 @@ function UserLayout({ children }: { children: React.ReactNode }) {
 			>
 				<UserHeader />
 				<nav
-					className={`px-4 py-2 mx-auto max-w-7xl select-none overflow-scroll ${
+					className={`px-4 py-2 mx-auto max-w-7xl select-none overflow-auto ${
 						isError && "cursor-not-allowed"
 					}`}
 				>

@@ -20,12 +20,12 @@ function MainLayout({ children }: { children: React.ReactNode }) {
 		return <Loader />;
 	}
 
-	document.documentElement.style.setProperty("--color-nav-bg", "#333333DD");
+	// #1F2937
+	document.documentElement.style.setProperty("--color-nav-bg", "#1E3A8ADD");
 
 	return (
 		<>
 			<Head>
-				<title>42next</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<div className="flex flex-col min-h-screen font-sans antialiased bg-skin-base text-skin-text">
