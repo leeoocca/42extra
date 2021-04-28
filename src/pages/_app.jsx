@@ -14,6 +14,7 @@ function MyApp({ Component, pageProps }) {
 				onError: (err) => {
 					console.error(err);
 				},
+				revalidateOnFocus: false,
 			}}
 		>
 			<Provider session={pageProps.session}>
