@@ -13,12 +13,6 @@ function AchievementCard({ a }: { a: Achievement }) {
 			<div>
 				<p className="font-bold">{a.name}</p>
 				<p>{a.description}</p>
-				<p>
-					<span className="mr-1 text-xs uppercase opacity-75">
-						Kind
-					</span>
-					{a.kind}
-				</p>
 				{a.tier !== "none" && (
 					<p>
 						<span className="mr-1 text-xs uppercase opacity-75">
