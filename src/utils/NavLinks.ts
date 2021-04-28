@@ -25,6 +25,10 @@ export function getUserNavLinks(login: string) {
 			href: baseUrl + "/patronages",
 		},
 		{
+			name: "Partnerships",
+			href: baseUrl + "/partnerships",
+		},
+		{
 			name: "Apps",
 			href: baseUrl + "/apps",
 		},
