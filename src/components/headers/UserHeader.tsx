@@ -30,7 +30,7 @@ function UserHeader() {
 			/>
 			{!isLoading && (
 				<div className="pb-1 ml-4">
-					{user.titles.length ? (
+					{!isError && user.titles.length ? (
 						<p className="-mb-0.5 text-xs font-bold tracking-wider uppercase">
 							{user.titles[0].name.replace(" %login", "")}
 						</p>
