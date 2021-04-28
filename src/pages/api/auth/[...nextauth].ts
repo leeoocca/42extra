@@ -63,7 +63,7 @@ export default NextAuth({
 		},
 		async session(session, token: JWT) {
 			if (token) {
-				session.user.id = token.user.id;
+				session.user = token.user;
 				session.accessToken = token.accessToken;
 			}
 			return session;
