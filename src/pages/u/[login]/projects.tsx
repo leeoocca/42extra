@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
-import Layout from "@components/layouts/MainLayout";
-import useAPI from "@lib/useAPI";
-import { getLayout } from "@components/layouts/UserLayout";
+import Layout from "@/components/layouts/MainLayout";
+import useAPI from "@/lib/useAPI";
+import { getLayout } from "@/components/layouts/UserLayout";
 
 function UserProjects() {
 	const router = useRouter();

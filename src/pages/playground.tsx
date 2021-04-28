@@ -1,5 +1,5 @@
-import Avatar, { ErrorAvatar } from "@components/Avatar";
-import Card from "@components/Card";
+import Avatar, { ErrorAvatar } from "@/components/Avatar";
+import Card from "@/components/Card";
 
 function Playground() {
 	return (

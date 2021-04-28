@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
-import useAPI from "@lib/useAPI";
-import { getLayout } from "@components/layouts/UserLayout";
+import useAPI from "@/lib/useAPI";
+import { getLayout } from "@/components/layouts/UserLayout";
 import { TrendingDownIcon } from "@heroicons/react/solid";
-import { Achievement, User } from "@interfaces/User";
-import AchievementCard from "@components/AchievementCard";
+import { Achievement, User } from "@/types/User";
+import AchievementCard from "@/components/AchievementCard";
 
 function AchievementsGrid({ children }: { children: React.ReactNode }) {
 	return (

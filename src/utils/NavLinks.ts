@@ -1,4 +1,4 @@
-import { LinkListNode } from "@interfaces/LinkListNode";
+import { LinkListNode } from "@/types/LinkListNode";
 
 export function getUserNavLinks(login: string) {
 	const baseUrl = "/u/[login]";

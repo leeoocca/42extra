@@ -1,4 +1,4 @@
-import { getLayout as getMainLayout } from "@components/layouts/MainLayout";
+import { getLayout as getMainLayout } from "@/components/layouts/MainLayout";
 
 function SimpleLayout({ children }: { children: React.ReactNode }) {
 	return (

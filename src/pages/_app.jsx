@@ -1,8 +1,8 @@
 import { SWRConfig } from "swr";
-import "../styles/globals.css";
+import "@/styles/globals.css";
 import { Provider } from "next-auth/client";
-import fetcherWithToken from "@lib/fetcherWithToken";
-import { getLayout as getSimpleLayout } from "@components/layouts/SimpleLayout";
+import fetcherWithToken from "@/lib/fetcherWithToken";
+import { getLayout as getSimpleLayout } from "@/components/layouts/SimpleLayout";
 
 function MyApp({ Component, pageProps }) {
 	const getLayout = Component.getLayout || getSimpleLayout;

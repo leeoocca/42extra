@@ -1,4 +1,4 @@
-import { Achievement } from "@interfaces/User";
+import { Achievement } from "@/types/User";
 import Card from "./Card";
 
 function AchievementCard({ a }: { a: Achievement }) {

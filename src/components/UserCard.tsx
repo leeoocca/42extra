@@ -1,5 +1,5 @@
-import { User } from "@interfaces/User";
-import useAPI from "@lib/useAPI";
+import { User } from "@/types/User";
+import useAPI from "@/lib/useAPI";
 import Link from "next/link";
 import Avatar from "./Avatar";
 import Card from "./Card";

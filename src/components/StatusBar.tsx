@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import UserDropdown from "./UserDropdown";
-import { LinkListNode } from "@interfaces/LinkListNode";
+import { LinkListNode } from "@/types/LinkListNode";
 
 const menu = [{ name: "users", href: "/users" }];
 

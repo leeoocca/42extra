@@ -1,7 +1,7 @@
-import Avatar from "@components/Avatar";
+import Avatar from "@/components/Avatar";
 import { BadgeCheckIcon } from "@heroicons/react/outline";
-import { User } from "@interfaces/User";
-import useAPI from "@lib/useAPI";
+import { User } from "@/types/User";
+import useAPI from "@/lib/useAPI";
 import { useRouter } from "next/router";
 
 function UserHeader() {

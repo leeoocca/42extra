@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LinkListNode } from "@interfaces/LinkListNode";
+import { LinkListNode } from "@/types/LinkListNode";
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 

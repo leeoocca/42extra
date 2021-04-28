@@ -1,7 +1,7 @@
-import UserHeader from "@components/headers/UserHeader";
-import NavLink from "@components/NavLink";
-import useAPI from "@lib/useAPI";
-import { getUserNavLinks } from "@utils/NavLinks";
+import UserHeader from "@/components/headers/UserHeader";
+import NavLink from "@/components/NavLink";
+import useAPI from "@/lib/useAPI";
+import { getUserNavLinks } from "@/utils/NavLinks";
 import { useRouter } from "next/router";
 import { getLayout as getMainLayout } from "./MainLayout";
 
@@ -54,6 +54,12 @@ function UserLayout({ children }: { children: React.ReactNode }) {
 			</div>
 			<main className="flex-grow w-full px-4 py-6 mx-auto max-w-7xl">
 				{!isLoading && !isError && children}
+				{isError && (
+					<>
+						<img src="https://i.imgur.com/RDBy5.gif" />
+						<p>Huston, do you copy?</p>
+					</>
+				)}
 			</main>
 		</>
 	);

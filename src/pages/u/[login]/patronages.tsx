@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
-import useAPI from "@lib/useAPI";
-import { getLayout } from "@components/layouts/UserLayout";
-import { User } from "@interfaces/User";
-import UserCard from "@components/UserCard";
+import useAPI from "@/lib/useAPI";
+import { getLayout } from "@/components/layouts/UserLayout";
+import { User } from "@/types/User";
+import UserCard from "@/components/UserCard";
 
 function UserPatronages() {
 	const router = useRouter();

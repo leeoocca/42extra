@@ -1,5 +1,5 @@
-import useAPI from "@lib/useAPI";
-import { User } from "@interfaces/User";
+import useAPI from "@/lib/useAPI";
+import { User } from "@/types/User";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useSession } from "next-auth/client";

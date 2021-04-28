@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import useAPI from "@lib/useAPI";
-import { getLayout } from "@components/layouts/UserLayout";
+import useAPI from "@/lib/useAPI";
+import { getLayout } from "@/components/layouts/UserLayout";
 
 function UserQuests() {
 	const router = useRouter();

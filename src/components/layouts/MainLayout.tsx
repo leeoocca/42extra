@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useSession, signIn } from "next-auth/client";
 
-import StatusBar from "@components/StatusBar";
-import Footer from "@components/Footer";
-
-import Loader from "@components/Loader";
+import StatusBar from "@/components/StatusBar";
+import Footer from "@/components/Footer";
+import Loader from "@/components/Loader";
 import Head from "next/head";
 
 function MainLayout({ children }: { children: React.ReactNode }) {

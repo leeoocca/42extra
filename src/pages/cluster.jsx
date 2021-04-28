@@ -1,5 +1,5 @@
 import React from "react";
-import { getLayout } from "@components/layouts/MainLayout";
+import { getLayout } from "@/components/layouts/MainLayout";
 
 // const locations = [
 // 	{
