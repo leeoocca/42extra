@@ -1,6 +1,6 @@
-import { User } from "@interfaces/User";
-import NextAuth from "next-auth";
-import refreshAccessToken from "@lib/refreshAccessToken";
+import NextAuth, { Profile, User } from "next-auth";
+import refreshAccessToken from "@/lib/refreshAccessToken";
+import { JWT } from "next-auth/jwt";
 
 export default NextAuth({
 	// Configure one or more authentication providers
@@ -15,12 +15,9 @@ export default NextAuth({
 			authorizationUrl:
 				"https://api.intra.42.fr/oauth/authorize?response_type=code",
 			profileUrl: "https://api.intra.42.fr/v2/me",
-			async profile(OAuthProfile: User, tokens) {
-				// You can use the tokens, in case you want to fetch more profile information
-				// For example several OAuth provider does not return e-mail by default.
-				// Depending on your provider, will have tokens like `access_token`, `id_token` and or `refresh_token`
+			profile(OAuthProfile, tokens) {
 				return {
-					id: OAuthProfile.id,
+					id: OAuthProfile.login,
 					login: OAuthProfile.login,
 					name:
 						OAuthProfile.usual_first_name ||
@@ -29,12 +26,14 @@ export default NextAuth({
 					email: OAuthProfile.email,
 					image: OAuthProfile.image_url,
 					campus: OAuthProfile.campus_users[0].campus_id,
-					token: tokens.accessToken,
-					sessionExpiry: tokens.created_at + 7200,
+					// token: tokens.accessToken,
+					// sessionExpiry: tokens.created_at + 7200,
 				};
 			},
 			clientId: process.env.FT_UID,
 			clientSecret: process.env.FT_SECRET,
+			requestTokenUrl: "",
+			scope: "",
 		},
 	],
 	// session: {
@@ -49,7 +48,7 @@ export default NextAuth({
 			if (account && profile) {
 				return {
 					accessToken: account.access_token,
-					accessTokenExpires: (account.created_at + 7200) * 1000,
+					expires: (Number(account.created_at) + 7200) * 1000,
 					refreshToken: account.refresh_token,
 					user: user,
 				};
@@ -62,9 +61,9 @@ export default NextAuth({
 			// access token has expired, try to update it
 			return refreshAccessToken(prevToken);
 		},
-		async session(session, token) {
+		async session(session, token: JWT) {
 			if (token) {
-				session.user = token.user;
+				session.user.id = token.user.id;
 				session.accessToken = token.accessToken;
 			}
 			return session;
