@@ -20,7 +20,12 @@ function UsersIndex() {
 
 	return (
 		<>
-			<form onSubmit={() => router.push(`/u/${login}`)}>
+			<form
+				onSubmit={(e) => {
+					e.preventDefault();
+					router.push(`/u/${login}`, null, { shallow: true });
+				}}
+			>
 				<input
 					type="search"
 					placeholder="login"
