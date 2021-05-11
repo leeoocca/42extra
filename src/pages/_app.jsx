@@ -15,6 +15,8 @@ function MyApp({ Component, pageProps }) {
 					console.error(err);
 				},
 				revalidateOnFocus: false,
+				dedupingInterval: 60 * 1000,
+				errorRetryInterval: 2000,
 			}}
 		>
 			<Provider session={pageProps.session}>
