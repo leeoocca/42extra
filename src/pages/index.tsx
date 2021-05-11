@@ -7,7 +7,7 @@ function Home() {
 	return (
 		<>
 			<p>Welcome {session.user?.name}!</p>
-			<UserCard id="lrocca" />
+			<UserCard id={session.user.login} />
 		</>
 	);
 }
