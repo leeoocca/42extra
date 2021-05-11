@@ -17,11 +17,7 @@ function NavLink({ name, href, className }: LinkListNode) {
 	}, []);
 
 	return (
-		<Link
-			href={{ pathname: href, query: { login: login } }}
-			key={href}
-			replace
-		>
+		<Link href={{ pathname: href, query: { login: login } }} key={href}>
 			<a
 				className={`${
 					active
