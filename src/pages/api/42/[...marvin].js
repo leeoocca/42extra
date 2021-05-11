@@ -13,7 +13,14 @@ async function handler(req, res) {
 
 		const { marvin } = req.query;
 
-		resp = await fetch(`https://api.intra.42.fr/${marvin.join("/")}`, {
+		const rawParams = req.query;
+		delete rawParams.marvin;
+		const params = new URLSearchParams(rawParams).toString();
+
+		const url =
+			"https://api.intra.42.fr/" + marvin.join("/") + "?" + params;
+
+		resp = await fetch(url, {
 			headers: {
 				Authorization: `Bearer ${session.accessToken}`,
 			},
@@ -25,8 +32,8 @@ async function handler(req, res) {
 		return res.json(data);
 	} catch (error) {
 		return res
-			.status(resp.status || error.status || 500)
-			.end(resp.statusText || error.message);
+			.status((resp && resp.status) || (error && error.status) || 500)
+			.end((resp && resp.statusText) || (error && error.message));
 	}
 }
 
