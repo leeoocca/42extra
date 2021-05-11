@@ -16,10 +16,18 @@ function UserScales() {
 		isError: boolean;
 	} = useAPI(`/v2/users/${login}/scale_teams`);
 
+	const { data: history } = useAPI(
+		`/v2/users/${login}/correction_point_historics`
+	);
+
 	if (isLoading || isError) return <>Loading or error</>;
 
 	return (
 		<>
+			<details>
+				<summary>Correction points history</summary>
+				<pre>{history && JSON.stringify(history, null, 2)}</pre>
+			</details>
 			<table className="w-full">
 				<thead>
 					<tr>
