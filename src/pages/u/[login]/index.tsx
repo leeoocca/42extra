@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { getLayout } from "@/components/layouts/UserLayout";
 import useAPI from "@/lib/useAPI";
+import Link from "next/link";
 
 function UserOverview() {
 	const router = useRouter();
@@ -21,17 +22,25 @@ function UserOverview() {
 			<code className="block">
 				staff: {user["staff?"] ? "true" : "false"}
 			</code>
-			<code className="block">
-				correction points: {user.correction_point}
-			</code>
+			<Link href={`/u/${login}/scales`}>
+				<a>
+					<code className="block">
+						correction points: {user.correction_point}
+					</code>
+				</a>
+			</Link>
 			<code className="block">{user.wallet} ₳</code>
 			<code className="block">
 				pool: {user.pool_month} {user.pool_year}
 			</code>
 			<code className="block">campus[0]: {user?.campus[0]?.name}</code>
-			<code className="block">
-				location: {user.location || "unavailible"}
-			</code>
+			<Link href={`/u/${login}/locations`}>
+				<a>
+					<code className="block">
+						location: {user.location || "unavailible"}
+					</code>
+				</a>
+			</Link>
 			<code className="block">
 				cursus[0]: {user.cursus_users[0]?.cursus.name}
 			</code>
@@ -45,12 +54,20 @@ function UserOverview() {
 				achievements: {user.achievements.length}
 			</code>
 			<code className="block">anonymize date: {user.anonymize_date}</code>
-
-			<code className="block">
-				{coalition !== undefined && coalition[0] !== undefined
-					? `coalition: ${coalition[0]?.name}`
-					: "no coalition"}
-			</code>
+			<h2>Coalition{coalition && coalition.length > 1 && "s"}</h2>
+			{coalition ? (
+				<ul>
+					{coalition.map((coalition) => (
+						<li>
+							<Link href={`/coalitions/${coalition.slug}`}>
+								<a>{coalition.name}</a>
+							</Link>
+						</li>
+					))}
+				</ul>
+			) : (
+				<p>no coalition</p>
+			)}
 		</>
 	);
 }

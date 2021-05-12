@@ -43,7 +43,11 @@ function UserApps() {
 						}
 						return (
 							<tr key={app.id} className="text-center">
-								<td>{app.name}</td>
+								<td>
+									<Link href={`/apps/${app.id}`}>
+										<a>{app.name}</a>
+									</Link>
+								</td>
 								<td>{app.description}</td>
 
 								<td>

@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import Layout from "@/components/layouts/MainLayout";
 import useAPI from "@/lib/useAPI";
 import { getLayout } from "@/components/layouts/UserLayout";
+import Link from "next/link";
 
 function UserProjects() {
 	const router = useRouter();
@@ -41,7 +42,11 @@ function UserProjects() {
 						return (
 							<tr key={project.id} className="text-center">
 								<td className="text-left">
-									{project.project.name}
+									<Link
+										href={`/p/${project.project.slug}/${login}`}
+									>
+										{project.project.name}
+									</Link>
 								</td>
 								<td
 									className={`${

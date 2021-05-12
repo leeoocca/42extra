@@ -29,7 +29,7 @@ function UserAchievements() {
 	if (!user.achievements.length)
 		return (
 			<div className="flex flex-col items-center w-full mt-4">
-				<TrendingDownIcon className="w-32 h-32 mb-2" />
+				<img src="https://i.chzbgr.com/full/8270686464/h7779056E/coding-is-an-art" />
 				<p>
 					No achievements for{" "}
 					<span className="font-bold">{login}</span> yet.
@@ -44,7 +44,7 @@ function UserAchievements() {
 	return (
 		<>
 			{kinds.map((kind) => (
-				<section className="mb-10" key={kind}>
+				<section key={kind} id={kind} className="mb-10">
 					<h3 className="mb-4 text-3xl font-bold">
 						{kind.replace(/^\w/, (c) => c.toUpperCase())}
 					</h3>
