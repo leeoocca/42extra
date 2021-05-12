@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { useSession, signIn } from "next-auth/client";
 
 import StatusBar from "@/components/StatusBar";
@@ -15,8 +14,8 @@ function MainLayout({ children }: { children: React.ReactNode }) {
 		setTimeout(() => setLoader(false), 1000);
 	}, []);
 
-	if (loader || loading || !session) {
-		if (!loading && !session) signIn();
+	if (loader || loading || !session.user) {
+		if (!loading && !session.user) signIn();
 		return <Loader />;
 	}
 
@@ -26,9 +25,18 @@ function MainLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<>
 			<Head>
-				<link rel="icon" href="/favicon.ico" />
+				<link
+					rel="icon"
+					href={
+						// window.matchMedia("(prefers-color-scheme: light)")
+						// 	.matches
+						// 	? "/light-favicon.ico"
+						// 	:
+						"/favicon.ico"
+					}
+				/>
 			</Head>
-			<div className="flex flex-col min-h-screen font-sans antialiased bg-skin-base text-skin-text">
+			<div className="flex flex-col min-h-screen antialiased bg-skin-base text-skin-text">
 				<div
 					className="bg-skin-nav"
 					// style={{ transition: "background-color 200ms ease-in-out" }}
