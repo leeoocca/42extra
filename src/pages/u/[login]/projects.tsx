@@ -1,8 +1,10 @@
 import { useRouter } from "next/router";
-import Layout from "@/components/layouts/MainLayout";
 import useAPI from "@/lib/useAPI";
 import { getLayout } from "@/components/layouts/UserLayout";
 import Link from "next/link";
+import Card from "@/components/Card";
+import { ProjectsUser } from "@/types/User";
+import getTimeAgo from "@/lib/getTimeAgo";
 
 function UserProjects() {
 	const router = useRouter();
@@ -14,56 +16,76 @@ function UserProjects() {
 
 	return (
 		<>
-			<table className="w-full">
-				<thead>
-					<tr>
-						<th>Project</th>
-						<th>Final Mark</th>
-						<th>Status</th>
-						<th>Marked at</th>
-					</tr>
-				</thead>
-				<tbody>
-					{user.projects_users.map((project) => {
-						const options: Intl.DateTimeFormatOptions = {
-							year: "numeric",
-							month: "numeric",
-							day: "numeric",
-							hour: "numeric",
-							minute: "numeric",
-							hour12: false,
-						};
-						let date = null;
-						if (project.marked_at)
-							date = new Date(project.marked_at).toLocaleString(
-								"en",
-								options
-							);
-						return (
-							<tr key={project.id} className="text-center">
-								<td className="text-left">
-									<Link
-										href={`/p/${project.project.slug}/${login}`}
-									>
-										{project.project.name}
-									</Link>
-								</td>
-								<td
-									className={`${
-										project["validated?"]
-											? "text-green-400"
-											: "text-red-600"
-									}`}
-								>
-									{project.final_mark}
-								</td>
-								<td>{project.status}</td>
-								<td className="font-mono">{date}</td>
-							</tr>
+			<div className="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
+				{user.projects_users.map((project: ProjectsUser) => {
+					const options: Intl.DateTimeFormatOptions = {
+						year: "numeric",
+						month: "2-digit",
+						day: "2-digit",
+						hour: "numeric",
+						minute: "numeric",
+						hour12: false,
+						// dateStyle: "medium",
+						// timeStyle: "short",
+					};
+					let date = null;
+					let timeAgo = null;
+					if (project.marked_at) {
+						const locale = navigator.language || "en";
+						date = new Date(project.marked_at).toLocaleString(
+							locale,
+							options
 						);
-					})}
-				</tbody>
-			</table>
+						timeAgo = getTimeAgo(project.marked_at);
+					}
+					return (
+						<Link href={`/p/${project.project.slug}/${login}`}>
+							<a>
+								<Card key={project.id}>
+									<div className="flex items-end justify-between w-full h-24">
+										<div>
+											<h2 className="text-lg">
+												{project.project.name}
+											</h2>
+											<p className="text-sm">
+												<span
+													className={`${
+														project.status ===
+															"in_progress" &&
+														"text-yellow-400"
+													}`}
+												>
+													{project.status.replace(
+														"_",
+														" "
+													)}
+												</span>
+												{date && (
+													<time
+														title={date}
+														className="ml-1 opacity-75"
+													>
+														{timeAgo}
+													</time>
+												)}
+											</p>
+										</div>
+										<span
+											className={`${
+												project["validated?"]
+													? "text-green-400"
+													: "text-red-600"
+											}`}
+										>
+											{project.final_mark}
+										</span>
+									</div>
+								</Card>
+							</a>
+						</Link>
+					);
+				})}
+			</div>
 		</>
 	);
 }
