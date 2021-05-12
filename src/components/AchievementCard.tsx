@@ -3,25 +3,25 @@ import Card from "./Card";
 
 function AchievementCard({ a }: { a: Achievement }) {
 	return (
-		<Card className="flex">
+		<Card className="items-center">
 			<img
 				src={
 					"https://cdn.intra.42.fr" + a.image.replace("/uploads", "")
 				}
-				className="w-12 mr-4"
+				className="w-12 m-2"
 			/>
-			<div>
-				<p className="font-bold">{a.name}</p>
-				<p>{a.description}</p>
+			<div className="flex flex-col justify-center ml-2 leading-relaxed pt-0.5 pb-1.5">
+				<h3 className="font-bold tracking-tight">{a.name}</h3>
+				<p className="text-sm">{a.description}</p>
 				{a.tier !== "none" && (
-					<p>
+					<p className="mt-1 text-sm">
 						<span className="mr-1 text-xs uppercase opacity-75">
 							Tier
 						</span>
 						{a.tier}
 					</p>
 				)}
-				<p>{a.nbr_of_success}</p>
+				{/* <p>{a.nbr_of_success}</p> */}
 			</div>
 		</Card>
 	);

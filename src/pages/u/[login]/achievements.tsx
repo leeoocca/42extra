@@ -1,13 +1,12 @@
 import { useRouter } from "next/router";
 import useAPI from "@/lib/useAPI";
 import { getLayout } from "@/components/layouts/UserLayout";
-import { TrendingDownIcon } from "@heroicons/react/solid";
 import { Achievement, User } from "@/types/User";
 import AchievementCard from "@/components/AchievementCard";
 
 function AchievementsGrid({ children }: { children: React.ReactNode }) {
 	return (
-		<div className="grid gap-2 md:grid-cols-2 lg:grid-cols-3 auto-rows-auto">
+		<div className="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
 			{children}
 		</div>
 	);
@@ -45,9 +44,9 @@ function UserAchievements() {
 		<>
 			{kinds.map((kind) => (
 				<section key={kind} id={kind} className="mb-10">
-					<h3 className="mb-4 text-3xl font-bold">
+					<h2 className="mb-4 text-3xl font-bold tracking-tight">
 						{kind.replace(/^\w/, (c) => c.toUpperCase())}
-					</h3>
+					</h2>
 					<AchievementsGrid>
 						{user.achievements.map((a: Achievement) => {
 							if (a.kind === kind)
