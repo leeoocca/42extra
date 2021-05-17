@@ -3,6 +3,7 @@
 const units: { unit: Intl.RelativeTimeFormatUnit; ms: number }[] = [
 	{ unit: "year", ms: 31536000000 },
 	{ unit: "month", ms: 2628000000 },
+	{ unit: "week", ms: 604800000 },
 	{ unit: "day", ms: 86400000 },
 	{ unit: "hour", ms: 3600000 },
 	{ unit: "minute", ms: 60000 },
