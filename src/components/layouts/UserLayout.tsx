@@ -2,6 +2,7 @@ import UserHeader from "@/components/headers/UserHeader";
 import NavLink from "@/components/NavLink";
 import useAPI from "@/lib/useAPI";
 import { getUserNavLinks } from "@/utils/NavLinks";
+import { route } from "next/dist/next-server/server/router";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { getLayout as getMainLayout } from "./MainLayout";
@@ -11,52 +12,65 @@ function UserLayout({ children }: { children: React.ReactNode }) {
 	const { login } = router.query;
 	const navLinks = getUserNavLinks(String(login));
 
-	const { data: coalition, isLoading, isError } = useAPI(
-		`/v2/users/${login}/coalitions`
-	);
+	const {
+		data: coalition,
+		isLoading,
+		isError,
+	} = useAPI(`/v2/users/${login}/coalitions`);
 
-	/* if (isLoading) {
-	} else  */
-	if (coalition !== undefined && coalition[0] !== undefined)
-		document.documentElement.style.setProperty(
-			"--color-nav-bg",
-			coalition[0].color + "DD"
-		);
-	else
-		document.documentElement.style.setProperty(
-			"--color-nav-bg",
-			"#00BABCDD"
-		);
+	if (!isLoading)
+		if (coalition !== undefined && coalition[0] !== undefined)
+			document.documentElement.style.setProperty(
+				"--color-nav-bg",
+				coalition[0].color[0] !== "#"
+					? "#"
+					: "" + coalition[0].color + "99"
+			);
+		else
+			document.documentElement.style.setProperty(
+				"--color-nav-bg",
+				"#00BABC99"
+			);
+
+	const routeArray = router.route.split("/");
+	const pageName = routeArray[routeArray.length - 1];
+	let title = login;
+	if (pageName !== "[login]") title = `${login}'s ${pageName}`;
+	title += " – 42next";
 
 	return (
 		<>
 			<Head>
-				<title>{login} — 42next</title>
+				<title>{title}</title>
 			</Head>
-			<div
-				className="bg-right bg-no-repeat bg-skin-nav bg-blend-soft-light"
-				style={{
-					backgroundImage: `url(
-						${(coalition && coalition[0] !== undefined && coalition[0].image_url) || ""})`,
-					backgroundPosition: "90%",
-					backgroundSize: "10rem",
-				}}
-			>
-				<UserHeader />
-				<nav
-					className={`px-4 py-2 mx-auto max-w-7xl select-none overflow-auto ${
-						isError && "cursor-not-allowed"
-					}`}
-				>
-					{navLinks.map((item) => (
-						<NavLink
-							key={item.href}
-							name={item.name}
-							href={item.href}
-							className={isError && "pointer-events-none"}
-						/>
-					))}
-				</nav>
+			<div className="bg-skin-nav">
+				<div className="relative mx-auto max-w-7xl">
+					<UserHeader />
+					<img
+						src={
+							(coalition &&
+								coalition[0] !== undefined &&
+								coalition[0].image_url) ||
+							""
+						}
+						alt="Coalition"
+						className="absolute top-0 right-0 object-cover w-40 text-transparent mix-blend-soft-light"
+					/>
+					<nav
+						className={`px-4 py-2 mx-auto select-none overflow-auto ${
+							isError && "cursor-not-allowed"
+						}`}
+					>
+						{navLinks.map((item) => (
+							<NavLink
+								key={item.href}
+								name={item.name}
+								href={item.href}
+								className={isError && "pointer-events-none"}
+							/>
+						))}
+					</nav>
+				</div>
 			</div>
 			<main className="flex-grow w-full px-4 py-6 mx-auto max-w-7xl">
 				{!isLoading && !isError && children}
