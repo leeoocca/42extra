@@ -3,6 +3,12 @@ import { getLayout } from "@/components/layouts/UserLayout";
 import useAPI from "@/lib/useAPI";
 import Link from "next/link";
 
+const Th = ({ children }) => (
+	<th className="py-1 pr-2 text-xs text-left uppercase opacity-75">
+		{children}
+	</th>
+);
+
 function UserOverview() {
 	const router = useRouter();
 	const { login } = router.query;
@@ -15,59 +21,115 @@ function UserOverview() {
 	}
 	if (isLoading) return <>loading...</>;
 
+	const details = [
+		{ name: "Email", value: user.email, href: `mailto:${user.email}` },
+		{
+			name: "Phone",
+			value: user.phone,
+			href: +user.phone > 0 ? `tel:${user.phone}` : null,
+		},
+		{
+			name: "Correction points",
+			value: user.correction_point,
+			href: `/u/${login}/scales`,
+		},
+		{ name: "Wallet", value: `${user.wallet} ₳`, href: null },
+		{
+			name: "Pool",
+			value: `${user.pool_month} ${user.pool_year}`,
+			href: null,
+		},
+		{
+			name: "Location",
+			value: user.location || "unavailible",
+			href: `/u/${login}/locations`,
+		},
+		{
+			name: "Achievements",
+			value: user.achievements.length,
+			href: `/u/${login}/achievements`,
+		},
+		// {name: , value: , href: },
+	];
+
 	return (
 		<>
-			<code className="block">email: {user.email}</code>
-			<code className="block">phone: {user.phone}</code>
-			<code className="block">
-				staff: {user["staff?"] ? "true" : "false"}
-			</code>
-			<Link href={`/u/${login}/scales`}>
-				<a>
-					<code className="block">
-						correction points: {user.correction_point}
-					</code>
-				</a>
-			</Link>
-			<code className="block">{user.wallet} ₳</code>
-			<code className="block">
-				pool: {user.pool_month} {user.pool_year}
-			</code>
-			<code className="block">campus[0]: {user?.campus[0]?.name}</code>
-			<Link href={`/u/${login}/locations`}>
-				<a>
-					<code className="block">
-						location: {user.location || "unavailible"}
-					</code>
-				</a>
-			</Link>
-			<code className="block">
-				cursus[0]: {user.cursus_users[0]?.cursus.name}
-			</code>
-			<code className="block">
-				cursus[1]: {user.cursus_users[1]?.cursus.name}
-			</code>
+			<table>
+				<tbody>
+					{details.map((detail) => (
+						<tr key={detail.name}>
+							<Th>{detail.name}</Th>
+
+							<td>
+								{detail.href ? (
+									<Link href={detail.href}>
+										<a>{detail.value}</a>
+									</Link>
+								) : (
+									detail.value
+								)}
+							</td>
+						</tr>
+					))}
+					<tr>
+						<Th>Coalition{coalition?.length > 1 && "s"}</Th>
+						<td>
+							{coalition ? (
+								<ul>
+									{coalition.map((coalition) => (
+										<li key={coalition.slug}>
+											<Link
+												href={`/coalitions/${coalition.slug}`}
+											>
+												<a>{coalition.name}</a>
+											</Link>
+										</li>
+									))}
+								</ul>
+							) : (
+								"none"
+							)}
+						</td>
+					</tr>
+					<tr>
+						<Th>Campus{user.campus?.length > 1 && "es"}</Th>
+						<td>
+							<ul>
+								{user.campus.map((campus) => (
+									<li key={campus.id}>
+										<Link href={`/campus/${campus.id}`}>
+											<a>{campus.name}</a>
+										</Link>
+									</li>
+								))}
+							</ul>
+						</td>
+					</tr>
+					<tr>
+						<Th>Cursus{user.campus?.length > 1 && "es"}</Th>
+						<td>
+							<ul>
+								{user.cursus_users.map((cursus) => (
+									<li key={cursus.cursus.id}>
+										<Link
+											href={`/cursus/${cursus.cursus.id}`}
+										>
+											<a>
+												{cursus.cursus.name} -{" "}
+												{cursus.level}
+											</a>
+										</Link>
+									</li>
+								))}
+							</ul>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 			<code className="block">
 				languages: {user.languages_users.length}
 			</code>
-			<code className="block">
-				achievements: {user.achievements.length}
-			</code>
 			<code className="block">anonymize date: {user.anonymize_date}</code>
-			<h2>Coalition{coalition && coalition.length > 1 && "s"}</h2>
-			{coalition ? (
-				<ul>
-					{coalition.map((coalition) => (
-						<li>
-							<Link href={`/coalitions/${coalition.slug}`}>
-								<a>{coalition.name}</a>
-							</Link>
-						</li>
-					))}
-				</ul>
-			) : (
-				<p>no coalition</p>
-			)}
 		</>
 	);
 }

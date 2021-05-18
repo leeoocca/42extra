@@ -8,9 +8,11 @@ function UserApps() {
 	const router = useRouter();
 	const { login } = router.query;
 
-	const { data: apps, isLoading, isError } = useAPI(
-		`/v2/users/${login}/apps`
-	);
+	const {
+		data: apps,
+		isLoading,
+		isError,
+	} = useAPI(`/v2/users/${login}/apps`);
 
 	if (isLoading || isError) return <>Loading or error</>;
 
