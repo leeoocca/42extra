@@ -56,7 +56,7 @@ export default NextAuth({
 
 			// Subsequent use of JWT, the user has been logged in before
 			// access token has not expired yet
-			if (Date.now() < prevToken.accessTokenExpires) return prevToken;
+			if (Date.now() < prevToken.expires) return prevToken;
 
 			// access token has expired, try to update it
 			return refreshAccessToken(prevToken);

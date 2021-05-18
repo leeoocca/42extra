@@ -1,10 +1,8 @@
 async function refreshAccessToken(token) {
-	console.log("refreshAccessToken");
 	try {
 		const url = "https://api.intra.42.fr/oauth/token";
 
 		const response = await fetch(url, {
-			// await fetch("/api/auth/signin/42", {
 			body: new URLSearchParams({
 				client_id: process.env.FT_UID,
 				client_secret: process.env.FT_SECRET,
@@ -29,13 +27,13 @@ async function refreshAccessToken(token) {
 		return {
 			...token,
 			accessToken: tokens.access_token,
-			accessTokenExpires: (tokens.created_at + 7200) * 1000,
+			expires: (Number(token.created_at) + 7200) * 1000,
 			refreshToken: tokens.refresh_token,
 		};
 	} catch (error) {
 		console.error(error);
 		return {
-			...token,
+			// ...token,
 			error: "RefreshAccessTokenError",
 		};
 	}
