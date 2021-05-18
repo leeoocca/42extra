@@ -4,8 +4,8 @@
 
 @layer base {
 	:root {
-		--color-base: #000;
-		--color-text: #fff;
+		--color-base: #111111;
+		--color-text: #f2f2f2;
 		--color-nav-bg: #333;
 	}
 }

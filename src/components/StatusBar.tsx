@@ -2,18 +2,19 @@ import Link from "next/link";
 import SearchBar from "./SearchBar";
 import UserDropdown from "./UserDropdown";
 
+// border-b border-white border-opacity-50
+
 function StatusBar() {
 	return (
-		<nav className="flex items-center p-4 mx-auto space-x-4 align-middle max-w-7xl">
+		<nav className="flex items-center w-full p-4 mx-auto space-x-4 align-middle max-w-7xl">
 			<Link href="/">
 				<a>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 -200 960 960"
+						viewBox="0 0 42 42"
 						className="w-8 h-8 fill-current"
 					>
-						<path d="M32 412.6h330.1V578h164.7V279.1H197.3L526.8-51.1H362.1L32 279.1zM597.9 114.2L762.7-51.1H597.9zM762.7 114.2L597.9 279.1v164.8h164.8V279.1L928 114.2V-51.1H762.7z" />
-						<path d="M928 279.1L762.7 443.9H928z" />
+						<path d="M4 28.69h12.593V35h6.284V23.597h-12.57L22.876 11h-6.284L4 23.597v5.093zm21.589-11.384L31.876 11h-6.287v6.306zm6.287 0l-6.287 6.291v6.287h6.287v-6.287l6.306-6.29V11h-6.306v6.306zM38.182 23.597l-6.306 6.287h6.306v-6.287z" />
 					</svg>
 				</a>
 			</Link>

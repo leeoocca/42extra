@@ -1,15 +1,14 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import Link from "next/link";
+// import Link from "next/link";
 
-const links = [
-	{ name: "users", href: "/users" },
-	{ name: "projects", href: "/projects" },
-];
+// const links = [
+// 	{ name: "users", href: "/users" },
+// 	{ name: "projects", href: "/projects" },
+// ];
 
 function SearchBar() {
 	const [search, setSearch] = useState("");
-	const [visibility, setVisibility] = useState(false);
 	const router = useRouter();
 	return (
 		<>
@@ -29,25 +28,28 @@ function SearchBar() {
 				<input
 					type="text"
 					placeholder={router.asPath}
-					className="w-full px-2 py-1 text-center placeholder-white placeholder-opacity-75 bg-black bg-opacity-50 rounded text-skin-text"
+					className="w-full px-2 py-1 placeholder-white placeholder-opacity-75 bg-transparent border-none rounded text-skin-text"
 					name="search"
 					onChange={(event) => setSearch(event.target.value)}
 					value={search}
-					onFocus={() => setVisibility(true)}
-					onBlur={() => setVisibility(false)}
+					// onFocus={() => setVisibility(true)}
+					// onBlur={() => setVisibility(false)}
+					autoComplete="off"
 				/>
 			</form>
-			{visibility && (
+			{/* {visibility && (
 				<div className="absolute z-50 mt-10 overflow-hidden overflow-y-scroll border border-gray-300 rounded w-max bg-skin-base max-height-48">
 					<ul className="py-1">
 						{links.map((link) => (
 							<li className="px-3 py-2 text-opacity-50 cursor-pointer hover:text-opacity-100">
-								<Link href={link.href}>{link.name}</Link>
+								<Link href={link.href}>
+									<a>{link.name}</a>
+								</Link>
 							</li>
 						))}
 					</ul>
 				</div>
-			)}
+			)} */}
 		</>
 	);
 }

@@ -1,25 +1,29 @@
-import { useSession, signIn, signOut } from "next-auth/client";
+import { useSession, signOut } from "next-auth/client";
 import Avatar from "./Avatar";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import { useRouter } from "next/router";
+
+function getButtonClasses(active: boolean) {
+	return `w-full p-2 text-sm text-skin-text text-left ${
+		active && "bg-white bg-opacity-10"
+	}`;
+}
 
 export default function UserDropdown() {
 	const [session] = useSession();
+	const router = useRouter();
 
 	return (
-		<div className="w-56 text-right">
-			<Menu as="div" className="relative inline-block text-left">
+		<div className="h-8">
+			<Menu as="div" className="relative inline-block">
 				{({ open }) => (
 					<>
 						<div>
-							<Menu.Button className="rounded-full focus:outline-none focus:ring-2 focus:ring-white">
+							<Menu.Button className="flex items-center space-x-2 rounded-full focus:outline-none focus:ring-2 focus:ring-white">
 								<span className="sr-only">Open user menu</span>
-								<div className="relative w-8 h-8">
-									<Avatar
-										url={session.user.image}
-										size={32}
-									/>
-								</div>
+								<span>{session.user.login}</span>
+								<Avatar url={session.user.image} size={32} />
 							</Menu.Button>
 						</div>
 						<Transition
@@ -34,87 +38,83 @@ export default function UserDropdown() {
 						>
 							<Menu.Items
 								static
-								className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+								className="absolute right-0 z-10 w-40 mt-2 origin-top-right divide-y divide-white rounded-md shadow-lg divide-opacity-50 bg-skin-base ring-1 ring-white ring-opacity-5 focus:outline-none"
 							>
-								<div className="px-1 py-1 ">
+								<div className="py-1 ">
 									<Menu.Item>
 										{({ active }) => (
 											<button
-												className={`${
+												className={getButtonClasses(
 													active
-														? "bg-black text-white"
-														: "text-gray-900"
-												} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+												)}
+												onClick={() =>
+													router.push(
+														`/u/${session.user.login}`
+													)
+												}
 											>
-												Hi {session.user.name}
-											</button>
-										)}
-									</Menu.Item>
-									<Menu.Item>
-										{({ active }) => (
-											<button
-												className={`${
-													active
-														? "bg-black text-white"
-														: "text-gray-900"
-												} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-											>
-												Duplicate
+												Hi, {session.user.name}
 											</button>
 										)}
 									</Menu.Item>
 								</div>
-								<div className="px-1 py-1">
+								<div className="py-1">
 									<Menu.Item>
 										{({ active }) => (
-											<button
-												className={`${
-													active
-														? "bg-black text-white"
-														: "text-gray-900"
-												} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-											>
-												Language
-											</button>
+											<div>
+												<label
+													htmlFor="language"
+													className="m-2 text-sm"
+												>
+													Language
+												</label>
+												<select
+													name="language"
+													id="select-language"
+													className="p-1 text-sm text-black"
+												>
+													<option value="en">
+														English
+													</option>
+												</select>
+											</div>
 										)}
 									</Menu.Item>
 									<Menu.Item>
 										{({ active }) => (
-											<button
-												className={`${
-													active
-														? "bg-black text-white"
-														: "text-gray-900"
-												} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-											>
-												Theme
-											</button>
+											<div>
+												<label
+													htmlFor="theme"
+													className="m-2 text-sm"
+												>
+													Theme
+												</label>
+												<select
+													name="theme"
+													id="select-theme"
+													className="p-1 text-sm text-black"
+												>
+													<option value="system">
+														System
+													</option>
+													<option value="light">
+														Light
+													</option>
+													<option value="dark">
+														Dark
+													</option>
+												</select>
+											</div>
 										)}
 									</Menu.Item>
 								</div>
-								<div className="px-1 py-1">
+								<div className="py-1">
 									<Menu.Item>
 										{({ active }) => (
 											<button
-												className={`${
+												className={getButtonClasses(
 													active
-														? "bg-black text-white"
-														: "text-gray-900"
-												} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-												onClick={() => signIn("42")}
-											>
-												Sign in
-											</button>
-										)}
-									</Menu.Item>
-									<Menu.Item>
-										{({ active }) => (
-											<button
-												className={`${
-													active
-														? "bg-black text-white"
-														: "text-gray-900"
-												} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+												)}
 												onClick={() => signOut()}
 											>
 												Sign out

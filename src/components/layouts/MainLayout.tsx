@@ -6,7 +6,11 @@ import Footer from "@/components/Footer";
 import Loader from "@/components/Loader";
 import Head from "next/head";
 
-function MainLayout({ children }: { children: React.ReactNode }) {
+interface Props {
+	children: React.ReactNode;
+}
+
+function MainLayout({ children }: Props) {
 	const [session, loading] = useSession();
 	const [loader, setLoader] = useState(true);
 
@@ -14,13 +18,13 @@ function MainLayout({ children }: { children: React.ReactNode }) {
 		setTimeout(() => setLoader(false), 1000);
 	}, []);
 
-	if (loader || loading || !session.user) {
-		if (!loading && !session.user) signIn();
+	if (loader || loading || !session?.user) {
+		if (!loading && !session?.user) signIn();
 		return <Loader />;
 	}
 
 	// #1F2937
-	document.documentElement.style.setProperty("--color-nav-bg", "#1E3A8ADD");
+	// document.documentElement.style.setProperty("--color-nav-bg", "#1E3A8ADD");
 
 	return (
 		<>
@@ -37,12 +41,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
 				/>
 			</Head>
 			<div className="flex flex-col min-h-screen antialiased bg-skin-base text-skin-text">
-				<div
-					className="bg-skin-nav"
-					// style={{ transition: "background-color 200ms ease-in-out" }}
-				>
-					<StatusBar />
-				</div>
+				<StatusBar />
 				{children}
 				<Footer />
 			</div>
