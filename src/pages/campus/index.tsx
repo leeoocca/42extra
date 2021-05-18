@@ -1,4 +1,5 @@
 import Card from "@/components/Card";
+import CardGrid from "@/components/CardGrid";
 import useAPI from "@/lib/useAPI";
 import Link from "next/link";
 
@@ -7,7 +8,7 @@ function CampusesIndex() {
 	return (
 		<>
 			<h1 className="text-3xl font-bold leading-relaxed">Campuses</h1>
-			<div className="grid grid-cols-3 gap-2">
+			<CardGrid>
 				{campuses &&
 					campuses.map((c) => (
 						<Link href={`/campus/${c.id}`} key={c.id}>
@@ -29,7 +30,7 @@ function CampusesIndex() {
 							</a>
 						</Link>
 					))}
-			</div>
+			</CardGrid>
 		</>
 	);
 }

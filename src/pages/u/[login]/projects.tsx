@@ -5,6 +5,7 @@ import Link from "next/link";
 import Card from "@/components/Card";
 import { ProjectsUser } from "@/types/User";
 import getTimeAgo from "@/lib/getTimeAgo";
+import CardGrid from "@/components/CardGrid";
 
 function UserProjects() {
 	const router = useRouter();
@@ -16,7 +17,7 @@ function UserProjects() {
 
 	return (
 		<>
-			<div className="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
+			<CardGrid>
 				{user.projects_users.map((project: ProjectsUser) => {
 					const options: Intl.DateTimeFormatOptions = {
 						year: "numeric",
@@ -85,7 +86,7 @@ function UserProjects() {
 						</Link>
 					);
 				})}
-			</div>
+			</CardGrid>
 		</>
 	);
 }

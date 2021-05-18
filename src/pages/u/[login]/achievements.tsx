@@ -3,14 +3,8 @@ import useAPI from "@/lib/useAPI";
 import { getLayout } from "@/components/layouts/UserLayout";
 import { Achievement, User } from "@/types/User";
 import AchievementCard from "@/components/AchievementCard";
+import CardGrid from "@/components/CardGrid";
 
-function AchievementsGrid({ children }: { children: React.ReactNode }) {
-	return (
-		<div className="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
-			{children}
-		</div>
-	);
-}
 function UserAchievements() {
 	const router = useRouter();
 	const { login } = router.query;
@@ -47,12 +41,12 @@ function UserAchievements() {
 					<h2 className="mb-4 text-3xl font-bold tracking-tight">
 						{kind.replace(/^\w/, (c) => c.toUpperCase())}
 					</h2>
-					<AchievementsGrid>
+					<CardGrid>
 						{user.achievements.map((a: Achievement) => {
 							if (a.kind === kind)
 								return <AchievementCard key={a.id} a={a} />;
 						})}
-					</AchievementsGrid>
+					</CardGrid>
 				</section>
 			))}
 		</>

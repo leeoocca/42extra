@@ -1,4 +1,5 @@
 import Card from "@/components/Card";
+import CardGrid from "@/components/CardGrid";
 import useAPI from "@/lib/useAPI";
 import Link from "next/link";
 
@@ -7,7 +8,7 @@ function CoalitionsIndex() {
 	return (
 		<>
 			<h1 className="text-3xl font-bold leading-relaxed">Coalitions</h1>
-			<div className="grid grid-cols-3 gap-2">
+			<CardGrid>
 				{coalitions &&
 					coalitions.map((c) => (
 						<Link href={`/coalitions/${c.slug}`} key={c.id}>
@@ -38,7 +39,7 @@ function CoalitionsIndex() {
 							</a>
 						</Link>
 					))}
-			</div>
+			</CardGrid>
 		</>
 	);
 }

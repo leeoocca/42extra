@@ -1,4 +1,5 @@
 import Card from "@/components/Card";
+import CardGrid from "@/components/CardGrid";
 import useAPI from "@/lib/useAPI";
 import Link from "next/link";
 
@@ -8,7 +9,7 @@ function Cursuses() {
 	return (
 		<>
 			<h1 className="text-3xl font-bold leading-relaxed">Cursuses</h1>
-			<div className="grid grid-cols-3 gap-2">
+			<CardGrid>
 				{cursuses &&
 					cursuses.map((cursus) => (
 						<Link href={`/cursus/${cursus.slug}`} key={cursus.id}>
@@ -22,7 +23,7 @@ function Cursuses() {
 							</a>
 						</Link>
 					))}
-			</div>
+			</CardGrid>
 		</>
 	);
 }
