@@ -8,6 +8,10 @@
 		--color-text: #f2f2f2;
 		--color-nav-bg: #333;
 	}
+	[data-theme="light"] {
+		--color-base: #f8f8f8;
+		--color-text: #111111;
+	}
 }
 
 @font-face {

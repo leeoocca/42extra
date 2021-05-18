@@ -1,6 +1,10 @@
 import Link from "next/link";
+import { useTheme } from "next-themes";
+import { useRef } from "react";
 
 export default function Footer() {
+	const { theme, setTheme } = useTheme();
+	const selectTheme = useRef();
 	return (
 		<footer className="w-full my-4 text-sm font-light text-center text-gray-400">
 			<a
@@ -13,6 +17,23 @@ export default function Footer() {
 			<Link href="/u/lrocca">
 				<a className="text-gray-200">lrocca</a>
 			</Link>
+			<div>
+				<label htmlFor="theme" className="m-2 text-sm">
+					Theme
+				</label>
+				<select
+					name="theme"
+					id="select-theme" //text-black
+					className="w-24 p-1 text-sm border-transparent rounded bg-skin-base text-skin-text focus:border-white focus:ring-0"
+					ref={selectTheme}
+					value={theme}
+					onChange={(e) => setTheme(e.target.value)}
+				>
+					<option value="system">System</option>
+					<option value="light">Light</option>
+					<option value="dark">Dark</option>
+				</select>
+			</div>
 		</footer>
 	);
 }
