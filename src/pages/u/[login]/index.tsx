@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { getLayout } from "@/components/layouts/UserLayout";
+import { getLayout } from "@/layouts/UserLayout";
 import useAPI from "@/lib/useAPI";
 import Link from "next/link";
 

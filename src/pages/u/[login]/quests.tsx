@@ -1,14 +1,16 @@
 import { useRouter } from "next/router";
 import useAPI from "@/lib/useAPI";
-import { getLayout } from "@/components/layouts/UserLayout";
+import { getLayout } from "@/layouts/UserLayout";
 
 function UserQuests() {
 	const router = useRouter();
 	const { login } = router.query;
 
-	const { data: quests, isLoading, isError } = useAPI(
-		`/v2/users/${login}/quests_users`
-	);
+	const {
+		data: quests,
+		isLoading,
+		isError,
+	} = useAPI(`/v2/users/${login}/quests_users`);
 
 	if (isLoading || isError) return <>Loading or error</>;
 

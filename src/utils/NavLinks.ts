@@ -1,6 +1,6 @@
 import { LinkListNode } from "@/types/LinkListNode";
 
-export function getUserNavLinks(login: string) {
+export function getUserNavLinks() {
 	const baseUrl = "/u/[login]";
 
 	let navLinks: LinkListNode[] = [

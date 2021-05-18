@@ -1,5 +1,5 @@
 import useAPI from "@/lib/useAPI";
-import { getLayout } from "@/components/layouts/UserLayout";
+import { getLayout } from "@/layouts/UserLayout";
 import { useRouter } from "next/router";
 
 function UserScales() {

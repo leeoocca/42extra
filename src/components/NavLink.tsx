@@ -21,9 +21,9 @@ function NavLink({ name, href, className }: LinkListNode) {
 			<a
 				className={`${
 					active
-						? "opacity-100 border-white border-b-2"
-						: "opacity-75"
-				} hover:opacity-100 hover:text-white px-3 py-2 font-medium ease-in-out transition-opacity focus:opacity-100 last:mr-3 ${className}`}
+						? "opacity-100 border-white"
+						: "opacity-75 border-transparent"
+				} hover:opacity-100 hover:text-white border-b-2 px-1 py-2 font-medium ease-in-out transition-opacity focus:opacity-100 ${className}`}
 				ref={activeNavRef}
 			>
 				{name}

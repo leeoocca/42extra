@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import useAPI from "@/lib/useAPI";
 import Link from "next/link";
-import { getLayout } from "@/components/layouts/UserLayout";
+import { getLayout } from "@/layouts/UserLayout";
 import { EyeOffIcon } from "@heroicons/react/outline";
 
 function UserApps() {

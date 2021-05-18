@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import useAPI from "@/lib/useAPI";
-import { getLayout } from "@/components/layouts/UserLayout";
+import { getLayout } from "@/layouts/UserLayout";
 import { Achievement, User } from "@/types/User";
 import AchievementCard from "@/components/AchievementCard";
 import CardGrid from "@/components/CardGrid";

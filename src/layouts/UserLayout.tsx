@@ -1,8 +1,7 @@
-import UserHeader from "@/components/headers/UserHeader";
+import UserHeader from "@/headers/UserHeader";
 import NavLink from "@/components/NavLink";
 import useAPI from "@/lib/useAPI";
 import { getUserNavLinks } from "@/utils/NavLinks";
-import { route } from "next/dist/next-server/server/router";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { getLayout as getMainLayout } from "./MainLayout";
@@ -10,7 +9,7 @@ import { getLayout as getMainLayout } from "./MainLayout";
 function UserLayout({ children }: { children: React.ReactNode }) {
 	const router = useRouter();
 	const { login } = router.query;
-	const navLinks = getUserNavLinks(String(login));
+	const navLinks = getUserNavLinks();
 
 	const {
 		data: coalition,
@@ -43,22 +42,21 @@ function UserLayout({ children }: { children: React.ReactNode }) {
 			<Head>
 				<title>{title}</title>
 			</Head>
-			<div className="bg-skin-nav">
+			<div className="transition-colors duration-500 bg-skin-nav">
 				<div className="relative mx-auto overflow-hidden max-w-7xl">
 					<UserHeader />
-					<img
-						src={
-							(coalition &&
-								coalition[0] !== undefined &&
-								coalition[0].image_url) ||
-							""
-						}
-						alt="Coalition"
-						className="absolute object-cover w-40 text-transparent top-4 right-4 mix-blend-soft-light"
-					/>
+					{coalition &&
+						coalition[0] !== undefined &&
+						coalition[0].image_url && (
+							<img
+								src={coalition[0].image_url}
+								alt={coalition[0].name}
+								className="absolute object-cover w-40 text-transparent top-4 right-4 mix-blend-soft-light"
+							/>
+						)}
 					<nav
-						className={`px-4 py-2 mx-auto select-none overflow-auto ${
-							isError && "cursor-not-allowed"
+						className={`px-4 space-x-4 flex mx-auto select-none overflow-auto ${
+							isError ? "cursor-not-allowed" : ""
 						}`}
 					>
 						{navLinks.map((item) => (
@@ -66,7 +64,7 @@ function UserLayout({ children }: { children: React.ReactNode }) {
 								key={item.href}
 								name={item.name}
 								href={item.href}
-								className={isError && "pointer-events-none"}
+								className={isError ? "pointer-events-none" : ""}
 							/>
 						))}
 					</nav>

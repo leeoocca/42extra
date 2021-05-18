@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-import { getLayout as getSimpleLayout } from "@/components/layouts/SimpleLayout";
+import { getLayout as getSimpleLayout } from "@/layouts/SimpleLayout";
 import { Provider } from "next-auth/client";
 import { SWRConfig } from "swr";
 import { ThemeProvider } from "next-themes";
@@ -11,7 +11,7 @@ const progress = new ProgressBar({
 	size: 2,
 	color: "#22D3EE", // use css variable
 	className: "bar-of-progress",
-	delay: 100,
+	delay: 0,
 });
 
 Router.events.on("routeChangeStart", progress.start);
