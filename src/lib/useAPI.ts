@@ -11,7 +11,7 @@ function useAPI(uri: string) {
 			isError: null,
 		};
 
-	const { data, error } = useSWR([`/api/42${uri}`, session.accessToken]);
+	const { data, error } = useSWR([`/api${uri}`, session.accessToken]);
 
 	return {
 		data,

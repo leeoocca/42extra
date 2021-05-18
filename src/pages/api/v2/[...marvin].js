@@ -18,7 +18,7 @@ async function handler(req, res) {
 		const params = new URLSearchParams(rawParams).toString();
 
 		const url =
-			"https://api.intra.42.fr/" + marvin.join("/") + "?" + params;
+			"https://api.intra.42.fr/v2/" + marvin.join("/") + "?" + params;
 
 		resp = await fetch(url, {
 			headers: {
