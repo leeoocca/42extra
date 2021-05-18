@@ -27,12 +27,13 @@ function UserHeader() {
 						: null
 				}
 				size={128}
+				className="w-16 h-16 md:w-32 md:h-32"
 			/>
 			{!isLoading && (
 				<div className="pb-1 ml-4">
 					{!isError && user.titles.length ? (
 						<p className="-mb-0.5 text-xs font-bold tracking-wider uppercase">
-							{user.titles[0].name.replace(" %login", "")}
+							{user.titles[0].name.replace("%login", "")}
 						</p>
 					) : null}
 					<h1 className="inline-flex text-4xl font-bold">

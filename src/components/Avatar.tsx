@@ -1,9 +1,20 @@
 import Image from "next/image";
 import styles from "./Avatar.module.css";
 
-function Avatar({ url, size }: { url: string | null; size: number }) {
+function Avatar({
+	url,
+	size,
+	className,
+}: {
+	url: string | null;
+	size: number;
+	className?: string;
+}) {
 	return (
-		<div className={styles.container} style={{ width: size, height: size }}>
+		<div
+			className={styles.container + " " + className}
+			style={{ width: !className && size, height: !className && size }}
+		>
 			{url && (
 				<Image
 					src={url}

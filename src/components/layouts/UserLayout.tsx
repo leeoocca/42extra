@@ -44,7 +44,7 @@ function UserLayout({ children }: { children: React.ReactNode }) {
 				<title>{title}</title>
 			</Head>
 			<div className="bg-skin-nav">
-				<div className="relative mx-auto max-w-7xl">
+				<div className="relative mx-auto overflow-hidden max-w-7xl">
 					<UserHeader />
 					<img
 						src={
@@ -54,7 +54,7 @@ function UserLayout({ children }: { children: React.ReactNode }) {
 							""
 						}
 						alt="Coalition"
-						className="absolute top-0 right-0 object-cover w-40 text-transparent mix-blend-soft-light"
+						className="absolute object-cover w-40 text-transparent top-4 right-4 mix-blend-soft-light"
 					/>
 					<nav
 						className={`px-4 py-2 mx-auto select-none overflow-auto ${
