@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSession, signIn } from "next-auth/client";
-
 import StatusBar from "@/components/StatusBar";
 import Footer from "@/components/Footer";
 import Loader from "@/components/Loader";
@@ -12,19 +11,11 @@ interface Props {
 
 function MainLayout({ children }: Props) {
 	const [session, loading] = useSession();
-	const [loader, setLoader] = useState(true);
 
-	useEffect(() => {
-		setTimeout(() => setLoader(false), 1000);
-	}, []);
-
-	if (loader || loading || !session?.user) {
-		if (!loading && !session?.user) signIn();
+	if (!session?.user) {
+		if (!loading) signIn();
 		return <Loader />;
 	}
-
-	// #1F2937
-	// document.documentElement.style.setProperty("--color-nav-bg", "#1E3A8ADD");
 
 	return (
 		<>
