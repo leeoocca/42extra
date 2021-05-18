@@ -1,8 +1,9 @@
-import { SWRConfig } from "swr";
 import "@/styles/globals.css";
-import { Provider } from "next-auth/client";
-import fetcherWithToken from "@/lib/fetcherWithToken";
 import { getLayout as getSimpleLayout } from "@/components/layouts/SimpleLayout";
+import { Provider } from "next-auth/client";
+import { SWRConfig } from "swr";
+import { ThemeProvider } from "next-themes";
+import fetcherWithToken from "@/lib/fetcherWithToken";
 import ProgressBar from "@badrap/bar-of-progress";
 import Router from "next/router";
 
@@ -24,21 +25,23 @@ function MyApp({ Component, pageProps }) {
 	const getLayout = Component.getLayout || getSimpleLayout;
 
 	return (
-		<SWRConfig
-			value={{
-				fetcher: fetcherWithToken,
-				onError: (err) => {
-					console.error(err);
-				},
-				revalidateOnFocus: false,
-				dedupingInterval: 60 * 1000,
-				errorRetryInterval: 2000,
-			}}
-		>
+		<ThemeProvider defaultTheme="system">
 			<Provider session={pageProps.session}>
-				{getLayout(<Component {...pageProps} />)}
+				<SWRConfig
+					value={{
+						fetcher: fetcherWithToken,
+						onError: (err) => {
+							console.error(err);
+						},
+						revalidateOnFocus: false,
+						dedupingInterval: 60 * 1000,
+						errorRetryInterval: 2000,
+					}}
+				>
+					{getLayout(<Component {...pageProps} />)}
+				</SWRConfig>
 			</Provider>
-		</SWRConfig>
+		</ThemeProvider>
 	);
 }
 
