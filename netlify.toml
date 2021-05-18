@@ -1,9 +1,0 @@
-[build]
-  publish = "build"
-  command = "yarn build"
-  functions = "functions"
-
-[template.environment]
-  FT_UID = "42 UID"
-  FT_SECRET = "42 secret"
-  FT_REDIRECT_URI = "42 redirect uri "
