@@ -1,6 +1,3 @@
-import React from "react";
-import { getLayout } from "@/components/MainLayout";
-
 // const locations = [
 // 	{
 // 		host: "e3r1p1",
@@ -154,7 +151,5 @@ function Cluster() {
 		</>
 	);
 }
-
-Cluster.getLayout = getLayout;
 
 export default Cluster;
