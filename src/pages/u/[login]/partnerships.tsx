@@ -3,6 +3,8 @@ import useAPI from "@/lib/useAPI";
 import { getLayout } from "@/layouts/UserLayout";
 import { EyeOffIcon } from "@heroicons/react/outline";
 import { User } from "@/types/User";
+import CardGrid from "@/components/CardGrid";
+import Card from "@/components/Card";
 
 function UserPartnerships() {
 	const router = useRouter();
@@ -16,7 +18,9 @@ function UserPartnerships() {
 		`/v2/users/${login}`
 	);
 
-	if (isLoading || isError) return <>Loading or error</>;
+	if (isLoading) return <>Loading...</>;
+
+	if (isError) return <>Error</>;
 
 	if (!user.partnerships.length)
 		return (
@@ -30,32 +34,22 @@ function UserPartnerships() {
 		);
 
 	return (
-		<>
-			<table className="w-full">
-				<thead>
-					<tr>
-						<th>Partnership</th>
-						<th>Slug</th>
-						<th>Difficulty</th>
-						<th>Skills</th>
-					</tr>
-				</thead>
-				<tbody>
-					{user.partnerships.map((p) => (
-						<tr key={p.id} className="text-center">
-							<td>{p.name}</td>
-							<td>{p.slug}</td>
-							<td>{p.difficulty}</td>
-							<td>
-								{p.partnerships_skills.map(
-									(skill) => skill.skill_id + " "
-								)}
-							</td>
-						</tr>
-					))}
-				</tbody>
-			</table>
-		</>
+		<CardGrid>
+			{user.partnerships.map((p) => (
+				<Card key={p.id}>
+					<div className="flex flex-col place-content-end">
+						<p>{p.name}</p>
+						<p>{p.slug}</p>
+						<p>{p.difficulty}</p>
+						<p>
+							{p.partnerships_skills.map(
+								(skill) => skill.skill_id + " "
+							)}
+						</p>
+					</div>
+				</Card>
+			))}
+		</CardGrid>
 	);
 }
 

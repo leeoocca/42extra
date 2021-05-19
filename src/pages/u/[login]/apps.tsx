@@ -3,10 +3,15 @@ import useAPI from "@/lib/useAPI";
 import Link from "next/link";
 import { getLayout } from "@/layouts/UserLayout";
 import { EyeOffIcon } from "@heroicons/react/outline";
+import CardGrid from "@/components/CardGrid";
+import Card from "@/components/Card";
+import { useSession } from "next-auth/client";
+import Image from "next/image";
 
 function UserApps() {
 	const router = useRouter();
 	const { login } = router.query;
+	const [session] = useSession();
 
 	const {
 		data: apps,
@@ -14,7 +19,8 @@ function UserApps() {
 		isError,
 	} = useAPI(`/v2/users/${login}/apps`);
 
-	if (isLoading || isError) return <>Loading or error</>;
+	if (isLoading) return <>Loading...</>;
+	if (isError) return <>Error</>;
 
 	if (!apps.length)
 		return (
@@ -27,45 +33,38 @@ function UserApps() {
 		);
 
 	return (
-		<>
-			<table className="w-full">
-				<thead>
-					<tr>
-						<th>App</th>
-						<th>Description</th>
-						<th>Website</th>
-						<th>Public</th>
-					</tr>
-				</thead>
-				<tbody>
-					{apps.map((app) => {
-						let domain;
-						if (app.website.length) {
-							domain = new URL(app.website);
-						}
-						return (
-							<tr key={app.id} className="text-center">
-								<td>
-									<Link href={`/apps/${app.id}`}>
-										<a>{app.name}</a>
-									</Link>
-								</td>
-								<td>{app.description}</td>
+		<CardGrid>
+			{apps.map((app) => (
+				<Card key={app.id}>
+					<Link href={`/apps/${app.id}`}>
+						<a className="flex">
+							{app.image && app.image.length && (
+								<div className="relative w-16 h-16 mr-2">
+									<Image
+										src={
+											"https://cdn.intra.42.fr" +
+											app.image.replace("/uploads", "")
+										}
+										layout="fill"
+										objectFit="contain"
+									/>
+								</div>
+							)}
 
-								<td>
-									{app.website && (
-										<Link href={app.website}>
-											<a>{domain.hostname}</a>
-										</Link>
-									)}
-								</td>
-								<td>{app.public ? "true" : "false"}</td>
-							</tr>
-						);
-					})}
-				</tbody>
-			</table>
-		</>
+							<div className="text-sm">
+								<h2 className="text-base font-semibold">
+									{app.name}
+								</h2>
+								<p>{app.description}</p>
+								{login === session.user.login && (
+									<p>{app.public ? "public" : "hidden"}</p>
+								)}
+							</div>
+						</a>
+					</Link>
+				</Card>
+			))}
+		</CardGrid>
 	);
 }
 
