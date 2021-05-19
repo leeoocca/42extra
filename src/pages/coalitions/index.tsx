@@ -32,7 +32,7 @@ function CoalitionsIndex() {
 										<img
 											src={c.image_url}
 											alt={c.name}
-											className="w-16 h-16"
+											className="w-16 h-16 mix-blend-soft-light"
 										/>
 									</div>
 								</Card>
