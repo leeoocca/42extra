@@ -8,7 +8,7 @@ async function handler(req, res) {
 		const session = await getSession({ req });
 
 		if (!session) {
-			res.status(401).send({ error: "unauthorized" });
+			return res.status(401).end({ error: "unauthorized" });
 		}
 
 		const { marvin } = req.query;
