@@ -17,7 +17,8 @@ function UserPatronages() {
 		`/v2/users/${login}`
 	);
 
-	if (isLoading || isError) return <>Loading or error</>;
+	if (isLoading) return <>Loading...</>;
+	if (isError) return <>Error</>;
 
 	return (
 		<>

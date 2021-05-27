@@ -13,7 +13,15 @@ function UserProjects() {
 
 	const { data: user, isLoading, isError } = useAPI(`/v2/users/${login}`);
 
-	if (isLoading || isError) return <>Loading or error</>;
+	if (isLoading) return <>Loading...</>;
+	if (isError) return <>Error</>;
+
+	if (!user.projects_users.length)
+		return (
+			<>
+				No projects for <b>{login}</b>.
+			</>
+		);
 
 	return (
 		<>
@@ -40,7 +48,10 @@ function UserProjects() {
 						timeAgo = getTimeAgo(project.marked_at);
 					}
 					return (
-						<Link href={`/p/${project.project.slug}/${login}`}>
+						<Link
+							key={project.id}
+							href={`/p/${project.project.slug}/${login}`}
+						>
 							<a>
 								<Card key={project.id}>
 									<div className="flex items-end justify-between w-full h-24">

@@ -1,6 +1,7 @@
 import useAPI from "@/lib/useAPI";
 import { getLayout } from "@/layouts/UserLayout";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 function UserLocations() {
 	const router = useRouter();
@@ -16,7 +17,8 @@ function UserLocations() {
 		isError: boolean;
 	} = useAPI(`/v2/users/${login}/locations`);
 
-	if (isLoading || isError) return <>Loading or error</>;
+	if (isLoading) return <>Loading...</>;
+	if (isError) return <>Error</>;
 
 	return (
 		<>
@@ -34,15 +36,24 @@ function UserLocations() {
 					{locations.map((l) => {
 						const start = new Date(l.end_at);
 						const end = new Date(l.begin_at);
-						const total = Math.round(
-							(start.valueOf() - end.valueOf()) / 1000 / 60 / 60
-						);
+						let total: String | Number = "online";
+						if (l.end_at)
+							total = Math.round(
+								(start.valueOf() - end.valueOf()) /
+									1000 /
+									60 /
+									60
+							);
 						return (
 							<tr key={l.id} className="text-center">
-								<td>{l.host}</td>
-								<td>{l.campus_id}</td>
-								<td>{l.begin_at}</td>
-								<td>{l.end_at}</td>
+								<td className="font-mono">{l.host}</td>
+								<td>
+									<Link href={`/campus/${l.campus_id}`}>
+										<a>{l.campus_id}</a>
+									</Link>
+								</td>
+								<td className="font-mono">{l.begin_at}</td>
+								<td className="font-mono">{l.end_at}</td>
 								<td>{total || "<1"}</td>
 							</tr>
 						);

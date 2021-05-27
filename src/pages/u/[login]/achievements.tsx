@@ -17,7 +17,8 @@ function UserAchievements() {
 		`/v2/users/${login}`
 	);
 
-	if (isLoading || isError) return <>Loading or error</>;
+	if (isLoading) return <>Loading...</>;
+	if (isError) return <>Error</>;
 
 	if (!user.achievements.length)
 		return (
@@ -25,7 +26,7 @@ function UserAchievements() {
 				<img src="https://i.chzbgr.com/full/8270686464/h7779056E/coding-is-an-art" />
 				<p>
 					No achievements for{" "}
-					<span className="font-bold">{login}</span> yet.
+					<span className="font-bold">{login}</span>.
 				</p>
 			</div>
 		);

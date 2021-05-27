@@ -16,8 +16,14 @@ function UserQuests() {
 	} = useAPI(`/v2/users/${login}/quests_users`);
 
 	if (isLoading) return <>Loading...</>;
-
 	if (isError) return <>Error</>;
+
+	if (!quests.length)
+		return (
+			<>
+				No quests for <b>{login}</b>.
+			</>
+		);
 
 	return (
 		<CardGrid>

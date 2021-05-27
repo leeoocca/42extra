@@ -38,7 +38,7 @@ function UserHeader() {
 					) : null}
 					<h1 className="inline-flex text-4xl font-bold">
 						{isError ? (
-							"404"
+							"Error"
 						) : (
 							<>
 								<span>
@@ -57,7 +57,7 @@ function UserHeader() {
 						)}
 					</h1>
 					<p className="text-3xl font-medium">
-						{isError ? "user not found" : user.usual_full_name}
+						{isError ? "Don't panic!" : user.usual_full_name}
 					</p>
 				</div>
 			)}

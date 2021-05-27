@@ -7,7 +7,10 @@ function CampusIndex() {
 	const router = useRouter();
 	const { id } = router.query;
 
-	const { data: c } = useAPI(`/v2/campus/${id}`);
+	const { data: c, isLoading } = useAPI(`/v2/campus/${id}`);
+
+	if (isLoading) return <>Loading...</>;
+
 	return (
 		<>
 			{c && (

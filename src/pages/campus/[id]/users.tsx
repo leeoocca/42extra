@@ -8,7 +8,11 @@ function CampusesIndex() {
 	const router = useRouter();
 	const { id } = router.query;
 
-	const { data: users }: { data: User[] } = useAPI(`/v2/campus/${id}/users`);
+	const { data: users, isLoading }: { data: User[]; isLoading: boolean } =
+		useAPI(`/v2/campus/${id}/users`);
+
+	if (isLoading) return <>Loading...</>;
+
 	return (
 		<>
 			<h1 className="text-3xl font-bold leading-relaxed">

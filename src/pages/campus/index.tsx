@@ -4,7 +4,10 @@ import useAPI from "@/lib/useAPI";
 import Link from "next/link";
 
 function CampusesIndex() {
-	const { data: campuses } = useAPI(`/v2/campus?sort=id`);
+	const { data: campuses, isLoading } = useAPI(`/v2/campus?sort=id`);
+
+	if (isLoading) return <>Loading...</>;
+
 	return (
 		<>
 			<h1 className="text-3xl font-bold leading-relaxed">Campuses</h1>

@@ -20,7 +20,15 @@ function UserScales() {
 		`/v2/users/${login}/correction_point_historics`
 	);
 
-	if (isLoading || isError) return <>Loading or error</>;
+	if (isLoading) return <>Loading...</>;
+	if (isError) return <>Error</>;
+
+	if (!scales.length)
+		return (
+			<>
+				No scales for <b>{login}</b>
+			</>
+		);
 
 	return (
 		<>
