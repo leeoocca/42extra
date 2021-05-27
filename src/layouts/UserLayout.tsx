@@ -51,20 +51,17 @@ function UserLayout({ children }: { children: React.ReactNode }) {
 							<img
 								src={coalition[0].image_url}
 								alt={coalition[0].name}
-								className="absolute object-cover w-40 text-transparent top-4 right-4 mix-blend-soft-light"
+								className="absolute object-cover w-20 text-transparent md:w-40 top-4 right-4 mix-blend-soft-light"
 							/>
 						)}
 					<nav
-						className={`px-4 space-x-4 flex mx-auto select-none overflow-auto ${
-							isError ? "cursor-not-allowed" : ""
-						}`}
+						className={`px-4 space-x-4 flex mx-auto select-none overflow-auto`}
 					>
 						{navLinks.map((item) => (
 							<NavLink
 								key={item.href}
 								name={item.name}
 								href={item.href}
-								className={isError ? "pointer-events-none" : ""}
 							/>
 						))}
 					</nav>
