@@ -5,6 +5,7 @@ import { getUserNavLinks } from "@/utils/NavLinks";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { getLayout as getMainLayout } from "./MainLayout";
+import hexToRGB from "@/lib/hexToRGB";
 
 function UserLayout({ children }: { children: React.ReactNode }) {
 	const router = useRouter();
@@ -23,11 +24,9 @@ function UserLayout({ children }: { children: React.ReactNode }) {
 		if (coalition !== undefined && coalition[0] !== undefined)
 			document.documentElement.style.setProperty(
 				"--nav",
-				coalition[0].color[0] !== "#"
-					? "#"
-					: "" + coalition[0].color + "99"
+				hexToRGB(coalition[0].color)
 			);
-		else document.documentElement.style.setProperty("--nav", "#00BABC99");
+		else document.documentElement.style.setProperty("--nav", "0, 186, 188");
 
 	const routeArray = router.route.split("/");
 	const pageName = routeArray[routeArray.length - 1];

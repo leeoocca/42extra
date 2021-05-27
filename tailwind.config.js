@@ -11,7 +11,7 @@ module.exports = {
 			colors: {
 				background: "var(--background)",
 				foreground: "var(--foreground)",
-				nav: "var(--nav)",
+				nav: "rgba(var(--nav), var(--nav-opacity))",
 			},
 		},
 	},
