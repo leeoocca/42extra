@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps }) {
 	const getLayout = Component.getLayout || getSimpleLayout;
 
 	return (
-		<ThemeProvider defaultTheme="system">
+		<ThemeProvider disableTransitionOnChange>
 			<Provider session={pageProps.session}>
 				<SWRConfig
 					value={{

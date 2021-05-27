@@ -4,13 +4,19 @@
 
 @layer base {
 	:root {
-		--color-base: #111111;
-		--color-text: #f2f2f2;
-		--color-nav-bg: #333;
+		/* common */
+		--nav: rgba(var(--nav-color), var(--nav-opacity));
+		/* dark */
+		--background: #111111;
+		--foreground: #f2f2f2;
+		--nav-color: 55, 55, 55;
+		--nav-opacity: 0.6;
 	}
 	[data-theme="light"] {
-		--color-base: #f8f8f8;
-		--color-text: #111111;
+		--background: #f8f8f8;
+		--foreground: #111111;
+		--nav-color: 221, 221, 221;
+		--nav-opacity: 0.8;
 	}
 }
 

@@ -24,7 +24,7 @@ export default function Footer() {
 				<select
 					name="theme"
 					id="select-theme" //text-black
-					className="w-24 p-1 text-sm border-transparent rounded bg-skin-base text-skin-text focus:border-white focus:ring-0"
+					className="w-24 p-1 text-sm border-gray-500 rounded text-foreground hover:border-foreground focus:border-foreground bg-background focus:ring-0"
 					ref={selectTheme}
 					value={theme}
 					onChange={(e) => setTheme(e.target.value)}

@@ -31,7 +31,7 @@ function MainLayout({ children }: Props) {
 					}
 				/>
 			</Head>
-			<div className="flex flex-col min-h-screen antialiased bg-skin-base text-skin-text">
+			<div className="flex flex-col min-h-screen antialiased bg-background text-foreground">
 				<StatusBar />
 				{children}
 				<Footer />

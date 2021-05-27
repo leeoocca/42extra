@@ -12,10 +12,7 @@ function CoalitionIndex() {
 
 	if (!coalition) return <>Loading...</>;
 
-	document.documentElement.style.setProperty(
-		"--color-nav-bg",
-		coalition.color + "DD"
-	);
+	document.documentElement.style.setProperty("--nav", coalition.color + "DD");
 
 	return (
 		<>

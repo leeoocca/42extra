@@ -8,18 +8,10 @@ module.exports = {
 			fontFamily: {
 				sans: ["Inter var", ...defaultTheme.fontFamily.sans],
 			},
-			textColor: {
-				skin: {
-					base: "var(--color-base)",
-					text: "var(--color-text)",
-				},
-			},
-			backgroundColor: {
-				skin: {
-					nav: "var(--color-nav-bg)",
-					base: "var(--color-base)",
-					text: "var(--color-text)",
-				},
+			colors: {
+				background: "var(--background)",
+				foreground: "var(--foreground)",
+				nav: "var(--nav)",
 			},
 		},
 	},

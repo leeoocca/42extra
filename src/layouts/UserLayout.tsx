@@ -17,19 +17,17 @@ function UserLayout({ children }: { children: React.ReactNode }) {
 		isError,
 	} = useAPI(`/v2/users/${login}/coalitions`);
 
+	document.documentElement.style.setProperty("--nav", "");
+
 	if (!isLoading)
 		if (coalition !== undefined && coalition[0] !== undefined)
 			document.documentElement.style.setProperty(
-				"--color-nav-bg",
+				"--nav",
 				coalition[0].color[0] !== "#"
 					? "#"
 					: "" + coalition[0].color + "99"
 			);
-		else
-			document.documentElement.style.setProperty(
-				"--color-nav-bg",
-				"#00BABC99"
-			);
+		else document.documentElement.style.setProperty("--nav", "#00BABC99");
 
 	const routeArray = router.route.split("/");
 	const pageName = routeArray[routeArray.length - 1];
@@ -42,7 +40,7 @@ function UserLayout({ children }: { children: React.ReactNode }) {
 			<Head>
 				<title>{title}</title>
 			</Head>
-			<div className="transition-colors duration-500 bg-skin-nav">
+			<div className="transition-colors duration-500 bg-nav">
 				<div className="relative mx-auto overflow-hidden max-w-7xl">
 					<UserHeader />
 					{coalition &&
