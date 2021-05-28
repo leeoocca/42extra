@@ -21,7 +21,6 @@ function AchievementCard({ a }: { a: Achievement }) {
 						{a.tier}
 					</p>
 				)}
-				{/* <p>{a.nbr_of_success}</p> */}
 			</div>
 		</Card>
 	);

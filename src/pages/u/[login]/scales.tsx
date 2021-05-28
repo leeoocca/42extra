@@ -1,6 +1,15 @@
 import useAPI from "@/lib/useAPI";
 import { getLayout } from "@/layouts/UserLayout";
 import { useRouter } from "next/router";
+import {
+	ResponsiveContainer,
+	LineChart,
+	Line,
+	Tooltip,
+	ReferenceLine,
+} from "recharts";
+import CardGrid from "@/components/CardGrid";
+import Card from "@/components/Card";
 
 function UserScales() {
 	const router = useRouter();
@@ -32,38 +41,48 @@ function UserScales() {
 
 	return (
 		<>
-			<details>
-				<summary>Correction points history</summary>
-				<pre>{history && JSON.stringify(history, null, 2)}</pre>
-			</details>
-			<table className="w-full">
-				<thead>
-					<tr>
-						<th>Scale</th>
-						<th>Comment</th>
-						<th>Feedback</th>
-						<th>Final mark</th>
-					</tr>
-				</thead>
-				<tbody>
-					{scales.map((s) => (
-						<tr key={s.id}>
-							<td>{s.scale_id}</td>
-							<td className="w-2/5">{s.comment}</td>
-							<td className="w-2/5">{s.feedback}</td>
-							<td
-								className={`${
-									s.flag.positive
-										? "text-green-400"
-										: "text-red-600"
-								}`}
-							>
-								{s.final_mark} — {s.flag.name}
-							</td>
-						</tr>
-					))}
-				</tbody>
-			</table>
+			{history && (
+				<ResponsiveContainer height={100}>
+					<LineChart data={history}>
+						<ReferenceLine
+							y={0}
+							label="0"
+							stroke="gray"
+							strokeDasharray="3 3"
+						/>
+						<Tooltip />
+						<Line
+							type="monotone"
+							dataKey="total"
+							stroke="var(--foreground)"
+						/>
+					</LineChart>
+				</ResponsiveContainer>
+			)}
+			<CardGrid>
+				{scales.map((s) => (
+					<Card key={s.id}>
+						<div className="w-full">
+							<p>{s.scale_id}</p>
+							<p className="text-xs opacity-75">{s.comment}</p>
+							<hr className="my-1 opacity-50" />
+							<p className="text-xs opacity-75">{s.feedback}</p>
+							<p>
+								<span
+									className={`${
+										s.flag.positive
+											? "text-green-400"
+											: "text-red-600"
+									}`}
+								>
+									{s.final_mark}
+								</span>{" "}
+								— {s.flag.name}
+							</p>
+						</div>
+					</Card>
+				))}
+			</CardGrid>
 		</>
 	);
 }
