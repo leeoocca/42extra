@@ -36,3 +36,24 @@ export function getUserNavLinks() {
 
 	return navLinks;
 }
+
+export function getProjectNavLinks() {
+	const baseUrl = "/p/[slug]";
+
+	let navLinks: LinkListNode[] = [
+		{
+			name: "Overview",
+			href: baseUrl,
+		},
+		{
+			name: "Users",
+			href: baseUrl + "/users",
+		},
+		{
+			name: "Cursuses",
+			href: baseUrl + "/cursuses",
+		},
+	];
+
+	return navLinks;
+}

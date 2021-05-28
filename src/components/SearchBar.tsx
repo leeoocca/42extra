@@ -28,7 +28,7 @@ function SearchBar() {
 				<input
 					type="text"
 					placeholder={router.asPath}
-					className="w-full px-2 py-1 placeholder-white placeholder-opacity-75 bg-transparent border-none rounded text-skin-text"
+					className="w-full px-2 py-1 placeholder-opacity-75 bg-transparent border-none rounded placeholder-foreground text-foreground"
 					name="search"
 					onChange={(event) => setSearch(event.target.value)}
 					value={search}

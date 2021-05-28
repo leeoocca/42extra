@@ -20,7 +20,7 @@ export default function UserDropdown() {
 				{({ open }) => (
 					<>
 						<div>
-							<Menu.Button className="flex items-center space-x-2 rounded-full focus:outline-none focus:ring-2 focus:ring-white">
+							<Menu.Button className="flex items-center space-x-2 rounded-full focus:outline-none focus:ring-2 focus:ring-foreground">
 								<span className="sr-only">Open user menu</span>
 								<span>{session.user.login}</span>
 								<Avatar url={session.user.image} size={32} />
@@ -38,7 +38,7 @@ export default function UserDropdown() {
 						>
 							<Menu.Items
 								static
-								className="absolute right-0 z-10 w-40 mt-2 origin-top-right divide-y divide-white rounded-md shadow-lg divide-opacity-50 bg-skin-base ring-1 ring-white ring-opacity-5 focus:outline-none"
+								className="absolute right-0 z-10 w-40 mt-2 origin-top-right divide-y rounded-md shadow-lg divide-foreground divide-opacity-50 bg-background ring-1 ring-foreground ring-opacity-5 focus:outline-none"
 							>
 								<div className="py-1 ">
 									<Menu.Item>

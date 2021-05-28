@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { getLayout } from "@/layouts/UserLayout";
 import useAPI from "@/lib/useAPI";
 import Link from "next/link";
+import { User } from "@/types/User";
 
 const Th = ({ children }) => (
 	<th className="py-1 pr-2 text-xs text-left uppercase opacity-75">
@@ -9,17 +10,16 @@ const Th = ({ children }) => (
 	</th>
 );
 
+const None = () => <i className="opacity-75">none</i>;
+
 function UserOverview() {
 	const router = useRouter();
 	const { login } = router.query;
 
-	const { data: user, isLoading, isError } = useAPI(`/v2/users/${login}`);
+	const { data: user }: { data: User } = useAPI(`/v2/users/${login}`);
 	const { data: coalition } = useAPI(`/v2/users/${login}/coalitions`);
 
-	if (isError || !user) {
-		return <>error</>;
-	}
-	if (isLoading) return <>loading...</>;
+	if (!user) return <>Loading...</>;
 
 	const details = [
 		{ name: "Email", value: user.email, href: `mailto:${user.email}` },
@@ -36,7 +36,9 @@ function UserOverview() {
 		{ name: "Wallet", value: `${user.wallet} ₳`, href: null },
 		{
 			name: "Pool",
-			value: `${user.pool_month} ${user.pool_year}`,
+			value: user.pool_year
+				? `${user.pool_month} ${user.pool_year}`
+				: "none",
 			href: null,
 		},
 		{
@@ -59,12 +61,13 @@ function UserOverview() {
 					{details.map((detail) => (
 						<tr key={detail.name}>
 							<Th>{detail.name}</Th>
-
 							<td>
 								{detail.href ? (
 									<Link href={detail.href}>
 										<a>{detail.value}</a>
 									</Link>
+								) : detail.value === "none" ? (
+									<None />
 								) : (
 									detail.value
 								)}
@@ -74,7 +77,7 @@ function UserOverview() {
 					<tr>
 						<Th>Coalition{coalition?.length > 1 && "s"}</Th>
 						<td>
-							{coalition ? (
+							{coalition?.length ? (
 								<ul>
 									{coalition.map((coalition) => (
 										<li key={coalition.slug}>
@@ -87,41 +90,49 @@ function UserOverview() {
 									))}
 								</ul>
 							) : (
-								"none"
+								<None />
 							)}
 						</td>
 					</tr>
 					<tr>
 						<Th>Campus{user.campus?.length > 1 && "es"}</Th>
 						<td>
-							<ul>
-								{user.campus.map((campus) => (
-									<li key={campus.id}>
-										<Link href={`/campus/${campus.id}`}>
-											<a>{campus.name}</a>
-										</Link>
-									</li>
-								))}
-							</ul>
+							{user.campus?.length ? (
+								<ul>
+									{user.campus.map((campus) => (
+										<li key={campus.id}>
+											<Link href={`/campus/${campus.id}`}>
+												<a>{campus.name}</a>
+											</Link>
+										</li>
+									))}
+								</ul>
+							) : (
+								<None />
+							)}
 						</td>
 					</tr>
 					<tr>
-						<Th>Cursus{user.campus?.length > 1 && "es"}</Th>
+						<Th>Cursus{user.cursus_users?.length > 1 && "es"}</Th>
 						<td>
-							<ul>
-								{user.cursus_users.map((cursus) => (
-									<li key={cursus.cursus.id}>
-										<Link
-											href={`/cursus/${cursus.cursus.id}`}
-										>
-											<a>
-												{cursus.cursus.name} -{" "}
-												{cursus.level}
-											</a>
-										</Link>
-									</li>
-								))}
-							</ul>
+							{user.cursus_users?.length ? (
+								<ul>
+									{user.cursus_users.map((cursus) => (
+										<li key={cursus.cursus.id}>
+											<Link
+												href={`/cursus/${cursus.cursus.id}`}
+											>
+												<a>
+													{cursus.cursus.name} -{" "}
+													{cursus.level}
+												</a>
+											</Link>
+										</li>
+									))}
+								</ul>
+							) : (
+								<None />
+							)}
 						</td>
 					</tr>
 				</tbody>
