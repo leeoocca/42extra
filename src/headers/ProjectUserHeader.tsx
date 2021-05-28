@@ -22,6 +22,8 @@ function ProjectUserHeader() {
 		);
 		if (userProject["validated?"])
 			document.documentElement.style.setProperty("--nav", "52, 211, 153");
+		else if (userProject.status === "in_progress")
+			document.documentElement.style.setProperty("--nav", "251, 191, 36");
 		else document.documentElement.style.setProperty("--nav", "220, 38, 38");
 	}
 
