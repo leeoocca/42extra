@@ -4,7 +4,7 @@ import useAPI from "@/lib/useAPI";
 import Link from "next/link";
 
 function Cursuses() {
-	const { data: cursuses } = useAPI(`/v2/cursus?sort=id`);
+	const { data: cursuses } = useAPI(`/v2/cursus?sort=id&page[size]=100`);
 
 	return (
 		<>
