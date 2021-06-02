@@ -9,14 +9,13 @@ function ProjectUserHeader() {
 	const { login, slug } = router.query;
 
 	const { data: project } = useAPI(`/v2/projects/${slug}`);
-	const { data: user, isLoading }: { data: User; isLoading: boolean } =
-		useAPI(`/v2/users/${login}`);
+	const { data: user }: { data: User } = useAPI(`/v2/users/${login}`);
 
 	document.documentElement.style.setProperty("--nav", "");
 
 	let userProject: ProjectsUser | null = null;
 
-	if (!isLoading) {
+	if (user) {
 		userProject = user.projects_users.find(
 			(project) => project.project.slug === slug
 		);

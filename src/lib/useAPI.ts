@@ -1,17 +1,8 @@
 import useSWR from "swr";
-import { useSession } from "next-auth/client";
 
 function useAPI(uri: string) {
-	const [session, loading] = useSession();
-
-	if (loading)
-		return {
-			data: null,
-			isLoading: true,
-			isError: null,
-		};
-
-	const { data, error } = useSWR([`/api${uri}`, session.accessToken]);
+	const { data: session } = useSWR("/api/auth/session");
+	const { data, error } = useSWR([`/api${uri}`, session?.accessToken]);
 
 	return {
 		data,

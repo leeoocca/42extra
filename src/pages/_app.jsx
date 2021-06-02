@@ -26,7 +26,12 @@ function MyApp({ Component, pageProps }) {
 
 	return (
 		<ThemeProvider disableTransitionOnChange>
-			<Provider session={pageProps.session}>
+			<Provider
+				session={pageProps.session}
+				options={{
+					clientMaxAge: 60 * 60,
+				}}
+			>
 				<SWRConfig
 					value={{
 						fetcher: fetcherWithToken,

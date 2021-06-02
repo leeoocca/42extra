@@ -4,15 +4,21 @@ import Link from "next/link";
 import Avatar, { ErrorAvatar, LoadingAvatar } from "./Avatar";
 import Card from "./Card";
 
-function Template({ avatar, title, description }) {
+function Template({ id, avatar, title, description }) {
 	return (
-		<Card className="flex w-full">
-			{avatar}
-			<div className="ml-3">
-				<p className="text-sm font-medium text-gray-200">{title}</p>
-				<p className="text-sm text-gray-500">{description}</p>
-			</div>
-		</Card>
+		<Link href={`/u/${id}`}>
+			<a className="w-full">
+				<Card className="flex w-full">
+					{avatar}
+					<div className="ml-3">
+						<p className="text-sm font-medium text-gray-200">
+							{title}
+						</p>
+						<p className="text-sm text-gray-500">{description}</p>
+					</div>
+				</Card>
+			</a>
+		</Link>
 	);
 }
 
@@ -28,6 +34,7 @@ function UserCard({ id }: { id: string | number }) {
 	if (isLoading)
 		return (
 			<Template
+				id={id}
 				avatar={<LoadingAvatar size={40} />}
 				title={id}
 				description={"Loading..."}
@@ -37,6 +44,7 @@ function UserCard({ id }: { id: string | number }) {
 	if (isError)
 		return (
 			<Template
+				id={id}
 				title={"Error"}
 				description={`while loading ${id}`}
 				avatar={<ErrorAvatar size={40} />}
@@ -49,19 +57,14 @@ function UserCard({ id }: { id: string | number }) {
 	);
 
 	return (
-		<Link href={`/u/${id}`}>
-			<a className="w-full">
-				<Template
-					avatar={<Avatar url={user.image_url} size={40} />}
-					title={user.login}
-					description={
-						campus !== undefined
-							? campus.name
-							: user.usual_full_name
-					}
-				/>
-			</a>
-		</Link>
+		<Template
+			id={id}
+			avatar={<Avatar url={user.image_url} size={40} />}
+			title={user.login}
+			description={
+				campus !== undefined ? campus.name : user.usual_full_name
+			}
+		/>
 	);
 }
 
