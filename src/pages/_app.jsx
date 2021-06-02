@@ -3,7 +3,7 @@ import { getLayout as getSimpleLayout } from "@/layouts/SimpleLayout";
 import { Provider } from "next-auth/client";
 import { SWRConfig } from "swr";
 import { ThemeProvider } from "next-themes";
-import fetcherWithToken from "@/lib/fetcherWithToken";
+import fetcher from "@/lib/fetcher";
 import ProgressBar from "@badrap/bar-of-progress";
 import Router from "next/router";
 
@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps }) {
 			>
 				<SWRConfig
 					value={{
-						fetcher: fetcherWithToken,
+						fetcher: fetcher,
 						onError: (err) => {
 							console.error(err);
 						},

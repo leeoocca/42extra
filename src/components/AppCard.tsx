@@ -7,9 +7,9 @@ function AppCard({ app }) {
 	const { data: session } = useSWR("/api/auth/session");
 
 	return (
-		<Card key={app.id}>
-			<Link href={`/apps/${app.id}`}>
-				<a className="flex">
+		<Link key={app.id} href={`/apps/${app.id}`}>
+			<a>
+				<Card className="overflow-hidden max-h-8">
 					{app.image && app.image.length && (
 						<div className="relative w-16 h-16 mr-2">
 							<Image
@@ -25,13 +25,13 @@ function AppCard({ app }) {
 					<div className="text-sm">
 						<h2 className="text-base font-semibold">{app.name}</h2>
 						<p>{app.description}</p>
-						{app.owner.login === session.user.login && (
+						{app.owner.login === session?.user.login && (
 							<p>{app.public ? "public" : "hidden"}</p>
 						)}
 					</div>
-				</a>
-			</Link>
-		</Card>
+				</Card>
+			</a>
+		</Link>
 	);
 }
 
