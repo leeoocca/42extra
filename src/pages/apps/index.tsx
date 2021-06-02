@@ -1,7 +1,6 @@
-import Card from "@/components/Card";
+import AppCard from "@/components/AppCard";
 import CardGrid from "@/components/CardGrid";
 import useAPI from "@/lib/useAPI";
-import Link from "next/link";
 
 function AppsIndex() {
 	const { data: apps } = useAPI(`/v2/apps?sort=id`);
@@ -9,21 +8,7 @@ function AppsIndex() {
 		<>
 			<h1 className="text-3xl font-bold leading-relaxed">Apps</h1>
 			<CardGrid>
-				{apps &&
-					apps.map((app) => (
-						<Link href={`/apps/${app.id}`} key={app.id}>
-							<a>
-								<Card className="h-32 overflow-hidden">
-									<div>
-										<h2>{app.name}</h2>
-										<p className="text-xs">
-											{app.description}
-										</p>
-									</div>
-								</Card>
-							</a>
-						</Link>
-					))}
+				{apps && apps.map((app) => <AppCard key={app.id} app={app} />)}
 			</CardGrid>
 		</>
 	);

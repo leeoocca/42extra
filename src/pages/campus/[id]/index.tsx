@@ -1,4 +1,4 @@
-import Card from "@/components/Card";
+import WebsiteLink from "@/components/WebsiteLink";
 import useAPI from "@/lib/useAPI";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -7,9 +7,9 @@ function CampusIndex() {
 	const router = useRouter();
 	const { id } = router.query;
 
-	const { data: c, isLoading } = useAPI(`/v2/campus/${id}`);
+	const { data: c } = useAPI(`/v2/campus/${id}`);
 
-	if (isLoading) return <>Loading...</>;
+	if (!c) return <>Loading...</>;
 
 	return (
 		<>
@@ -21,15 +21,7 @@ function CampusIndex() {
 					<p>
 						{c.city}, {c.country}
 					</p>
-					<p>
-						<a
-							href={c.website}
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							{c.website}
-						</a>
-					</p>
+					<WebsiteLink url={c.website} />
 					<Link href={`/campus/${id}/users`}>
 						<a>
 							<p>{c.users_count} users</p>

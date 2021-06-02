@@ -1,4 +1,5 @@
 import UserCard from "@/components/UserCard";
+import WebsiteLink from "@/components/WebsiteLink";
 import useAPI from "@/lib/useAPI";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -31,12 +32,7 @@ function AppDetails() {
 					<p>{app.description}</p>
 				</div>
 			</div>
-			<p>
-				website:{" "}
-				<a href={app.website} target="_blank" rel="noopener noreferrer">
-					{app.website}
-				</a>
-			</p>
+			<WebsiteLink url={app.website} />
 			<p>{app.public ? "public" : "not public"}</p>
 			<p>Created: {app.created_at}</p>
 			<p>Updated: {app.updated_at}</p>
