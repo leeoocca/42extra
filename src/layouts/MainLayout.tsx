@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { useSession, signIn } from "next-auth/client";
 import StatusBar from "@/components/StatusBar";
 import Footer from "@/components/Footer";
@@ -12,30 +11,22 @@ interface Props {
 function MainLayout({ children }: Props) {
 	const [session, loading] = useSession();
 
-	if (!session?.user) {
-		if (!loading) signIn();
-		return <Loader />;
-	}
+	var content = (
+		<div className="flex flex-col min-h-screen antialiased bg-background text-foreground">
+			<StatusBar />
+			{children}
+			<Footer />
+		</div>
+	);
+
+	if (!loading && !session?.user) signIn("42");
 
 	return (
 		<>
 			<Head>
-				<link
-					rel="icon"
-					href={
-						// window.matchMedia("(prefers-color-scheme: light)")
-						// 	.matches
-						// 	? "/light-favicon.ico"
-						// 	:
-						"/favicon.ico"
-					}
-				/>
+				<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 			</Head>
-			<div className="flex flex-col min-h-screen antialiased bg-background text-foreground">
-				<StatusBar />
-				{children}
-				<Footer />
-			</div>
+			{loading ? <Loader /> : content}
 		</>
 	);
 }
