@@ -77,20 +77,24 @@ function UserOverview() {
 					<tr>
 						<Th>Coalition{coalition?.length > 1 && "s"}</Th>
 						<td>
-							{coalition?.length ? (
-								<ul>
-									{coalition.map((coalition) => (
-										<li key={coalition.slug}>
-											<Link
-												href={`/coalitions/${coalition.slug}`}
-											>
-												<a>{coalition.name}</a>
-											</Link>
-										</li>
-									))}
-								</ul>
+							{coalition ? (
+								coalition.length ? (
+									<ul>
+										{coalition.map((coalition) => (
+											<li key={coalition.slug}>
+												<Link
+													href={`/coalitions/${coalition.slug}`}
+												>
+													<a>{coalition.name}</a>
+												</Link>
+											</li>
+										))}
+									</ul>
+								) : (
+									<None />
+								)
 							) : (
-								<None />
+								"..."
 							)}
 						</td>
 					</tr>
