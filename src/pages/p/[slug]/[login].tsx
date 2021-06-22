@@ -25,7 +25,7 @@ function ProjectUser() {
 								"text-yellow-400"
 							}`}
 						>
-							{team.status.replace("_", " ")}
+							{team.status.replace(/_/g, " ")}
 						</span>
 						{team.final_mark !== null && (
 							<>
