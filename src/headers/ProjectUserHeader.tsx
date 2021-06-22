@@ -30,7 +30,7 @@ function ProjectUserHeader() {
 		<>
 			<Head>
 				<title>
-					{login}'s {project ? project.name : slug} – 42next
+					{login}'s {project ? project.name : slug} – 42extra
 				</title>
 			</Head>
 			<header className="relative px-4 py-10">

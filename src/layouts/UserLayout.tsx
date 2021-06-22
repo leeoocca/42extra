@@ -32,7 +32,7 @@ function UserLayout({ children }: { children: React.ReactNode }) {
 	const pageName = routeArray[routeArray.length - 1];
 	let title = login;
 	if (pageName !== "[login]") title = `${login}'s ${pageName}`;
-	title += " – 42next";
+	title += " – 42extra";
 
 	return (
 		<>

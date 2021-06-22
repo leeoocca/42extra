@@ -11,7 +11,7 @@ export default function Footer() {
 				href="https://github.com/leeoocca"
 				className="font-normal text-gray-200"
 			>
-				42next
+				42extra
 			</a>{" "}
 			— a project by{" "}
 			<Link href="/u/lrocca">

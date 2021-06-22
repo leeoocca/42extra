@@ -27,7 +27,7 @@ function ProjectIndex() {
 	return (
 		<>
 			<Head>
-				<title>{project.name} – 42next</title>
+				<title>{project.name} – 42extra</title>
 			</Head>
 			<article className="leading-relaxed">
 				<section className="mt-2">
