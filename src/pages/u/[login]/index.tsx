@@ -24,11 +24,6 @@ function UserOverview() {
 	const details = [
 		{ name: "Email", value: user.email, href: `mailto:${user.email}` },
 		{
-			name: "Phone",
-			value: user.phone,
-			href: +user.phone > 0 ? `tel:${user.phone}` : null,
-		},
-		{
 			name: "Correction points",
 			value: user.correction_point,
 			href: `/u/${login}/scales`,
@@ -51,7 +46,6 @@ function UserOverview() {
 			value: user.achievements.length,
 			href: `/u/${login}/achievements`,
 		},
-		// {name: , value: , href: },
 	];
 
 	return (
