@@ -1,4 +1,3 @@
-import UserCard from "@/components/UserCard";
 import { useSession } from "next-auth/client";
 import Link from "next/link";
 
@@ -14,20 +13,20 @@ function Home() {
 	const [session] = useSession();
 
 	return (
-		<>
-			<p>Welcome {session.user?.name}!</p>
-			<UserCard id={session.user.login} />
-			<h2>Start surfing</h2>
-			<ul className="list-disc list-inside">
+		<div className="text-center">
+			<h2 className="mb-4 text-2xl font-bold">
+				Welcome {session?.user ? session.user.name : "user"}!
+			</h2>
+			<ul>
 				{links.map((link) => (
 					<li key={link.href}>
 						<Link href={link.href}>
-							<a>{link.name}</a>
+							<a className="mb-2 hover:underline">{link.name}</a>
 						</Link>
 					</li>
 				))}
 			</ul>
-		</>
+		</div>
 	);
 }
 
