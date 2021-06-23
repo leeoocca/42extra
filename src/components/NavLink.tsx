@@ -12,7 +12,10 @@ function NavLink({ name, href, className }: LinkListNode) {
 
 	useEffect(() => {
 		if (active && activeNavRef.current) {
-			activeNavRef.current.scrollIntoView();
+			activeNavRef.current.scrollIntoView({
+				block: "nearest",
+				inline: "center",
+			});
 		}
 	}, [active]);
 
