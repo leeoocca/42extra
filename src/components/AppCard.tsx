@@ -9,7 +9,7 @@ function AppCard({ app }) {
 	return (
 		<Link key={app.id} href={`/apps/${app.id}`}>
 			<a>
-				<Card className="overflow-hidden max-h-8">
+				<Card className="h-20 overflow-hidden">
 					{app.image && app.image.length && (
 						<div className="relative w-16 h-16 mr-2">
 							<Image
