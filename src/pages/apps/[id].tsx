@@ -24,6 +24,7 @@ function AppDetails() {
 								"https://cdn.intra.42.fr" + app.image.substr(8)
 							}
 							className="object-contain"
+							alt={app.name}
 						/>
 					</div>
 				)}

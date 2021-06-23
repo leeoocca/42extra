@@ -27,16 +27,7 @@ function CampusIndex() {
 							<p>{c.users_count} users</p>
 						</a>
 					</Link>
-					<p>
-						Main language: {c.language.name}{" "}
-						<img
-							src={`https://www.countryflags.io/${
-								c.language.identifier === "en"
-									? "gb"
-									: c.language.identifier
-							}/flat/24.png`}
-						/>
-					</p>
+					<p>Main language: {c.language.name}</p>
 					<p>{c.active ? "active" : "inactive"}</p>
 					<h2>Socials</h2>
 					<ul>

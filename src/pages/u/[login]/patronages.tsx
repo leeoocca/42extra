@@ -48,6 +48,7 @@ function UserPatronages() {
 						];
 						return (
 							<UserCardWithDetails
+								key={patron.godfather_id}
 								user={patron.godfather_id}
 								details={details}
 							/>
@@ -81,6 +82,7 @@ function UserPatronages() {
 						];
 						return (
 							<UserCardWithDetails
+								key={patron.user_id}
 								user={patron.user_id}
 								details={details}
 							/>

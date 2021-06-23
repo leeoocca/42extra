@@ -37,6 +37,7 @@ function CoalitionIndex() {
 						];
 						return (
 							<UserCardWithDetails
+								key={user.user_id}
 								user={user.user_id}
 								details={details}
 							/>

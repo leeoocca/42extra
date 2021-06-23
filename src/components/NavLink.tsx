@@ -14,7 +14,7 @@ function NavLink({ name, href, className }: LinkListNode) {
 		if (active && activeNavRef.current) {
 			activeNavRef.current.scrollIntoView();
 		}
-	}, []);
+	}, [active]);
 
 	return (
 		<Link href={{ pathname: href, query: { login: login } }} key={href}>

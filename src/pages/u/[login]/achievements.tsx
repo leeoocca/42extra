@@ -23,7 +23,10 @@ function UserAchievements() {
 	if (!user.achievements.length)
 		return (
 			<div className="flex flex-col items-center w-full mt-4">
-				<img src="https://i.chzbgr.com/full/8270686464/h7779056E/coding-is-an-art" />
+				<img
+					src="https://i.chzbgr.com/full/8270686464/h7779056E/coding-is-an-art"
+					alt=""
+				/>
 				<p>
 					No achievements for{" "}
 					<span className="font-bold">{login}</span>.
@@ -33,6 +36,10 @@ function UserAchievements() {
 
 	const kinds = [
 		...new Set<string>(user.achievements.map((a: Achievement) => a.kind)),
+	];
+
+	const names = [
+		...new Set<string>(user.achievements.map((a: Achievement) => a.name)),
 	];
 
 	return (

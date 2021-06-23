@@ -17,7 +17,7 @@ function UserCardWithDetails({ user, details }: Props) {
 			<table className="mt-1">
 				<tbody>
 					{details.map((detail) => (
-						<tr>
+						<tr key={detail.name}>
 							<th className="pr-1 text-xs text-left uppercase opacity-75">
 								{detail.name}
 							</th>
