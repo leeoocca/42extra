@@ -1,20 +1,36 @@
+/** @jsxImportSource theme-ui */
+
+import Head from "next/head";
 import { useSession, signIn } from "next-auth/client";
-import StatusBar from "@/components/StatusBar";
+
 import Footer from "@/components/Footer";
 import Loader from "@/components/Loader";
-import Head from "next/head";
+import StatusBar from "@/components/StatusBar";
 
 interface Props {
 	children: React.ReactNode;
 }
 
-function MainLayout({ children }: Props) {
+export default function MainLayout({ children }: Props) {
 	const [session, loading] = useSession();
 
 	var content = (
-		<div className="flex flex-col min-h-screen antialiased bg-background text-foreground">
+		<div
+			sx={{
+				display: "flex",
+				flexDirection: "column",
+				minHeight: "100vh"
+			}}
+		>
 			<StatusBar />
-			{children}
+			<main
+				sx={{
+					width: "100%",
+					flex: "1 1 auto"
+				}}
+			>
+				{children}
+			</main>
 			<Footer />
 		</div>
 	);
@@ -34,5 +50,3 @@ function MainLayout({ children }: Props) {
 export const getLayout = (page: React.ReactNode) => (
 	<MainLayout>{page}</MainLayout>
 );
-
-export default MainLayout;

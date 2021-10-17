@@ -2,16 +2,17 @@ import "@/styles/globals.css";
 import { getLayout as getSimpleLayout } from "@/layouts/SimpleLayout";
 import { Provider } from "next-auth/client";
 import { SWRConfig } from "swr";
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider } from "theme-ui";
 import fetcher from "@/lib/fetcher";
 import ProgressBar from "@badrap/bar-of-progress";
 import Router from "next/router";
+import theme from "@/lib/theme";
 
 const progress = new ProgressBar({
 	size: 2,
-	color: "#22D3EE", // use css variable
+	color: "--theme-ui-colors-primary", // use css variable
 	className: "bar-of-progress",
-	delay: 0,
+	delay: 0
 });
 
 Router.events.on("routeChangeStart", progress.start);
@@ -25,11 +26,11 @@ function MyApp({ Component, pageProps }) {
 	const getLayout = Component.getLayout || getSimpleLayout;
 
 	return (
-		<ThemeProvider disableTransitionOnChange>
+		<ThemeProvider theme={theme}>
 			<Provider
 				session={pageProps.session}
 				options={{
-					clientMaxAge: 60 * 60,
+					clientMaxAge: 60 * 60
 				}}
 			>
 				<SWRConfig
@@ -40,7 +41,7 @@ function MyApp({ Component, pageProps }) {
 						},
 						revalidateOnFocus: false,
 						dedupingInterval: 60 * 1000,
-						errorRetryInterval: 2000,
+						errorRetryInterval: 2000
 					}}
 				>
 					{getLayout(<Component {...pageProps} />)}
