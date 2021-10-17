@@ -9,27 +9,27 @@
   },
   "dependencies": {
     "@badrap/bar-of-progress": "^0.1.2",
-    "@headlessui/react": "^1.3.0",
-    "@heroicons/react": "^1.0.1",
+    "@headlessui/react": "^1.4.1",
+    "@heroicons/react": "^1.0.4",
     "@tailwindcss/forms": "^0.3.3",
-    "next": "11.0.1",
-    "next-auth": "^3.27.0",
-    "next-themes": "^0.0.14",
-    "normalize-url": "^4",
+    "next": "11.1.2",
+    "next-auth": "^3.29.0",
+    "normalize-url": "^7.0.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "recharts": "^2.0.9",
-    "swr": "^0.5.3"
+    "recharts": "^2.1.4",
+    "swr": "^1.0.1",
+    "theme-ui": "^0.11.3"
   },
   "devDependencies": {
-    "@types/node": "^15.12.4",
-    "@types/react": "^17.0.11",
-    "autoprefixer": "^10.2.5",
-    "eslint": "^7.29.0",
-    "eslint-config-next": "^11.0.1",
-    "postcss": "^8.3.5",
-    "tailwindcss": "^2.2.2",
-    "typescript": "^4.3.4",
-    "vercel": "^23.0.1"
+    "@types/node": "^16.10.1",
+    "@types/react": "^17.0.24",
+    "autoprefixer": "^10.3.6",
+    "eslint": "^7.32.0",
+    "eslint-config-next": "^11.1.2",
+    "postcss": "^8.3.8",
+    "tailwindcss": "^2.2.16",
+    "typescript": "^4.4.3",
+    "vercel": "^23.1.2"
   }
 }
