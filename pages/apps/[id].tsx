@@ -1,5 +1,5 @@
-import UserCard from "components/UserCard";
-import WebsiteLink from "components/WebsiteLink";
+import UserCard from "ui/UserCard";
+import WebsiteLink from "ui/WebsiteLink";
 import useAPI from "lib/useAPI";
 import Image from "next/image";
 import { useRouter } from "next/router";

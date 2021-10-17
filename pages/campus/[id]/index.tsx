@@ -1,4 +1,4 @@
-import WebsiteLink from "components/WebsiteLink";
+import WebsiteLink from "ui/WebsiteLink";
 import useAPI from "lib/useAPI";
 import Link from "next/link";
 import { useRouter } from "next/router";

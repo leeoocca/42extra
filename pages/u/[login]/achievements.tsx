@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 import useAPI from "lib/useAPI";
-import { getLayout } from "components/layouts/UserLayout";
+import { getLayout } from "ui/layouts/UserLayout";
 import { Achievement, User } from "types/User";
-import AchievementCard from "components/AchievementCard";
-import CardGrid from "components/CardGrid";
+import AchievementCard from "ui/AchievementCard";
+import CardGrid from "ui/CardGrid";
 
 function UserAchievements() {
 	const router = useRouter();

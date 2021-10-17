@@ -1,5 +1,5 @@
-import UserHeader from "components/headers/UserHeader";
-import NavLink from "components/NavLink";
+import UserHeader from "ui/headers/UserHeader";
+import NavLink from "ui/NavLink";
 import useAPI from "lib/useAPI";
 import { getUserNavLinks } from "lib/NavLinks";
 import Head from "next/head";

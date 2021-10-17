@@ -1,9 +1,9 @@
-import { getLayout } from "components/layouts/ProjectLayout";
+import { getLayout } from "ui/layouts/ProjectLayout";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import useAPI from "lib/useAPI";
-import UserCard from "components/UserCard";
-import UserGrid from "components/UserGrid";
+import UserCard from "ui/UserCard";
+import UserGrid from "ui/UserGrid";
 
 function ProjectUser() {
 	const router = useRouter();

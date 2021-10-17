@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import useAPI from "lib/useAPI";
-import { getLayout } from "components/layouts/UserLayout";
+import { getLayout } from "ui/layouts/UserLayout";
 import { EyeOffIcon } from "@heroicons/react/outline";
 import { User } from "types/User";
-import CardGrid from "components/CardGrid";
-import Card from "components/Card";
+import CardGrid from "ui/CardGrid";
+import Card from "ui/Card";
 
 function UserPartnerships() {
 	const router = useRouter();

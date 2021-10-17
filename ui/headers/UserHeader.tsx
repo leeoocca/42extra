@@ -1,4 +1,4 @@
-import Avatar from "components/Avatar";
+import Avatar from "ui/Avatar";
 import { BadgeCheckIcon } from "@heroicons/react/outline";
 import { User } from "types/User";
 import useAPI from "lib/useAPI";

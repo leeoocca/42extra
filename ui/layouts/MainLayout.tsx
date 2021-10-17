@@ -3,9 +3,9 @@
 import Head from "next/head";
 import { useSession, signIn } from "next-auth/client";
 
-import Footer from "components/Footer";
-import Loader from "components/Loader";
-import StatusBar from "components/StatusBar";
+import Footer from "ui/Footer";
+import Loader from "ui/Loader";
+import StatusBar from "ui/StatusBar";
 
 interface Props {
 	children: React.ReactNode;

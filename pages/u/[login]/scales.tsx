@@ -1,5 +1,5 @@
 import useAPI from "lib/useAPI";
-import { getLayout } from "components/layouts/UserLayout";
+import { getLayout } from "ui/layouts/UserLayout";
 import { useRouter } from "next/router";
 import {
 	ResponsiveContainer,
@@ -8,8 +8,8 @@ import {
 	Tooltip,
 	ReferenceLine,
 } from "recharts";
-import CardGrid from "components/CardGrid";
-import Card from "components/Card";
+import CardGrid from "ui/CardGrid";
+import Card from "ui/Card";
 
 function UserScales() {
 	const router = useRouter();

@@ -1,5 +1,5 @@
-import AppCard from "components/AppCard";
-import CardGrid from "components/CardGrid";
+import AppCard from "ui/AppCard";
+import CardGrid from "ui/CardGrid";
 import useAPI from "lib/useAPI";
 
 function AppsIndex() {

@@ -1,5 +1,5 @@
-import UserCard from "components/UserCard";
-import UserGrid from "components/UserGrid";
+import UserCard from "ui/UserCard";
+import UserGrid from "ui/UserGrid";
 import useAPI from "lib/useAPI";
 import { User } from "next-auth";
 import { useRouter } from "next/router";

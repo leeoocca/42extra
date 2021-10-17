@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import useAPI from "lib/useAPI";
-import { getLayout } from "components/layouts/UserLayout";
-import CardGrid from "components/CardGrid";
-import Card from "components/Card";
+import { getLayout } from "ui/layouts/UserLayout";
+import CardGrid from "ui/CardGrid";
+import Card from "ui/Card";
 import getTimeAgo from "lib/getTimeAgo";
 
 function UserQuests() {

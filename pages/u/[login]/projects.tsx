@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
 import useAPI from "lib/useAPI";
-import { getLayout } from "components/layouts/UserLayout";
+import { getLayout } from "ui/layouts/UserLayout";
 import Link from "next/link";
-import Card from "components/Card";
+import Card from "ui/Card";
 import { User } from "types/User";
 import getTimeAgo from "lib/getTimeAgo";
-import CardGrid from "components/CardGrid";
+import CardGrid from "ui/CardGrid";
 
 function UserProjects() {
 	const { query } = useRouter();

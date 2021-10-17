@@ -1,5 +1,5 @@
 import useAPI from "lib/useAPI";
-import { getLayout } from "components/layouts/UserLayout";
+import { getLayout } from "ui/layouts/UserLayout";
 import { useRouter } from "next/router";
 import Link from "next/link";
 

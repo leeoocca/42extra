@@ -1,13 +1,13 @@
 import { useRouter } from "next/router";
 import useAPI from "lib/useAPI";
 import Link from "next/link";
-import { getLayout } from "components/layouts/UserLayout";
+import { getLayout } from "ui/layouts/UserLayout";
 import { EyeOffIcon } from "@heroicons/react/outline";
-import CardGrid from "components/CardGrid";
-import Card from "components/Card";
+import CardGrid from "ui/CardGrid";
+import Card from "ui/Card";
 import { useSession } from "next-auth/client";
 import Image from "next/image";
-import AppCard from "components/AppCard";
+import AppCard from "ui/AppCard";
 
 function UserApps() {
 	const router = useRouter();

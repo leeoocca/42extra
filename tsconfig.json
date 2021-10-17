@@ -21,7 +21,7 @@
 			"@public": ["public/*"],
 			"@styles": ["styles/*"],
 			"@types": ["types/*"],
-			"@ui": ["components/*"]
+			"@ui": ["ui/*"]
 		}
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

@@ -1,7 +1,7 @@
-import ProjectUserHeader from "components/headers/ProjectUserHeader";
+import ProjectUserHeader from "ui/headers/ProjectUserHeader";
 import { useRouter } from "next/router";
 import { getLayout as getMainLayout } from "./MainLayout";
-import ProjectHeader from "components/headers/ProjectHeader";
+import ProjectHeader from "ui/headers/ProjectHeader";
 
 function ProjectLayout({ children }: { children: React.ReactNode }) {
 	const router = useRouter();

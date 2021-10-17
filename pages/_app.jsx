@@ -1,5 +1,5 @@
 import "styles/globals.css";
-import { getLayout as getSimpleLayout } from "components/layouts/SimpleLayout";
+import { getLayout as getSimpleLayout } from "ui/layouts/SimpleLayout";
 import { Provider } from "next-auth/client";
 import { SWRConfig } from "swr";
 import { ThemeProvider } from "theme-ui";

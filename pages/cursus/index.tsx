@@ -1,5 +1,5 @@
-import Card from "components/Card";
-import CardGrid from "components/CardGrid";
+import Card from "ui/Card";
+import CardGrid from "ui/CardGrid";
 import useAPI from "lib/useAPI";
 import Link from "next/link";
 

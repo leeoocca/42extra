@@ -4,7 +4,7 @@ import { useSession } from "next-auth/client";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { getLayout } from "components/layouts/ProjectLayout";
+import { getLayout } from "ui/layouts/ProjectLayout";
 
 function ProjectIndex() {
 	const [session] = useSession();
