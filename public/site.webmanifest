@@ -1,0 +1,26 @@
+{
+	"lang": "en",
+	"name": "42extra",
+	"short_name": "42extra",
+	"start_url": "/",
+	"scope": "https://42extra.vercel.app",
+	"display": "minimal-ui",
+	"theme_color": "#000000",
+	"background_color": "#ffffff",
+	"icons": [
+		{
+			"src": "favicon.svg",
+			"type": "image/svg+xml"
+		},
+		{
+			"src": "/android-chrome-192x192.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
+			"src": "/android-chrome-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		}
+	]
+}
