@@ -38,6 +38,7 @@ function UserOverview() {
 		},
 		{
 			name: "Location",
+			value: user.location || "unavailable",
 			href: `/u/${login}/locations`,
 		},
 		{
