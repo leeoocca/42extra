@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	--background: #111111;
+	--foreground: #f2f2f2;
+	--nav: 55, 55, 55;
+	--nav-opacity: 0.6;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+	font-family: "Inter var";
+	font-weight: 100 900;
+	font-display: swap;
+	font-style: normal;
+	font-named-instance: "Regular";
+	src: url("../fonts/Inter.var.woff2") format("woff2");
+}
