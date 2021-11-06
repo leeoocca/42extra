@@ -4,7 +4,7 @@
 	"short_name": "42extra",
 	"start_url": "/",
 	"scope": "https://42extra.vercel.app",
-	"display": "minimal-ui",
+	"display": "standalone",
 	"theme_color": "#000000",
 	"background_color": "#ffffff",
 	"icons": [
