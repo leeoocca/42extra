@@ -122,7 +122,7 @@ function UserProjects() {
 							return (
 								<Link
 									key={project.id}
-									href={`/p/${project.project.slug}/${login}`}
+									href={`/users/${login}/${project.project.slug}`}
 								>
 									<a>
 										<Card key={project.id}>

@@ -26,7 +26,7 @@ function UserOverview() {
 		{
 			name: "Correction points",
 			value: user.correction_point,
-			href: `/u/${login}/scales`,
+			href: `/users/${login}/scales`,
 		},
 		{ name: "Wallet", value: `${user.wallet} ₳`, href: null },
 		{
@@ -39,12 +39,12 @@ function UserOverview() {
 		{
 			name: "Location",
 			value: user.location || "unavailable",
-			href: `/u/${login}/locations`,
+			href: `/users/${login}/locations`,
 		},
 		{
 			name: "Achievements",
 			value: user.achievements.length,
-			href: `/u/${login}/achievements`,
+			href: `/users/${login}/achievements`,
 		},
 	];
 

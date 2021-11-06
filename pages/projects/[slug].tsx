@@ -46,7 +46,7 @@ function ProjectIndex() {
 						))}
 					</ul>
 				</section>
-				<Link href={`/p/${project.slug}/${session.user.login}`}>
+				<Link href={`/users/${session.user.login}/${project.slug}`}>
 					<a>
 						{session.user.login}&apos;s{" "}
 						<span className="font-mono">{project.name}</span>

@@ -7,9 +7,11 @@ import UserGrid from "ui/UserGrid";
 
 function ProjectUser() {
 	const router = useRouter();
-	const { slug, login } = router.query;
+	const { project, login } = router.query;
 
-	const { data: teams } = useAPI(`/v2/users/${login}/projects/${slug}/teams`);
+	const { data: teams } = useAPI(
+		`/v2/users/${login}/projects/${project}/teams`
+	);
 
 	if (!teams) return <>Loading...</>;
 
@@ -68,7 +70,9 @@ function ProjectUser() {
 										{scale.final_mark}
 									</span>{" "}
 									– {scale.flag.name} from{" "}
-									<Link href={`/u/${scale.corrector.login}`}>
+									<Link
+										href={`/users/${scale.corrector.login}`}
+									>
 										<a className="underline">
 											{scale.corrector.login}
 										</a>
