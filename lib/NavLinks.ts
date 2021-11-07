@@ -1,7 +1,7 @@
 import { LinkListNode } from "types/LinkListNode";
 
 export function getUserNavLinks() {
-	const baseUrl = "/u/[login]";
+	const baseUrl = "/users/[login]";
 
 	let navLinks: LinkListNode[] = [
 		{
@@ -38,7 +38,7 @@ export function getUserNavLinks() {
 }
 
 export function getProjectNavLinks() {
-	const baseUrl = "/p/[slug]";
+	const baseUrl = "/projects/[slug]";
 
 	let navLinks: LinkListNode[] = [
 		{

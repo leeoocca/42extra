@@ -23,7 +23,7 @@ function UsersIndex() {
 			<form
 				onSubmit={(e) => {
 					e.preventDefault();
-					router.push(`/u/${login}`, null, { shallow: true });
+					router.push(`/users/${login}`, null, { shallow: true });
 				}}
 			>
 				<input
