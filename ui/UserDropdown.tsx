@@ -49,7 +49,7 @@ export default function UserDropdown() {
 												)}
 												onClick={() =>
 													router.push(
-														`/u/${session.user.login}`
+														`/users/${session.user.login}`
 													)
 												}
 											>

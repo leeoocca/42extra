@@ -6,9 +6,9 @@ import { useRouter } from "next/router";
 
 function ProjectUserHeader() {
 	const router = useRouter();
-	const { login, slug } = router.query;
+	const { login, project } = router.query;
 
-	const { data: project } = useAPI(`/v2/projects/${slug}`);
+	const { data: projectData } = useAPI(`/v2/projects/${project}`);
 	const { data: user }: { data: User } = useAPI(`/v2/users/${login}`);
 
 	document.documentElement.style.setProperty("--nav", "");
@@ -17,7 +17,7 @@ function ProjectUserHeader() {
 
 	if (user) {
 		userProject = user.projects_users.find(
-			(project) => project.project.slug === slug
+			(projectsUsers) => projectsUsers.project.slug === project
 		);
 		if (userProject["validated?"])
 			document.documentElement.style.setProperty("--nav", "52, 211, 153");
@@ -30,17 +30,18 @@ function ProjectUserHeader() {
 		<>
 			<Head>
 				<title>
-					{login}'s {project ? project.name : slug} – 42extra
+					{login}'s {projectData ? projectData.name : project} –
+					42extra
 				</title>
 			</Head>
 			<header className="relative px-4 py-10">
 				<h1 className="text-2xl font-bold">
-					<Link href={`/u/${login}`}>
+					<Link href={`/users/${login}`}>
 						<a>{login}</a>
 					</Link>
 					's{" "}
-					<Link href={`/p/${slug}`}>
-						<a>{project ? project.name : slug}</a>
+					<Link href={`/projects/${project}`}>
+						<a>{projectData ? projectData.name : project}</a>
 					</Link>
 				</h1>
 				{userProject && (

@@ -10,7 +10,7 @@ export default function Footer() {
 				42extra
 			</a>{" "}
 			— a project by{" "}
-			<Link href="/u/lrocca">
+			<Link href="/users/lrocca">
 				<a className="text-gray-200">lrocca</a>
 			</Link>
 		</footer>
