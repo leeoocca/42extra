@@ -4,6 +4,28 @@ import useAPI from "lib/useAPI";
 import Link from "next/link";
 import { User } from "types/User";
 import getTimeAgo from "lib/getTimeAgo";
+import prettyMilliseconds from "pretty-ms";
+// import getCampusFromId from "lib/getCampusFromId";
+
+function getCurrentLocation(locations: any): string {
+	if (locations)
+		// in ${getCampusFromId(locations[0].campus_id).name}
+		return `${locations[0].host} for ~
+		${prettyMilliseconds(Date.now() - Date.parse(locations[0].begin_at), {
+			unitCount: 2,
+		})}`;
+	return null;
+}
+
+function getLastSeen(locations: any): string {
+	if (locations) {
+		if (locations.length)
+			// in ${getCampusFromId(locations[0].campus_id).name}
+			return `last seen ${getTimeAgo(locations[0].end_at)}`;
+		else return "never seen on any campus";
+	}
+	return "...";
+}
 
 const Th = ({ children }) => (
 	<th className="py-1 pr-2 text-xs text-left uppercase opacity-75">
@@ -40,13 +62,9 @@ function UserOverview() {
 		},
 		{
 			name: "Location",
-			value:
-				user.location ||
-				`last seen ${
-					locations &&
-					locations.length &&
-					getTimeAgo(locations[0].end_at)
-				}`,
+			value: user.location
+				? getCurrentLocation(locations) || user.location
+				: getLastSeen(locations),
 			href: `/users/${login}/locations`,
 		},
 		{

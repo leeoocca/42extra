@@ -2,6 +2,7 @@ import useAPI from "lib/useAPI";
 import { getLayout } from "ui/layouts/UserLayout";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import prettyMilliseconds from "pretty-ms";
 
 function UserLocations() {
 	const router = useRouter();
@@ -20,6 +21,8 @@ function UserLocations() {
 	if (isLoading) return <>Loading...</>;
 	if (isError) return <>Error</>;
 
+	// group by day
+
 	return (
 		<>
 			<table className="w-full">
@@ -29,35 +32,32 @@ function UserLocations() {
 						<th>Campus</th>
 						<th>Begin</th>
 						<th>End</th>
-						<th>Hours</th>
+						<th>Duration</th>
 					</tr>
 				</thead>
 				<tbody>
-					{locations.map((l) => {
-						const start = new Date(l.end_at);
-						const end = new Date(l.begin_at);
-						let total: String | Number = "online";
-						if (l.end_at)
-							total = Math.round(
-								(start.valueOf() - end.valueOf()) /
-									1000 /
-									60 /
-									60
-							);
-						return (
-							<tr key={l.id} className="text-center">
-								<td className="font-mono">{l.host}</td>
-								<td>
-									<Link href={`/campus/${l.campus_id}`}>
-										<a>{l.campus_id}</a>
-									</Link>
-								</td>
-								<td className="font-mono">{l.begin_at}</td>
-								<td className="font-mono">{l.end_at}</td>
-								<td>{total || "<1"}</td>
-							</tr>
-						);
-					})}
+					{locations.map((l) => (
+						<tr key={l.id} className="text-center">
+							<td className="font-mono">{l.host}</td>
+							<td>
+								<Link href={`/campus/${l.campus_id}`}>
+									<a>{l.campus_id}</a>
+								</Link>
+							</td>
+							<td className="font-mono">{l.begin_at}</td>
+							<td className="font-mono">{l.end_at}</td>
+							<td style={{ textAlign: "left" }}>
+								{prettyMilliseconds(
+									(Date.parse(l.end_at) || Date.now()) -
+										Date.parse(l.begin_at),
+									{
+										unitCount: 2,
+										secondsDecimalDigits: 0,
+									}
+								)}
+							</td>
+						</tr>
+					))}
 				</tbody>
 			</table>
 		</>
