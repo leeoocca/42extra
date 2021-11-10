@@ -1,6 +1,7 @@
 import "styles/globals.css";
 import { getLayout as getSimpleLayout } from "ui/layouts/SimpleLayout";
 import {
+	Action,
 	KBarAnimator,
 	KBarPortal,
 	KBarPositioner,
@@ -58,23 +59,30 @@ const animatorStyle = {
 	boxShadow: "var(--shadow)",
 };
 
-function MyApp({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }) {
 	const getLayout = Component.getLayout || getSimpleLayout;
 
-	const actions = [
+	const actions: Action[] = [
+		{
+			id: "home",
+			name: "Home",
+			shortcut: ["h"],
+			keywords: "",
+			perform: () => Router.push("/"),
+		},
 		{
 			id: "users",
 			name: "Users",
 			shortcut: ["u"],
 			keywords: "login",
-			perform: () => Router.push("users"),
+			perform: () => Router.push("/users"),
 		},
 		{
 			id: "coalitions",
 			name: "Coalitions",
-			// shortcut: ["b"],
-			// keywords: "writing words",
-			perform: () => Router.push("coalitions"),
+			shortcut: [],
+			keywords: "",
+			perform: () => Router.push("/coalitions"),
 		},
 	];
 
@@ -113,5 +121,3 @@ function MyApp({ Component, pageProps }) {
 		</SessionProvider>
 	);
 }
-
-export default MyApp;
