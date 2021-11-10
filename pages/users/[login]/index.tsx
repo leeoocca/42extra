@@ -3,6 +3,7 @@ import { getLayout } from "ui/layouts/UserLayout";
 import useAPI from "lib/useAPI";
 import Link from "next/link";
 import { User } from "types/User";
+import getTimeAgo from "lib/getTimeAgo";
 
 const Th = ({ children }) => (
 	<th className="py-1 pr-2 text-xs text-left uppercase opacity-75">
@@ -18,6 +19,7 @@ function UserOverview() {
 
 	const { data: user }: { data: User } = useAPI(`/v2/users/${login}`);
 	const { data: coalition } = useAPI(`/v2/users/${login}/coalitions`);
+	const { data: locations } = useAPI(`/v2/users/${login}/locations`);
 
 	if (!user) return <>Loading...</>;
 
@@ -38,7 +40,13 @@ function UserOverview() {
 		},
 		{
 			name: "Location",
-			value: user.location || "unavailable",
+			value:
+				user.location ||
+				`last seen ${
+					locations &&
+					locations.length &&
+					getTimeAgo(locations[0].end_at)
+				}`,
 			href: `/users/${login}/locations`,
 		},
 		{
