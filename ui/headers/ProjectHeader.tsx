@@ -2,7 +2,7 @@ import useAPI from "lib/useAPI";
 import { Project } from "types/Project";
 import { useRouter } from "next/router";
 
-function ProjectHeader() {
+export default function ProjectHeader() {
 	const router = useRouter();
 	const { slug } = router.query;
 
@@ -22,18 +22,16 @@ function ProjectHeader() {
 					<span className="font-mono">#{project.id}</span>
 					<span>{project.exam ? "exam" : "project"}</span>
 					{/* <span
-			className={`mx-2 ${
-				(project.recommendation === "forbidden" &&
-				"text-red-600") || (project.recommendation === "forbidden" &&
-				"text-red-600")
-			}`}
-		>
-			{project.recommendation}
-		</span> */}
+						className={`mx-2 ${
+							(project.recommendation === "forbidden" &&
+							"text-red-600") || (project.recommendation === "forbidden" &&
+							"text-red-600")
+						}`}
+					>
+						{project.recommendation}
+					</span> */}
 				</section>
 			)}
 		</header>
 	);
 }
-
-export default ProjectHeader;
