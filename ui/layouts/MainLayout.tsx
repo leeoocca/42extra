@@ -1,11 +1,10 @@
-/** @jsxImportSource theme-ui */
-
 import Head from "next/head";
 import { useSession, signIn } from "next-auth/client";
 
 import Footer from "ui/Footer";
 import Loader from "ui/Loader";
 import StatusBar from "ui/StatusBar";
+import { Box } from "@theme-ui/components";
 
 interface Props {
 	children: React.ReactNode;
@@ -15,7 +14,7 @@ export default function MainLayout({ children }: Props) {
 	const [session, loading] = useSession();
 
 	var content = (
-		<div
+		<Box
 			sx={{
 				display: "flex",
 				flexDirection: "column",
@@ -23,16 +22,16 @@ export default function MainLayout({ children }: Props) {
 			}}
 		>
 			<StatusBar />
-			<main
+			<Box
 				sx={{
 					width: "100%",
 					flex: "1 1 auto",
 				}}
 			>
 				{children}
-			</main>
+			</Box>
 			<Footer />
-		</div>
+		</Box>
 	);
 
 	if (!loading && !session?.user) signIn("42");
