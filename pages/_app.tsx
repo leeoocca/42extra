@@ -16,6 +16,7 @@ import fetcher from "lib/fetcher";
 import ProgressBar from "@badrap/bar-of-progress";
 import Router from "next/router";
 import theme from "lib/theme";
+import { CSSProperties } from "react";
 
 const progress = new ProgressBar({
 	size: 2,
@@ -31,7 +32,7 @@ Router.events.on("routeChangeComplete", () => {
 });
 Router.events.on("routeChangeError", progress.finish);
 
-const searchStyle = {
+const searchStyle: CSSProperties = {
 	padding: "12px 16px",
 	fontSize: "16px",
 	width: "100%",
@@ -42,14 +43,14 @@ const searchStyle = {
 	color: "var(--theme-ui-colors-text)",
 };
 
-const resultsStyle = {
+const resultsStyle: CSSProperties = {
 	maxHeight: 400,
 	overflow: "auto",
 	background: "var(--theme-ui-colors-background)",
 	color: "var(--theme-ui-colors-text)",
 };
 
-const animatorStyle = {
+const animatorStyle: CSSProperties = {
 	maxWidth: "500px",
 	width: "100%",
 	background: "var(--theme-ui-colors-background)",
