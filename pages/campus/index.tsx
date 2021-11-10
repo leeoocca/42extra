@@ -2,13 +2,19 @@ import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
 import useAPI from "lib/useAPI";
 import Link from "next/link";
+import { Grid, Spinner } from "@theme-ui/components";
 
 function CampusesIndex() {
 	const { data: campuses, isLoading } = useAPI(
 		`/v2/campus?sort=id&page[size]=100`
 	);
 
-	if (isLoading) return <>Loading...</>;
+	if (isLoading)
+		return (
+			<Grid sx={{ placeItems: "center" }}>
+				<Spinner />
+			</Grid>
+		);
 
 	return (
 		<>

@@ -5,6 +5,7 @@ import CardGrid from "ui/CardGrid";
 import Card from "ui/Card";
 import getTimeAgo from "lib/getTimeAgo";
 import { Heading } from "theme-ui";
+import { Grid, Spinner } from "@theme-ui/components";
 
 const Quest = ({ quest }) => (
 	<Card key={quest.id}>
@@ -37,7 +38,12 @@ function UserQuests() {
 		isError,
 	} = useAPI(`/v2/users/${login}/quests_users`);
 
-	if (isLoading) return <>Loading...</>;
+	if (isLoading)
+		return (
+			<Grid sx={{ placeItems: "center" }}>
+				<Spinner />
+			</Grid>
+		);
 	if (isError) return <>Error</>;
 
 	if (!quests.length)

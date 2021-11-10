@@ -1,13 +1,11 @@
 import { useRouter } from "next/router";
 import useAPI from "lib/useAPI";
-import Link from "next/link";
 import { getLayout } from "ui/layouts/UserLayout";
 import { EyeOffIcon } from "@heroicons/react/outline";
 import CardGrid from "ui/CardGrid";
-import Card from "ui/Card";
 import { useSession } from "next-auth/client";
-import Image from "next/image";
 import AppCard from "ui/AppCard";
+import { Grid, Spinner } from "@theme-ui/components";
 
 function UserApps() {
 	const router = useRouter();
@@ -20,7 +18,12 @@ function UserApps() {
 		isError,
 	} = useAPI(`/v2/users/${login}/apps`);
 
-	if (isLoading) return <>Loading...</>;
+	if (isLoading)
+		return (
+			<Grid sx={{ placeItems: "center" }}>
+				<Spinner />
+			</Grid>
+		);
 	if (isError) return <>Error</>;
 
 	if (!apps.length)

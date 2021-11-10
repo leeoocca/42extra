@@ -5,6 +5,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { getLayout } from "ui/layouts/ProjectLayout";
+import { Grid, Spinner } from "@theme-ui/components";
 
 function ProjectIndex() {
 	const [session] = useSession();
@@ -21,7 +22,12 @@ function ProjectIndex() {
 		isError: any;
 	} = useAPI(`/v2/projects/${slug}`);
 
-	if (isLoading) return <>Loading...</>;
+	if (isLoading)
+		return (
+			<Grid sx={{ placeItems: "center" }}>
+				<Spinner />
+			</Grid>
+		);
 	if (isError) return <>Error</>;
 
 	return (

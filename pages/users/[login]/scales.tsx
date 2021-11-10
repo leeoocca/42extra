@@ -10,6 +10,7 @@ import {
 } from "recharts";
 import CardGrid from "ui/CardGrid";
 import Card from "ui/Card";
+import { Grid, Spinner } from "@theme-ui/components";
 
 function UserScales() {
 	const router = useRouter();
@@ -29,7 +30,12 @@ function UserScales() {
 		`/v2/users/${login}/correction_point_historics`
 	);
 
-	if (isLoading) return <>Loading...</>;
+	if (isLoading)
+		return (
+			<Grid sx={{ placeItems: "center" }}>
+				<Spinner />
+			</Grid>
+		);
 	if (isError) return <>Error</>;
 
 	if (!scales.length)

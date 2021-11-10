@@ -4,6 +4,7 @@ import { getLayout } from "ui/layouts/UserLayout";
 import { User } from "types/User";
 import UserGrid from "ui/UserGrid";
 import UserCardWithDetails from "ui/UserCardWithDetails";
+import { Grid, Spinner } from "@theme-ui/components";
 
 function UserPatronages() {
 	const router = useRouter();
@@ -17,7 +18,12 @@ function UserPatronages() {
 		`/v2/users/${login}`
 	);
 
-	if (isLoading) return <>Loading...</>;
+	if (isLoading)
+		return (
+			<Grid sx={{ placeItems: "center" }}>
+				<Spinner />
+			</Grid>
+		);
 	if (isError) return <>Error</>;
 
 	return (

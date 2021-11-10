@@ -4,6 +4,7 @@ import { getLayout } from "ui/layouts/UserLayout";
 import { Achievement, User } from "types/User";
 import AchievementCard from "ui/AchievementCard";
 import CardGrid from "ui/CardGrid";
+import { Grid, Spinner } from "@theme-ui/components";
 
 function UserAchievements() {
 	const router = useRouter();
@@ -17,7 +18,12 @@ function UserAchievements() {
 		`/v2/users/${login}`
 	);
 
-	if (isLoading) return <>Loading...</>;
+	if (isLoading)
+		return (
+			<Grid sx={{ placeItems: "center" }}>
+				<Spinner />
+			</Grid>
+		);
 	if (isError) return <>Error</>;
 
 	if (!user.achievements.length)

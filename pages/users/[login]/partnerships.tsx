@@ -5,6 +5,7 @@ import { EyeOffIcon } from "@heroicons/react/outline";
 import { User } from "types/User";
 import CardGrid from "ui/CardGrid";
 import Card from "ui/Card";
+import { Grid, Spinner } from "@theme-ui/components";
 
 function UserPartnerships() {
 	const router = useRouter();
@@ -18,7 +19,12 @@ function UserPartnerships() {
 		`/v2/users/${login}`
 	);
 
-	if (isLoading) return <>Loading...</>;
+	if (isLoading)
+		return (
+			<Grid sx={{ placeItems: "center" }}>
+				<Spinner />
+			</Grid>
+		);
 
 	if (isError) return <>Error</>;
 

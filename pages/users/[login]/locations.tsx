@@ -3,6 +3,7 @@ import { getLayout } from "ui/layouts/UserLayout";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import prettyMilliseconds from "pretty-ms";
+import { Grid, Spinner } from "@theme-ui/components";
 
 function UserLocations() {
 	const router = useRouter();
@@ -18,7 +19,12 @@ function UserLocations() {
 		isError: boolean;
 	} = useAPI(`/v2/users/${login}/locations`);
 
-	if (isLoading) return <>Loading...</>;
+	if (isLoading)
+		return (
+			<Grid sx={{ placeItems: "center" }}>
+				<Spinner />
+			</Grid>
+		);
 	if (isError) return <>Error</>;
 
 	// group by day

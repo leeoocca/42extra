@@ -6,6 +6,7 @@ import Card from "ui/Card";
 import { User } from "types/User";
 import getTimeAgo from "lib/getTimeAgo";
 import CardGrid from "ui/CardGrid";
+import { Grid, Spinner } from "@theme-ui/components";
 
 function UserProjects() {
 	const { query } = useRouter();
@@ -14,7 +15,12 @@ function UserProjects() {
 	const { data: user, isLoading }: { data: User; isLoading: boolean } =
 		useAPI(`/v2/users/${login}`);
 
-	if (isLoading) return <>Loading...</>;
+	if (isLoading)
+		return (
+			<Grid sx={{ placeItems: "center" }}>
+				<Spinner />
+			</Grid>
+		);
 	if (!user) return <>Error</>;
 
 	if (!user.projects_users.length)
