@@ -4,6 +4,17 @@ import { User } from "types/User";
 import useAPI from "lib/useAPI";
 import { useRouter } from "next/router";
 
+function getCustomUserLogin(user: User): string {
+	const selectedTitle = user.titles_users.find((title) => title.selected);
+	if (selectedTitle) {
+		const selectedTitleName = user.titles.find(
+			(title) => title.id === selectedTitle.title_id
+		);
+		return selectedTitleName.name.replace("%login", user.login);
+	}
+	return null;
+}
+
 function UserHeader() {
 	const router = useRouter();
 	const { login } = router.query;
@@ -15,6 +26,8 @@ function UserHeader() {
 	}: { data: User; isLoading: boolean; isError: any } = useAPI(
 		`/v2/users/${login}`
 	);
+
+	const customUserLogin = user && getCustomUserLogin(user);
 
 	return (
 		<header className="flex flex-row items-center px-4 py-2 mx-auto my-6 max-w-7xl">
@@ -31,11 +44,6 @@ function UserHeader() {
 			/>
 			{!isLoading && (
 				<div className="pb-1 ml-4">
-					{!isError && user.titles.length ? (
-						<p className="-mb-0.5 text-xs font-bold tracking-wider uppercase">
-							{user.titles[0].name.replace("%login", "")}
-						</p>
-					) : null}
 					<h1 className="inline-flex text-4xl font-bold">
 						{isError ? (
 							"Error"
@@ -44,7 +52,11 @@ function UserHeader() {
 								<span>
 									{/* maybe just always use user.login? */}
 									{/* useful when loading though */}
-									{Number(login) > 0 ? user.login : login}
+									{customUserLogin
+										? customUserLogin
+										: Number(login) > 0
+										? user.login
+										: login}
 								</span>
 								{user["staff?"] && (
 									<span
