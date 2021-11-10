@@ -8,7 +8,7 @@ import { Heading } from "theme-ui";
 import { Grid, Spinner } from "@theme-ui/components";
 
 const Quest = ({ quest }) => (
-	<Card key={quest.id}>
+	<Card>
 		<div className="flex flex-col h-32 overflow-hidden text-sm place-content-end">
 			<h2 className="text-base font-semibold">{quest.quest.name}</h2>
 			<p>{quest.quest.description}</p>
@@ -60,7 +60,7 @@ function UserQuests() {
 		<>
 			<CardGrid>
 				{validated.map((quest) => (
-					<Quest quest={quest} />
+					<Quest quest={quest} key={quest.id} />
 				))}
 			</CardGrid>
 			<Heading mb={2} mt={4}>
@@ -68,7 +68,7 @@ function UserQuests() {
 			</Heading>
 			<CardGrid>
 				{not_validated.map((quest) => (
-					<Quest quest={quest} />
+					<Quest quest={quest} key={quest.id} />
 				))}
 			</CardGrid>
 		</>
