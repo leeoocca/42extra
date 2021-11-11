@@ -1,5 +1,7 @@
 import "styles/globals.css";
-import { getLayout as getSimpleLayout } from "ui/layouts/SimpleLayout";
+import { CSSProperties } from "react";
+import Router from "next/router";
+
 import {
 	Action,
 	KBarAnimator,
@@ -9,14 +11,14 @@ import {
 	KBarResults,
 	KBarSearch,
 } from "kbar";
-import { Provider as SessionProvider } from "next-auth/client";
 import { SWRConfig } from "swr";
 import { ThemeProvider } from "theme-ui";
-import fetcher from "lib/fetcher";
 import ProgressBar from "@badrap/bar-of-progress";
-import Router from "next/router";
+import { Provider as SessionProvider } from "next-auth/client";
+
 import theme from "lib/theme";
-import { CSSProperties } from "react";
+import fetcher from "lib/fetcher";
+import { getLayout as getSimpleLayout } from "ui/layouts/SimpleLayout";
 
 const progress = new ProgressBar({
 	size: 2,
@@ -79,11 +81,32 @@ export default function MyApp({ Component, pageProps }) {
 			perform: () => Router.push("/users"),
 		},
 		{
+			id: "campus",
+			name: "Campuses",
+			shortcut: [],
+			keywords: "",
+			perform: () => Router.push("/campus"),
+		},
+		{
 			id: "coalitions",
 			name: "Coalitions",
 			shortcut: [],
 			keywords: "",
 			perform: () => Router.push("/coalitions"),
+		},
+		{
+			id: "cursus",
+			name: "Cursuses",
+			shortcut: [],
+			keywords: "",
+			perform: () => Router.push("/cursus"),
+		},
+		{
+			id: "apps",
+			name: "Apps",
+			shortcut: [],
+			keywords: "",
+			perform: () => Router.push("/apps"),
 		},
 	];
 
