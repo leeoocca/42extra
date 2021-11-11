@@ -1,8 +1,8 @@
-import useAPI from "lib/useAPI";
-import { User } from "types/User";
-import { useRouter } from "next/router";
 import { useState } from "react";
-import { useSession } from "next-auth/client";
+import { useRouter } from "next/router";
+// import useAPI from "lib/useAPI";
+// import { User } from "types/User";
+// import { useSession } from "next-auth/client";
 
 function UsersIndex() {
 	const [login, setLogin] = useState("");

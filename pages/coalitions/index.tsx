@@ -2,6 +2,7 @@ import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
 import useAPI from "lib/useAPI";
 import Link from "next/link";
+import Loading from "ui/Loading";
 
 function CoalitionsIndex() {
 	const { data: coalitions } = useAPI(`/v2/coalitions?sort=id`);
@@ -9,7 +10,7 @@ function CoalitionsIndex() {
 		<>
 			<h1 className="text-3xl font-bold leading-relaxed">Coalitions</h1>
 			<CardGrid>
-				{coalitions &&
+				{coalitions ? (
 					coalitions.map((c) => (
 						<Link href={`/coalitions/${c.slug}`} key={c.id}>
 							<a>
@@ -38,7 +39,10 @@ function CoalitionsIndex() {
 								</Card>
 							</a>
 						</Link>
-					))}
+					))
+				) : (
+					<Loading />
+				)}
 			</CardGrid>
 		</>
 	);
