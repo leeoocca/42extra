@@ -1,6 +1,5 @@
-import useAPI from "lib/useAPI";
-import { getLayout } from "ui/layouts/UserLayout";
 import { useRouter } from "next/router";
+
 import {
 	ResponsiveContainer,
 	LineChart,
@@ -8,9 +7,12 @@ import {
 	Tooltip,
 	ReferenceLine,
 } from "recharts";
-import CardGrid from "ui/CardGrid";
+
+import useAPI from "lib/useAPI";
+import Loading from "ui/Loading";
 import Card from "ui/Card";
-import { Grid, Spinner } from "@theme-ui/components";
+import CardGrid from "ui/CardGrid";
+import { getLayout } from "ui/layouts/UserLayout";
 
 function UserScales() {
 	const router = useRouter();
@@ -30,12 +32,7 @@ function UserScales() {
 		`/v2/users/${login}/correction_point_historics`
 	);
 
-	if (isLoading)
-		return (
-			<Grid sx={{ placeItems: "center" }}>
-				<Spinner />
-			</Grid>
-		);
+	if (isLoading) return <Loading />;
 	if (isError) return <>Error</>;
 
 	if (!scales.length)

@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
+
 import useAPI from "lib/useAPI";
-import { getLayout } from "ui/layouts/UserLayout";
 import { User } from "types/User";
+import Loading from "ui/Loading";
 import UserGrid from "ui/UserGrid";
 import UserCardWithDetails from "ui/UserCardWithDetails";
-import { Grid, Spinner } from "@theme-ui/components";
+import { getLayout } from "ui/layouts/UserLayout";
 
 function UserPatronages() {
 	const router = useRouter();
@@ -18,12 +19,7 @@ function UserPatronages() {
 		`/v2/users/${login}`
 	);
 
-	if (isLoading)
-		return (
-			<Grid sx={{ placeItems: "center" }}>
-				<Spinner />
-			</Grid>
-		);
+	if (isLoading) return <Loading />;
 	if (isError) return <>Error</>;
 
 	return (

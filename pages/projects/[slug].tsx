@@ -1,11 +1,13 @@
-import useAPI from "lib/useAPI";
-import { Project } from "types/Project";
-import { useSession } from "next-auth/client";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+
+import { useSession } from "next-auth/client";
+
+import useAPI from "lib/useAPI";
+import { Project } from "types/Project";
+import Loading from "ui/Loading";
 import { getLayout } from "ui/layouts/ProjectLayout";
-import { Grid, Spinner } from "@theme-ui/components";
 
 function ProjectIndex() {
 	const [session] = useSession();
@@ -22,12 +24,7 @@ function ProjectIndex() {
 		isError: any;
 	} = useAPI(`/v2/projects/${slug}`);
 
-	if (isLoading)
-		return (
-			<Grid sx={{ placeItems: "center" }}>
-				<Spinner />
-			</Grid>
-		);
+	if (isLoading) return <Loading />;
 	if (isError) return <>Error</>;
 
 	return (

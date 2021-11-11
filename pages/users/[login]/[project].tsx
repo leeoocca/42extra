@@ -1,9 +1,11 @@
-import { getLayout } from "ui/layouts/ProjectLayout";
-import { useRouter } from "next/router";
 import Link from "next/link";
+import { useRouter } from "next/router";
+
 import useAPI from "lib/useAPI";
+import Loading from "ui/Loading";
 import UserCard from "ui/UserCard";
 import UserGrid from "ui/UserGrid";
+import { getLayout } from "ui/layouts/ProjectLayout";
 
 function ProjectUser() {
 	const router = useRouter();
@@ -13,7 +15,7 @@ function ProjectUser() {
 		`/v2/users/${login}/projects/${project}/teams`
 	);
 
-	if (!teams) return <>Loading...</>;
+	if (!teams) return <Loading />;
 
 	return teams.map((team, i) => (
 		<section key={team.id} className="mb-8">

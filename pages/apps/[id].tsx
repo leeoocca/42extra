@@ -1,8 +1,10 @@
-import UserCard from "ui/UserCard";
-import WebsiteLink from "ui/WebsiteLink";
-import useAPI from "lib/useAPI";
 import Image from "next/image";
 import { useRouter } from "next/router";
+
+import useAPI from "lib/useAPI";
+import UserCard from "ui/UserCard";
+import WebsiteLink from "ui/WebsiteLink";
+import Loading from "ui/Loading";
 
 function AppDetails() {
 	const router = useRouter();
@@ -10,7 +12,7 @@ function AppDetails() {
 
 	const { data: app } = useAPI(`/v2/apps/${id}`);
 
-	if (!app) return <>Loading...</>;
+	if (!app) return <Loading />;
 
 	return (
 		<>

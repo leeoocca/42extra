@@ -1,16 +1,16 @@
 import { useRouter } from "next/router";
-import useAPI from "lib/useAPI";
-import { getLayout } from "ui/layouts/UserLayout";
+
 import { EyeOffIcon } from "@heroicons/react/outline";
+
+import useAPI from "lib/useAPI";
 import CardGrid from "ui/CardGrid";
-import { useSession } from "next-auth/client";
 import AppCard from "ui/AppCard";
-import { Grid, Spinner } from "@theme-ui/components";
+import { getLayout } from "ui/layouts/UserLayout";
+import Loading from "ui/Loading";
 
 function UserApps() {
 	const router = useRouter();
 	const { login } = router.query;
-	const [session] = useSession();
 
 	const {
 		data: apps,
@@ -18,12 +18,7 @@ function UserApps() {
 		isError,
 	} = useAPI(`/v2/users/${login}/apps`);
 
-	if (isLoading)
-		return (
-			<Grid sx={{ placeItems: "center" }}>
-				<Spinner />
-			</Grid>
-		);
+	if (isLoading) return <Loading />;
 	if (isError) return <>Error</>;
 
 	if (!apps.length)

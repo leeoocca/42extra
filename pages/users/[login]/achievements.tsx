@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
+
 import useAPI from "lib/useAPI";
-import { getLayout } from "ui/layouts/UserLayout";
 import { Achievement, User } from "types/User";
-import AchievementCard from "ui/AchievementCard";
+import { getLayout } from "ui/layouts/UserLayout";
 import CardGrid from "ui/CardGrid";
-import { Grid, Spinner } from "@theme-ui/components";
+import AchievementCard from "ui/AchievementCard";
+import Loading from "ui/Loading";
 
 function UserAchievements() {
 	const router = useRouter();
@@ -18,12 +19,7 @@ function UserAchievements() {
 		`/v2/users/${login}`
 	);
 
-	if (isLoading)
-		return (
-			<Grid sx={{ placeItems: "center" }}>
-				<Spinner />
-			</Grid>
-		);
+	if (isLoading) return <Loading />;
 	if (isError) return <>Error</>;
 
 	if (!user.achievements.length)

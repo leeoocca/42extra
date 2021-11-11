@@ -1,12 +1,13 @@
-import { useRouter } from "next/router";
-import useAPI from "lib/useAPI";
-import { getLayout } from "ui/layouts/UserLayout";
 import Link from "next/link";
-import Card from "ui/Card";
-import { User } from "types/User";
+import { useRouter } from "next/router";
+
+import useAPI from "lib/useAPI";
 import getTimeAgo from "lib/getTimeAgo";
+import { User } from "types/User";
+import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
-import { Grid, Spinner } from "@theme-ui/components";
+import { getLayout } from "ui/layouts/UserLayout";
+import Loading from "ui/Loading";
 
 function UserProjects() {
 	const { query } = useRouter();
@@ -15,12 +16,7 @@ function UserProjects() {
 	const { data: user, isLoading }: { data: User; isLoading: boolean } =
 		useAPI(`/v2/users/${login}`);
 
-	if (isLoading)
-		return (
-			<Grid sx={{ placeItems: "center" }}>
-				<Spinner />
-			</Grid>
-		);
+	if (isLoading) return <Loading />;
 	if (!user) return <>Error</>;
 
 	if (!user.projects_users.length)

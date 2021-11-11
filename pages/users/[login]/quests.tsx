@@ -1,11 +1,13 @@
 import { useRouter } from "next/router";
-import useAPI from "lib/useAPI";
-import { getLayout } from "ui/layouts/UserLayout";
-import CardGrid from "ui/CardGrid";
-import Card from "ui/Card";
-import getTimeAgo from "lib/getTimeAgo";
+
 import { Heading } from "theme-ui";
-import { Grid, Spinner } from "@theme-ui/components";
+
+import useAPI from "lib/useAPI";
+import getTimeAgo from "lib/getTimeAgo";
+import Loading from "ui/Loading";
+import Card from "ui/Card";
+import CardGrid from "ui/CardGrid";
+import { getLayout } from "ui/layouts/UserLayout";
 
 const Quest = ({ quest }) => (
 	<Card>
@@ -38,12 +40,7 @@ function UserQuests() {
 		isError,
 	} = useAPI(`/v2/users/${login}/quests_users`);
 
-	if (isLoading)
-		return (
-			<Grid sx={{ placeItems: "center" }}>
-				<Spinner />
-			</Grid>
-		);
+	if (isLoading) return <Loading />;
 	if (isError) return <>Error</>;
 
 	if (!quests.length)

@@ -1,10 +1,13 @@
-import { useRouter } from "next/router";
-import { getLayout } from "ui/layouts/UserLayout";
-import useAPI from "lib/useAPI";
 import Link from "next/link";
-import { User } from "types/User";
-import getTimeAgo from "lib/getTimeAgo";
+import { useRouter } from "next/router";
+
 import prettyMilliseconds from "pretty-ms";
+
+import useAPI from "lib/useAPI";
+import getTimeAgo from "lib/getTimeAgo";
+import { User } from "types/User";
+import Loading from "ui/Loading";
+import { getLayout } from "ui/layouts/UserLayout";
 // import getCampusFromId from "lib/getCampusFromId";
 
 function getCurrentLocation(locations: any): string {
@@ -43,7 +46,7 @@ function UserOverview() {
 	const { data: coalition } = useAPI(`/v2/users/${login}/coalitions`);
 	const { data: locations } = useAPI(`/v2/users/${login}/locations`);
 
-	if (!user) return <>Loading...</>;
+	if (!user) return <Loading />;
 
 	const details = [
 		{ name: "Email", value: user.email, href: `mailto:${user.email}` },

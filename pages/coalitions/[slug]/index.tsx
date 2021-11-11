@@ -1,7 +1,9 @@
-import UserCardWithDetails from "ui/UserCardWithDetails";
-import UserGrid from "ui/UserGrid";
-import useAPI from "lib/useAPI";
 import { useRouter } from "next/router";
+
+import useAPI from "lib/useAPI";
+import Loading from "ui/Loading";
+import UserGrid from "ui/UserGrid";
+import UserCardWithDetails from "ui/UserCardWithDetails";
 
 function CoalitionIndex() {
 	const router = useRouter();
@@ -10,7 +12,7 @@ function CoalitionIndex() {
 	const { data: coalition } = useAPI(`/v2/coalitions/${slug}`);
 	const { data: users } = useAPI(`/v2/coalitions/${slug}/coalitions_users`);
 
-	if (!coalition) return <>Loading...</>;
+	if (!coalition) return <Loading />;
 
 	document.documentElement.style.setProperty("--nav", coalition.color + "DD");
 

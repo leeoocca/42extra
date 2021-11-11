@@ -1,5 +1,7 @@
-import useAPI from "lib/useAPI";
 import { useRouter } from "next/router";
+
+import useAPI from "lib/useAPI";
+import Loading from "ui/Loading";
 
 function Cursus() {
 	const router = useRouter();
@@ -12,7 +14,7 @@ function Cursus() {
 	const { data: events } = useAPI(`/v2/cursus/${slug}/events`);
 	const { data: achievements } = useAPI(`/v2/cursus/${slug}/achievements`);
 
-	if (!cursus) return <>Loading...</>;
+	if (!cursus) return <Loading />;
 
 	return (
 		<>

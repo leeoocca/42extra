@@ -1,7 +1,9 @@
-import WebsiteLink from "ui/WebsiteLink";
-import useAPI from "lib/useAPI";
 import Link from "next/link";
 import { useRouter } from "next/router";
+
+import useAPI from "lib/useAPI";
+import Loading from "ui/Loading";
+import WebsiteLink from "ui/WebsiteLink";
 
 function CampusIndex() {
 	const router = useRouter();
@@ -9,7 +11,7 @@ function CampusIndex() {
 
 	const { data: c } = useAPI(`/v2/campus/${id}`);
 
-	if (!c) return <>Loading...</>;
+	if (!c) return <Loading />;
 
 	return (
 		<>

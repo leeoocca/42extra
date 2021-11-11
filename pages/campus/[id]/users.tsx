@@ -1,9 +1,10 @@
-import UserCard from "ui/UserCard";
-import UserGrid from "ui/UserGrid";
-import useAPI from "lib/useAPI";
 import { User } from "next-auth";
 import { useRouter } from "next/router";
-import { Grid, Spinner } from "@theme-ui/components";
+
+import useAPI from "lib/useAPI";
+import UserCard from "ui/UserCard";
+import UserGrid from "ui/UserGrid";
+import Loading from "ui/Loading";
 
 function CampusesIndex() {
 	const router = useRouter();
@@ -12,12 +13,7 @@ function CampusesIndex() {
 	const { data: users, isLoading }: { data: User[]; isLoading: boolean } =
 		useAPI(`/v2/campus/${id}/users`);
 
-	if (isLoading)
-		return (
-			<Grid sx={{ placeItems: "center" }}>
-				<Spinner />
-			</Grid>
-		);
+	if (isLoading) return <Loading />;
 
 	return (
 		<>

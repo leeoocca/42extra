@@ -1,11 +1,13 @@
 import { useRouter } from "next/router";
-import useAPI from "lib/useAPI";
-import { getLayout } from "ui/layouts/UserLayout";
+
 import { EyeOffIcon } from "@heroicons/react/outline";
+
+import useAPI from "lib/useAPI";
 import { User } from "types/User";
-import CardGrid from "ui/CardGrid";
 import Card from "ui/Card";
-import { Grid, Spinner } from "@theme-ui/components";
+import CardGrid from "ui/CardGrid";
+import { getLayout } from "ui/layouts/UserLayout";
+import Loading from "ui/Loading";
 
 function UserPartnerships() {
 	const router = useRouter();
@@ -19,12 +21,7 @@ function UserPartnerships() {
 		`/v2/users/${login}`
 	);
 
-	if (isLoading)
-		return (
-			<Grid sx={{ placeItems: "center" }}>
-				<Spinner />
-			</Grid>
-		);
+	if (isLoading) return <Loading />;
 
 	if (isError) return <>Error</>;
 
