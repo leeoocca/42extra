@@ -6,7 +6,7 @@ function VariableControl({ variable }: { variable: string }) {
 		`--theme-ui-colors-${variable}`
 	);
 
-	const [value, setValue] = useState("");
+	const [value, setValue] = useState(null);
 
 	useEffect(() => {
 		const s = new Option().style;
@@ -18,16 +18,23 @@ function VariableControl({ variable }: { variable: string }) {
 	}, [value]);
 
 	return (
-		<Flex>
+		<Flex
+			sx={{ alignItems: "center", justifyContent: "center", mb: "1rem" }}
+		>
 			<Box
-				sx={{ backgroundColor: value, width: "3rem", height: "3rem" }}
+				sx={{
+					backgroundColor: value || def,
+					width: "3rem",
+					height: "3rem",
+					border: "1px #fff solid",
+					mr: ".5rem",
+				}}
 			/>
 			<Box>
 				<Label>{variable}</Label>
 				<Input
 					placeholder={def}
 					onChange={(event) => setValue(event.target.value)}
-					mb="1rem"
 				/>
 			</Box>
 		</Flex>
@@ -36,8 +43,10 @@ function VariableControl({ variable }: { variable: string }) {
 
 export default function ThemeEditor() {
 	return (
-		<Box sx={{ width: "50%" }}>
-			<Heading mb="1rem">Theme</Heading>
+		<Box>
+			<Heading mb="1rem" sx={{ textAlign: "center" }}>
+				Theme
+			</Heading>
 			<VariableControl variable="background" />
 			<VariableControl variable="text" />
 			<VariableControl variable="muted" />
