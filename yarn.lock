@@ -417,6 +417,11 @@
   resolved "https://registry.yarnpkg.com/@panva/asn1.js/-/asn1.js-1.0.0.tgz#dd55ae7b8129e02049f009408b97c61ccf9032f6"
   integrity sha512-UdkG3mLEqXgnlKsWanWcgb6dOjUzJ+XC5f+aWw30qrtjxeNUSfKX1cd5FBzOaXQumoe9nIqeZUvrRJS03HCCtw==
 
+"@reach/observe-rect@^1.1.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@reach/observe-rect/-/observe-rect-1.2.0.tgz#d7a6013b8aafcc64c778a0ccb83355a11204d3b2"
+  integrity sha512-Ba7HmkFgfQxZqqaeIWWkNK0rEhpxVQHIoVyW1YDSkGsGIXzcaW4deC8B0pZrNSSyLTdIk7y+5olKt5+g0GmFIQ==
+
 "@reach/portal@^0.16.0":
   version "0.16.2"
   resolved "https://registry.yarnpkg.com/@reach/portal/-/portal-0.16.2.tgz#ca83696215ee03acc2bb25a5ae5d8793eaaf2f64"
@@ -3065,14 +3070,15 @@ jws@^3.2.2:
     jwa "^1.4.1"
     safe-buffer "^5.0.1"
 
-kbar@0.1.0-beta.14:
-  version "0.1.0-beta.14"
-  resolved "https://registry.yarnpkg.com/kbar/-/kbar-0.1.0-beta.14.tgz#576f39beec2c5e046256004bd054d106f9c6be45"
-  integrity sha512-20Oauie3wam2ZOY/Im5csoHyiskv5B+Gi9QRoj0buj2kewN1S2rKIB/nSvVzzvnL/QZ8EHSVK+PAWqKzzdrqIw==
+kbar@0.1.0-beta.20:
+  version "0.1.0-beta.20"
+  resolved "https://registry.yarnpkg.com/kbar/-/kbar-0.1.0-beta.20.tgz#3f44ddf684e72b28f0fbeca1bdb24585b207eb52"
+  integrity sha512-+zKMBpZ9PJ8/jcImT3y2jA30EKAKZHGqCxmmwsUTGAfFO+BgiYK5SSmOZDoYYCPmR9cK4n0TPQpEMiKBC7Q9ag==
   dependencies:
     "@reach/portal" "^0.16.0"
     fast-equals "^2.0.3"
     match-sorter "^6.3.0"
+    react-virtual "^2.8.2"
 
 keyv@^3.0.0:
   version "3.1.0"
@@ -4106,6 +4112,13 @@ react-transition-group@2.9.0:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
+
+react-virtual@^2.8.2:
+  version "2.8.2"
+  resolved "https://registry.yarnpkg.com/react-virtual/-/react-virtual-2.8.2.tgz#e204b30c57c426bd260ed1ac49f8b1099e92b7cb"
+  integrity sha512-CwnvF/3Jev4M14S9S7fgzGc0UFQ/bG/VXbrUCq+AB0zH8WGnVDTG0lQT7O3jPY76YLPzTHBu+AMl64Stp8+exg==
+  dependencies:
+    "@reach/observe-rect" "^1.1.0"
 
 react@17.0.2:
   version "17.0.2"

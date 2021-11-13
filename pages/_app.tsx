@@ -1,18 +1,20 @@
 import "styles/globals.css";
-import { CSSProperties } from "react";
+import { CSSProperties, useMemo } from "react";
 import Router from "next/router";
 
 import {
-	Action,
+	BaseAction,
 	KBarAnimator,
 	KBarPortal,
 	KBarPositioner,
 	KBarProvider,
 	KBarResults,
 	KBarSearch,
+	useMatches,
 } from "kbar";
+import { NO_GROUP } from "kbar/lib/useMatches";
 import { SWRConfig } from "swr";
-import { ThemeProvider } from "theme-ui";
+import { ThemeProvider, Text, Flex } from "theme-ui";
 import ProgressBar from "@badrap/bar-of-progress";
 import { Provider as SessionProvider } from "next-auth/client";
 
@@ -22,7 +24,7 @@ import { getLayout as getSimpleLayout } from "ui/layouts/SimpleLayout";
 
 const progress = new ProgressBar({
 	size: 2,
-	color: "--theme-ui-colors-primary",
+	color: "var(--theme-ui-colors-primary)",
 	className: "bar-of-progress",
 	delay: 0,
 });
@@ -45,13 +47,6 @@ const searchStyle: CSSProperties = {
 	color: "var(--theme-ui-colors-text)",
 };
 
-const resultsStyle: CSSProperties = {
-	maxHeight: 400,
-	overflow: "auto",
-	background: "var(--theme-ui-colors-background)",
-	color: "var(--theme-ui-colors-text)",
-};
-
 const animatorStyle: CSSProperties = {
 	maxWidth: "500px",
 	width: "100%",
@@ -65,12 +60,13 @@ const animatorStyle: CSSProperties = {
 export default function MyApp({ Component, pageProps }) {
 	const getLayout = Component.getLayout || getSimpleLayout;
 
-	const actions: Action[] = [
+	const actions: BaseAction[] = [
 		{
 			id: "home",
 			name: "Home",
 			shortcut: ["h"],
 			keywords: "",
+			section: "Navigation",
 			perform: () => Router.push("/"),
 		},
 		{
@@ -78,6 +74,7 @@ export default function MyApp({ Component, pageProps }) {
 			name: "Users",
 			shortcut: ["u"],
 			keywords: "login",
+			section: "Navigation",
 			perform: () => Router.push("/users"),
 		},
 		{
@@ -85,6 +82,7 @@ export default function MyApp({ Component, pageProps }) {
 			name: "Campuses",
 			shortcut: [],
 			keywords: "",
+			section: "Navigation",
 			perform: () => Router.push("/campus"),
 		},
 		{
@@ -92,6 +90,7 @@ export default function MyApp({ Component, pageProps }) {
 			name: "Coalitions",
 			shortcut: [],
 			keywords: "",
+			section: "Navigation",
 			perform: () => Router.push("/coalitions"),
 		},
 		{
@@ -99,6 +98,7 @@ export default function MyApp({ Component, pageProps }) {
 			name: "Cursuses",
 			shortcut: [],
 			keywords: "",
+			section: "Navigation",
 			perform: () => Router.push("/cursus"),
 		},
 		{
@@ -106,7 +106,40 @@ export default function MyApp({ Component, pageProps }) {
 			name: "Apps",
 			shortcut: [],
 			keywords: "",
+			section: "Navigation",
 			perform: () => Router.push("/apps"),
+		},
+		{
+			id: "intra",
+			name: "Intra",
+			shortcut: [],
+			keywords: "",
+			section: "External",
+			perform: () =>
+				window.open(
+					"https://intra.42.fr",
+					"_blank noopener noreferrer"
+				),
+		},
+		{
+			id: "slack",
+			name: "Slack",
+			shortcut: [],
+			keywords: "",
+			section: "External",
+			perform: () =>
+				window.open(
+					"https://42born2code.slack.com",
+					"_blank noopener noreferrer"
+				),
+		},
+		{
+			id: "theme",
+			name: "Theme customizer",
+			shortcut: ["t"],
+			keywords: "",
+			section: "Preferences",
+			perform: () => Router.push("/theme"),
 		},
 	];
 
@@ -134,7 +167,7 @@ export default function MyApp({ Component, pageProps }) {
 							<KBarPositioner>
 								<KBarAnimator style={animatorStyle}>
 									<KBarSearch style={searchStyle} />
-									<KBarResults style={resultsStyle} />
+									<RenderResults />
 								</KBarAnimator>
 							</KBarPositioner>
 						</KBarPortal>
@@ -143,5 +176,75 @@ export default function MyApp({ Component, pageProps }) {
 				</ThemeProvider>
 			</SWRConfig>
 		</SessionProvider>
+	);
+}
+
+function RenderResults() {
+	const groups = useMatches();
+	const flattened = useMemo(
+		() =>
+			groups.reduce((acc, curr) => {
+				acc.push(curr.name);
+				acc.push(...curr.actions);
+				return acc;
+			}, []),
+		[groups]
+	);
+
+	return (
+		<KBarResults
+			items={flattened.filter((i) => i !== NO_GROUP)}
+			onRender={({ item, active }) =>
+				typeof item === "string" ? (
+					<Text
+						sx={{
+							textTransform: "uppercase",
+							opacity: "75%",
+							fontSize: "75%",
+							mx: 3,
+						}}
+					>
+						{item}
+					</Text>
+				) : (
+					<Flex
+						sx={{
+							backgroundColor: active ? "muted" : "transparent",
+							maxHeight: 400,
+							overflow: "auto",
+							justifyContent: "space-between",
+						}}
+					>
+						<Text sx={{ mx: 3 }}>{item.name}</Text>
+						{item.shortcut?.length ? (
+							<div
+								aria-hidden
+								style={{
+									display: "grid",
+									gridAutoFlow: "column",
+									gap: "4px",
+								}}
+							>
+								{item.shortcut.map((sc) => (
+									<Text
+										key={sc}
+										as="kbd"
+										sx={{
+											padding: "4px 6px",
+											background: "rgba(3 3 3 / .1)",
+											borderRadius: "4px",
+											fontSize: 14,
+											mr: 3,
+										}}
+									>
+										{sc}
+									</Text>
+								))}
+							</div>
+						) : null}
+					</Flex>
+				)
+			}
+		/>
 	);
 }
