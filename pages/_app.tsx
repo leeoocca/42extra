@@ -134,6 +134,30 @@ export default function MyApp({ Component, pageProps }) {
 				),
 		},
 		{
+			id: "awesome",
+			name: "Awesome 42",
+			shortcut: ["a", "w"],
+			keywords: "",
+			section: "External",
+			perform: () =>
+				window.open(
+					"https://github.com/leeoocca/awesome-42",
+					"_blank noopener noreferrer"
+				),
+		},
+		{
+			id: "github",
+			name: "GitHub",
+			shortcut: ["g", "h"],
+			keywords: "repository source code",
+			section: "External",
+			perform: () =>
+				window.open(
+					"https://github.com/leeoocca/42extra",
+					"_blank noopener noreferrer"
+				),
+		},
+		{
 			id: "theme",
 			name: "Theme customizer",
 			shortcut: ["t"],
@@ -199,9 +223,9 @@ function RenderResults() {
 					<Text
 						sx={{
 							textTransform: "uppercase",
-							opacity: "75%",
-							fontSize: "75%",
-							mx: 3,
+							padding: "8px 16px",
+							fontSize: "10px",
+							opacity: 0.5,
 						}}
 					>
 						{item}
@@ -210,12 +234,17 @@ function RenderResults() {
 					<Flex
 						sx={{
 							backgroundColor: active ? "muted" : "transparent",
-							maxHeight: 400,
-							overflow: "auto",
+							// maxHeight: 400,
+							// overflow: "auto",
 							justifyContent: "space-between",
+							padding: "12px 16px",
+							borderLeft: "2px solid",
+							borderLeftColor: active ? "text" : "transparent",
+							alignItems: "center",
+							cursor: "pointer",
 						}}
 					>
-						<Text sx={{ mx: 3 }}>{item.name}</Text>
+						<Text>{item.name}</Text>
 						{item.shortcut?.length ? (
 							<div
 								aria-hidden
@@ -231,10 +260,10 @@ function RenderResults() {
 										as="kbd"
 										sx={{
 											padding: "4px 6px",
-											background: "rgba(3 3 3 / .1)",
+											background:
+												"rgba(255 255 255 / .1)",
 											borderRadius: "4px",
 											fontSize: 14,
-											mr: 3,
 										}}
 									>
 										{sc}
