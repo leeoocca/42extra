@@ -16,7 +16,7 @@ import { NO_GROUP } from "kbar/lib/useMatches";
 import { SWRConfig } from "swr";
 import { ThemeProvider, Text, Flex } from "theme-ui";
 import ProgressBar from "@badrap/bar-of-progress";
-import { Provider as SessionProvider } from "next-auth/client";
+import { Provider as SessionProvider, signOut } from "next-auth/client";
 
 import theme from "lib/theme";
 import fetcher from "lib/fetcher";
@@ -80,40 +80,30 @@ export default function MyApp({ Component, pageProps }) {
 		{
 			id: "campus",
 			name: "Campuses",
-			shortcut: [],
-			keywords: "",
 			section: "Navigation",
 			perform: () => Router.push("/campus"),
 		},
 		{
 			id: "coalitions",
 			name: "Coalitions",
-			shortcut: [],
-			keywords: "",
 			section: "Navigation",
 			perform: () => Router.push("/coalitions"),
 		},
 		{
 			id: "cursus",
 			name: "Cursuses",
-			shortcut: [],
-			keywords: "",
 			section: "Navigation",
 			perform: () => Router.push("/cursus"),
 		},
 		{
 			id: "apps",
 			name: "Apps",
-			shortcut: [],
-			keywords: "",
 			section: "Navigation",
 			perform: () => Router.push("/apps"),
 		},
 		{
 			id: "intra",
 			name: "Intra",
-			shortcut: [],
-			keywords: "",
 			section: "External",
 			perform: () =>
 				window.open(
@@ -124,8 +114,6 @@ export default function MyApp({ Component, pageProps }) {
 		{
 			id: "slack",
 			name: "Slack",
-			shortcut: [],
-			keywords: "",
 			section: "External",
 			perform: () =>
 				window.open(
@@ -137,7 +125,7 @@ export default function MyApp({ Component, pageProps }) {
 			id: "awesome",
 			name: "Awesome 42",
 			shortcut: ["a", "w"],
-			keywords: "",
+			keywords: "list resources",
 			section: "External",
 			perform: () =>
 				window.open(
@@ -159,11 +147,17 @@ export default function MyApp({ Component, pageProps }) {
 		},
 		{
 			id: "theme",
-			name: "Theme customizer",
+			name: "Theme",
 			shortcut: ["t"],
-			keywords: "",
-			section: "Preferences",
+			section: "You",
 			perform: () => Router.push("/theme"),
+		},
+		{
+			id: "signOut",
+			name: "Sign out",
+			keywords: "logout",
+			section: "You",
+			perform: () => signOut(),
 		},
 	];
 

@@ -34,7 +34,7 @@ export default function MainLayout({ children }: Props) {
 		</Box>
 	);
 
-	if (!loading && !session?.user) signIn("42");
+	if (!loading && !session?.user) signIn();
 
 	return (
 		<>
