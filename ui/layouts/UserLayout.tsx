@@ -1,11 +1,14 @@
-import UserHeader from "ui/headers/UserHeader";
-import NavLink from "ui/NavLink";
-import useAPI from "lib/useAPI";
-import { getUserNavLinks } from "lib/NavLinks";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { getLayout as getMainLayout } from "./MainLayout";
+
+import { BaseAction, useRegisterActions } from "kbar";
+
+import useAPI from "lib/useAPI";
 import hexToRGB from "lib/hexToRGB";
+import { getUserNavLinks } from "lib/NavLinks";
+import NavLink from "ui/NavLink";
+import UserHeader from "ui/headers/UserHeader";
+import { getLayout as getMainLayout } from "./MainLayout";
 
 function UserLayout({ children }: { children: React.ReactNode }) {
 	const router = useRouter();
@@ -33,6 +36,80 @@ function UserLayout({ children }: { children: React.ReactNode }) {
 	let title = login;
 	if (pageName !== "[login]") title = `${login}'s ${pageName}`;
 	title += " – 42extra";
+
+	const section = `${login}'s profile`;
+
+	const actions: BaseAction[] = [
+		{
+			id: "userOverview",
+			name: "Overview",
+			shortcut: ["o"],
+			section: section,
+			perform: () => router.push(`/users/${login}`),
+		},
+		{
+			id: "userProjects",
+			name: "Projects",
+			shortcut: ["p"],
+			keywords: "cursus",
+			section: section,
+			perform: () => router.push(`/users/${login}/projects`),
+		},
+		{
+			id: "userQuests",
+			name: "Quests",
+			shortcut: ["q"],
+			keywords: "common core",
+			section: section,
+			perform: () => router.push(`/users/${login}/quests`),
+		},
+		{
+			id: "userAchievements",
+			name: "Achievements",
+			shortcut: ["a"],
+			keywords: "",
+			section: section,
+			perform: () => router.push(`/users/${login}/achievements`),
+		},
+		{
+			id: "userLocations",
+			name: "Locations",
+			shortcut: ["l"],
+			keywords: "cluster place",
+			section: section,
+			perform: () => router.push(`/users/${login}/locations`),
+		},
+		{
+			id: "userScales",
+			name: "Scales",
+			keywords: "evaluations",
+			section: section,
+			perform: () => router.push(`/users/${login}/scales`),
+		},
+		{
+			id: "userPatronages",
+			name: "Patronages",
+			keywords: "",
+			section: section,
+			perform: () => router.push(`/users/${login}/patronages`),
+		},
+		{
+			id: "userPartnerships",
+			name: "Partnerships",
+			keywords: "company companies",
+			section: section,
+			perform: () => router.push(`/users/${login}/partnerships`),
+		},
+		{
+			id: "userApps",
+			name: "Apps",
+			keywords: "",
+			section: section,
+			perform: () => router.push(`/users/${login}/apps`),
+		},
+	];
+
+	useRegisterActions(actions);
 
 	return (
 		<>
