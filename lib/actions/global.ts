@@ -44,6 +44,13 @@ export const globalActions: BaseAction[] = [
 		perform: () => router.push("/apps"),
 	},
 	{
+		id: "copyURL",
+		name: "Copy URL",
+		shortcut: ["c", "p"],
+		section: "Tools",
+		perform: () => navigator.clipboard.writeText(window.location.href),
+	},
+	{
 		id: "intra",
 		name: "42 Intranet",
 		section: "External",
