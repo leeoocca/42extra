@@ -3,7 +3,6 @@ import { CSSProperties, useMemo } from "react";
 import Router from "next/router";
 
 import {
-	BaseAction,
 	KBarAnimator,
 	KBarPortal,
 	KBarPositioner,
@@ -20,6 +19,7 @@ import { Provider as SessionProvider, signOut } from "next-auth/client";
 
 import theme from "lib/theme";
 import fetcher from "lib/fetcher";
+import { globalActions } from "lib/actions";
 import { getLayout as getSimpleLayout } from "ui/layouts/SimpleLayout";
 
 const progress = new ProgressBar({
@@ -60,107 +60,6 @@ const animatorStyle: CSSProperties = {
 export default function MyApp({ Component, pageProps }) {
 	const getLayout = Component.getLayout || getSimpleLayout;
 
-	const actions: BaseAction[] = [
-		{
-			id: "home",
-			name: "Home",
-			shortcut: ["h"],
-			keywords: "",
-			section: "Navigation",
-			perform: () => Router.push("/"),
-		},
-		{
-			id: "users",
-			name: "Users",
-			shortcut: ["u"],
-			keywords: "login",
-			section: "Navigation",
-			perform: () => Router.push("/users"),
-		},
-		{
-			id: "campus",
-			name: "Campuses",
-			section: "Navigation",
-			perform: () => Router.push("/campus"),
-		},
-		{
-			id: "coalitions",
-			name: "Coalitions",
-			section: "Navigation",
-			perform: () => Router.push("/coalitions"),
-		},
-		{
-			id: "cursus",
-			name: "Cursuses",
-			section: "Navigation",
-			perform: () => Router.push("/cursus"),
-		},
-		{
-			id: "apps",
-			name: "Apps",
-			section: "Navigation",
-			perform: () => Router.push("/apps"),
-		},
-		{
-			id: "intra",
-			name: "Intra",
-			section: "External",
-			perform: () =>
-				window.open(
-					"https://intra.42.fr",
-					"_blank noopener noreferrer"
-				),
-		},
-		{
-			id: "slack",
-			name: "Slack",
-			section: "External",
-			perform: () =>
-				window.open(
-					"https://42born2code.slack.com",
-					"_blank noopener noreferrer"
-				),
-		},
-		{
-			id: "awesome",
-			name: "Awesome 42",
-			shortcut: ["a", "w"],
-			keywords: "list resources",
-			section: "External",
-			perform: () =>
-				window.open(
-					"https://github.com/leeoocca/awesome-42",
-					"_blank noopener noreferrer"
-				),
-		},
-		{
-			id: "github",
-			name: "GitHub",
-			shortcut: ["g", "h"],
-			keywords: "repository source code",
-			section: "External",
-			perform: () =>
-				window.open(
-					"https://github.com/leeoocca/42extra",
-					"_blank noopener noreferrer"
-				),
-		},
-		{
-			id: "theme",
-			name: "Theme",
-			shortcut: ["t"],
-			section: "You",
-			perform: () => Router.push("/theme"),
-		},
-		{
-			id: "signOut",
-			name: "Sign out",
-			keywords: "logout",
-			section: "You",
-			perform: () => signOut(),
-		},
-	];
-
 	return (
 		<SessionProvider
 			session={pageProps.session}
@@ -180,7 +79,7 @@ export default function MyApp({ Component, pageProps }) {
 				}}
 			>
 				<ThemeProvider theme={theme}>
-					<KBarProvider actions={actions}>
+					<KBarProvider actions={globalActions}>
 						<KBarPortal>
 							<KBarPositioner>
 								<KBarAnimator style={animatorStyle}>
