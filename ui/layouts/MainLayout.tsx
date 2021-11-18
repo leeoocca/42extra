@@ -1,10 +1,14 @@
+import { useEffect, useState } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useSession, signIn } from "next-auth/client";
+
+import { Box } from "@theme-ui/components";
+import { BaseAction, useKBar, useRegisterActions } from "kbar";
 
 import Footer from "ui/Footer";
 import Loader from "ui/Loader";
 import StatusBar from "ui/StatusBar";
-import { Box } from "@theme-ui/components";
 
 interface Props {
 	children: React.ReactNode;
@@ -12,6 +16,33 @@ interface Props {
 
 export default function MainLayout({ children }: Props) {
 	const [session, loading] = useSession();
+
+	const router = useRouter();
+
+	const { queryValue } = useKBar((state) => ({
+		queryValue: state.searchQuery,
+	}));
+	const [user, setUser] = useState("");
+
+	useEffect(() => {
+		setUser(queryValue);
+	}, [queryValue]);
+
+	const userSearch: BaseAction[] = [
+		{
+			id: "userSearch",
+			name: queryValue.length
+				? `Go to ${queryValue}'s profile`
+				: "Start typing an user's login",
+			parent: "users",
+			perform: () =>
+				router.push(
+					queryValue.length ? `/users/${queryValue}` : "/users"
+				),
+		},
+	];
+
+	useRegisterActions(userSearch, [user]);
 
 	var content = (
 		<Box

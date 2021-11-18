@@ -17,7 +17,6 @@ export const globalActions: BaseAction[] = [
 		shortcut: ["u"],
 		keywords: "login",
 		section: "Navigation",
-		perform: () => router.push("/users"),
 	},
 	{
 		id: "campus",
