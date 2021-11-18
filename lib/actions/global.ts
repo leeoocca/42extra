@@ -12,6 +12,17 @@ export const globalActions: BaseAction[] = [
 		perform: () => router.push("/"),
 	},
 	{
+		id: "me",
+		name: "Your profile",
+		shortcut: ["m", "e"],
+		section: "Navigation",
+		perform: () => {
+			fetch("/api/auth/session")
+				.then((r) => r.json())
+				.then((r) => router.push(`/users/${r.user.login}`));
+		},
+	},
+	{
 		id: "users",
 		name: "Users",
 		shortcut: ["u"],
