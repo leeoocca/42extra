@@ -50,8 +50,13 @@ function UserQuests() {
 			</>
 		);
 
-	const validated = quests.filter((quest) => quest.validated_at);
-	const not_validated = quests.filter((quest) => !quest.validated_at);
+	let validated = [],
+		not_validated = [];
+
+	quests.forEach((q) => {
+		if (q.validated_at) validated.push(q);
+		else not_validated.push(q);
+	});
 
 	return (
 		<>
