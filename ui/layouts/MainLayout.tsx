@@ -19,7 +19,7 @@ export default function MainLayout({ children }: Props) {
 
 	const router = useRouter();
 
-	const { queryValue } = useKBar((state) => ({
+	const { queryValue, query } = useKBar((state) => ({
 		queryValue: state.searchQuery,
 	}));
 	const [user, setUser] = useState("");
@@ -50,6 +50,9 @@ export default function MainLayout({ children }: Props) {
 				display: "flex",
 				flexDirection: "column",
 				minHeight: "100vh",
+			}}
+			onTouchStart={(e) => {
+				if (e.touches.length == 2) query.toggle();
 			}}
 		>
 			<StatusBar />
