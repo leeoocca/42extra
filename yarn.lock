@@ -3070,10 +3070,10 @@ jws@^3.2.2:
     jwa "^1.4.1"
     safe-buffer "^5.0.1"
 
-kbar@0.1.0-beta.20:
-  version "0.1.0-beta.20"
-  resolved "https://registry.yarnpkg.com/kbar/-/kbar-0.1.0-beta.20.tgz#3f44ddf684e72b28f0fbeca1bdb24585b207eb52"
-  integrity sha512-+zKMBpZ9PJ8/jcImT3y2jA30EKAKZHGqCxmmwsUTGAfFO+BgiYK5SSmOZDoYYCPmR9cK4n0TPQpEMiKBC7Q9ag==
+kbar@0.1.0-beta.21:
+  version "0.1.0-beta.21"
+  resolved "https://registry.yarnpkg.com/kbar/-/kbar-0.1.0-beta.21.tgz#9035490635d43d3e6d459a18e73cf517bdf43a72"
+  integrity sha512-+UQ0tfiREfmGdtUIS5bqLGz5BwhYzvZ/d6k2uwGe/odyrIfs86Rh8VzlpD4e6feNpYDhFc+yp2lCMAp9FKO/qA==
   dependencies:
     "@reach/portal" "^0.16.0"
     fast-equals "^2.0.3"
