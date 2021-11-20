@@ -1,7 +1,5 @@
 import { useRouter } from "next/router";
 
-import { EyeOffIcon } from "@heroicons/react/outline";
-
 import useAPI from "lib/useAPI";
 import CardGrid from "ui/CardGrid";
 import AppCard from "ui/AppCard";
@@ -24,7 +22,6 @@ function UserApps() {
 	if (!apps.length)
 		return (
 			<div className="flex flex-col items-center w-full mt-4">
-				<EyeOffIcon className="w-32 h-32 mb-2" />
 				<p>
 					No apps from <span className="font-bold">{login}</span> yet.
 				</p>

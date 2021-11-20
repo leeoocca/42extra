@@ -1,7 +1,5 @@
 import { useRouter } from "next/router";
 
-import { EyeOffIcon } from "@heroicons/react/outline";
-
 import useAPI from "lib/useAPI";
 import { User } from "types/User";
 import Card from "ui/Card";
@@ -28,7 +26,6 @@ function UserPartnerships() {
 	if (!user.partnerships.length)
 		return (
 			<div className="flex flex-col items-center w-full mt-4">
-				<EyeOffIcon className="w-32 h-32 mb-2" />
 				<p>
 					No partnerships for{" "}
 					<span className="font-bold">{login}</span> yet.
