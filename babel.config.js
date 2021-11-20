@@ -4,12 +4,11 @@ module.exports = {
 			"next/babel",
 			{
 				"preset-react": {
-					importSource: "theme-ui", // or '@theme-ui/core'
+					importSource: "theme-ui",
 					runtime: "automatic",
 					throwIfNamespace: false,
 				},
 			},
 		],
 	],
-	// ...
 };
