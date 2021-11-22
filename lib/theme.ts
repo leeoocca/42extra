@@ -3,7 +3,7 @@ import { Theme } from "@theme-ui/css";
 const theme: Theme = {
 	colors: {
 		text: "#fff",
-		background: "#060606", // #000
+		background: "#121212",
 		primary: "#22D3EE", // #3cf
 		secondary: "#e0f",
 		muted: "#191919", // #333
