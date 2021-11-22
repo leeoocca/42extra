@@ -35,7 +35,7 @@ const animatorStyle: CSSProperties = {
 export default function CommandBar() {
 	return (
 		<KBarPortal>
-			<KBarPositioner>
+			<KBarPositioner className="kbar-positioner">
 				<KBarAnimator style={animatorStyle}>
 					<KBarSearch style={searchStyle} />
 					<RenderResults />

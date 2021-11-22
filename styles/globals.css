@@ -19,3 +19,7 @@
 	font-named-instance: "Regular";
 	src: url("../fonts/Inter.var.woff2") format("woff2");
 }
+
+.kbar-positioner {
+	background-color: rgba(0 0 0 / 0.25);
+}
