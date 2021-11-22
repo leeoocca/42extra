@@ -1,6 +1,7 @@
+import router from "next/router";
+
 import { BaseAction } from "kbar";
 import { signOut } from "next-auth/client";
-import router from "next/router";
 
 export const globalActions: BaseAction[] = [
 	{
