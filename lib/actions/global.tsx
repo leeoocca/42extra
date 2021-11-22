@@ -2,6 +2,24 @@ import router from "next/router";
 
 import { BaseAction } from "kbar";
 import { signOut } from "next-auth/client";
+import {
+	BookOpen,
+	Flag,
+	GitHub,
+	MapPin,
+	Home,
+	Link,
+	LogOut,
+	Slack,
+	Star,
+	User,
+	Users,
+	Hexagon,
+	Thermometer,
+} from "react-feather";
+
+import { ICON_SIZE } from "./constants";
+import Logo from "ui/Logo";
 
 export const globalActions: BaseAction[] = [
 	{
@@ -10,6 +28,7 @@ export const globalActions: BaseAction[] = [
 		shortcut: ["h"],
 		keywords: "",
 		section: "Navigation",
+		icon: <Home size={ICON_SIZE} />,
 		perform: () => router.push("/"),
 	},
 	{
@@ -17,6 +36,7 @@ export const globalActions: BaseAction[] = [
 		name: "Your profile",
 		shortcut: ["m", "e"],
 		section: "Navigation",
+		icon: <User size={ICON_SIZE} />,
 		perform: () => {
 			fetch("/api/auth/session")
 				.then((r) => r.json())
@@ -29,29 +49,34 @@ export const globalActions: BaseAction[] = [
 		shortcut: ["u"],
 		keywords: "login",
 		section: "Navigation",
+		icon: <Users size={ICON_SIZE} />,
 	},
 	{
 		id: "campus",
 		name: "Campuses",
 		section: "Navigation",
+		icon: <MapPin size={ICON_SIZE} />,
 		perform: () => router.push("/campus"),
 	},
 	{
 		id: "coalitions",
 		name: "Coalitions",
 		section: "Navigation",
+		icon: <Flag size={ICON_SIZE} />,
 		perform: () => router.push("/coalitions"),
 	},
 	{
 		id: "cursus",
 		name: "Cursuses",
 		section: "Navigation",
+		icon: <BookOpen size={ICON_SIZE} />,
 		perform: () => router.push("/cursus"),
 	},
 	{
 		id: "apps",
 		name: "Apps",
 		section: "Navigation",
+		icon: <Hexagon size={ICON_SIZE} />,
 		perform: () => router.push("/apps"),
 	},
 	{
@@ -59,12 +84,15 @@ export const globalActions: BaseAction[] = [
 		name: "Copy URL",
 		shortcut: ["c", "p"],
 		section: "Tools",
+		icon: <Link size={ICON_SIZE} />,
 		perform: () => navigator.clipboard.writeText(window.location.href),
 	},
 	{
 		id: "intra",
-		name: "42 Intranet",
+		name: "Intranet",
+		keywords: "42",
 		section: "External",
+		icon: <Logo width={ICON_SIZE + 4} height={ICON_SIZE + 4} />,
 		perform: () =>
 			window.open("https://intra.42.fr", "_blank noopener noreferrer"),
 	},
@@ -72,6 +100,7 @@ export const globalActions: BaseAction[] = [
 		id: "slack",
 		name: "Slack",
 		section: "External",
+		icon: <Slack size={ICON_SIZE} />,
 		perform: () =>
 			window.open(
 				"https://42born2code.slack.com",
@@ -84,6 +113,7 @@ export const globalActions: BaseAction[] = [
 		shortcut: ["a", "w"],
 		keywords: "list resources",
 		section: "External",
+		icon: <Star size={ICON_SIZE} />,
 		perform: () =>
 			window.open(
 				"https://github.com/leeoocca/awesome-42",
@@ -92,10 +122,11 @@ export const globalActions: BaseAction[] = [
 	},
 	{
 		id: "github",
-		name: "GitHub",
+		name: "Source code",
 		shortcut: ["g", "h"],
-		keywords: "repository source code",
+		keywords: "github repository",
 		section: "External",
+		icon: <GitHub size={ICON_SIZE} />,
 		perform: () =>
 			window.open(
 				"https://github.com/leeoocca/42extra",
@@ -107,13 +138,15 @@ export const globalActions: BaseAction[] = [
 		name: "Theme",
 		shortcut: ["t"],
 		section: "You",
+		icon: <Thermometer size={ICON_SIZE} />,
 		perform: () => router.push("/theme"),
 	},
 	{
 		id: "signOut",
 		name: "Sign out",
-		keywords: "logout",
+		keywords: "logout exit",
 		section: "You",
+		icon: <LogOut size={ICON_SIZE} />,
 		perform: () => signOut(),
 	},
 ];

@@ -9,6 +9,8 @@ import { BaseAction, useKBar, useRegisterActions } from "kbar";
 import Footer from "ui/Footer";
 import Loader from "ui/Loader";
 import StatusBar from "ui/StatusBar";
+import { ArrowRight } from "react-feather";
+import { ICON_SIZE } from "lib/actions";
 
 interface Props {
 	children: React.ReactNode;
@@ -35,10 +37,9 @@ export default function MainLayout({ children }: Props) {
 				? `Go to ${queryValue}'s profile`
 				: "Start typing an user's login",
 			parent: "users",
+			icon: <ArrowRight size={ICON_SIZE} />,
 			perform: () =>
-				router.push(
-					queryValue.length ? `/users/${queryValue}` : "/users"
-				),
+				queryValue.length && router.push(`/users/${queryValue}`),
 		},
 	];
 

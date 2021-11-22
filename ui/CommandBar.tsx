@@ -84,9 +84,11 @@ function RenderResults() {
 							borderLeftColor: active ? "text" : "transparent",
 							alignItems: "center",
 							cursor: "pointer",
+							gap: 3,
 						}}
 					>
-						<Text>{item.name}</Text>
+						{item.icon && item.icon}
+						<Text sx={{ flexGrow: 1 }}>{item.name}</Text>
 						{item.shortcut?.length ? (
 							<div
 								aria-hidden
