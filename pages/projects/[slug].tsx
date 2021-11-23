@@ -2,7 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import { useSession } from "next-auth/client";
+import { useSession } from "next-auth/react";
 
 import useAPI from "lib/useAPI";
 import { Project } from "types/Project";
@@ -10,7 +10,7 @@ import Loading from "ui/Loading";
 import { getLayout } from "ui/layouts/ProjectLayout";
 
 function ProjectIndex() {
-	const [session] = useSession();
+	const { data: session } = useSession();
 	const router = useRouter();
 	const { slug } = router.query;
 

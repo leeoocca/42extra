@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useSession, signIn } from "next-auth/client";
+import { useSession, signIn } from "next-auth/react";
 
 import { Box } from "@theme-ui/components";
 import { BaseAction, useKBar, useRegisterActions } from "kbar";
@@ -17,7 +17,12 @@ interface Props {
 }
 
 export default function MainLayout({ children }: Props) {
-	const [session, loading] = useSession();
+	const { status } = useSession({
+		required: true,
+		onUnauthenticated() {
+			signIn();
+		},
+	});
 
 	const router = useRouter();
 
@@ -69,8 +74,6 @@ export default function MainLayout({ children }: Props) {
 		</Box>
 	);
 
-	if (!loading && !session?.user) signIn();
-
 	return (
 		<>
 			<Head>
@@ -105,7 +108,7 @@ export default function MainLayout({ children }: Props) {
 					href="/favicon-16x16.png"
 				/>
 			</Head>
-			{loading ? <Loader /> : content}
+			{status === "loading" ? <Loader /> : content}
 		</>
 	);
 }

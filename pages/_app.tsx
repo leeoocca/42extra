@@ -5,7 +5,7 @@ import { KBarProvider } from "kbar";
 import { SWRConfig } from "swr";
 import { ThemeProvider } from "theme-ui";
 import ProgressBar from "@badrap/bar-of-progress";
-import { Provider as SessionProvider } from "next-auth/client";
+import { getSession, SessionProvider } from "next-auth/react";
 
 import theme from "lib/theme";
 import fetcher from "lib/fetcher";
@@ -27,10 +27,6 @@ Router.events.on("routeChangeComplete", () => {
 });
 Router.events.on("routeChangeError", progress.finish);
 
-const sessionOptions = {
-	clientMaxAge: 60 * 60,
-};
-
 const SWRSettings = {
 	fetcher: fetcher,
 	onError: (err) => {
@@ -41,11 +37,14 @@ const SWRSettings = {
 	errorRetryInterval: 2000,
 };
 
-export default function MyApp({ Component, pageProps }) {
+export default function MyApp({
+	Component,
+	pageProps: { session, ...pageProps },
+}) {
 	const getLayout = Component.getLayout || getSimpleLayout;
 
 	return (
-		<SessionProvider session={pageProps.session} options={sessionOptions}>
+		<SessionProvider session={session} refetchInterval={60 * 60}>
 			<SWRConfig value={SWRSettings}>
 				<ThemeProvider theme={theme}>
 					<KBarProvider actions={globalActions}>
@@ -56,4 +55,10 @@ export default function MyApp({ Component, pageProps }) {
 			</SWRConfig>
 		</SessionProvider>
 	);
+}
+
+export async function getServerSideProps(context) {
+	return {
+		props: { session: await getSession(context) },
+	};
 }

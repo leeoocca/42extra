@@ -1,7 +1,7 @@
 import router from "next/router";
 
 import { BaseAction } from "kbar";
-import { signOut } from "next-auth/client";
+import { signOut } from "next-auth/react";
 import {
 	BookOpen,
 	Flag,

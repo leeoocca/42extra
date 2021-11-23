@@ -1,5 +1,5 @@
 // import { NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "next-auth/client";
+import { getSession } from "next-auth/react";
 
 // async function handler(req: NextApiRequest, res: NextApiResponse) {
 async function handler(req, res) {

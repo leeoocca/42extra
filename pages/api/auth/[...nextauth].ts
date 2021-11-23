@@ -1,76 +1,68 @@
-import NextAuth, { Profile, User } from "next-auth";
+import NextAuth from "next-auth";
+
+import { User } from "types/User";
 import refreshAccessToken from "lib/refreshAccessToken";
-import { JWT } from "next-auth/jwt";
 
 export default NextAuth({
-	// Configure one or more authentication providers
 	providers: [
 		{
 			id: "42",
 			name: "42",
 			type: "oauth",
 			version: "2.0",
-			params: { grant_type: "authorization_code" },
-			accessTokenUrl: "https://api.intra.42.fr/oauth/token",
-			authorizationUrl:
-				"https://api.intra.42.fr/oauth/authorize?response_type=code",
-			profileUrl: "https://api.intra.42.fr/v2/me",
-			profile(OAuthProfile, tokens) {
-				return {
-					id: OAuthProfile.login,
-					login: OAuthProfile.login,
-					name:
-						OAuthProfile.usual_first_name ||
-						OAuthProfile.first_name,
-					fullName: OAuthProfile.usual_full_name,
-					email: OAuthProfile.email,
-					image: OAuthProfile.image_url,
-					campus: OAuthProfile.campus_users[0].campus_id,
-					// token: tokens.accessToken,
-					// sessionExpiry: tokens.created_at + 7200,
-				};
-			},
 			clientId: process.env.FT_UID,
 			clientSecret: process.env.FT_SECRET,
-			requestTokenUrl: "",
-			scope: "",
+			authorization: {
+				url: "https://api.intra.42.fr/oauth/authorize?response_type=code",
+				params: { grant_type: "authorization_code", scope: "public" },
+			},
+			token: "https://api.intra.42.fr/oauth/token",
+			userinfo: "https://api.intra.42.fr/v2/me",
+			profile(profile: User) {
+				const primaryUser = profile.campus_users.find(
+					(campus) => campus.is_primary
+				);
+				return {
+					id: String(profile.id),
+					login: profile.login,
+					name: profile.usual_first_name || profile.first_name,
+					fullName: profile.usual_full_name,
+					email: profile.email,
+					image: profile.image_url,
+					campus: primaryUser?.campus_id,
+				};
+			},
 		},
 	],
-	// session: {
-	// 	maxAge: 7200,
-	// },
-	// pages: {
-	// 	signIn: '/login',
-	// },
+	theme: {
+		colorScheme: "dark",
+		brandColor: "#22D3EE",
+	},
 	callbacks: {
-		async jwt(prevToken, user, account, profile, isNewUser) {
-			// Signing in
-			if (account && profile) {
+		async jwt({ token, user, account }) {
+			// initial sign in
+			if (account) {
 				return {
 					accessToken: account.access_token,
-					expires: (Number(account.created_at) + 7200) * 1000,
+					expires: account.expires_at,
 					refreshToken: account.refresh_token,
-					user: user,
+					user,
 				};
 			}
 
-			// Subsequent use of JWT, the user has been logged in before
 			// access token has not expired yet
-			if (Date.now() < prevToken.expires) return prevToken;
+			if (Date.now() / 1000 < token.expires) return token;
 
 			// access token has expired, try to update it
-			return refreshAccessToken(prevToken);
+			return refreshAccessToken(token);
 		},
-		async session(session, token: JWT) {
-			if (token) {
-				session.user = token.user;
-				session.accessToken = token.accessToken;
-			}
+		async session({ session, token }) {
+			session.user = token.user;
+			session.accessToken = token.accessToken;
+			session.error = token.error;
+
 			return session;
 		},
-	},
-	jwt: {
-		signingKey: process.env.JWT_SIGNING_PRIVATE_KEY,
 	},
 	secret: process.env.JWT_SECRET,
 });
