@@ -1,39 +1,40 @@
 async function refreshAccessToken(token) {
 	try {
-		const url = "https://api.intra.42.fr/oauth/token";
-
-		const response = await fetch(url, {
-			body: new URLSearchParams({
+		const url =
+			"https://api.intra.42.fr/oauth/token?" +
+			new URLSearchParams({
 				client_id: process.env.FT_UID,
 				client_secret: process.env.FT_SECRET,
 				grant_type: "refresh_token",
 				refresh_token: token.refreshToken,
-				redirect_uri:
-					process.env.NODE_ENV === "production"
-						? process.env.FT_REDIRECT
-						: "http://localhost:3000/api/auth/callback/42",
-			}),
+				redirect_uri: process.env.FT_REDIRECT,
+			});
+
+		const response = await fetch(url, {
 			headers: {
 				"Content-Type": "application/x-www-form-urlencoded",
+				Authorization: `Bearer ${token.accessToken}`,
 			},
 			method: "POST",
 		});
-		const tokens = await response.json();
+
+		const refreshedTokens = await response.json();
 
 		if (!response.ok) {
-			throw tokens;
+			throw refreshedTokens;
 		}
 
 		return {
 			...token,
-			accessToken: tokens.access_token,
-			expires: (Number(token.created_at) + 7200) * 1000,
-			refreshToken: tokens.refresh_token,
+			accessToken: refreshedTokens.access_token,
+			expires: token.created_at + 7200,
+			refreshToken: refreshedTokens.refresh_token,
 		};
 	} catch (error) {
 		console.error(error);
+
 		return {
-			// ...token,
+			...token,
 			error: "RefreshAccessTokenError",
 		};
 	}
