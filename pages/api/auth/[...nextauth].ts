@@ -14,7 +14,10 @@ export default NextAuth({
 			clientSecret: process.env.FT_SECRET,
 			authorization: {
 				url: "https://api.intra.42.fr/oauth/authorize?response_type=code",
-				params: { grant_type: "authorization_code", scope: "public" },
+				params: {
+					grant_type: "authorization_code",
+					scope: "public projects",
+				},
 			},
 			token: "https://api.intra.42.fr/oauth/token",
 			userinfo: "https://api.intra.42.fr/v2/me",
@@ -60,6 +63,7 @@ export default NextAuth({
 			session.user = token.user;
 			session.accessToken = token.accessToken;
 			session.error = token.error;
+			session.tokenExpires = token.expires;
 
 			return session;
 		},
