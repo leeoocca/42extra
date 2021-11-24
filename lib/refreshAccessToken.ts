@@ -27,7 +27,7 @@ async function refreshAccessToken(token) {
 		return {
 			...token,
 			accessToken: refreshedTokens.access_token,
-			expires: token.created_at + 7200,
+			expires: refreshedTokens.created_at + refreshedTokens.expires_in,
 			refreshToken: refreshedTokens.refresh_token,
 		};
 	} catch (error) {
