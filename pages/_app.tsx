@@ -34,7 +34,7 @@ const SWRSettings = {
 	},
 	revalidateOnFocus: false,
 	dedupingInterval: 60 * 1000,
-	errorRetryInterval: 2000,
+	shouldRetryOnError: false,
 };
 
 export default function MyApp({

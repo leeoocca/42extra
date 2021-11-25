@@ -42,10 +42,13 @@ function UserOverview() {
 	const router = useRouter();
 	const { login } = router.query;
 
-	const { data: user }: { data: User } = useAPI(`/v2/users/${login}`);
+	const { data: user, isError }: { data: User; isError: any } = useAPI(
+		`/v2/users/${login}`
+	);
 	const { data: coalition } = useAPI(`/v2/users/${login}/coalitions`);
 	const { data: locations } = useAPI(`/v2/users/${login}/locations`);
 
+	if (isError) return <>Error</>;
 	if (!user) return <Loading />;
 
 	const details = [
