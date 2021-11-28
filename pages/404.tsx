@@ -20,7 +20,7 @@ export default function Custom404() {
 				flexDirection: "column",
 				alignItems: "center",
 				justifyContent: "center",
-				minHeight: "100vh",
+				height: "100%",
 			}}
 		>
 			<Frown size={42} />
@@ -82,5 +82,3 @@ export default function Custom404() {
 		</Flex>
 	);
 }
-
-Custom404.shell = false;
