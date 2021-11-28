@@ -1,6 +1,5 @@
 import ProjectUserHeader from "ui/headers/ProjectUserHeader";
 import { useRouter } from "next/router";
-import { getLayout as getMainLayout } from "./MainLayout";
 import ProjectHeader from "ui/headers/ProjectHeader";
 
 function ProjectLayout({ children }: { children: React.ReactNode }) {
@@ -41,7 +40,8 @@ function ProjectLayout({ children }: { children: React.ReactNode }) {
 	);
 }
 
-export const getLayout = (page: React.ReactNode) =>
-	getMainLayout(<ProjectLayout>{page}</ProjectLayout>);
+export const getLayout = (page: React.ReactNode) => (
+	<ProjectLayout>{page}</ProjectLayout>
+);
 
 export default ProjectLayout;

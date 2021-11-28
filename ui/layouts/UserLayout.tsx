@@ -9,7 +9,6 @@ import hexToRGB from "lib/hexToRGB";
 import { getUserNavLinks } from "lib/NavLinks";
 import NavLink from "ui/NavLink";
 import UserHeader from "ui/headers/UserHeader";
-import { getLayout as getMainLayout } from "./MainLayout";
 
 function UserLayout({ children }: { children: React.ReactNode }) {
 	const router = useRouter();
@@ -79,7 +78,8 @@ function UserLayout({ children }: { children: React.ReactNode }) {
 	);
 }
 
-export const getLayout = (page: React.ReactNode) =>
-	getMainLayout(<UserLayout>{page}</UserLayout>);
+export const getLayout = (page: React.ReactNode) => (
+	<UserLayout>{page}</UserLayout>
+);
 
 export default UserLayout;
