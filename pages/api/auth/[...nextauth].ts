@@ -39,7 +39,9 @@ export default NextAuth({
 	],
 	theme: {
 		colorScheme: "dark",
-		brandColor: "#22D3EE",
+	},
+	pages: {
+		signIn: "/auth/signin",
 	},
 	callbacks: {
 		async jwt({ token, user, account }) {
