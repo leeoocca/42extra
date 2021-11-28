@@ -38,7 +38,9 @@ function UserLayout({ children }: { children: React.ReactNode }) {
 	if (pageName !== "[login]") title = `${login}'s ${pageName}`;
 	title += " – 42extra";
 
-	useRegisterActions(userActions(String(login), `${login}'s profile`));
+	useRegisterActions(userActions(String(login), `${login}'s profile`), [
+		login,
+	]);
 
 	return (
 		<>
