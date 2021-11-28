@@ -3,7 +3,7 @@ import { signIn } from "next-auth/react";
 
 export default function SignIn() {
 	return (
-		<Grid sx={{ placeItems: "center", height: "calc(100vh - 2rem)" }}>
+		<Grid sx={{ placeItems: "center", minHeight: "calc(100vh - 2rem)" }}>
 			<Button
 				onClick={() => signIn("42")}
 				sx={{
