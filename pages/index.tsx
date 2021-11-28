@@ -1,5 +1,5 @@
-import { useSession } from "next-auth/react";
-import { Alert } from "@theme-ui/components";
+import { signIn, useSession } from "next-auth/react";
+import { Alert, Button } from "@theme-ui/components";
 
 // import useAPI from "lib/useAPI";
 
@@ -19,7 +19,22 @@ export default function Home() {
 	return (
 		<div className="text-center">
 			{session.tokenExpires < Date.now() / 1000 && (
-				<Alert>Stale session</Alert>
+				<Alert
+					sx={{ display: "flex", justifyContent: "space-between" }}
+				>
+					<span>Stale session</span>
+					<Button
+						bg="transparent"
+						sx={{
+							textTransform: "uppercase",
+							fontSize: 1,
+							fontWeight: "heading",
+						}}
+						onClick={() => signIn("42")}
+					>
+						Sign back in
+					</Button>
+				</Alert>
 			)}
 			<h2 className="mb-4 text-2xl font-bold">
 				Welcome {session?.user ? session.user.name : "user"}!
@@ -47,6 +62,7 @@ export default function Home() {
 						</li>
 					))} */}
 			</ul>
+			{/* try cmd + k */}
 		</div>
 	);
 }
