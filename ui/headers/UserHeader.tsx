@@ -69,28 +69,28 @@ function UserHeader() {
 					/>
 				</Box>
 				{!isLoading && (
-					<Box sx={{ textAlign: ["center", , "left"] }}>
+					<Box>
 						<Heading
 							as="h1"
 							sx={{
 								fontSize: 36,
 								display: "flex",
+								justifyContent: ["center", , "flex-start"],
 								lineHeight: "2.5rem",
+								textAlign: "center",
 							}}
 						>
 							{isError ? (
 								"Error"
 							) : (
 								<>
-									<span>
-										{/* maybe just always use user.login? */}
-										{/* useful when loading though */}
-										{customUserLogin
-											? customUserLogin
-											: Number(login) > 0
-											? user.login
-											: login}
-									</span>
+									{/* maybe just always use user.login? */}
+									{/* useful when loading though */}
+									{customUserLogin
+										? customUserLogin
+										: Number(login) > 0
+										? user.login
+										: login}
 									{user["staff?"] && (
 										<span
 											title={`${login} is a member of the staff`}
@@ -101,9 +101,15 @@ function UserHeader() {
 								</>
 							)}
 						</Heading>
-						<p className="text-3xl font-medium">
+						<Heading
+							sx={{
+								fontSize: 30,
+								fontWeight: 500,
+								textAlign: ["center", , "left"],
+							}}
+						>
 							{isError ? "Don't panic!" : user.usual_full_name}
-						</p>
+						</Heading>
 					</Box>
 				)}
 			</Flex>
