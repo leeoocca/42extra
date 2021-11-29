@@ -7,7 +7,7 @@ import getTimeAgo from "lib/getTimeAgo";
 import Loading from "ui/Loading";
 import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
-import { getLayout } from "ui/layouts/UserLayout";
+import UserHeader from "ui/headers/UserHeader";
 
 const Quest = ({ quest }) => (
 	<Card>
@@ -30,7 +30,7 @@ const Quest = ({ quest }) => (
 	</Card>
 );
 
-function UserQuests() {
+export default function UserQuests() {
 	const router = useRouter();
 	const { login } = router.query;
 
@@ -77,6 +77,4 @@ function UserQuests() {
 	);
 }
 
-UserQuests.getLayout = getLayout;
-
-export default UserQuests;
+UserQuests.header = UserHeader;

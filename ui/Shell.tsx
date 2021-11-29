@@ -1,12 +1,15 @@
-import { Box } from "@theme-ui/components";
-import { BaseAction, useKBar, useRegisterActions } from "kbar";
-import { ICON_SIZE } from "lib/actions";
-import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+
 import { ArrowRight } from "react-feather";
+import { BaseAction, useKBar, useRegisterActions } from "kbar";
+import { Box } from "@theme-ui/components";
+import { signIn, useSession } from "next-auth/react";
+
+import { ICON_SIZE } from "lib/actions";
 import CommandBar from "./CommandBar";
 import Footer from "./Footer";
+import Header from "./headers/Header";
 import Loader from "./Loader";
 import StatusBar from "./StatusBar";
 
@@ -59,6 +62,7 @@ export default function Shell({ children }) {
 		>
 			<CommandBar />
 			<StatusBar />
+			<Header />
 			<Box
 				sx={{
 					width: "100%",

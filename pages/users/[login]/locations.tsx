@@ -5,9 +5,9 @@ import prettyMilliseconds from "pretty-ms";
 
 import useAPI from "lib/useAPI";
 import Loading from "ui/Loading";
-import { getLayout } from "ui/layouts/UserLayout";
+import UserHeader from "ui/headers/UserHeader";
 
-function UserLocations() {
+export default function UserLocations() {
 	const router = useRouter();
 	const { login } = router.query;
 
@@ -67,6 +67,4 @@ function UserLocations() {
 	);
 }
 
-UserLocations.getLayout = getLayout;
-
-export default UserLocations;
+UserLocations.header = UserHeader;

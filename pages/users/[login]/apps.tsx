@@ -3,10 +3,10 @@ import { useRouter } from "next/router";
 import useAPI from "lib/useAPI";
 import CardGrid from "ui/CardGrid";
 import AppCard from "ui/AppCard";
-import { getLayout } from "ui/layouts/UserLayout";
 import Loading from "ui/Loading";
+import UserHeader from "ui/headers/UserHeader";
 
-function UserApps() {
+export default function UserApps() {
 	const router = useRouter();
 	const { login } = router.query;
 
@@ -37,6 +37,4 @@ function UserApps() {
 	);
 }
 
-UserApps.getLayout = getLayout;
-
-export default UserApps;
+UserApps.header = UserHeader;

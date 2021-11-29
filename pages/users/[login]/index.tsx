@@ -3,11 +3,11 @@ import { useRouter } from "next/router";
 
 import prettyMilliseconds from "pretty-ms";
 
-import useAPI from "lib/useAPI";
-import getTimeAgo from "lib/getTimeAgo";
 import { User } from "types/User";
+import getTimeAgo from "lib/getTimeAgo";
 import Loading from "ui/Loading";
-import { getLayout } from "ui/layouts/UserLayout";
+import useAPI from "lib/useAPI";
+import UserHeader from "ui/headers/UserHeader";
 // import getCampusFromId from "lib/getCampusFromId";
 
 function getCurrentLocation(locations: any): string {
@@ -38,7 +38,7 @@ const Th = ({ children }) => (
 
 const None = () => <i className="opacity-75">none</i>;
 
-function UserOverview() {
+export default function UserOverview() {
 	const router = useRouter();
 	const { login } = router.query;
 
@@ -175,6 +175,4 @@ function UserOverview() {
 	);
 }
 
-UserOverview.getLayout = getLayout;
-
-export default UserOverview;
+UserOverview.header = UserHeader;

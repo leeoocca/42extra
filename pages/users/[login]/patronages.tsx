@@ -5,9 +5,8 @@ import { User } from "types/User";
 import Loading from "ui/Loading";
 import UserGrid from "ui/UserGrid";
 import UserCardWithDetails from "ui/UserCardWithDetails";
-import { getLayout } from "ui/layouts/UserLayout";
 
-function UserPatronages() {
+export default function UserPatronages() {
 	const router = useRouter();
 	const { login } = router.query;
 
@@ -96,6 +95,4 @@ function UserPatronages() {
 	);
 }
 
-UserPatronages.getLayout = getLayout;
-
-export default UserPatronages;
+UserPatronages.header = UserHeader;

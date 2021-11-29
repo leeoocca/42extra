@@ -42,7 +42,14 @@ export default function MyApp({
 	pageProps: { session, ...pageProps },
 }) {
 	const getShell = (child) =>
-		Component.shell !== false ? <Shell>{child}</Shell> : child;
+		Component.shell !== false ? (
+			<Shell>
+				{Component.header && <Component.header />}
+				{child}
+			</Shell>
+		) : (
+			child
+		);
 	const getLayout =
 		Component.getLayout || ((child) => <Container>{child}</Container>);
 

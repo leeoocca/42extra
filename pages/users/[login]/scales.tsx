@@ -12,9 +12,9 @@ import useAPI from "lib/useAPI";
 import Loading from "ui/Loading";
 import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
-import { getLayout } from "ui/layouts/UserLayout";
+import UserHeader from "ui/headers/UserHeader";
 
-function UserScales() {
+export default function UserScales() {
 	const router = useRouter();
 	const { login } = router.query;
 
@@ -90,6 +90,4 @@ function UserScales() {
 	);
 }
 
-UserScales.getLayout = getLayout;
-
-export default UserScales;
+UserScales.header = UserHeader;

@@ -6,10 +6,10 @@ import getTimeAgo from "lib/getTimeAgo";
 import { User } from "types/User";
 import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
-import { getLayout } from "ui/layouts/UserLayout";
 import Loading from "ui/Loading";
+import UserHeader from "ui/headers/UserHeader";
 
-function UserProjects() {
+export default function UserProjects() {
 	const { query } = useRouter();
 	const { login } = query;
 
@@ -177,6 +177,4 @@ function UserProjects() {
 		));
 }
 
-UserProjects.getLayout = getLayout;
-
-export default UserProjects;
+UserProjects.header = UserHeader;

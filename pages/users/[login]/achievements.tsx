@@ -1,13 +1,13 @@
 import { useRouter } from "next/router";
 
-import useAPI from "lib/useAPI";
 import { Achievement, User } from "types/User";
-import { getLayout } from "ui/layouts/UserLayout";
-import CardGrid from "ui/CardGrid";
 import AchievementCard from "ui/AchievementCard";
+import CardGrid from "ui/CardGrid";
 import Loading from "ui/Loading";
+import useAPI from "lib/useAPI";
+import UserHeader from "ui/headers/UserHeader";
 
-function UserAchievements() {
+export default function UserAchievements() {
 	const router = useRouter();
 	const { login } = router.query;
 
@@ -63,6 +63,4 @@ function UserAchievements() {
 	);
 }
 
-UserAchievements.getLayout = getLayout;
-
-export default UserAchievements;
+UserAchievements.header = UserHeader;

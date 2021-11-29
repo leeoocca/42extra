@@ -4,10 +4,10 @@ import useAPI from "lib/useAPI";
 import { User } from "types/User";
 import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
-import { getLayout } from "ui/layouts/UserLayout";
 import Loading from "ui/Loading";
+import UserHeader from "ui/headers/UserHeader";
 
-function UserPartnerships() {
+export default function UserPartnerships() {
 	const router = useRouter();
 	const { login } = router.query;
 
@@ -53,6 +53,4 @@ function UserPartnerships() {
 	);
 }
 
-UserPartnerships.getLayout = getLayout;
-
-export default UserPartnerships;
+UserPartnerships.header = UserHeader;

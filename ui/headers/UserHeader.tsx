@@ -1,10 +1,18 @@
 import { useRouter } from "next/router";
+import Head from "next/head";
 
+import { useRegisterActions } from "kbar";
 import { Flex, Box, Heading } from "@theme-ui/components";
+import SVG from "react-inlinesvg";
 
+import { getUserNavLinks } from "lib/NavLinks";
 import { User } from "types/User";
-import useAPI from "lib/useAPI";
+import { userActions } from "lib/actions";
 import Avatar from "ui/Avatar";
+import HeaderPortal from "ui/HeaderPortal";
+import NavLink from "ui/NavLink";
+import useAPI from "lib/useAPI";
+import hexToRGB from "lib/hexToRGB";
 
 function getCustomUserLogin(user: User): string {
 	const selectedTitle = user.titles_users.find((title) => title.selected);
@@ -15,6 +23,12 @@ function getCustomUserLogin(user: User): string {
 		return selectedTitleName.name.replace("%login", user.login);
 	}
 	return null;
+}
+
+function getPageTitle(login: string, routeArray: any) {
+	const pageName = routeArray[routeArray.length - 1];
+	const title = pageName !== "[login]" ? `${login}'s ${pageName}` : login;
+	return `${title} – 42extra`;
 }
 
 const BadgeCheckIcon = () => (
@@ -32,7 +46,7 @@ const BadgeCheckIcon = () => (
 	</svg>
 );
 
-function UserHeader() {
+export default function UserHeader() {
 	const router = useRouter();
 	const { login } = router.query;
 
@@ -44,16 +58,56 @@ function UserHeader() {
 		`/v2/users/${login}`
 	);
 
+	const { data: coalitions } = useAPI(
+		login && `/v2/users/${login}/coalitions`
+	);
+
+	document.documentElement.style.setProperty("--nav", "");
+
+	const coalition = coalitions && coalitions[0] ? coalitions[0] : null;
+
+	if (coalition)
+		document.documentElement.style.setProperty(
+			"--nav",
+			hexToRGB(coalition.color)
+		);
+	else if (coalitions !== undefined)
+		document.documentElement.style.setProperty("--nav", "0, 186, 188");
+
 	const customUserLogin = user && getCustomUserLogin(user);
 
+	useRegisterActions(userActions(String(login), `${login}'s profile`), [
+		login,
+	]);
+
 	return (
-		<header className="flex flex-row items-center px-4 py-2 mx-auto my-6 max-w-7xl">
+		<HeaderPortal>
+			<Head>
+				<title>{getPageTitle(login, router.route.split("/"))}</title>
+			</Head>
+			{coalition && (
+				<Box sx={{ position: "relative" }}>
+					<SVG
+						src={coalition.image_url}
+						fill="black"
+						style={{
+							position: "absolute",
+							objectFit: "cover",
+							height: "160px",
+							right: 4,
+							mixBlendMode: "soft-light",
+						}}
+						// className="absolute object-cover w-20 text-transparent md:w-40 top-4 right-4 mix-blend-soft-light"
+					/>
+				</Box>
+			)}
 			<Flex
 				sx={{
 					flexDirection: ["column", , "row"],
 					alignItems: "center",
 					gap: [2, , 3],
 					width: "100%",
+					my: 3,
 				}}
 			>
 				<Box sx={{ w: 6, h: 6 }}>
@@ -113,8 +167,23 @@ function UserHeader() {
 					</Box>
 				)}
 			</Flex>
-		</header>
+			<Flex
+				as="nav"
+				sx={{
+					paddingX: 3,
+					gap: 3,
+					overflow: "auto",
+					userSelect: "none",
+				}}
+			>
+				{getUserNavLinks().map((item) => (
+					<NavLink
+						key={item.href}
+						name={item.name}
+						href={item.href}
+					/>
+				))}
+			</Flex>
+		</HeaderPortal>
 	);
 }
-
-export default UserHeader;
