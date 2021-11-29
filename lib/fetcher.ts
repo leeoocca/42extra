@@ -1,7 +1,7 @@
 import { RateLimiter } from "limiter";
 import { getSession } from "next-auth/react";
 
-const limiter = new RateLimiter({ tokensPerInterval: 1, interval: 505 });
+const limiter = new RateLimiter({ tokensPerInterval: 1, interval: 510 });
 
 export default async function fetcher(url: string) {
 	const session = await getSession();
