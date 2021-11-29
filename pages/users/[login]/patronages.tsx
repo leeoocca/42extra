@@ -5,6 +5,7 @@ import { User } from "types/User";
 import Loading from "ui/Loading";
 import UserGrid from "ui/UserGrid";
 import UserCardWithDetails from "ui/UserCardWithDetails";
+import UserHeader from "ui/headers/UserHeader";
 
 export default function UserPatronages() {
 	const router = useRouter();
