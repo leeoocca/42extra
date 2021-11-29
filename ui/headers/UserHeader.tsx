@@ -104,11 +104,12 @@ export default function UserHeader() {
 			)}
 			<Flex
 				sx={{
-					flexDirection: ["column", , "row"],
-					alignItems: "center",
-					gap: [2, , 3],
-					width: "100%",
+					px: 3,
 					my: 3,
+					width: "100%",
+					gap: [2, , 3],
+					alignItems: "center",
+					flexDirection: ["column", , "row"],
 				}}
 			>
 				<Box sx={{ w: 6, h: 6 }}>
@@ -171,7 +172,7 @@ export default function UserHeader() {
 			<Flex
 				as="nav"
 				sx={{
-					paddingX: 3,
+					px: 3,
 					gap: 3,
 					overflow: "auto",
 					userSelect: "none",
