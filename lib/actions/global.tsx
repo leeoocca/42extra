@@ -16,6 +16,7 @@ import {
 	Users,
 	Hexagon,
 	Thermometer,
+	Database,
 } from "react-feather";
 
 import { ICON_SIZE } from "./constants";
@@ -86,6 +87,13 @@ export const globalActions: BaseAction[] = [
 		section: "Tools",
 		icon: <Link size={ICON_SIZE} />,
 		perform: () => navigator.clipboard.writeText(window.location.href),
+	},
+	{
+		id: "query",
+		name: "Query",
+		section: "Tools",
+		icon: <Database size={ICON_SIZE} />,
+		perform: () => router.push("/debug"),
 	},
 	{
 		id: "intra",
