@@ -13,9 +13,10 @@ const theme: Theme = {
 		gray: "#999",
 	},
 	fonts: {
-		body: "'Inter var', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif",
+		body: "Inter var, system-ui, sans-serif",
 		heading: "inherit",
-		monospace: "'JetBrains Mono', ui-monospace, Menlo, Monaco, monospace",
+		monospace:
+			"JetBrains Mono, ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace",
 	},
 	layout: {
 		container: {
