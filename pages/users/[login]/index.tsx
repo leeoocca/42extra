@@ -8,6 +8,7 @@ import getTimeAgo from "lib/getTimeAgo";
 import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
+import { Themed } from "@theme-ui/mdx";
 // import getCampusFromId from "lib/getCampusFromId";
 
 function getCurrentLocation(locations: any): string {
@@ -167,10 +168,8 @@ export default function UserOverview() {
 					</tr>
 				</tbody>
 			</table>
-			<code className="block">
-				languages: {user.languages_users.length}
-			</code>
-			<code className="block">anonymize date: {user.anonymize_date}</code>
+			<Themed.pre>languages: {user.languages_users.length}</Themed.pre>
+			<Themed.pre>anonymize date: {user.anonymize_date}</Themed.pre>
 		</>
 	);
 }
