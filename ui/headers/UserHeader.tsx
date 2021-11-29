@@ -13,6 +13,7 @@ import HeaderPortal from "ui/HeaderPortal";
 import NavLink from "ui/NavLink";
 import useAPI from "lib/useAPI";
 import hexToRGB from "lib/hexToRGB";
+import PageTitle from "ui/PageTitle";
 
 function getCustomUserLogin(user: User): string {
 	const selectedTitle = user.titles_users.find((title) => title.selected);
@@ -27,8 +28,7 @@ function getCustomUserLogin(user: User): string {
 
 function getPageTitle(login: string, routeArray: any) {
 	const pageName = routeArray[routeArray.length - 1];
-	const title = pageName !== "[login]" ? `${login}'s ${pageName}` : login;
-	return `${title} – 42extra`;
+	return pageName !== "[login]" ? `${login}'s ${pageName}` : login;
 }
 
 const BadgeCheckIcon = () => (
@@ -82,11 +82,9 @@ export default function UserHeader() {
 
 	return (
 		<HeaderPortal>
-			<Head>
-				<title>
-					{getPageTitle(String(login), router.route.split("/"))}
-				</title>
-			</Head>
+			<PageTitle>
+				{getPageTitle(String(login), router.route.split("/"))}
+			</PageTitle>
 			{coalition && (
 				<Box sx={{ position: "relative" }}>
 					<SVG

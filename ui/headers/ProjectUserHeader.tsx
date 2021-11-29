@@ -3,6 +3,7 @@ import { ProjectsUser, User } from "types/User";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import PageTitle from "ui/PageTitle";
 
 function ProjectUserHeader() {
 	const router = useRouter();
@@ -28,12 +29,9 @@ function ProjectUserHeader() {
 
 	return (
 		<>
-			<Head>
-				<title>
-					{login}'s {projectData ? projectData.name : project} –
-					42extra
-				</title>
-			</Head>
+			<PageTitle>
+				{`${login}'s ${projectData ? projectData.name : project}`}
+			</PageTitle>
 			<header className="relative px-4 py-10">
 				<h1 className="text-2xl font-bold">
 					<Link href={`/users/${login}`}>

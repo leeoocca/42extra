@@ -8,6 +8,7 @@ import useAPI from "lib/useAPI";
 import { Project } from "types/Project";
 import Loading from "ui/Loading";
 import { getLayout } from "ui/layouts/ProjectLayout";
+import PageTitle from "ui/PageTitle";
 
 function ProjectIndex() {
 	const { data: session } = useSession();
@@ -29,9 +30,7 @@ function ProjectIndex() {
 
 	return (
 		<>
-			<Head>
-				<title>{project.name} – 42extra</title>
-			</Head>
+			<PageTitle>{project.name}</PageTitle>
 			<article className="leading-relaxed">
 				<section className="mt-2">
 					<h2 className="text-xl font-bold">Cursuses</h2>
