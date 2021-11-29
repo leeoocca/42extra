@@ -83,7 +83,9 @@ export default function UserHeader() {
 	return (
 		<HeaderPortal>
 			<Head>
-				<title>{getPageTitle(login, router.route.split("/"))}</title>
+				<title>
+					{getPageTitle(String(login), router.route.split("/"))}
+				</title>
 			</Head>
 			{coalition && (
 				<Box sx={{ position: "relative" }}>
@@ -97,7 +99,6 @@ export default function UserHeader() {
 							right: 4,
 							mixBlendMode: "soft-light",
 						}}
-						// className="absolute object-cover w-20 text-transparent md:w-40 top-4 right-4 mix-blend-soft-light"
 					/>
 				</Box>
 			)}
