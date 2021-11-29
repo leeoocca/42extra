@@ -93,7 +93,7 @@ export const globalActions: BaseAction[] = [
 		name: "Query",
 		section: "Tools",
 		icon: <Database size={ICON_SIZE} />,
-		perform: () => router.push("/debug"),
+		perform: () => router.push("/tools/query"),
 	},
 	{
 		id: "intra",
