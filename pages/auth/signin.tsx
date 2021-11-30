@@ -1,5 +1,6 @@
 import { Button, Grid } from "@theme-ui/components";
 import { signIn } from "next-auth/react";
+import Logo from "ui/Logo";
 
 export default function SignIn() {
 	const router = useRouter();
@@ -14,10 +15,15 @@ export default function SignIn() {
 					sx={{
 						bg: "transparent",
 						border: "1px solid gray",
+						display: "flex",
+						gap: 1,
+						"&:hover": {
+							bg: "#fff2",
+						},
 					}}
 				>
-				Sign in with 42
-			</Button>
+					Sign in with <Logo width={24} />
+				</Button>
 		</Grid>
 	);
 }
