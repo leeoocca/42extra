@@ -42,16 +42,13 @@ export default function MyApp({
 	pageProps: { session, ...pageProps },
 }) {
 	const getShell = (child) =>
-		Component.shell !== false ? (
-			<Shell>
-				{Component.header && <Component.header />}
+		Component.shell === false ? (
+			child
+		) : (
+			<Shell headerContent={Component.header && <Component.header />}>
 				{child}
 			</Shell>
-		) : (
-			child
 		);
-	const getLayout =
-		Component.getLayout || ((child) => <Container>{child}</Container>);
 
 	return (
 		<SessionProvider session={session} refetchInterval={60 * 60}>
@@ -59,7 +56,7 @@ export default function MyApp({
 				<ThemeProvider theme={theme}>
 					<KBarProvider actions={globalActions}>
 						<Favicons />
-						{getShell(getLayout(<Component {...pageProps} />))}
+						{getShell(<Component {...pageProps} />)}
 					</KBarProvider>
 				</ThemeProvider>
 			</SWRConfig>

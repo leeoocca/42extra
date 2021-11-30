@@ -9,7 +9,6 @@ import { getUserNavLinks } from "lib/NavLinks";
 import { User } from "types/User";
 import { userActions } from "lib/actions";
 import Avatar from "ui/Avatar";
-import HeaderPortal from "ui/HeaderPortal";
 import NavLink from "ui/NavLink";
 import useAPI from "lib/useAPI";
 import hexToRGB from "lib/hexToRGB";
@@ -81,7 +80,7 @@ export default function UserHeader() {
 	]);
 
 	return (
-		<HeaderPortal>
+		<>
 			<Head>
 				<title>
 					{getPageTitle(String(login), router.route.split("/"))}
@@ -186,6 +185,6 @@ export default function UserHeader() {
 					/>
 				))}
 			</Flex>
-		</HeaderPortal>
+		</>
 	);
 }
