@@ -4,7 +4,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-function ProjectUserHeader() {
+export default function ProjectUserHeader() {
 	const router = useRouter();
 	const { login, project } = router.query;
 
@@ -34,7 +34,7 @@ function ProjectUserHeader() {
 					42extra
 				</title>
 			</Head>
-			<header className="relative px-4 py-10">
+			<div className="relative px-4 py-10">
 				<h1 className="text-2xl font-bold">
 					<Link href={`/users/${login}`}>
 						<a>{login}</a>
@@ -49,9 +49,7 @@ function ProjectUserHeader() {
 						{userProject.final_mark}
 					</span>
 				)}
-			</header>
+			</div>
 		</>
 	);
 }
-
-export default ProjectUserHeader;
