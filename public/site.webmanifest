@@ -5,22 +5,26 @@
 	"start_url": "/",
 	"scope": "https://42extra.vercel.app",
 	"display": "standalone",
-	"theme_color": "#000000",
-	"background_color": "#ffffff",
+	"theme_color": "#121212",
+	"background_color": "#121212",
 	"icons": [
 		{
-			"src": "favicon.svg",
-			"type": "image/svg+xml"
+			"src": "icon.svg",
+			"sizes": "150x150",
+			"type": "image/svg+xml",
+			"purpose": "any monochrome"
 		},
 		{
-			"src": "/android-chrome-192x192.png",
+			"src": "/icon_x192.png",
 			"sizes": "192x192",
-			"type": "image/png"
+			"type": "image/png",
+			"purpose": "maskable"
 		},
 		{
-			"src": "/android-chrome-512x512.png",
+			"src": "/icon_x512.png",
 			"sizes": "512x512",
-			"type": "image/png"
+			"type": "image/png",
+			"purpose": "maskable"
 		}
 	]
 }
