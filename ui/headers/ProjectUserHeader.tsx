@@ -1,11 +1,11 @@
-import useAPI from "lib/useAPI";
-import { ProjectsUser, User } from "types/User";
-import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import PageTitle from "ui/PageTitle";
+import Link from "next/link";
 
-function ProjectUserHeader() {
+import { ProjectsUser, User } from "types/User";
+import PageTitle from "ui/PageTitle";
+import useAPI from "lib/useAPI";
+
+export default function ProjectUserHeader() {
 	const router = useRouter();
 	const { login, project } = router.query;
 
@@ -32,7 +32,7 @@ function ProjectUserHeader() {
 			<PageTitle>
 				{`${login}'s ${projectData ? projectData.name : project}`}
 			</PageTitle>
-			<header className="relative px-4 py-10">
+			<div className="relative px-4 py-10">
 				<h1 className="text-2xl font-bold">
 					<Link href={`/users/${login}`}>
 						<a>{login}</a>
@@ -47,9 +47,7 @@ function ProjectUserHeader() {
 						{userProject.final_mark}
 					</span>
 				)}
-			</header>
+			</div>
 		</>
 	);
 }
-
-export default ProjectUserHeader;

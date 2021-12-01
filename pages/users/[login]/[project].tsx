@@ -5,9 +5,9 @@ import useAPI from "lib/useAPI";
 import Loading from "ui/Loading";
 import UserCard from "ui/UserCard";
 import UserGrid from "ui/UserGrid";
-import { getLayout } from "ui/layouts/ProjectLayout";
+import ProjectUserHeader from "ui/headers/ProjectUserHeader";
 
-function ProjectUser() {
+export default function ProjectUser() {
 	const router = useRouter();
 	const { project, login } = router.query;
 
@@ -110,6 +110,4 @@ function ProjectUser() {
 	));
 }
 
-ProjectUser.getLayout = getLayout;
-
-export default ProjectUser;
+ProjectUser.header = ProjectUserHeader;

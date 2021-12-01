@@ -1,6 +1,6 @@
 import { Container, Box } from "@theme-ui/components";
 
-export default function Header() {
+export default function Header({ children }) {
 	return (
 		<Box
 			sx={{
@@ -9,7 +9,9 @@ export default function Header() {
 					"background-color 500ms cubic-bezier(0.4, 0, 0.2, 1)",
 			}}
 		>
-			<Container p={0} as="header" id="header" />
+			<Container p={0} as="header" id="header">
+				{children}
+			</Container>
 		</Box>
 	);
 }

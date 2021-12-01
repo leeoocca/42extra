@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import Head from "next/head";
 
 import { useRegisterActions } from "kbar";
 import { Flex, Box, Heading } from "@theme-ui/components";
@@ -9,7 +8,6 @@ import { getUserNavLinks } from "lib/NavLinks";
 import { User } from "types/User";
 import { userActions } from "lib/actions";
 import Avatar from "ui/Avatar";
-import HeaderPortal from "ui/HeaderPortal";
 import NavLink from "ui/NavLink";
 import useAPI from "lib/useAPI";
 import hexToRGB from "lib/hexToRGB";
@@ -81,7 +79,7 @@ export default function UserHeader() {
 	]);
 
 	return (
-		<HeaderPortal>
+		<>
 			<PageTitle>
 				{getPageTitle(String(login), router.route.split("/"))}
 			</PageTitle>
@@ -184,6 +182,6 @@ export default function UserHeader() {
 					/>
 				))}
 			</Flex>
-		</HeaderPortal>
+		</>
 	);
 }

@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import { ArrowRight } from "react-feather";
 import { BaseAction, useKBar, useRegisterActions } from "kbar";
-import { Box } from "@theme-ui/components";
+import { Box, Container } from "@theme-ui/components";
 import { signIn, useSession } from "next-auth/react";
 
 import { ICON_SIZE } from "lib/actions";
@@ -13,7 +13,7 @@ import Header from "./headers/Header";
 import Loader from "./Loader";
 import StatusBar from "./StatusBar";
 
-export default function Shell({ children }) {
+export default function Shell({ children, headerContent }) {
 	const { status } = useSession({
 		required: true,
 		onUnauthenticated() {
@@ -62,15 +62,14 @@ export default function Shell({ children }) {
 		>
 			<CommandBar />
 			<StatusBar />
-			<Header />
-			<Box
+			<Header>{headerContent}</Header>
+			<Container
 				sx={{
-					width: "100%",
 					flex: "1 1 auto",
 				}}
 			>
 				{children}
-			</Box>
+			</Container>
 			<Footer />
 		</Box>
 	);
