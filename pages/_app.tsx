@@ -13,6 +13,9 @@ import { globalActions } from "lib/actions";
 import Shell from "ui/Shell";
 import Favicons from "ui/Favicons";
 
+// import { useEffect, useState } from "react";
+// import Loader from "ui/Loader";
+
 const progress = new ProgressBar({
 	size: 2,
 	color: "var(--theme-ui-colors-primary)",
@@ -37,6 +40,14 @@ const SWRSettings: SWRConfiguration = {
 	shouldRetryOnError: false,
 };
 
+// function Splash({ children }) {
+// 	const [loading, setLoading] = useState(true);
+
+// 	useEffect(() => setLoading(false), []);
+// 	if (loading) return <Loader />;
+// 	return children;
+// }
+
 export default function MyApp({
 	Component,
 	pageProps: { session, ...pageProps },
@@ -51,15 +62,17 @@ export default function MyApp({
 		);
 
 	return (
-		<SessionProvider session={session} refetchInterval={60 * 60}>
-			<SWRConfig value={SWRSettings}>
-				<ThemeProvider theme={theme}>
+		<ThemeProvider theme={theme}>
+			{/* <Splash> */}
+			<SessionProvider session={session} refetchInterval={60 * 60}>
+				<SWRConfig value={SWRSettings}>
 					<KBarProvider actions={globalActions}>
 						<Favicons />
 						{getShell(<Component {...pageProps} />)}
 					</KBarProvider>
-				</ThemeProvider>
-			</SWRConfig>
-		</SessionProvider>
+				</SWRConfig>
+			</SessionProvider>
+			{/* </Splash> */}
+		</ThemeProvider>
 	);
 }
