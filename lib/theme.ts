@@ -26,6 +26,12 @@ const theme: Theme = {
 			maxWidth: "80rem",
 		},
 	},
+	grids: {
+		cards: {
+			columns: [1, , 2, 3],
+			gap: 2,
+		},
+	},
 	text: {
 		kbd: {
 			"& kbd:not(:last-child)": {
