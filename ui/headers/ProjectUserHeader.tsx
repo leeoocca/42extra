@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ProjectsUser, User } from "types/User";
 import PageTitle from "ui/PageTitle";
 import useAPI from "lib/useAPI";
+import { useEffect } from "react";
 
 export default function ProjectUserHeader() {
 	const router = useRouter();
@@ -16,16 +17,33 @@ export default function ProjectUserHeader() {
 
 	let userProject: ProjectsUser | null = null;
 
-	if (user) {
-		userProject = user.projects_users.find(
-			(projectsUsers) => projectsUsers.project.slug === project
-		);
-		if (userProject["validated?"])
-			document.documentElement.style.setProperty("--nav", "52, 211, 153");
-		else if (userProject.status === "in_progress")
-			document.documentElement.style.setProperty("--nav", "251, 191, 36");
-		else document.documentElement.style.setProperty("--nav", "220, 38, 38");
-	}
+	useEffect(
+		function () {
+			if (user) {
+				userProject = user.projects_users.find(
+					(projectsUsers) => projectsUsers.project.slug === project
+				);
+				if (!userProject) {
+					document.documentElement.style.setProperty("--nav", "");
+				} else if (userProject["validated?"])
+					document.documentElement.style.setProperty(
+						"--nav",
+						"52, 211, 153"
+					);
+				else if (userProject.status === "in_progress")
+					document.documentElement.style.setProperty(
+						"--nav",
+						"251, 191, 36"
+					);
+				else
+					document.documentElement.style.setProperty(
+						"--nav",
+						"220, 38, 38"
+					);
+			}
+		},
+		[user]
+	);
 
 	return (
 		<>
