@@ -57,7 +57,12 @@ export default function UserLocations() {
 					{day[0].end_at ? "" : " ++"}
 				</Text>
 				{day.map((location) => (
-					<Text as="p" my={3} sx={{ fontFeatureSettings: "'tnum'" }}>
+					<Text
+						key={location.id}
+						as="p"
+						my={3}
+						sx={{ fontFeatureSettings: "'tnum'" }}
+					>
 						<h4>
 							<b>{location.host}</b>
 							<Text opacity="50%">
