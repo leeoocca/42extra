@@ -1,70 +1,96 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+import { Box, Heading, Text } from "@theme-ui/components";
 import prettyMilliseconds from "pretty-ms";
 
-import useAPI from "lib/useAPI";
+import groupBy from "lib/groupBy";
 import Loading from "ui/Loading";
+import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
+
+const prettyOptions = { secondsDecimalDigits: 0 };
+
+function getDayDuration(day) {
+	let duration = 0;
+
+	day.forEach((location) => {
+		duration += rawDuration(location);
+	});
+
+	return prettyMilliseconds(duration, prettyOptions);
+}
+
+function rawDuration(location) {
+	const start = new Date(location.begin_at).valueOf();
+	const end = location.end_at
+		? new Date(location.end_at).valueOf()
+		: Date.now();
+	return end - start;
+}
 
 export default function UserLocations() {
 	const router = useRouter();
 	const { login } = router.query;
 
-	const {
-		data: locations,
-		isLoading,
-		isError,
-	}: {
-		data: any; // @todo add location interface
-		isLoading: boolean;
-		isError: boolean;
-	} = useAPI(`/v2/users/${login}/locations`);
+	const { data: locations, isLoading } = useAPI(
+		`/v2/users/${login}/locations`
+	);
 
 	if (isLoading) return <Loading />;
-	if (isError) return <>Error</>;
+	if (!locations) return <>Error</>;
 
-	// group by day
+	if (!locations.length) return <>Never seen on any campus.</>;
 
-	return (
-		<>
-			<table className="w-full">
-				<thead>
-					<tr>
-						<th>Host</th>
-						<th>Campus</th>
-						<th>Begin</th>
-						<th>End</th>
-						<th>Duration</th>
-					</tr>
-				</thead>
-				<tbody>
-					{locations.map((l) => (
-						<tr key={l.id} className="text-center">
-							<td className="font-mono">{l.host}</td>
-							<td>
-								<Link href={`/campus/${l.campus_id}`}>
-									<a>{l.campus_id}</a>
-								</Link>
-							</td>
-							<td className="font-mono">{l.begin_at}</td>
-							<td className="font-mono">{l.end_at}</td>
-							<td style={{ textAlign: "left" }}>
-								{prettyMilliseconds(
-									(Date.parse(l.end_at) || Date.now()) -
-										Date.parse(l.begin_at),
-									{
-										unitCount: 2,
-										secondsDecimalDigits: 0,
-									}
-								)}
-							</td>
-						</tr>
-					))}
-				</tbody>
-			</table>
-		</>
+	const byDay = groupBy(locations, (l) =>
+		new Date(l.begin_at).toDateString()
 	);
+
+	let content = [null];
+
+	byDay.forEach((day) =>
+		content.push(
+			<Box as="section" my={2}>
+				<Heading>{new Date(day[0].begin_at).toDateString()} </Heading>
+				<Text>
+					{getDayDuration(day)}
+					{day[0].end_at ? "" : " ++"}
+				</Text>
+				{day.map((location) => (
+					<Text as="p" my={3} sx={{ fontFeatureSettings: "'tnum'" }}>
+						<h4>
+							<b>{location.host}</b>
+							<Text opacity="50%">
+								{" "}
+								@{" "}
+								<Link href={`/campus/${location.campus_id}`}>
+									<a>{location.campus_id}</a>
+								</Link>
+							</Text>
+						</h4>
+						<small>
+							<time dateTime={location.begin_at}>
+								{new Date(
+									location.begin_at
+								).toLocaleTimeString()}
+							</time>{" "}
+							–{" "}
+							{location.end_at ? (
+								<time dateTime={location.end_at}>
+									{new Date(
+										location.end_at
+									).toLocaleTimeString()}
+								</time>
+							) : (
+								<Text color="#01FF70">active</Text>
+							)}
+						</small>
+					</Text>
+				))}
+			</Box>
+		)
+	);
+	return content;
 }
 
 UserLocations.header = UserHeader;
