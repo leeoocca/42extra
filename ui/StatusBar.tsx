@@ -1,34 +1,78 @@
 import Link from "next/link";
-import { useKBar } from "kbar";
-import UserDropdown from "./UserDropdown";
-import { IconButton, Flex } from "@theme-ui/components";
 
-function StatusBar() {
+import { IconButton, Container, Text, Flex } from "@theme-ui/components";
+import { useKBar } from "kbar";
+import { useSession } from "next-auth/react";
+
+import Logo from "./Logo";
+import Avatar from "./Avatar";
+import { Disc } from "react-feather";
+
+export default function StatusBar() {
 	const { query } = useKBar();
+	const { data: session } = useSession();
+
+	const mac =
+		typeof window !== "undefined" &&
+		/(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
+
 	return (
-		<Flex as="nav">
-			<nav className="flex items-center w-full p-4 mx-auto space-x-4 align-middle max-w-7xl">
-				<Link href="/">
-					<a>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 42 42"
-							className="w-8 h-8 fill-current"
-						>
-							<path d="M4 28.69h12.593V35h6.284V23.597h-12.57L22.876 11h-6.284L4 23.597v5.093zm21.589-11.384L31.876 11h-6.287v6.306zm6.287 0l-6.287 6.291v6.287h6.287v-6.287l6.306-6.29V11h-6.306v6.306zM38.182 23.597l-6.306 6.287h6.306v-6.287z" />
-						</svg>
-					</a>
-				</Link>
+		<Container
+			as="nav"
+			sx={{
+				display: "flex",
+				justifyContent: "space-between",
+				alignItems: "center",
+				"& button, a": {
+					flexGrow: 1,
+					flexBasis: 0,
+				},
+			}}
+		>
+			<Link href="/" passHref>
 				<IconButton
-					onClick={query.toggle}
-					sx={{ fontSize: 3, color: "#ddd" }}
+					sx={{
+						"& > svg": { width: "2rem", mr: "auto" },
+					}}
 				>
-					⌘
+					<Logo />
 				</IconButton>
-				<UserDropdown />
-			</nav>
-		</Flex>
+			</Link>
+			<Text
+				as="kbd"
+				variant="kbd"
+				sx={{
+					opacity: "50%",
+					display: ["none", , "block"],
+				}}
+				onClick={query.toggle}
+			>
+				<kbd>{mac ? "⌘" : "Ctrl"}</kbd>
+				<kbd>K</kbd>
+			</Text>
+			<Text
+				as="small"
+				sx={{
+					opacity: "50%",
+					display: ["flex", , "none"],
+					alignItems: "center",
+					gap: 1,
+					fontSize: "0.7rem",
+				}}
+				onClick={query.toggle}
+			>
+				<Disc size={14} />
+				Tap with two fingers
+			</Text>
+			<Link href={`/users/${session.user.login}`} passHref>
+				<Flex
+					as="a"
+					sx={{ gap: 2, alignItems: "center", justifyContent: "end" }}
+				>
+					<Avatar url={session.user.image} size={20} />
+					<p>{session.user.login}</p>
+				</Flex>
+			</Link>
+		</Container>
 	);
 }
-
-export default StatusBar;

@@ -24,6 +24,21 @@ const theme: Theme = {
 			maxWidth: "80rem",
 		},
 	},
+	text: {
+		kbd: {
+			"& kbd:not(:last-child)": {
+				mr: 1,
+			},
+			"& kbd": {
+				py: 1,
+				px: 2,
+				borderRadius: 4,
+				fontSize: "0.9rem",
+				fontFamily: "sans-serif",
+				background: "rgba(255 255 255 / .1)",
+			},
+		},
+	},
 	styles: {
 		...base.styles,
 	},
