@@ -1,44 +1,32 @@
 import { useRouter } from "next/router";
-import Image from "next/image";
 
-import SVG from "react-inlinesvg";
+import { Heading } from "@theme-ui/components";
 
-import useAPI from "lib/useAPI";
+import CoalitionHeader from "ui/headers/CoalitionHeader";
+import Loader from "ui/Loader";
 import Loading from "ui/Loading";
-import UserGrid from "ui/UserGrid";
+import useAPI from "lib/useAPI";
+import UserCard from "ui/UserCard";
 import UserCardWithDetails from "ui/UserCardWithDetails";
+import UserGrid from "ui/UserGrid";
 
-function CoalitionIndex() {
+export default function CoalitionIndex() {
 	const router = useRouter();
 	const { slug } = router.query;
 
 	const { data: coalition } = useAPI(`/v2/coalitions/${slug}`);
-	const { data: users } = useAPI(`/v2/coalitions/${slug}/coalitions_users`);
+	const { data: users } = useAPI(
+		`/v2/coalitions/${slug}/coalitions_users?page[size]=20&sort=-this_year_score`
+	);
 
 	if (!coalition) return <Loading />;
 
-	document.documentElement.style.setProperty("--nav", coalition.color + "DD");
-
 	return (
 		<>
-			<h1>{coalition.name}</h1>
-			<p>Score: {coalition.score}</p>
-			<SVG
-				src={coalition.image_url}
-				fill="white"
-				width="4rem"
-				height="4rem"
-				className="object-contain w-16 h-16"
-			/>
-			<Image
-				src={coalition.cover_url}
-				className="object-cover w-16 h-16"
-				width={64}
-				height={64}
-				quality={100}
-				alt=""
-			/>
-			{users && (
+			<Heading my={2}>Master</Heading>
+			<UserCard id={coalition.user_id} />
+			<Heading my={2}>Leaderboard</Heading>
+			{users ? (
 				<UserGrid>
 					{users.map((user) => {
 						const details = [
@@ -54,9 +42,11 @@ function CoalitionIndex() {
 						);
 					})}
 				</UserGrid>
+			) : (
+				<Loader />
 			)}
 		</>
 	);
 }
 
-export default CoalitionIndex;
+CoalitionIndex.header = CoalitionHeader;
