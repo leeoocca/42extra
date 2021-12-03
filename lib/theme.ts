@@ -11,6 +11,8 @@ const theme: Theme = {
 		muted: "#191919", // #333
 		highlight: "#29112c",
 		gray: "#999",
+		lime: "#01FF70",
+		red: "#FF4136",
 	},
 	fonts: {
 		body: "Inter var, system-ui, sans-serif",

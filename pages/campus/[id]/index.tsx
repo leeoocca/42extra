@@ -1,37 +1,59 @@
-import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
-import useAPI from "lib/useAPI";
+import { Heading, Text, Link as TLink } from "@theme-ui/components";
+
+import CampusHeader from "ui/headers/CampusHeader";
 import Loading from "ui/Loading";
+import useAPI from "lib/useAPI";
 import WebsiteLink from "ui/WebsiteLink";
 
-function CampusIndex() {
+export default function CampusIndex() {
 	const router = useRouter();
 	const { id } = router.query;
 
 	const { data: c } = useAPI(`/v2/campus/${id}`);
 
+	const [time, setTime] = useState(new Date());
+
+	function refreshClock() {
+		setTime(new Date());
+	}
+
+	useEffect(() => {
+		const timerId = setInterval(refreshClock, 1000);
+		return function cleanup() {
+			clearInterval(timerId);
+		};
+	}, []);
+
 	if (!c) return <Loading />;
 
 	return (
 		<>
-			{c && (
+			<WebsiteLink url={c.website} />
+			<Heading my={2}>
+				Users{" "}
+				<Link href={`/campus/${id}/users`} passHref>
+					<TLink>
+						<p>{c.users_count}</p>
+					</TLink>
+				</Link>
+			</Heading>
+			<Heading my={2}>Local time</Heading>
+			<time dateTime={time.toISOString()}>
+				{time.toLocaleTimeString("en-UK", { timeZone: c.time_zone })}
+			</time>
+			<Heading my={2}>Main language</Heading>
+			<p>{c.language.name}</p>
+			<Heading my={2}>Status</Heading>
+			<Text color={c.active ? "lime" : "red"}>
+				{c.active ? "active" : "inactive"}
+			</Text>
+			{c.facebook || c.twitter ? (
 				<>
-					<h1 className="text-3xl font-bold leading-relaxed">
-						{c.name}
-					</h1>
-					<p>
-						{c.city}, {c.country}
-					</p>
-					<WebsiteLink url={c.website} />
-					<Link href={`/campus/${id}/users`}>
-						<a>
-							<p>{c.users_count} users</p>
-						</a>
-					</Link>
-					<p>Main language: {c.language.name}</p>
-					<p>{c.active ? "active" : "inactive"}</p>
-					<h2>Socials</h2>
+					<Heading>Socials</Heading>
 					<ul>
 						{c.facebook && (
 							<li>
@@ -56,15 +78,16 @@ function CampusIndex() {
 							</li>
 						)}
 					</ul>
-					<h2>Full address</h2>
-					<p>{c.address}</p>
-					<p>
-						{c.zip} {c.city}, {c.country}
-					</p>
 				</>
-			)}
+			) : null}
+			<Heading my={2}>Address</Heading>
+			<address>
+				{c.address}
+				<br />
+				{c.zip} {c.city}, {c.country}
+			</address>
 		</>
 	);
 }
 
-export default CampusIndex;
+CampusIndex.header = CampusHeader;

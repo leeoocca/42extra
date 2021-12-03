@@ -1,12 +1,15 @@
-import { User } from "next-auth";
 import { useRouter } from "next/router";
 
+import { Heading } from "@theme-ui/components";
+import { User } from "next-auth";
+
+import CampusHeader from "ui/headers/CampusHeader";
+import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
 import UserCard from "ui/UserCard";
 import UserGrid from "ui/UserGrid";
-import Loading from "ui/Loading";
 
-function CampusesIndex() {
+export default function CampusUsers() {
 	const router = useRouter();
 	const { id } = router.query;
 
@@ -17,9 +20,7 @@ function CampusesIndex() {
 
 	return (
 		<>
-			<h1 className="text-3xl font-bold leading-relaxed">
-				Users for campus {id}
-			</h1>
+			<Heading mb={2}>Users</Heading>
 			<UserGrid>
 				{users &&
 					users.map((u) => <UserCard key={u.id} id={u.login} />)}
@@ -28,4 +29,4 @@ function CampusesIndex() {
 	);
 }
 
-export default CampusesIndex;
+CampusUsers.header = CampusHeader;
