@@ -44,6 +44,7 @@ export default function StatusBar() {
 				sx={{
 					opacity: "50%",
 					display: ["none", , "block"],
+					cursor: "pointer",
 				}}
 				onClick={query.toggle}
 			>
@@ -58,6 +59,7 @@ export default function StatusBar() {
 					alignItems: "center",
 					gap: 1,
 					fontSize: "0.7rem",
+					cursor: "pointer",
 				}}
 				onClick={query.toggle}
 			>
