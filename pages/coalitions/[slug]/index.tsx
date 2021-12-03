@@ -1,4 +1,7 @@
 import { useRouter } from "next/router";
+import Image from "next/image";
+
+import SVG from "react-inlinesvg";
 
 import useAPI from "lib/useAPI";
 import Loading from "ui/Loading";
@@ -20,15 +23,20 @@ function CoalitionIndex() {
 		<>
 			<h1>{coalition.name}</h1>
 			<p>Score: {coalition.score}</p>
-			<img
-				src={coalition.cover_url}
-				alt=""
-				className="object-cover w-16 h-16"
-			/>
-			<img
+			<SVG
 				src={coalition.image_url}
-				alt=""
+				fill="white"
+				width="4rem"
+				height="4rem"
 				className="object-contain w-16 h-16"
+			/>
+			<Image
+				src={coalition.cover_url}
+				className="object-cover w-16 h-16"
+				width={64}
+				height={64}
+				quality={100}
+				alt=""
 			/>
 			{users && (
 				<UserGrid>

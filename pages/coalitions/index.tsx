@@ -1,11 +1,17 @@
+import Link from "next/link";
+
+import SVG from "react-inlinesvg";
+
+import useAPI from "lib/useAPI";
+import Loading from "ui/Loading";
 import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
-import useAPI from "lib/useAPI";
-import Link from "next/link";
-import Loading from "ui/Loading";
 
-function CoalitionsIndex() {
-	const { data: coalitions } = useAPI(`/v2/coalitions?sort=id`);
+export default function CoalitionsIndex() {
+	const { data: coalitions } = useAPI(
+		`/v2/coalitions?sort=id&page[size]=100`
+	);
+	// TODO paginate results
 	return (
 		<>
 			<h1 className="text-3xl font-bold leading-relaxed">Coalitions</h1>
@@ -30,9 +36,9 @@ function CoalitionsIndex() {
 												Score: {c.score}
 											</p>
 										</div>
-										<img
+										<SVG
 											src={c.image_url}
-											alt={c.name}
+											fill="white"
 											className="w-16 h-16 mix-blend-soft-light"
 										/>
 									</div>
@@ -47,5 +53,3 @@ function CoalitionsIndex() {
 		</>
 	);
 }
-
-export default CoalitionsIndex;

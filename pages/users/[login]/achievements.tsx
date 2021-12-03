@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 import { Achievement, User } from "types/User";
 import AchievementCard from "ui/AchievementCard";
@@ -6,6 +7,8 @@ import CardGrid from "ui/CardGrid";
 import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
+
+import emptyState from "public/coding.gif";
 
 export default function UserAchievements() {
 	const router = useRouter();
@@ -25,10 +28,7 @@ export default function UserAchievements() {
 	if (!user.achievements.length)
 		return (
 			<div className="flex flex-col items-center w-full mt-4">
-				<img
-					src="https://i.chzbgr.com/full/8270686464/h7779056E/coding-is-an-art"
-					alt=""
-				/>
+				<Image src={emptyState} alt="" />
 				<p>
 					No achievements for{" "}
 					<span className="font-bold">{login}</span>.

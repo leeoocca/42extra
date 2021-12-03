@@ -1,14 +1,17 @@
+import Image from "next/image";
+
 import { Achievement } from "types/User";
 import Card from "./Card";
 
-function AchievementCard({ a }: { a: Achievement }) {
+export default function AchievementCard({ a }: { a: Achievement }) {
 	return (
 		<Card className="items-center">
-			<img
+			<Image
 				src={
 					"https://cdn.intra.42.fr" + a.image.replace("/uploads", "")
 				}
-				className="w-12 m-2"
+				width={48}
+				height={48}
 			/>
 			<div className="flex flex-col justify-center ml-2 leading-relaxed pt-0.5 pb-1.5">
 				<h3 className="font-bold tracking-tight">{a.name}</h3>
@@ -25,5 +28,3 @@ function AchievementCard({ a }: { a: Achievement }) {
 		</Card>
 	);
 }
-
-export default AchievementCard;

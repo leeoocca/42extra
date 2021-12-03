@@ -19,14 +19,14 @@ function Card({
 				backgroundColor: backgroundColor || "",
 			}}
 		>
-			{backgroundImageURL && (
+			{/* {backgroundImageURL && (
 				<>
 					<img
 						src={backgroundImageURL}
 						className="absolute inset-0 object-cover w-full h-full opacity-70 group-hover:opacity-80"
 					/>
 				</>
-			)}
+			)} */}
 			<div className="relative flex h-full p-2">{children}</div>
 		</div>
 	);
