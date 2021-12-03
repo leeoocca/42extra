@@ -1,10 +1,11 @@
+import Link from "next/link";
+
 import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
-import useAPI from "lib/useAPI";
-import Link from "next/link";
 import Loading from "ui/Loading";
+import useAPI from "lib/useAPI";
 
-function Cursuses() {
+export default function Cursuses() {
 	const { data: cursuses } = useAPI(`/v2/cursus?sort=id&page[size]=100`);
 
 	return (
@@ -13,7 +14,7 @@ function Cursuses() {
 			<CardGrid>
 				{cursuses ? (
 					cursuses.map((cursus) => (
-						<Link href={`/cursus/${cursus.slug}`} key={cursus.id}>
+						<Link key={cursus.id} href={`/cursus/${cursus.slug}`}>
 							<a>
 								<Card className="h-32 overflow-hidden">
 									<div>
@@ -31,5 +32,3 @@ function Cursuses() {
 		</>
 	);
 }
-
-export default Cursuses;
