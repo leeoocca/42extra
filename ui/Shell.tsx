@@ -69,6 +69,7 @@ export default function Shell({ children, headerContent }) {
 			<StatusBar />
 			<Header>{headerContent}</Header>
 			<Container
+				as="main"
 				sx={{
 					flex: "1 1 auto",
 				}}
