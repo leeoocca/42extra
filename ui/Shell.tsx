@@ -17,7 +17,12 @@ export default function Shell({ children, headerContent }) {
 	const { status } = useSession({
 		required: true,
 		onUnauthenticated() {
-			signIn();
+			router.push({
+				pathname: "/auth/signin",
+				query: {
+					callbackUrl: `${router.asPath}`,
+				},
+			});
 		},
 	});
 
