@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import { Box, Flex, Text } from "@theme-ui/components";
 
 import useAPI from "lib/useAPI";
+import HeaderNav from "./HeaderNav";
+import { CampusNavLinks } from "lib/NavLinks";
 
 export default function CampusHeader() {
 	const router = useRouter();
@@ -25,6 +27,7 @@ export default function CampusHeader() {
 					</Text>
 				</Flex>
 			</Box>
+			<HeaderNav navLinks={CampusNavLinks()} />
 		</>
 	);
 }
