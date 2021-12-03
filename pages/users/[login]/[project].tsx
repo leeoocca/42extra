@@ -11,10 +11,11 @@ export default function ProjectUser() {
 	const router = useRouter();
 	const { project, login } = router.query;
 
-	const { data: teams } = useAPI(
+	const { data: teams, isError } = useAPI(
 		`/v2/users/${login}/projects/${project}/teams`
 	);
 
+	if (isError) return <p>{isError.status === 404 ? `No teams.` : "Error"}</p>;
 	if (!teams) return <Loading />;
 
 	return teams.map((team, i) => (
