@@ -1,7 +1,9 @@
+import router from "next/router";
 import { LinkListNode } from "types/LinkListNode";
 
 export function getUserNavLinks() {
-	const baseUrl = "/users/[login]";
+	const { login } = router.query;
+	const baseUrl = `/users/${login}`;
 
 	let navLinks: LinkListNode[] = [
 		{
@@ -10,27 +12,27 @@ export function getUserNavLinks() {
 		},
 		{
 			name: "Projects",
-			href: baseUrl + "/projects",
+			href: `${baseUrl}/projects`,
 		},
 		{
 			name: "Quests",
-			href: baseUrl + "/quests",
+			href: `${baseUrl}/quests`,
 		},
 		{
 			name: "Achievements",
-			href: baseUrl + "/achievements",
+			href: `${baseUrl}/achievements`,
 		},
 		{
 			name: "Patronages",
-			href: baseUrl + "/patronages",
+			href: `${baseUrl}/patronages`,
 		},
 		{
 			name: "Partnerships",
-			href: baseUrl + "/partnerships",
+			href: `${baseUrl}/partnerships`,
 		},
 		{
 			name: "Apps",
-			href: baseUrl + "/apps",
+			href: `${baseUrl}/apps`,
 		},
 	];
 
@@ -38,7 +40,8 @@ export function getUserNavLinks() {
 }
 
 export function getProjectNavLinks() {
-	const baseUrl = "/projects/[slug]";
+	const { slug } = router.query;
+	const baseUrl = `/projects/${slug}`;
 
 	let navLinks: LinkListNode[] = [
 		{
@@ -47,11 +50,63 @@ export function getProjectNavLinks() {
 		},
 		{
 			name: "Users",
-			href: baseUrl + "/users",
+			href: `${baseUrl}/users`,
 		},
 		{
 			name: "Cursuses",
-			href: baseUrl + "/cursuses",
+			href: `${baseUrl}/cursuses`,
+		},
+	];
+
+	return navLinks;
+}
+
+export function CampusNavLinks() {
+	const { id } = router.query;
+	const baseUrl = `/campus/${id}`;
+
+	const navLinks: LinkListNode[] = [
+		{
+			name: "Overview",
+			href: baseUrl,
+		},
+		{
+			name: "Users",
+			href: `${baseUrl}/users`,
+		},
+	];
+
+	return navLinks;
+}
+
+export function CursusNavLinks() {
+	const { slug } = router.query;
+	const baseUrl = `/cursus/${slug}`;
+
+	const navLinks: LinkListNode[] = [
+		{
+			name: "Overview",
+			href: baseUrl,
+		},
+		{
+			name: "Projects",
+			href: `${baseUrl}/projects`,
+		},
+		{
+			name: "Achievements",
+			href: `${baseUrl}/achievements`,
+		},
+		{
+			name: "Notions",
+			href: `${baseUrl}/notions`,
+		},
+		{
+			name: "Skills",
+			href: `${baseUrl}/skills`,
+		},
+		{
+			name: "Events",
+			href: `${baseUrl}/events`,
 		},
 	];
 

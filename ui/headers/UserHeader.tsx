@@ -1,17 +1,17 @@
 import { useRouter } from "next/router";
 
-import { useRegisterActions } from "kbar";
 import { Flex, Box, Heading } from "@theme-ui/components";
+import { useRegisterActions } from "kbar";
 import SVG from "react-inlinesvg";
 
 import { getUserNavLinks } from "lib/NavLinks";
 import { User } from "types/User";
 import { userActions } from "lib/actions";
 import Avatar from "ui/Avatar";
-import NavLink from "ui/NavLink";
-import useAPI from "lib/useAPI";
+import HeaderNav from "./HeaderNav";
 import hexToRGB from "lib/hexToRGB";
 import PageTitle from "ui/PageTitle";
+import useAPI from "lib/useAPI";
 
 function getCustomUserLogin(user: User): string {
 	const selectedTitle = user.titles_users.find((title) => title.selected);
@@ -165,23 +165,7 @@ export default function UserHeader() {
 					</Box>
 				)}
 			</Flex>
-			<Flex
-				as="nav"
-				sx={{
-					px: 3,
-					gap: 3,
-					overflow: "auto",
-					userSelect: "none",
-				}}
-			>
-				{getUserNavLinks().map((item) => (
-					<NavLink
-						key={item.href}
-						name={item.name}
-						href={item.href}
-					/>
-				))}
-			</Flex>
+			<HeaderNav navLinks={getUserNavLinks()} />
 		</>
 	);
 }

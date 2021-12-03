@@ -1,14 +1,14 @@
-import Link from "next/link";
-import { LinkListNode } from "types/LinkListNode";
-import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
+
+import { LinkListNode } from "types/LinkListNode";
 
 function NavLink({ name, href, className }: LinkListNode) {
 	const router = useRouter();
-	const { login } = router.query;
 	const activeNavRef = useRef<HTMLAnchorElement>(null);
 
-	const active = router.pathname === href;
+	const active = router.asPath === href;
 
 	useEffect(() => {
 		if (active && activeNavRef.current) {
@@ -20,7 +20,7 @@ function NavLink({ name, href, className }: LinkListNode) {
 	}, [active]);
 
 	return (
-		<Link href={{ pathname: href, query: { login: login } }} key={href}>
+		<Link href={href}>
 			<a
 				className={`${
 					active
