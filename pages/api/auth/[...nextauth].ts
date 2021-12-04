@@ -3,6 +3,8 @@ import NextAuth from "next-auth";
 import { User } from "types/User";
 import refreshAccessToken from "lib/refreshAccessToken";
 
+const apiBaseUrl = "https://api.intra.42.fr";
+
 export default NextAuth({
 	providers: [
 		{
@@ -13,14 +15,14 @@ export default NextAuth({
 			clientId: process.env.FT_UID,
 			clientSecret: process.env.FT_SECRET,
 			authorization: {
-				url: "https://api.intra.42.fr/oauth/authorize?response_type=code",
+				url: `${apiBaseUrl}/oauth/authorize?response_type=code`,
 				params: {
 					grant_type: "authorization_code",
 					scope: "public projects",
 				},
 			},
-			token: "https://api.intra.42.fr/oauth/token",
-			userinfo: "https://api.intra.42.fr/v2/me",
+			token: `${apiBaseUrl}/oauth/token`,
+			userinfo: `${apiBaseUrl}/v2/me`,
 			profile(profile: User) {
 				const primaryCampus = profile.campus_users.find(
 					(campus) => campus.is_primary
@@ -34,6 +36,7 @@ export default NextAuth({
 					image: profile.image_url,
 					campus: primaryCampus?.campus_id,
 					staff: profile["staff?"],
+					cursus: profile.cursus_users.map((c) => c.cursus_id),
 				};
 			},
 		},
