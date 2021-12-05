@@ -5,15 +5,21 @@ function Avatar({
 	url,
 	size,
 	className,
+	deprecated,
 }: {
 	url: string | null;
 	size: number;
 	className?: string;
+	deprecated: boolean;
 }) {
 	return (
 		<div
-			className={styles.container + " " + className}
-			style={{ width: !className && size, height: !className && size }}
+			className={`${styles.container}${className ? ` ${className}` : ""}`}
+			style={{
+				width: !className && size,
+				height: !className && size,
+				filter: `grayscale(${deprecated ? "1" : "0"})`,
+			}}
 		>
 			{url && (
 				<Image
