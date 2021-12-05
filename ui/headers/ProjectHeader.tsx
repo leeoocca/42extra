@@ -1,6 +1,7 @@
-import useAPI from "lib/useAPI";
-import { Project } from "types/Project";
 import { useRouter } from "next/router";
+
+import { Project } from "types/42/Project";
+import useAPI from "lib/useAPI";
 
 export default function ProjectHeader() {
 	const router = useRouter();

@@ -1,9 +1,9 @@
 import Image from "next/image";
 
-import { Achievement } from "types/User";
+import { AchievementPreview } from "types/42/Achievement";
 import Card from "./Card";
 
-export default function AchievementCard({ a }: { a: Achievement }) {
+export default function AchievementCard({ a }: { a: AchievementPreview }) {
 	return (
 		<Card className="items-center">
 			{a.image && (

@@ -5,7 +5,7 @@ import { useRegisterActions } from "kbar";
 import SVG from "react-inlinesvg";
 
 import { getUserNavLinks } from "lib/NavLinks";
-import { User } from "types/User";
+import { User } from "types/42/User";
 import { userActions } from "lib/actions";
 import Avatar from "ui/Avatar";
 import HeaderNav from "./HeaderNav";

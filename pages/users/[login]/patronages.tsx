@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 
 import useAPI from "lib/useAPI";
-import { User } from "types/User";
+import { User } from "types/42/User";
 import Loading from "ui/Loading";
 import UserGrid from "ui/UserGrid";
 import UserCardWithDetails from "ui/UserCardWithDetails";

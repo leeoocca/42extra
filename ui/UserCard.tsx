@@ -1,4 +1,4 @@
-import { User } from "types/User";
+import { User } from "types/42/User";
 import useAPI from "lib/useAPI";
 import Link from "next/link";
 import Avatar, { ErrorAvatar, LoadingAvatar } from "./Avatar";

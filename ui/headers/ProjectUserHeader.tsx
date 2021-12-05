@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-import { ProjectsUser, User } from "types/User";
+import { ProjectsUser, User } from "types/42/User";
 import PageTitle from "ui/PageTitle";
 import useAPI from "lib/useAPI";
 import { useEffect } from "react";
