@@ -1,6 +1,7 @@
 import { AchievementPreview } from "./Achievement";
 import { Campus } from "./Campus";
 import { Cursus } from "./Cursus";
+import { Status } from "./Team";
 
 export interface User {
 	id: number;
@@ -193,11 +194,4 @@ export interface ProjectPreview {
 	name: string;
 	slug: string;
 	parent_id: number | null;
-}
-
-export enum Status {
-	Finished = "finished",
-	InProgress = "in_progress",
-	Parent = "parent",
-	WaitingForCorrection = "waiting_for_correction",
 }

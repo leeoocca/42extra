@@ -27,18 +27,18 @@ export interface AchievementPreview {
 }
 
 export enum Kind {
-	"pedagogy",
-	"project",
-	"scolarity",
-	"social",
+	Pedagogy = "pedagogy",
+	Project = "project",
+	Scolarity = "scolarity",
+	Social = "social",
 }
 
 export enum Tier {
-	"challenge",
-	"easy",
-	"hard",
-	"medium",
-	"none",
+	Challenge = "challenge",
+	Easy = "easy",
+	Hard = "hard",
+	Medium = "medium",
+	None = "none",
 }
 
 export interface Title {

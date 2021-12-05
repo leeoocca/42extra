@@ -55,7 +55,10 @@ export interface Flag {
 }
 
 export enum Status {
-	"finished",
+	Finished = "finished",
+	InProgress = "in_progress",
+	Parent = "parent",
+	WaitingForCorrection = "waiting_for_correction",
 }
 
 export interface TeamsUpload {

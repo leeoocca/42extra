@@ -1,3 +1,6 @@
+import { Language } from "./Language";
+import { Status } from "./Team";
+
 export interface TeamClass {
 	id: number;
 	name: string;
@@ -85,32 +88,6 @@ export interface Scale {
 	languages: Language[];
 	flags: Flag[];
 	free: boolean;
-}
-
-export interface Language {
-	id: number;
-	name: LanguageName;
-	identifier: Identifier;
-	created_at: Date;
-	updated_at: Date;
-}
-
-export enum Identifier {
-	En = "en",
-	Es = "es",
-	Fr = "fr",
-	Hy = "hy",
-}
-
-export enum LanguageName {
-	Armenian = "Armenian",
-	English = "English",
-	Français = "Français",
-	Spanish = "Spanish",
-}
-
-export enum Status {
-	Finished = "finished",
 }
 
 export interface User {

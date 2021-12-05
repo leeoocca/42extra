@@ -27,7 +27,7 @@ export interface QuestUser {
 }
 
 export enum Kind {
-	"main",
-	"mandatory",
-	"optional",
+	Main = "main",
+	Mandatory = "mandatory",
+	Optional = "optional",
 }

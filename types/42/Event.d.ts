@@ -18,11 +18,11 @@ export interface Event {
 }
 
 export enum Kind {
-	"conference",
-	"event",
-	"hackathon",
-	"meet_up",
-	"workshop",
+	Conference = "conference",
+	Event = "event",
+	Hackathon = "hackathon",
+	MeetUp = "meet_up",
+	Workshop = "workshop",
 }
 
 export interface Waitlist {

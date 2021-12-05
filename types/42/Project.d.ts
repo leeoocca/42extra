@@ -60,8 +60,8 @@ export interface Scale {
 
 // TODO verify
 export enum TeamBehaviour {
-	"by_rule",
-	"user",
+	ByRule = "by_rule",
+	User = "user",
 }
 
 export interface Upload {
@@ -71,6 +71,6 @@ export interface Upload {
 
 // TODO verify
 export enum Recommendation {
-	"forbidden",
-	"recommended",
+	Forbidden = "forbidden",
+	Recommended = "recommended",
 }
