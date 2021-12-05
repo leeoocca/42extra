@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { useSession } from "next-auth/react";
 
-import { Project } from "types/Project";
+import { Project } from "types/42/Project";
 import Loading from "ui/Loading";
 import PageTitle from "ui/PageTitle";
 import ProjectHeader from "ui/headers/ProjectHeader";

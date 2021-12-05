@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
 
-import { Achievement, User } from "types/User";
+import { User } from "types/42/User";
 import AchievementCard from "ui/AchievementCard";
 import CardGrid from "ui/CardGrid";
 import Loading from "ui/Loading";
@@ -37,11 +37,11 @@ export default function UserAchievements() {
 		);
 
 	const kinds = [
-		...new Set<string>(user.achievements.map((a: Achievement) => a.kind)),
+		...new Set<string>(user.achievements.map((a => a.kind)),
 	];
 
 	const names = [
-		...new Set<string>(user.achievements.map((a: Achievement) => a.name)),
+		...new Set<string>(user.achievements.map((a => a.name)),
 	];
 
 	return (
@@ -52,7 +52,7 @@ export default function UserAchievements() {
 						{kind.replace(/^\w/, (c) => c.toUpperCase())}
 					</h2>
 					<CardGrid>
-						{user.achievements.map((a: Achievement) => {
+						{user.achievements.map((a => {
 							if (a.kind === kind)
 								return <AchievementCard key={a.id} a={a} />;
 						})}

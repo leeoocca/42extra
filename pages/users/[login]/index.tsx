@@ -1,14 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import prettyMilliseconds from "pretty-ms";
-
-import { User } from "types/User";
-import getTimeAgo from "lib/getTimeAgo";
-import Loading from "ui/Loading";
-import useAPI from "lib/useAPI";
-import UserHeader from "ui/headers/UserHeader";
-import { Themed } from "@theme-ui/mdx";
 import {
 	Badge,
 	Box,
@@ -19,8 +11,13 @@ import {
 	Progress,
 	Text,
 } from "@theme-ui/components";
-import { ElementType, ReactNode } from "react";
-import { ThemeUIStyleObject } from "@theme-ui/css";
+import prettyMilliseconds from "pretty-ms";
+
+import { User } from "types/42/User";
+import getTimeAgo from "lib/getTimeAgo";
+import Loading from "ui/Loading";
+import useAPI from "lib/useAPI";
+import UserHeader from "ui/headers/UserHeader";
 // import getCampusFromId from "lib/getCampusFromId";
 
 function getCurrentLocation(locations: any): string {

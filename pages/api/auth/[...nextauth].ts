@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 
-import { User } from "types/User";
+import { User } from "types/42/User";
 import refreshAccessToken from "lib/refreshAccessToken";
 
 const apiBaseUrl = "https://api.intra.42.fr";
