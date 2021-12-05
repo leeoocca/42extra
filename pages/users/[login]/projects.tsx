@@ -35,7 +35,7 @@ export default function UserProjects() {
 			<article
 				key={cursus.cursus_id}
 				className="mb-8"
-				id={cursus.cursus_id.toString()}
+				id={cursus.cursus.slug}
 			>
 				<header className="mb-4">
 					<div className="flex items-baseline space-x-2">
