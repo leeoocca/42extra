@@ -5,12 +5,12 @@ function Avatar({
 	url,
 	size,
 	className,
-	deprecated,
+	deprecated = false,
 }: {
 	url: string | null;
 	size: number;
 	className?: string;
-	deprecated: boolean;
+	deprecated?: boolean;
 }) {
 	return (
 		<div
