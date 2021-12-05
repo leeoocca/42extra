@@ -12,6 +12,7 @@ import HeaderNav from "./HeaderNav";
 import hexToRGB from "lib/hexToRGB";
 import PageTitle from "ui/PageTitle";
 import useAPI from "lib/useAPI";
+import { useEffect } from "react";
 
 function getCustomUserLogin(user: User): string {
 	const selectedTitle = user.titles_users.find((title) => title.selected);
@@ -64,10 +65,18 @@ export default function UserHeader() {
 
 	const coalition = coalitions && coalitions[0] ? coalitions[0] : null;
 
+	useEffect(() => {
+		return () =>
+			document.documentElement.style.setProperty(
+				"--theme-ui-colors-primary",
+				""
+			);
+	}, []);
+
 	if (coalition)
 		document.documentElement.style.setProperty(
-			"--nav",
-			hexToRGB(coalition.color)
+			"--theme-ui-colors-primary",
+			coalition.color
 		);
 	else if (coalitions !== undefined)
 		document.documentElement.style.setProperty("--nav", "0, 186, 188");
@@ -118,6 +127,13 @@ export default function UserHeader() {
 								: null
 						}
 						size={128}
+						deprecated={
+							user &&
+							!!user.titles_users.find(
+								(title) =>
+									title.title_id === 82 && title.selected
+							)
+						}
 					/>
 				</Box>
 				{!isLoading && (
