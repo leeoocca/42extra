@@ -36,13 +36,9 @@ export default function UserAchievements() {
 			</div>
 		);
 
-	const kinds = [
-		...new Set<string>(user.achievements.map((a => a.kind)),
-	];
+	const kinds = [...new Set<string>(user.achievements.map((a) => a.kind))];
 
-	const names = [
-		...new Set<string>(user.achievements.map((a => a.name)),
-	];
+	const names = [...new Set<string>(user.achievements.map((a) => a.name))];
 
 	return (
 		<>
@@ -52,7 +48,7 @@ export default function UserAchievements() {
 						{kind.replace(/^\w/, (c) => c.toUpperCase())}
 					</h2>
 					<CardGrid>
-						{user.achievements.map((a => {
+						{user.achievements.map((a) => {
 							if (a.kind === kind)
 								return <AchievementCard key={a.id} a={a} />;
 						})}
