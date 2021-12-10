@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+import { Box } from "@theme-ui/components";
+
 import { locale } from "lib/constants";
 import { User } from "types/42/User";
 import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
 import getTimeAgo from "lib/getTimeAgo";
+import isFuture from "lib/isFuture";
 import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
@@ -33,12 +36,14 @@ export default function UserProjects() {
 				new Date(b.begin_at).valueOf() - new Date(a.begin_at).valueOf()
 		)
 		.map((cursus) => (
-			<article
+			<Box
 				key={cursus.cursus_id}
-				className="mb-8"
 				id={cursus.cursus.slug}
+				m={3}
+				sx={{ scrollMargin: 3 }}
+				as="article"
 			>
-				<header className="mb-4">
+				<Box as="header" mb={3}>
 					<div className="flex items-baseline space-x-2">
 						<h2 className="text-2xl font-bold tracking-tight">
 							<Link href={`/cursus/${cursus.cursus_id}`}>
@@ -57,22 +62,26 @@ export default function UserProjects() {
 						</span>
 					</div>
 					<div className="text-sm leading-6">
+						{isFuture(cursus.begin_at) ? "will start " : "started "}
 						<time
 							dateTime={cursus.begin_at.toLocaleString(locale)}
 							title={cursus.begin_at.toLocaleString(locale)}
 						>
-							started {getTimeAgo(cursus.begin_at)}
+							{getTimeAgo(cursus.begin_at)}
 						</time>
 						{cursus.end_at && (
 							<>
 								{" · "}
+								{isFuture(cursus.end_at)
+									? "will end "
+									: "ended "}
 								<time
 									dateTime={cursus.end_at.toLocaleString(
 										locale
 									)}
 									title={cursus.end_at.toLocaleString(locale)}
 								>
-									ended {getTimeAgo(cursus.end_at)}
+									{getTimeAgo(cursus.end_at)}
 								</time>
 							</>
 						)}
@@ -103,7 +112,7 @@ export default function UserProjects() {
 							</>
 						)}
 					</div>
-				</header>
+				</Box>
 				<main>
 					<CardGrid>
 						{user.projects_users.map((project) => {
@@ -180,7 +189,7 @@ export default function UserProjects() {
 						})}
 					</CardGrid>
 				</main>
-			</article>
+			</Box>
 		));
 }
 
