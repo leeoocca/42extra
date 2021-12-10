@@ -1,10 +1,10 @@
+import { useRouter } from "next/router";
 import Link from "next/link";
 
 import { Button, Grid, Text, Link as ThemeLink } from "@theme-ui/components";
 import { signIn, useSession } from "next-auth/react";
 
 import Logo from "ui/Logo";
-import { useRouter } from "next/router";
 
 export default function SignIn() {
 	const { status } = useSession();
@@ -15,7 +15,7 @@ export default function SignIn() {
 	if (status === "loading") return null;
 
 	return (
-		<Grid sx={{ placeItems: "center", minHeight: "calc(100vh - 2rem)" }}>
+		<Grid sx={{ placeItems: "center", minHeight: "100vh" }}>
 			{status === "authenticated" ? (
 				<Text sx={{ textAlign: "center", lineHeight: 2 }}>
 					Already signed in.
