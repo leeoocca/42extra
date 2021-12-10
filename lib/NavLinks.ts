@@ -20,6 +20,14 @@ export function getUserNavLinks(): LinkListNode[] {
 			href: `${baseUrl}/achievements`,
 		},
 		{
+			name: "Locations",
+			href: `${baseUrl}/locations`,
+		},
+		{
+			name: "Scales",
+			href: `${baseUrl}/scales`,
+		},
+		{
 			name: "Patronages",
 			href: `${baseUrl}/patronages`,
 		},
