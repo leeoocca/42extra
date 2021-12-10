@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import useAPI from "lib/useAPI";
-import getTimeAgo from "lib/getTimeAgo";
+import { locale } from "lib/constants";
 import { User } from "types/42/User";
 import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
+import getTimeAgo from "lib/getTimeAgo";
 import Loading from "ui/Loading";
+import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
 
 export default function UserProjects() {
@@ -57,8 +58,8 @@ export default function UserProjects() {
 					</div>
 					<div className="text-sm leading-6">
 						<time
-							dateTime={cursus.begin_at.toString()}
-							title={cursus.begin_at.toString()}
+							dateTime={cursus.begin_at.toLocaleString(locale)}
+							title={cursus.begin_at.toLocaleString(locale)}
 						>
 							started {getTimeAgo(cursus.begin_at)}
 						</time>
@@ -66,8 +67,10 @@ export default function UserProjects() {
 							<>
 								{" · "}
 								<time
-									dateTime={cursus.end_at.toString()}
-									title={cursus.end_at.toString()}
+									dateTime={cursus.end_at.toLocaleString(
+										locale
+									)}
+									title={cursus.end_at.toLocaleString(locale)}
 								>
 									ended {getTimeAgo(cursus.end_at)}
 								</time>
@@ -78,8 +81,12 @@ export default function UserProjects() {
 								{" · "}
 								<abbr title="Black Hole">BH</abbr> in{" "}
 								<time
-									dateTime={cursus.blackholed_at.toString()}
-									title={cursus.blackholed_at.toString()}
+									dateTime={cursus.blackholed_at.toLocaleString(
+										locale
+									)}
+									title={cursus.blackholed_at.toLocaleString(
+										locale
+									)}
 								>
 									{(
 										(new Date(

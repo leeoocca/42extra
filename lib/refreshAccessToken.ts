@@ -1,7 +1,9 @@
+import { apiBaseUrl } from "./constants";
+
 async function refreshAccessToken(token) {
 	try {
 		const url =
-			"https://api.intra.42.fr/oauth/token?" +
+			`${apiBaseUrl}/oauth/token?` +
 			new URLSearchParams({
 				client_id: process.env.FT_UID,
 				client_secret: process.env.FT_SECRET,

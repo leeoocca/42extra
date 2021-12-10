@@ -13,6 +13,7 @@ import {
 } from "@theme-ui/components";
 import prettyMilliseconds from "pretty-ms";
 
+import { locale } from "lib/constants";
 import { User } from "types/42/User";
 import getTimeAgo from "lib/getTimeAgo";
 import Loading from "ui/Loading";
@@ -132,7 +133,7 @@ export default function UserOverview() {
 						{new Date(
 							new Date(user.anonymize_date).valueOf() -
 								31536000 * 1000
-						).toLocaleDateString("fr")}
+						).toLocaleDateString(locale)}
 					</Text>
 				</OverviewCard>
 				<Grid columns={2}>

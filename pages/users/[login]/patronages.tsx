@@ -6,6 +6,7 @@ import Loading from "ui/Loading";
 import UserGrid from "ui/UserGrid";
 import UserCardWithDetails from "ui/UserCardWithDetails";
 import UserHeader from "ui/headers/UserHeader";
+import { locale } from "lib/constants";
 
 export default function UserPatronages() {
 	const router = useRouter();
@@ -39,13 +40,13 @@ export default function UserPatronages() {
 								name: "Started",
 								value: new Date(
 									patron.created_at
-								).toLocaleString(),
+								).toLocaleString(locale),
 							},
 							{
 								name: "Updated",
 								value: new Date(
 									patron.updated_at
-								).toLocaleString(),
+								).toLocaleString(locale),
 							},
 						];
 						return (
@@ -73,13 +74,13 @@ export default function UserPatronages() {
 								name: "Started",
 								value: new Date(
 									patron.created_at
-								).toLocaleString(),
+								).toLocaleString(locale),
 							},
 							{
 								name: "Updated",
 								value: new Date(
 									patron.updated_at
-								).toLocaleString(),
+								).toLocaleString(locale),
 							},
 						];
 						return (

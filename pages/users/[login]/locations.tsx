@@ -8,6 +8,7 @@ import groupBy from "lib/groupBy";
 import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
+import { locale } from "lib/constants";
 
 const prettyOptions = { secondsDecimalDigits: 0 };
 
@@ -75,16 +76,16 @@ export default function UserLocations() {
 						</h4>
 						<small>
 							<time dateTime={location.begin_at}>
-								{new Date(
-									location.begin_at
-								).toLocaleTimeString()}
+								{new Date(location.begin_at).toLocaleTimeString(
+									"fr"
+								)}
 							</time>{" "}
 							–{" "}
 							{location.end_at ? (
 								<time dateTime={location.end_at}>
 									{new Date(
 										location.end_at
-									).toLocaleTimeString()}
+									).toLocaleTimeString(locale)}
 								</time>
 							) : (
 								<Text color="#01FF70">active</Text>

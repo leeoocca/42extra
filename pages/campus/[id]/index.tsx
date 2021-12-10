@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { Heading, Text, Link as TLink } from "@theme-ui/components";
 
+import { locale } from "lib/constants";
 import CampusHeader from "ui/headers/CampusHeader";
 import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
@@ -43,7 +44,7 @@ export default function CampusIndex() {
 			</Heading>
 			<Heading my={2}>Local time</Heading>
 			<time dateTime={time.toISOString()}>
-				{time.toLocaleTimeString("en-UK", { timeZone: c.time_zone })}
+				{time.toLocaleTimeString(locale, { timeZone: c.time_zone })}
 			</time>
 			<Heading my={2}>Main language</Heading>
 			<p>{c.language.name}</p>

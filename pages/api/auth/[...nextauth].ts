@@ -1,9 +1,8 @@
 import NextAuth from "next-auth";
 
+import { apiBaseUrl } from "lib/constants";
 import { User } from "types/42/User";
 import refreshAccessToken from "lib/refreshAccessToken";
-
-const apiBaseUrl = "https://api.intra.42.fr";
 
 export default NextAuth({
 	providers: [

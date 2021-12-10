@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { Heading, Card, Text, Grid } from "@theme-ui/components";
 import { useSession } from "next-auth/react";
 
+import { locale } from "lib/constants";
 import CursusHeader from "ui/headers/CursusHeader";
 import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
@@ -19,7 +20,7 @@ function EventCard({ event }) {
 				{event.max_people && ` / ${event.max_people}`}
 			</p>
 			<p>{event.location}</p>
-			<p>{new Date(event.begin_at).toLocaleString()}</p>
+			<p>{new Date(event.begin_at).toLocaleString(locale)}</p>
 		</Card>
 	);
 }
