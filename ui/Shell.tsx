@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { ArrowRight } from "react-feather";
 import { BaseAction, useKBar, useRegisterActions } from "kbar";
 import { Box, Container } from "@theme-ui/components";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 import { ICON_SIZE } from "lib/actions";
 import CommandBar from "./CommandBar";
@@ -28,7 +28,7 @@ export default function Shell({ children, headerContent }) {
 
 	const router = useRouter();
 
-	const { queryValue, query } = useKBar((state) => ({
+	const { queryValue } = useKBar((state) => ({
 		queryValue: state.searchQuery,
 	}));
 	const [user, setUser] = useState("");
@@ -60,9 +60,6 @@ export default function Shell({ children, headerContent }) {
 				display: "flex",
 				flexDirection: "column",
 				minHeight: "100vh",
-			}}
-			onTouchStart={(e) => {
-				if (e.touches.length == 2) query.toggle();
 			}}
 		>
 			<CommandBar />

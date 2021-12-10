@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { IconButton, Container, Text, Flex } from "@theme-ui/components";
+import { IconButton, Container, Text, Flex, Box } from "@theme-ui/components";
 import { useKBar } from "kbar";
 import { useSession } from "next-auth/react";
 
@@ -23,58 +23,52 @@ export default function StatusBar() {
 				display: "flex",
 				justifyContent: "space-between",
 				alignItems: "center",
-				"& button, a": {
+				"& div": {
 					flexGrow: 1,
 					flexBasis: 0,
 				},
 			}}
 		>
-			<Link href="/" passHref>
-				<IconButton
-					sx={{
-						"& > svg": { width: "2rem", mr: "auto" },
-					}}
-				>
-					<Logo />
-				</IconButton>
-			</Link>
+			<Box>
+				<Link href="/" passHref>
+					<IconButton
+						sx={{
+							"& > svg": { width: "2rem", mr: "auto" },
+						}}
+					>
+						<Logo />
+					</IconButton>
+				</Link>
+			</Box>
 			<Text
 				as="kbd"
 				variant="kbd"
 				sx={{
-					opacity: "50%",
-					display: ["none", , "block"],
+					opacity: "75%",
 					cursor: "pointer",
+					display: "flex",
+					"& kbd": {
+						display: "flex",
+					},
 				}}
 				onClick={query.toggle}
 			>
 				<kbd>{mac ? "⌘" : "Ctrl"}</kbd>
 				<kbd>K</kbd>
 			</Text>
-			<Text
-				as="small"
+			<Flex
 				sx={{
-					opacity: "50%",
-					display: ["flex", , "none"],
+					gap: 2,
 					alignItems: "center",
-					gap: 1,
-					fontSize: "0.7rem",
-					cursor: "pointer",
+					justifyContent: "end",
 				}}
-				onClick={query.toggle}
 			>
-				<Disc size={14} />
-				Tap with two fingers
-			</Text>
-			<Link href={`/users/${session.user.login}`} passHref>
-				<Flex
-					as="a"
-					sx={{ gap: 2, alignItems: "center", justifyContent: "end" }}
-				>
-					<Avatar url={session.user.image} size={20} />
-					<p>{session.user.login}</p>
-				</Flex>
-			</Link>
+				<Link href={`/users/${session.user.login}`} passHref>
+					<a>
+						<Avatar url={session.user.image} size={25} />
+					</a>
+				</Link>
+			</Flex>
 		</Container>
 	);
 }
