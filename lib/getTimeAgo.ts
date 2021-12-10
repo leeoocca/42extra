@@ -1,3 +1,5 @@
+import { locale } from "./constants";
+
 // https://stackoverflow.com/a/53800501/14477874
 // https://stackoverflow.com/a/66390028/14477874
 const units: { unit: Intl.RelativeTimeFormatUnit; ms: number }[] = [
@@ -30,7 +32,7 @@ export function getTimeAgo(
  * @param elapsed   - the elapsed time in milliseconds
  */
 export function relativeTimeFromElapsed(elapsed: number): string {
-	const rtf = new Intl.RelativeTimeFormat(navigator.language || "en", {
+	const rtf = new Intl.RelativeTimeFormat(locale, {
 		numeric: "auto",
 	});
 	for (const { unit, ms } of units) {
