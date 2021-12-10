@@ -20,7 +20,7 @@ function NavLink({ name, href, className }: LinkListNode) {
 	}, [active]);
 
 	return (
-		<Link href={href}>
+		<Link href={{ pathname: href, query: router.query }}>
 			<a
 				className={`${
 					active

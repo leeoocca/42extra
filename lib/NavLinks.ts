@@ -1,11 +1,8 @@
-import router from "next/router";
 import { LinkListNode } from "types/LinkListNode";
 
-export function getUserNavLinks() {
-	const { login } = router.query;
-	const baseUrl = `/users/${login}`;
-
-	let navLinks: LinkListNode[] = [
+export function getUserNavLinks(): LinkListNode[] {
+	const baseUrl = `/users/[login]`;
+	return [
 		{
 			name: "Overview",
 			href: baseUrl,
@@ -35,15 +32,11 @@ export function getUserNavLinks() {
 			href: `${baseUrl}/apps`,
 		},
 	];
-
-	return navLinks;
 }
 
-export function getProjectNavLinks() {
-	const { slug } = router.query;
-	const baseUrl = `/projects/${slug}`;
-
-	let navLinks: LinkListNode[] = [
+export function getProjectNavLinks(): LinkListNode[] {
+	const baseUrl = `/projects/[slug]`;
+	return [
 		{
 			name: "Overview",
 			href: baseUrl,
@@ -57,15 +50,11 @@ export function getProjectNavLinks() {
 			href: `${baseUrl}/cursuses`,
 		},
 	];
-
-	return navLinks;
 }
 
-export function CampusNavLinks() {
-	const { id } = router.query;
-	const baseUrl = `/campus/${id}`;
-
-	const navLinks: LinkListNode[] = [
+export function CampusNavLinks(): LinkListNode[] {
+	const baseUrl = `/campus/[id]`;
+	return [
 		{
 			name: "Overview",
 			href: baseUrl,
@@ -75,15 +64,11 @@ export function CampusNavLinks() {
 			href: `${baseUrl}/users`,
 		},
 	];
-
-	return navLinks;
 }
 
-export function CursusNavLinks() {
-	const { slug } = router.query;
-	const baseUrl = `/cursus/${slug}`;
-
-	const navLinks: LinkListNode[] = [
+export function CursusNavLinks(): LinkListNode[] {
+	const baseUrl = `/cursus/[slug]`;
+	return [
 		{
 			name: "Overview",
 			href: baseUrl,
@@ -109,6 +94,4 @@ export function CursusNavLinks() {
 			href: `${baseUrl}/events`,
 		},
 	];
-
-	return navLinks;
 }
