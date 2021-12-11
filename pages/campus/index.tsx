@@ -1,43 +1,49 @@
 import Link from "next/link";
 
-import useAPI from "lib/useAPI";
-import Card from "ui/Card";
-import CardGrid from "ui/CardGrid";
+import { Card, Grid } from "@theme-ui/components";
+import { useSession } from "next-auth/react";
+
 import Loading from "ui/Loading";
+import useAPI from "lib/useAPI";
 
 function CampusesIndex() {
-	const { data: campuses, isLoading } = useAPI(
-		`/v2/campus?sort=id&page[size]=100`
-	);
-
-	if (isLoading) return <Loading />;
+	const session = useSession();
+	const { data: campuses } = useAPI(`/v2/campus?sort=id&page[size]=100`);
 
 	return (
 		<>
 			<h1 className="text-3xl font-bold leading-relaxed">Campuses</h1>
-			<CardGrid>
-				{campuses &&
+			<Grid variant="cards">
+				{!campuses ? (
+					<Loading />
+				) : (
 					campuses.map((c) => (
-						<Link href={`/campus/${c.id}`} key={c.id}>
-							<a>
-								<Card className="h-32 overflow-hidden">
-									<div>
-										<h2>{c.name}</h2>
-										<p className="text-xs">
-											{c.city}, {c.country}
-										</p>
-										<p className="text-xs">
-											{c.users_count} users
-										</p>
-										<p className="text-xs">
-											{c.language.name}
-										</p>
-									</div>
-								</Card>
-							</a>
+						<Link key={c.id} href={`/campus/${c.id}`} passHref>
+							<Card
+								as="a"
+								bg={
+									c.id === session.data.user.campus
+										? "highlight"
+										: "muted"
+								}
+								p="2"
+								sx={{ height: "8rem" }}
+							>
+								<div>
+									<h2>{c.name}</h2>
+									<p className="text-xs">
+										{c.city}, {c.country}
+									</p>
+									<p className="text-xs">
+										{c.users_count} users
+									</p>
+									<p className="text-xs">{c.language.name}</p>
+								</div>
+							</Card>
 						</Link>
-					))}
-			</CardGrid>
+					))
+				)}
+			</Grid>
 		</>
 	);
 }
