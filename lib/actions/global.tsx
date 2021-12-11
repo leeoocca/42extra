@@ -5,7 +5,7 @@ import { signOut } from "next-auth/react";
 import {
 	BookOpen,
 	Flag,
-	GitHub,
+	Github,
 	MapPin,
 	Home,
 	Link,
@@ -17,7 +17,7 @@ import {
 	Hexagon,
 	Thermometer,
 	Database,
-} from "react-feather";
+} from "lucide-react";
 
 import { ICON_SIZE } from "./constants";
 import Logo from "ui/Logo";
@@ -134,7 +134,7 @@ export const globalActions: BaseAction[] = [
 		shortcut: ["g", "h"],
 		keywords: "github repository",
 		section: "External",
-		icon: <GitHub size={ICON_SIZE} />,
+		icon: <Github size={ICON_SIZE} />,
 		perform: () =>
 			window.open(
 				"https://github.com/leeoocca/42extra",

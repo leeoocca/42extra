@@ -6,7 +6,6 @@ import { useSession } from "next-auth/react";
 
 import Logo from "./Logo";
 import Avatar from "./Avatar";
-import { Disc } from "react-feather";
 
 export default function StatusBar() {
 	const { query } = useKBar();

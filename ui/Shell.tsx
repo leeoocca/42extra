@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-import { ArrowRight } from "react-feather";
+import { ArrowRight } from "lucide-react";
 import { BaseAction, useKBar, useRegisterActions } from "kbar";
 import { Box, Container } from "@theme-ui/components";
 import { useSession } from "next-auth/react";
