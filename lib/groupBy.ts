@@ -9,5 +9,5 @@ export default function groupBy(list: any[], keyGetter) {
 			collection.push(item);
 		}
 	});
-	return map;
+	return Array.from(map, ([name, value]) => ({ name, value }));
 }

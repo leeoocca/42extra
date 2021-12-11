@@ -4,18 +4,18 @@ import { useRouter } from "next/router";
 import { Box, Heading, Text } from "@theme-ui/components";
 import prettyMilliseconds from "pretty-ms";
 
+import { locale } from "lib/constants";
 import groupBy from "lib/groupBy";
 import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
-import { locale } from "lib/constants";
 
 const prettyOptions = { secondsDecimalDigits: 0 };
 
 function getDayDuration(day) {
 	let duration = 0;
 
-	day.forEach((location) => {
+	day.value.forEach((location) => {
 		duration += rawDuration(location);
 	});
 
@@ -47,56 +47,50 @@ export default function UserLocations() {
 		new Date(l.begin_at).toDateString()
 	);
 
-	let content = [null];
-
-	byDay.forEach((day) =>
-		content.push(
-			<Box as="section" my={2}>
-				<Heading>{new Date(day[0].begin_at).toDateString()} </Heading>
-				<Text>
-					{getDayDuration(day)}
-					{day[0].end_at ? "" : " ++"}
-				</Text>
-				{day.map((location) => (
-					<Text
-						key={location.id}
-						as="p"
-						my={3}
-						sx={{ fontFeatureSettings: "'tnum'" }}
-					>
-						<h4>
-							<b>{location.host}</b>
-							<Text opacity="50%">
-								{" "}
-								@{" "}
-								<Link href={`/campus/${location.campus_id}`}>
-									<a>{location.campus_id}</a>
-								</Link>
-							</Text>
-						</h4>
-						<small>
-							<time dateTime={location.begin_at}>
-								{new Date(location.begin_at).toLocaleTimeString(
-									"fr"
-								)}
-							</time>{" "}
-							–{" "}
-							{location.end_at ? (
-								<time dateTime={location.end_at}>
-									{new Date(
-										location.end_at
-									).toLocaleTimeString(locale)}
-								</time>
-							) : (
-								<Text color="#01FF70">active</Text>
+	return byDay.map((day) => (
+		<Box key={day.name} as="section" my={2}>
+			<Heading>{day.name} </Heading>
+			<Text>
+				{getDayDuration(day)}
+				{day.value[0].end_at ? "" : " ++"}
+			</Text>
+			{day.value.map((location) => (
+				<Box
+					key={location.id}
+					my={3}
+					sx={{ fontFeatureSettings: "'tnum'" }}
+				>
+					<h4>
+						<b>{location.host}</b>
+						<Text opacity="50%">
+							{" "}
+							@{" "}
+							<Link href={`/campus/${location.campus_id}`}>
+								<a>{location.campus_id}</a>
+							</Link>
+						</Text>
+					</h4>
+					<small>
+						<time dateTime={location.begin_at}>
+							{new Date(location.begin_at).toLocaleTimeString(
+								"fr"
 							)}
-						</small>
-					</Text>
-				))}
-			</Box>
-		)
-	);
-	return content;
+						</time>{" "}
+						–{" "}
+						{location.end_at ? (
+							<time dateTime={location.end_at}>
+								{new Date(location.end_at).toLocaleTimeString(
+									locale
+								)}
+							</time>
+						) : (
+							<Text color="#01FF70">active</Text>
+						)}
+					</small>
+				</Box>
+			))}
+		</Box>
+	));
 }
 
 UserLocations.header = UserHeader;
