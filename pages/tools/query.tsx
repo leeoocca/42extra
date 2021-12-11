@@ -7,7 +7,6 @@ import {
 	Flex,
 	Input,
 	Box,
-	Label,
 	Grid,
 	Text,
 } from "@theme-ui/components";
