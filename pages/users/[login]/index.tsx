@@ -19,6 +19,7 @@ import getTimeAgo from "lib/getTimeAgo";
 import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
+import sortCursus from "lib/sortCursus";
 // import getCampusFromId from "lib/getCampusFromId";
 
 function getCurrentLocation(locations: any): string {
@@ -160,31 +161,36 @@ export default function UserOverview() {
 				<OverviewCard title="Cursus">
 					{user.cursus_users?.length ? (
 						<ul>
-							{user.cursus_users.map((cursus) => (
-								<Box key={cursus.cursus_id} as="li" my={3}>
-									<Link
-										href={`/users/${login}/projects#${cursus.cursus.slug}`}
-										passHref
-									>
-										<Flex
-											as="a"
-											sx={{
-												justifyContent: "space-between",
-											}}
+							{user.cursus_users
+								.sort(sortCursus)
+								.map((cursus) => (
+									<Box key={cursus.cursus_id} as="li" my={3}>
+										<Link
+											href={`/users/${login}/projects#${cursus.cursus.slug}`}
+											passHref
 										>
-											<Text>{cursus.cursus.name}</Text>
-											<Text sx={{ opacity: "75%" }}>
-												{cursus.level}
-											</Text>
-										</Flex>
-									</Link>
-									<Progress
-										value={cursus.level}
-										max={21}
-										// sx={{ borderRadius: 0 }}
-									/>
-								</Box>
-							))}
+											<Flex
+												as="a"
+												sx={{
+													justifyContent:
+														"space-between",
+												}}
+											>
+												<Text>
+													{cursus.cursus.name}
+												</Text>
+												<Text sx={{ opacity: "75%" }}>
+													{cursus.level}
+												</Text>
+											</Flex>
+										</Link>
+										<Progress
+											value={cursus.level}
+											max={21}
+											// sx={{ borderRadius: 0 }}
+										/>
+									</Box>
+								))}
 						</ul>
 					) : (
 						<None />
