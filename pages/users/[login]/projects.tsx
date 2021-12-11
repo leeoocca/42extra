@@ -1,28 +1,27 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
+import { Asterisk, Skull, Smile, Award, Meh, Check, X } from "lucide-react";
 import {
 	Box,
 	Card,
 	Flex,
 	Grid,
 	Heading,
+	IconButton,
 	Progress,
 	Text,
 } from "@theme-ui/components";
-import { Asterisk, Skull, Smile, Award, Meh } from "lucide-react";
 
 import { ICON_SIZE } from "lib/actions";
 import { locale } from "lib/constants";
 import { User } from "types/42/User";
-import CardGrid from "ui/CardGrid";
 import getTimeAgo from "lib/getTimeAgo";
-import groupBy from "lib/groupBy";
 import isFuture from "lib/isFuture";
 import Loading from "ui/Loading";
+import sortCursus from "lib/sortCursus";
 import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
-import sortCursus from "lib/sortCursus";
 
 function CursusDetails({ cursus }) {
 	const Detail = ({ children }) => (
@@ -151,15 +150,21 @@ function ProjectCard({ project, login }) {
 							)}
 						</p>
 					</div>
-					<span
+					<Flex
 						className={`${
 							project["validated?"]
 								? "text-green-400"
 								: "text-red-600"
 						}`}
+						sx={{ alignItems: "center", gap: 1 }}
 					>
+						{project["validated?"] ? (
+							<Check size={ICON_SIZE} />
+						) : (
+							<X size={ICON_SIZE} />
+						)}
 						{project.final_mark}
-					</span>
+					</Flex>
 				</div>
 			</Card>
 		</Link>
