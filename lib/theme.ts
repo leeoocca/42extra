@@ -28,7 +28,7 @@ const theme: Theme = {
 	},
 	grids: {
 		cards: {
-			columns: [1, , 2, 3],
+			gridTemplateColumns: ["1fr", , "1fr 1fr", "1fr 1fr 1fr"],
 			gap: 2,
 		},
 	},

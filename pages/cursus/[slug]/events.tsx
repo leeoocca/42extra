@@ -48,7 +48,7 @@ export default function CursusEvents() {
 					))}
 			</Grid>
 			<Heading>Other campuses</Heading>
-			<Grid variant="grids.cards">
+			<Grid variant="cards">
 				{events
 					.filter(
 						(event) =>
