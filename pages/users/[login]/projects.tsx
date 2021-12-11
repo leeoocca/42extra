@@ -210,6 +210,7 @@ export default function UserProjects() {
 											<Grid gap={2}>
 												{children.map((p) => (
 													<ProjectCard
+														key={p.id}
 														project={p}
 														login={login}
 													/>
