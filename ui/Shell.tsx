@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Search } from "lucide-react";
 import { BaseAction, useKBar, useRegisterActions } from "kbar";
 import { Box, Container } from "@theme-ui/components";
 import { useSession } from "next-auth/react";
@@ -37,20 +37,23 @@ export default function Shell({ children, headerContent }) {
 		setUser(queryValue);
 	}, [queryValue]);
 
-	const userSearch: BaseAction[] = [
-		{
-			id: "userSearch",
-			name: queryValue.length
-				? `Go to ${queryValue}'s profile`
-				: "Start typing an user's login",
-			parent: "users",
-			icon: <ArrowRight size={ICON_SIZE} />,
-			perform: () =>
-				queryValue.length && router.push(`/users/${queryValue}`),
-		},
-	];
+	const goToUser: BaseAction = queryValue.length
+		? {
+				id: "goToUser",
+				name: `Go to ${queryValue}'s profile`,
+				parent: "users",
+				icon: <ArrowRight size={ICON_SIZE} />,
+				perform: () => router.push(`/users/${queryValue}`),
+		  }
+		: {
+				id: "userSearch",
+				name: "Start typing or open search page",
+				parent: "users",
+				icon: <Search size={ICON_SIZE} />,
+				perform: () => router.push("/search/user"),
+		  };
 
-	useRegisterActions(userSearch, [user]);
+	useRegisterActions([goToUser], [user]);
 
 	if (status === "loading") return <Loader />;
 
