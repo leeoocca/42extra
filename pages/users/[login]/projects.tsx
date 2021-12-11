@@ -1,77 +1,86 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import { Box } from "@theme-ui/components";
+import {
+	Box,
+	Card,
+	Flex,
+	Grid,
+	Heading,
+	Progress,
+	Text,
+} from "@theme-ui/components";
+import { Asterisk, Skull, Smile, Award, Meh } from "lucide-react";
 
+import { ICON_SIZE } from "lib/actions";
 import { locale } from "lib/constants";
 import { User } from "types/42/User";
-import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
 import getTimeAgo from "lib/getTimeAgo";
+import groupBy from "lib/groupBy";
 import isFuture from "lib/isFuture";
 import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
+import sortCursus from "lib/sortCursus";
 
-export default function UserProjects() {
-	const { query } = useRouter();
-	const { login } = query;
+function CursusDetails({ cursus }) {
+	const Detail = ({ children }) => (
+		<Flex sx={{ gap: 1, alignItems: "center" }}>{children}</Flex>
+	);
+	const blackholeDays = (
+		(new Date(cursus.blackholed_at).valueOf() - Date.now()) /
+		1000 /
+		60 /
+		60 /
+		24
+	).toFixed(0);
 
-	const { data: user, isLoading }: { data: User; isLoading: boolean } =
-		useAPI(`/v2/users/${login}`);
-
-	if (isLoading) return <Loading />;
-	if (!user) return <>Error</>;
-
-	if (!user.projects_users.length)
-		return (
-			<>
-				No projects for <b>{login}</b>.
-			</>
-		);
-
-	return user.cursus_users
-		.sort(
-			(a, b) =>
-				new Date(b.begin_at).valueOf() - new Date(a.begin_at).valueOf()
-		)
-		.map((cursus) => (
-			<Box
-				key={cursus.cursus_id}
-				id={cursus.cursus.slug}
-				m={3}
-				sx={{ scrollMargin: 3 }}
-				as="article"
+	return (
+		<Box as="header" mb={3}>
+			<Flex
+				sx={{
+					alignItems: "end",
+					justifyContent: "space-between",
+				}}
 			>
-				<Box as="header" mb={3}>
-					<div className="flex items-baseline space-x-2">
-						<h2 className="text-2xl font-bold tracking-tight">
-							<Link href={`/cursus/${cursus.cursus_id}`}>
-								<a>{cursus.cursus.name}</a>
-							</Link>
-						</h2>
-						<span className="flex space-x-2 text-sm">
-							<abbr title="level" className="tabular-nums">
-								{cursus.level.toFixed(2)}
-							</abbr>
-							{cursus.grade && (
-								<span className="font-semibold uppercase opacity-75">
-									{cursus.grade}
-								</span>
-							)}
-						</span>
-					</div>
-					<div className="text-sm leading-6">
-						{isFuture(cursus.begin_at) ? "will start " : "started "}
-						<time
-							dateTime={cursus.begin_at.toLocaleString(locale)}
-							title={cursus.begin_at.toLocaleString(locale)}
-						>
-							{getTimeAgo(cursus.begin_at)}
-						</time>
+				<Box>
+					<Link href={`/cursus/${cursus.cursus_id}`}>
+						<a>
+							<Heading sx={{ fontSize: 3, lineHeight: 1.5 }}>
+								{cursus.cursus.name}
+							</Heading>
+						</a>
+					</Link>
+					<Flex
+						sx={{
+							gap: [1, , 3],
+							flexDirection: ["column", , "row"],
+						}}
+					>
+						{cursus.grade && (
+							<Detail>
+								<Award size={ICON_SIZE} />
+								{cursus.grade}
+							</Detail>
+						)}
+						<Detail>
+							<Asterisk size={ICON_SIZE} />
+							{isFuture(cursus.begin_at)
+								? "will start "
+								: "started "}
+							<time
+								dateTime={cursus.begin_at.toLocaleString(
+									locale
+								)}
+								title={cursus.begin_at.toLocaleString(locale)}
+							>
+								{getTimeAgo(cursus.begin_at)}
+							</time>
+						</Detail>
 						{cursus.end_at && (
-							<>
-								{" · "}
+							<Detail>
+								<Skull size={ICON_SIZE} />
 								{isFuture(cursus.end_at)
 									? "will end "
 									: "ended "}
@@ -83,12 +92,16 @@ export default function UserProjects() {
 								>
 									{getTimeAgo(cursus.end_at)}
 								</time>
-							</>
+							</Detail>
 						)}
-						{cursus.blackholed_at && (
-							<>
-								{" · "}
-								<abbr title="Black Hole">BH</abbr> in{" "}
+						{isFuture(cursus.blackholed_at) && (
+							<Detail>
+								{parseInt(blackholeDays) > 30 ? (
+									<Smile size={ICON_SIZE} />
+								) : (
+									<Meh size={ICON_SIZE} />
+								)}
+								BlackHole in{" "}
 								<time
 									dateTime={cursus.blackholed_at.toLocaleString(
 										locale
@@ -97,100 +110,120 @@ export default function UserProjects() {
 										locale
 									)}
 								>
-									{(
-										(new Date(
-											cursus.blackholed_at
-										).valueOf() -
-											new Date().valueOf()) /
-										1000 /
-										60 /
-										60 /
-										24
-									).toFixed(0)}{" "}
-									days
+									{blackholeDays} days
 								</time>
-							</>
+							</Detail>
 						)}
-					</div>
+					</Flex>
 				</Box>
-				<main>
-					<CardGrid>
-						{user.projects_users.map((project) => {
-							if (!project.cursus_ids.includes(cursus.cursus_id))
-								return;
-							const options: Intl.DateTimeFormatOptions = {
-								year: "numeric",
-								month: "2-digit",
-								day: "2-digit",
-								hour: "numeric",
-								minute: "numeric",
-								hour12: false,
-								// dateStyle: "medium",
-								// timeStyle: "short",
-							};
-							let date = null;
-							let timeAgo = null;
-							if (project.marked_at) {
-								const locale = navigator.language || "en";
-								date = new Date(
-									project.marked_at
-								).toLocaleString(locale, options);
-								timeAgo = getTimeAgo(project.marked_at);
-							}
-							return (
-								<Link
-									key={project.id}
-									href={`/users/${login}/${project.project.slug}`}
+				<Text sx={{ fontFamily: "monospace", fontSize: 1 }}>
+					{cursus.level.toFixed(2)}
+				</Text>
+			</Flex>
+			<Progress my={2} max={21} value={cursus.level} />
+		</Box>
+	);
+}
+
+function ProjectCard({ project, login }) {
+	return (
+		<Link href={`/users/${login}/${project.project.slug}`} passHref>
+			<Card as="a" bg="muted" p={2}>
+				<div className="flex items-end justify-between w-full h-24">
+					<div>
+						<h2 className="text-lg">{project.project.name}</h2>
+						<p className="text-sm">
+							<span
+								className={`${
+									project.status === "in_progress" &&
+									"text-yellow-400"
+								}`}
+							>
+								{project.status.replace(/_/g, " ")}
+							</span>
+							{project.marked_at && (
+								<time
+									title={project.marked_at.toString()}
+									className="ml-1 opacity-75"
 								>
-									<a>
-										<Card key={project.id}>
-											<div className="flex items-end justify-between w-full h-24">
-												<div>
-													<h2 className="text-lg">
-														{project.project.name}
-													</h2>
-													<p className="text-sm">
-														<span
-															className={`${
-																project.status ===
-																	"in_progress" &&
-																"text-yellow-400"
-															}`}
-														>
-															{project.status.replace(
-																/_/g,
-																" "
-															)}
-														</span>
-														{date && (
-															<time
-																title={date}
-																className="ml-1 opacity-75"
-															>
-																{timeAgo}
-															</time>
-														)}
-													</p>
-												</div>
-												<span
-													className={`${
-														project["validated?"]
-															? "text-green-400"
-															: "text-red-600"
-													}`}
-												>
-													{project.final_mark}
-												</span>
-											</div>
-										</Card>
-									</a>
-								</Link>
+									{getTimeAgo(project.marked_at)}
+								</time>
+							)}
+						</p>
+					</div>
+					<span
+						className={`${
+							project["validated?"]
+								? "text-green-400"
+								: "text-red-600"
+						}`}
+					>
+						{project.final_mark}
+					</span>
+				</div>
+			</Card>
+		</Link>
+	);
+}
+
+export default function UserProjects() {
+	const { query } = useRouter();
+	const { login } = query;
+
+	const { data: user, isLoading }: { data: User; isLoading: boolean } =
+		useAPI(`/v2/users/${login}`);
+
+	if (isLoading) return <Loading />;
+	if (!user) return <>Error</>;
+
+	return user.cursus_users.sort(sortCursus).map((cursus) => (
+		<Box
+			key={cursus.cursus_id}
+			id={cursus.cursus.slug}
+			my={3}
+			sx={{ scrollMargin: 3 }}
+			as="article"
+		>
+			<CursusDetails cursus={cursus} />
+			<Grid as="main" variant="cards" sx={{ alignItems: "start" }}>
+				{!user.projects_users.length ? (
+					<>Not started any project yet.</>
+				) : (
+					user.projects_users
+						.filter((p) => p.cursus_ids.includes(cursus.cursus_id))
+						.filter((p) => !p.project.parent_id)
+						.map((project) => {
+							const children = user.projects_users.filter(
+								(p) =>
+									p.project.parent_id === project.project.id
 							);
-						})}
-					</CardGrid>
-				</main>
-			</Box>
-		));
+
+							return (
+								<Grid key={project.id}>
+									<ProjectCard
+										project={project}
+										login={login}
+									/>
+									{children.length > 0 && (
+										<Box as="details" mt={-2}>
+											<summary>Child projects</summary>
+											<Grid gap={2}>
+												{children.map((p) => (
+													<ProjectCard
+														project={p}
+														login={login}
+													/>
+												))}
+											</Grid>
+										</Box>
+									)}
+								</Grid>
+							);
+						})
+				)}
+			</Grid>
+		</Box>
+	));
 }
 
 UserProjects.header = UserHeader;
