@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import SVG from "react-inlinesvg";
 
-import hexToRGB from "lib/hexToRGB";
+import setPrimaryColor from "lib/setPrimaryColor";
 import useAPI from "lib/useAPI";
 
 export default function CoalitionHeader() {
@@ -12,12 +12,7 @@ export default function CoalitionHeader() {
 
 	const { data: coalition } = useAPI(`/v2/coalitions/${slug}`);
 
-	if (!coalition) return null;
-
-	document.documentElement.style.setProperty(
-		"--nav",
-		hexToRGB(coalition.color)
-	);
+	setPrimaryColor(coalition.color);
 
 	return (
 		<Box p={3}>

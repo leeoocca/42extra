@@ -2,9 +2,10 @@ import { useRouter } from "next/router";
 
 import { Box, Flex, Text } from "@theme-ui/components";
 
-import useAPI from "lib/useAPI";
-import HeaderNav from "./HeaderNav";
 import { CampusNavLinks } from "lib/NavLinks";
+import HeaderNav from "./HeaderNav";
+import setPrimaryColor from "lib/setPrimaryColor";
+import useAPI from "lib/useAPI";
 
 export default function CampusHeader() {
 	const {
@@ -14,7 +15,7 @@ export default function CampusHeader() {
 	const { data: c = { name: "Loading...", city: null, country: null } } =
 		useAPI(`/v2/campus/${id}`);
 
-	document.documentElement.style.setProperty("--nav", "");
+	setPrimaryColor();
 
 	return (
 		<>

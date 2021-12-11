@@ -5,6 +5,7 @@ import { ProjectsUser, User } from "types/42/User";
 import PageTitle from "ui/PageTitle";
 import useAPI from "lib/useAPI";
 import { useEffect } from "react";
+import setPrimaryColor from "lib/setPrimaryColor";
 
 export default function ProjectUserHeader() {
 	const router = useRouter();
@@ -13,7 +14,7 @@ export default function ProjectUserHeader() {
 	const { data: projectData } = useAPI(`/v2/projects/${project}`);
 	const { data: user }: { data: User } = useAPI(`/v2/users/${login}`);
 
-	document.documentElement.style.setProperty("--nav", "");
+	setPrimaryColor();
 
 	let userProject: ProjectsUser | null = null;
 
@@ -24,22 +25,12 @@ export default function ProjectUserHeader() {
 					(projectsUsers) => projectsUsers.project.slug === project
 				);
 				if (!userProject) {
-					document.documentElement.style.setProperty("--nav", "");
+					setPrimaryColor();
 				} else if (userProject["validated?"])
-					document.documentElement.style.setProperty(
-						"--nav",
-						"52, 211, 153"
-					);
+					setPrimaryColor("rgb(52, 211, 153)");
 				else if (userProject.status === "in_progress")
-					document.documentElement.style.setProperty(
-						"--nav",
-						"251, 191, 36"
-					);
-				else
-					document.documentElement.style.setProperty(
-						"--nav",
-						"220, 38, 38"
-					);
+					setPrimaryColor("rgb(251, 191, 36)");
+				else setPrimaryColor("rgb(220, 38, 38)");
 			}
 		},
 		[user]

@@ -2,9 +2,10 @@ import { useRouter } from "next/router";
 
 import { Box, Flex, Heading, Text } from "@theme-ui/components";
 
-import useAPI from "lib/useAPI";
-import HeaderNav from "./HeaderNav";
 import { CursusNavLinks } from "lib/NavLinks";
+import HeaderNav from "./HeaderNav";
+import setPrimaryColor from "lib/setPrimaryColor";
+import useAPI from "lib/useAPI";
 
 export default function CursusHeader() {
 	const router = useRouter();
@@ -12,7 +13,7 @@ export default function CursusHeader() {
 
 	const { data: cursus } = useAPI(`/v2/cursus/${slug}`);
 
-	document.documentElement.style.setProperty("--nav", "");
+	setPrimaryColor();
 
 	return (
 		<>

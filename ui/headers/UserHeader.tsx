@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 
 import { Flex, Box, Heading } from "@theme-ui/components";
@@ -9,10 +10,9 @@ import { User } from "types/42/User";
 import { userActions } from "lib/actions";
 import Avatar from "ui/Avatar";
 import HeaderNav from "./HeaderNav";
-import hexToRGB from "lib/hexToRGB";
 import PageTitle from "ui/PageTitle";
+import setPrimaryColor from "lib/setPrimaryColor";
 import useAPI from "lib/useAPI";
-import { useEffect } from "react";
 
 function getCustomUserLogin(user: User): string {
 	const selectedTitle = user.titles_users.find((title) => title.selected);
@@ -61,25 +61,16 @@ export default function UserHeader() {
 		login && `/v2/users/${login}/coalitions`
 	);
 
-	document.documentElement.style.setProperty("--nav", "");
+	setPrimaryColor();
 
 	const coalition = coalitions && coalitions[0] ? coalitions[0] : null;
 
 	useEffect(() => {
-		return () =>
-			document.documentElement.style.setProperty(
-				"--theme-ui-colors-primary",
-				""
-			);
+		return () => setPrimaryColor();
 	}, []);
 
-	if (coalition)
-		document.documentElement.style.setProperty(
-			"--theme-ui-colors-primary",
-			coalition.color
-		);
-	else if (coalitions !== undefined)
-		document.documentElement.style.setProperty("--nav", "0, 186, 188");
+	if (coalition) setPrimaryColor(coalition.color);
+	else if (coalitions !== undefined) setPrimaryColor("rgb(0, 186, 188)");
 
 	const customUserLogin = user && getCustomUserLogin(user);
 

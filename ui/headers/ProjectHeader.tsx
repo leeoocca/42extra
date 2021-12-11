@@ -2,13 +2,14 @@ import { useRouter } from "next/router";
 
 import { Project } from "types/42/Project";
 import useAPI from "lib/useAPI";
+import setPrimaryColor from "lib/setPrimaryColor";
 
 export default function ProjectHeader() {
 	const router = useRouter();
 	const { slug } = router.query;
 
 	// const navLinks = getProjectNavLinks();
-	document.documentElement.style.setProperty("--nav", "");
+	setPrimaryColor();
 
 	const {
 		data: project,
