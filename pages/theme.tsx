@@ -1,5 +1,6 @@
-import { Box, Flex, Heading, Input, Label } from "@theme-ui/components";
 import { useEffect, useState } from "react";
+
+import { Box, Flex, Heading, Input, Label } from "@theme-ui/components";
 
 function VariableControl({ variable }: { variable: string }) {
 	const def = getComputedStyle(document.documentElement).getPropertyValue(
