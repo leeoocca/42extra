@@ -53,6 +53,7 @@ export default function Query() {
 							value={query}
 							placeholder="me"
 							onChange={(e) => setQuery(e.target.value)}
+							autoFocus
 							sx={{
 								width: "auto",
 								flexGrow: 1,
