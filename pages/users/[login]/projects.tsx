@@ -161,7 +161,7 @@ function ProjectCard({ project, login }) {
 						{project["validated?"] ? (
 							<Check size={ICON_SIZE} />
 						) : (
-							<X size={ICON_SIZE} />
+							project.marked_at && <X size={ICON_SIZE} />
 						)}
 						{project.final_mark}
 					</Flex>
