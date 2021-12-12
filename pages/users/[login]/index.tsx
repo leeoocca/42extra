@@ -133,7 +133,7 @@ export default function UserOverview() {
 					<Text sx={{ fontSize: 4 }}>
 						{new Date(
 							new Date(user.anonymize_date).valueOf() -
-								31536000 * 1000
+								365 * 24 * 60 * 60 * 1000
 						).toLocaleDateString(locale)}
 					</Text>
 				</OverviewCard>
