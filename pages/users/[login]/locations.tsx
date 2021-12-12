@@ -73,7 +73,7 @@ export default function UserLocations() {
 					<small>
 						<time dateTime={location.begin_at}>
 							{new Date(location.begin_at).toLocaleTimeString(
-								"fr"
+								locale
 							)}
 						</time>{" "}
 						–{" "}
