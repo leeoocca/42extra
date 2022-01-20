@@ -52,6 +52,13 @@ function AppDetails() {
 				))}
 			</ul>
 			<h2 className="text-3xl font-bold leading-relaxed">Scopes</h2>
+			<ul>
+				{app.scopes.map((scopes) => (
+					<li key={scopes} className="flex space-x-2">
+						{scopes}
+					</li>
+				))}
+			</ul>
 		</>
 	);
 }
