@@ -46,20 +46,11 @@ export default function CommandBar() {
 }
 
 function RenderResults() {
-	const groups = useMatches();
-	const flattened = useMemo(
-		() =>
-			groups.reduce((acc, curr) => {
-				acc.push(curr.name);
-				acc.push(...curr.actions);
-				return acc;
-			}, []),
-		[groups]
-	);
+	const { results } = useMatches();
 
 	return (
 		<KBarResults
-			items={flattened.filter((i) => i !== NO_GROUP)}
+			items={results}
 			onRender={({ item, active }) =>
 				typeof item === "string" ? (
 					<Text

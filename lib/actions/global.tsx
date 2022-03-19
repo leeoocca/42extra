@@ -1,6 +1,6 @@
 import router from "next/router";
 
-import { BaseAction } from "kbar";
+import { Action } from "kbar";
 import { signOut } from "next-auth/react";
 import {
 	BookOpen,
@@ -22,7 +22,7 @@ import {
 import { ICON_SIZE } from "./constants";
 import Logo from "ui/Logo";
 
-export const globalActions: BaseAction[] = [
+export const globalActions: Action[] = [
 	{
 		id: "home",
 		name: "Home",

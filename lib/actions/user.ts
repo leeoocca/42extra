@@ -1,8 +1,8 @@
 import router from "next/router";
 
-import { BaseAction } from "kbar";
+import { Action } from "kbar";
 
-export const userActions = (login: string, section: string): BaseAction[] => [
+export const userActions = (login: string, section: string): Action[] => [
 	{
 		id: "userOverview",
 		name: "Overview",

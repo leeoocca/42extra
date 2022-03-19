@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import { ArrowRight, Search } from "lucide-react";
-import { BaseAction, useKBar, useRegisterActions } from "kbar";
+import { Action, useKBar, useRegisterActions } from "kbar";
 import { Box, Container } from "@theme-ui/components";
 import { useSession } from "next-auth/react";
 
@@ -37,7 +37,7 @@ export default function Shell({ children, headerContent }) {
 		setUser(queryValue);
 	}, [queryValue]);
 
-	const goToUser: BaseAction = queryValue.length
+	const goToUser: Action = queryValue.length
 		? {
 				id: "goToUser",
 				name: `Go to ${queryValue}'s profile`,
