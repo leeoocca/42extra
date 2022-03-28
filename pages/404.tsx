@@ -1,4 +1,4 @@
-import { SVGProps, useEffect, useState } from "react";
+import { SVGProps } from "react";
 import Link from "next/link";
 
 import { Heading, Text, Flex, Link as ThemeLink } from "@theme-ui/components";
