@@ -1,3 +1,5 @@
+import { UserPreview } from "./User";
+
 export interface Event {
 	id: number;
 	name: string;
@@ -38,4 +40,12 @@ export interface Waitlist {
 	waitlistable_type: string;
 	created_at: Date;
 	updated_at: Date;
+}
+
+export interface EventUser {
+	id: number;
+	event_id: number;
+	user_id: number;
+	user: UserPreview;
+	event: Event;
 }

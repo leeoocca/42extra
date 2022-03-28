@@ -17,7 +17,7 @@ export default NextAuth({
 				url: `${apiBaseUrl}/oauth/authorize?response_type=code`,
 				params: {
 					grant_type: "authorization_code",
-					scope: "public projects",
+					scope: "public projects profile",
 				},
 			},
 			token: `${apiBaseUrl}/oauth/token`,
