@@ -1,10 +1,19 @@
+import { Alert, Button, Grid, Heading } from "theme-ui";
 import { signIn, useSession } from "next-auth/react";
-import { Alert, Button } from "@theme-ui/components";
 
-// import useAPI from "lib/useAPI";
+import useAPI from "lib/useAPI";
+import EventCard from "ui/EventCard";
 
 export default function Home() {
 	const { data: session } = useSession();
+
+	const { data: myEvents } = useAPI(
+		`/v2/users/${session.user.id}/events?page[size]=3`
+	);
+	const { data: campusEvents } = useAPI(
+		`/v2/campus/${session.user.campus}/events?page[size]=3`
+	);
+
 	// const { data } = useAPI("/v2/me/slots?page[size]=100");
 
 	// const opts: Intl.DateTimeFormatOptions = {
@@ -17,7 +26,7 @@ export default function Home() {
 	// };
 
 	return (
-		<div className="text-center">
+		<>
 			{session.tokenExpires < Date.now() / 1000 && (
 				<Alert
 					sx={{ display: "flex", justifyContent: "space-between" }}
@@ -36,9 +45,25 @@ export default function Home() {
 					</Button>
 				</Alert>
 			)}
-			<h2 className="mb-4 text-2xl font-bold">
+			<Heading sx={{ textAlign: "center", mb: 2, fontSize: "2rem" }}>
 				Welcome {session?.user ? session.user.name : "user"}!
-			</h2>
+			</Heading>
+			<Heading>Your events</Heading>
+			{myEvents && (
+				<Grid variant="cards">
+					{myEvents.map((event) => (
+						<EventCard key={event.id} event={event} />
+					))}
+				</Grid>
+			)}
+			<Heading>Campus events</Heading>
+			{campusEvents && (
+				<Grid variant="cards">
+					{campusEvents.map((event) => (
+						<EventCard key={event.id} event={event} />
+					))}
+				</Grid>
+			)}
 			<ul style={{ textAlign: "left" }}>
 				{/* {data
 					?.filter(
@@ -63,6 +88,6 @@ export default function Home() {
 					))} */}
 			</ul>
 			{/* try cmd + k */}
-		</div>
+		</>
 	);
 }
