@@ -18,10 +18,17 @@ export interface Event {
 }
 
 export enum Kind {
+	Association = "association",
+	Atelier = "atelier",
+	Challenge = "challenge",
 	Conference = "conference",
 	Event = "event",
+	Extern = "extern",
 	Hackathon = "hackathon",
 	MeetUp = "meet_up",
+	Other = "other",
+	Partnership = "partnership",
+	SpeedWorking = "speed_working",
 	Workshop = "workshop",
 }
 
