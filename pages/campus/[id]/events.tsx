@@ -1,28 +1,42 @@
 import { useRouter } from "next/router";
 
-import { Grid } from "@theme-ui/components";
+import { Grid, Heading } from "theme-ui";
 
 import { Event } from "types/42/Event";
 import CampusHeader from "ui/headers/CampusHeader";
 import EventCard from "ui/EventCard";
 import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
+import isFuture from "lib/isFuture";
 
 export default function CampusUsers() {
 	const router = useRouter();
 	const { id } = router.query;
 
 	const { data: events, isLoading }: { data: Event[]; isLoading: boolean } =
-		useAPI(`/v2/campus/${id}/events`);
+		useAPI(`/v2/campus/${id}/events`); // TODO sort by closest
 
 	if (isLoading) return <Loading />;
 
 	return (
-		<Grid variant="cards">
-			{events.map((event) => (
-				<EventCard key={event.id} event={event} />
-			))}
-		</Grid>
+		<>
+			<Heading>Future</Heading>
+			<Grid variant="cards">
+				{events
+					.filter((event) => isFuture(event.end_at))
+					.map((event) => (
+						<EventCard key={event.id} event={event} />
+					))}
+			</Grid>
+			<Heading>Past</Heading>
+			<Grid variant="cards">
+				{events
+					.filter((event) => isFuture(event.end_at))
+					.map((event) => (
+						<EventCard key={event.id} event={event} />
+					))}
+			</Grid>
+		</>
 	);
 }
 
