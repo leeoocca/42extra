@@ -20,6 +20,8 @@ import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
 import sortCursus from "lib/sortCursus";
+import { ResponsiveRadar } from "@nivo/radar";
+import nivoTheme from "lib/nivoTheme";
 // import getCampusFromId from "lib/getCampusFromId";
 
 function getCurrentLocation(locations: any): string {
@@ -44,7 +46,7 @@ function getLastSeen(locations: any): string {
 
 const None = () => <i className="opacity-75">none</i>;
 
-const OverviewCard = ({ children, title, href = null }) => {
+const OverviewCard = ({ children, title, href = null, heigth = null }) => {
 	const link = href
 		? (el) => (
 				<Link href={href} passHref>
@@ -56,10 +58,28 @@ const OverviewCard = ({ children, title, href = null }) => {
 	return link(
 		<Card bg="muted" p={3} as={href ? "a" : null} sx={{ borderRadius: 5 }}>
 			<Heading mb={2}>{title}</Heading>
-			<Box>{children}</Box>
+			<Box sx={{ height: heigth }}>{children}</Box>
 		</Card>
 	);
 };
+
+const MyResponsiveRadar = ({ data }) => (
+	<ResponsiveRadar
+		data={data}
+		theme={nivoTheme}
+		keys={["level"]}
+		indexBy="name"
+		valueFormat=">-.2f"
+		margin={{ top: 40, right: 80, bottom: 40, left: 80 }}
+		maxValue={21}
+		// borderColor="white"
+		// gridLabelOffset={36}
+		// dotSize={10}
+		// dotColor="white"
+		// dotBorderWidth={2}
+		colors={{ scheme: "blues" }}
+	/>
+);
 
 export default function UserOverview() {
 	const router = useRouter();
@@ -308,6 +328,9 @@ export default function UserOverview() {
 					) : (
 						<None />
 					)}
+				</OverviewCard>
+				<OverviewCard title="Skills" heigth={300}>
+					<MyResponsiveRadar data={user.cursus_users[0].skills} />
 				</OverviewCard>
 			</Grid>
 		</>
