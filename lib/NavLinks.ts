@@ -71,6 +71,10 @@ export function CampusNavLinks(): LinkListNode[] {
 			name: "Users",
 			href: `${baseUrl}/users`,
 		},
+		{
+			name: "Events",
+			href: `${baseUrl}/events`,
+		},
 	];
 }
 
