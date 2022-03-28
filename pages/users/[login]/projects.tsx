@@ -1,7 +1,16 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-import { Asterisk, Skull, Smile, Award, Meh, Check, X } from "lucide-react";
+import {
+	Asterisk,
+	Skull,
+	Smile,
+	Award,
+	Meh,
+	Check,
+	X,
+	Frown,
+} from "lucide-react";
 import {
 	Box,
 	Card,
@@ -27,13 +36,13 @@ function CursusDetails({ cursus }) {
 	const Detail = ({ children }) => (
 		<Flex sx={{ gap: 1, alignItems: "center" }}>{children}</Flex>
 	);
-	const blackholeDays = (
+	const blackholeDays: number = Math.floor(
 		(new Date(cursus.blackholed_at).valueOf() - Date.now()) /
-		1000 /
-		60 /
-		60 /
-		24
-	).toFixed(0);
+			1000 /
+			60 /
+			60 /
+			24
+	);
 
 	return (
 		<Box as="header" mb={3}>
@@ -93,26 +102,37 @@ function CursusDetails({ cursus }) {
 								</time>
 							</Detail>
 						)}
-						{isFuture(cursus.blackholed_at) && (
-							<Detail>
-								{parseInt(blackholeDays) > 30 ? (
-									<Smile size={ICON_SIZE} />
-								) : (
-									<Meh size={ICON_SIZE} />
-								)}
-								BlackHole in{" "}
-								<time
-									dateTime={cursus.blackholed_at.toLocaleString(
-										locale
+
+						<Detail>
+							{isFuture(cursus.blackholed_at) ? (
+								<>
+									{blackholeDays > 30 ? (
+										<Smile size={ICON_SIZE} />
+									) : (
+										<Meh size={ICON_SIZE} />
 									)}
-									title={cursus.blackholed_at.toLocaleString(
-										locale
-									)}
-								>
-									{blackholeDays} days
-								</time>
-							</Detail>
-						)}
+									BlackHole in{" "}
+									<time
+										dateTime={cursus.blackholed_at.toLocaleString(
+											locale
+										)}
+										title={cursus.blackholed_at.toLocaleString(
+											locale
+										)}
+									>
+										{blackholeDays} days
+									</time>
+								</>
+							) : (
+								!cursus.end_at && (
+									<>
+										<Frown size={ICON_SIZE} />
+										Absorbed by the Black Hole{" "}
+										{getTimeAgo(cursus.blackholed_at)}
+									</>
+								)
+							)}
+						</Detail>
 					</Flex>
 				</Box>
 				<Text sx={{ fontFamily: "monospace", fontSize: 1 }}>
