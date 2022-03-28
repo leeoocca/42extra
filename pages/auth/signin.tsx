@@ -19,6 +19,16 @@ export default function SignIn() {
 			{status === "authenticated" ? (
 				<Text sx={{ textAlign: "center", lineHeight: 2 }}>
 					Already signed in.
+					{callbackUrl && callbackUrl !== "/" && (
+						<>
+							<br />
+							<Link href={String(callbackUrl)} passHref>
+								<ThemeLink sx={{ cursor: "pointer" }}>
+									Go to {callbackUrl}
+								</ThemeLink>
+							</Link>
+						</>
+					)}
 					<br />
 					<Link href="/" passHref>
 						<ThemeLink sx={{ cursor: "pointer" }}>
