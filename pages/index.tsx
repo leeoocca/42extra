@@ -71,7 +71,7 @@ export default function Home() {
 				{slots
 					?.filter((slot) => isFuture(slot.begin_at))
 					.map((slot) => (
-						<li>
+						<li key={slot.id}>
 							<small>
 								{new Date(slot.begin_at).toLocaleString(
 									"en",
