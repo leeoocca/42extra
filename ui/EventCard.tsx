@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { Card, Text } from "theme-ui";
 
-import { Event } from "types/42/Event";
+import { Event } from "types/42";
 import { locale } from "lib/constants";
 
 export default function EventCard({ event }: { event: Event }) {

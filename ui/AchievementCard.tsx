@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { AchievementPreview } from "types/42/Achievement";
+import { AchievementPreview } from "types/42";
 import Card from "./Card";
 
 export default function AchievementCard({ a }: { a: AchievementPreview }) {

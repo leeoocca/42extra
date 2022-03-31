@@ -15,7 +15,6 @@ import prettyMilliseconds from "pretty-ms";
 
 import { Coalition, CoalitionUser, Location, User } from "types/42";
 import { locale } from "lib/constants";
-import { User } from "types/42/User";
 import getTimeAgo from "lib/getTimeAgo";
 import Loading from "ui/Loading";
 import sortCursus from "lib/sortCursus";
