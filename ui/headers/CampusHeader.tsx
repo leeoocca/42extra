@@ -26,7 +26,9 @@ export default function CampusHeader() {
 			<Box p={3}>
 				<h1 className="text-3xl font-bold leading-relaxed">{c.name}</h1>
 				<Flex sx={{ gap: 3 }}>
-					<Text sx={{ fontFamily: "monosFlexace" }}>#{id}</Text>
+					<Text>
+						#<Text as="pre">{id}</Text>
+					</Text>
 					{c.city && (
 						<Text>
 							{c.city}, {getPrettyCountry(c.country)}
