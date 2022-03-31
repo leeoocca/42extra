@@ -47,11 +47,20 @@ export interface CorrectionUser {
 
 export interface Flag {
 	id: number;
-	name: string;
+	name: FlagName;
 	positive: boolean;
 	icon: string;
 	created_at: Date;
 	updated_at: Date;
+}
+
+export enum FlagName {
+	Cheat = "Cheat",
+	EmptyWork = "Empty work",
+	ForbiddenFunction = "Forbidden Function",
+	NoAuthorFile = "No author file",
+	Norme = "Norme",
+	Ok = "Ok",
 }
 
 export enum Status {
