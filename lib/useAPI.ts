@@ -1,11 +1,16 @@
 import useSWR from "swr";
 
-function useAPI<Type>(uri: string): {
+import { Campus } from "types/42";
+
+export default function useAPI<Type>(
+	uri: string,
+	options?
+): {
 	data: Type;
 	isLoading: boolean;
 	isError: any;
 } {
-	const { data, error } = useSWR([`/api${uri}`]);
+	const { data, error } = useSWR([`/api${uri}`], { ...options });
 
 	return {
 		data,
@@ -14,4 +19,10 @@ function useAPI<Type>(uri: string): {
 	};
 }
 
-export default useAPI;
+export function useCampuses() {
+	return useAPI<Campus[]>("/v2/campus?sort=id&page[size]=100", {
+		revalidateIfStale: false,
+		revalidateOnFocus: false,
+		revalidateOnReconnect: false,
+	});
+}

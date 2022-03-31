@@ -4,18 +4,17 @@ import Link from "next/link";
 
 import { Heading, Text, Link as TLink } from "@theme-ui/components";
 
-import { Campus } from "types/42";
 import { locale } from "lib/constants";
+import { useCampuses } from "lib/useAPI";
 import CampusHeader from "ui/headers/CampusHeader";
 import Loading from "ui/Loading";
-import useAPI from "lib/useAPI";
 import WebsiteLink from "ui/WebsiteLink";
 
 export default function CampusIndex() {
 	const router = useRouter();
 	const { id } = router.query;
 
-	const { data: c } = useAPI<Campus>(`/v2/campus/${id}`);
+	const { data: campuses } = useCampuses();
 
 	const [time, setTime] = useState(new Date());
 
@@ -30,7 +29,9 @@ export default function CampusIndex() {
 		};
 	}, []);
 
-	if (!c) return <Loading />;
+	if (!campuses) return <Loading />;
+
+	const c = campuses.find((campus) => campus.id === parseInt(String(id)));
 
 	return (
 		<>

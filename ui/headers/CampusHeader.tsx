@@ -2,9 +2,9 @@ import { useRouter } from "next/router";
 
 import { Box, Flex, Text } from "@theme-ui/components";
 
-import { Campus } from "types/42";
 import { CampusNavLinks } from "lib/NavLinks";
 import { setPrimaryColor } from "lib/color";
+import { useCampuses } from "lib/useAPI";
 import HeaderNav from "./HeaderNav";
 import useAPI from "lib/useAPI";
 
@@ -13,8 +13,11 @@ export default function CampusHeader() {
 		query: { id },
 	} = useRouter();
 
-	const { data: c = { name: "Loading...", city: null, country: null } } =
-		useAPI<Campus>(`/v2/campus/${id}`);
+	const { data: campuses } = useCampuses();
+
+	const c = campuses
+		? campuses.find((campus) => campus.id === parseInt(String(id)))
+		: { name: "Loading...", city: null, country: null };
 
 	setPrimaryColor();
 
