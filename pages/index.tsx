@@ -4,6 +4,7 @@ import { signIn, useSession } from "next-auth/react";
 import { Event } from "types/42";
 import EventCard from "ui/EventCard";
 import useAPI from "lib/useAPI";
+import isFuture from "lib/isFuture";
 
 export default function Home() {
 	const { data: session } = useSession();
@@ -15,16 +16,16 @@ export default function Home() {
 		`/v2/campus/${session.user.campus}/events?page[size]=3&sort=begin_at&filter[future]=true`
 	);
 
-	// const { data } = useAPI("/v2/me/slots?page[size]=100");
+	const { data: slots } = useAPI<any>("/v2/me/slots?page[size]=100");
 
-	// const opts: Intl.DateTimeFormatOptions = {
-	// 	year: "numeric",
-	// 	month: "2-digit",
-	// 	day: "2-digit",
-	// 	hour: "numeric",
-	// 	minute: "numeric",
-	// 	hour12: false,
-	// };
+	const opts: Intl.DateTimeFormatOptions = {
+		year: "numeric",
+		month: "2-digit",
+		day: "2-digit",
+		hour: "numeric",
+		minute: "numeric",
+		hour12: false,
+	};
 
 	return (
 		<>
@@ -49,7 +50,7 @@ export default function Home() {
 			<Heading sx={{ textAlign: "center", mb: 2, fontSize: "2rem" }}>
 				Welcome {session?.user ? session.user.name : "user"}!
 			</Heading>
-			<Heading m={2}>Your agenda</Heading>
+			<Heading m={3}>Your agenda</Heading>
 			{myEvents && (
 				<Grid variant="cards">
 					{myEvents.map((event) => (
@@ -57,19 +58,18 @@ export default function Home() {
 					))}
 				</Grid>
 			)}
-			<Heading m={2}>Campus events</Heading>
+			<Heading m={3}>Campus events</Heading>
 			{campusEvents && (
-				<Grid variant="cards" my={-1}>
+				<Grid variant="cards">
 					{campusEvents.map((event) => (
 						<EventCard key={event.id} event={event} />
 					))}
 				</Grid>
 			)}
+			<Heading m={2}>Slots</Heading>
 			<ul style={{ textAlign: "left" }}>
-				{/* {data
-					?.filter(
-						(slot) => new Date(slot.begin_at).valueOf() > Date.now()
-					)
+				{slots
+					?.filter((slot) => isFuture(slot.begin_at))
 					.map((slot) => (
 						<li>
 							<small>
@@ -78,6 +78,7 @@ export default function Home() {
 									opts
 								)}
 							</small>
+							{" -> "}
 							<small>
 								{new Date(slot.end_at).toLocaleString(
 									"en",
@@ -86,7 +87,7 @@ export default function Home() {
 							</small>
 							{slot.scale_team && slot.scale_team}
 						</li>
-					))} */}
+					))}
 			</ul>
 			{/* try cmd + k */}
 		</>
