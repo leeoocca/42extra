@@ -84,11 +84,11 @@ export default function UserHeader() {
 
 	setPrimaryColor();
 
-	const coalition = coalitions && coalitions[0] ? coalitions[0] : null;
-
 	useEffect(() => {
 		return () => setPrimaryColor();
 	}, []);
+
+	const coalition = coalitions && coalitions.slice(0).reverse()[0];
 
 	if (coalition) setPrimaryColor(coalition.color);
 	else if (coalitions !== undefined) setPrimaryColor("rgb(0, 186, 188)");

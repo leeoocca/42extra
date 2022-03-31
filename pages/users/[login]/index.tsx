@@ -231,47 +231,58 @@ export default function UserOverview() {
 					)}
 				</OverviewCard>
 				<OverviewCard title="Coalition">
-					{coalitions && coalitions?.length ? (
-						<ul>
-							{coalitions.map((c) => {
-								const c_u = coalitions_users?.find(
-									(current) => current.coalition_id === c.id
-								);
-								return (
-									<Link
-										key={c.slug}
-										href={`/coalitions/${c.slug}`}
-									>
-										<a>
-											<Flex
-												as="li"
-												sx={{
-													gap: 2,
-													alignItems: "center",
-												}}
+					{coalitions ? (
+						coalitions.length ? (
+							<ul>
+								{coalitions
+									.slice(0)
+									.reverse()
+									.map((c) => {
+										const c_u = coalitions_users?.find(
+											(current) =>
+												current.coalition_id === c.id
+										);
+										return (
+											<Link
+												key={c.slug}
+												href={`/coalitions/${c.slug}`}
 											>
-												<Text
-													px={1}
-													bg={c.color}
-													as="b"
-												>
-													{c.name}
-												</Text>
-												{c_u && (
-													<>
-														{" "}
-														- Rank: {c_u.rank} -
-														Score: {c_u.score}
-													</>
-												)}
-											</Flex>
-										</a>
-									</Link>
-								);
-							})}
-						</ul>
+												<a>
+													<Flex
+														as="li"
+														sx={{
+															gap: 2,
+															alignItems:
+																"center",
+														}}
+													>
+														<Text
+															px={1}
+															bg={c.color}
+															as="b"
+														>
+															{c.name}
+														</Text>
+														{c_u && (
+															<>
+																{" "}
+																- Rank:{" "}
+																{c_u.rank} -
+																Score:{" "}
+																{c_u.score}
+															</>
+														)}
+													</Flex>
+												</a>
+											</Link>
+										);
+									})}
+							</ul>
+						) : (
+							<None />
+						)
 					) : (
-						"..."
+						"Loading"
 					)}
 				</OverviewCard>
 				<OverviewCard title="Languages">
