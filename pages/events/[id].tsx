@@ -180,26 +180,32 @@ export default function EventDetails() {
 					Add to Google Calendar
 				</CalendarButton>
 			</Grid>
-			<Box>
-				<Heading>Campuses</Heading>
-				<ul>
-					{event.campus_ids.map((campus) => (
-						<Link key={campus} href={`/campus/${campus}`}>
-							<li>{campus}</li>
-						</Link>
-					))}
-				</ul>
-			</Box>
-			<Box>
-				<Heading>Cursuses</Heading>
-				<ul>
-					{event.cursus_ids.map((cursus) => (
-						<Link key={cursus} href={`/cursus/${cursus}`}>
-							<li>{cursus}</li>
-						</Link>
-					))}
-				</ul>
-			</Box>
+			<Grid columns={2} mt={3}>
+				<Box>
+					<Heading>Campuses</Heading>
+					<ul>
+						{event.campus_ids.map((campus) => (
+							<Link key={campus} href={`/campus/${campus}`}>
+								<a>
+									<li>{campus}</li>
+								</a>
+							</Link>
+						))}
+					</ul>
+				</Box>
+				<Box>
+					<Heading>Cursuses</Heading>
+					<ul>
+						{event.cursus_ids.map((cursus) => (
+							<Link key={cursus} href={`/cursus/${cursus}`}>
+								<a>
+									<li>{cursus}</li>
+								</a>
+							</Link>
+						))}
+					</ul>
+				</Box>
+			</Grid>
 		</Flex>
 	);
 }
