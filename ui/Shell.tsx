@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-import { ArrowRight, Search } from "lucide-react";
 import { Action, useKBar, useRegisterActions } from "kbar";
-import { Box, Container } from "@theme-ui/components";
-import { useSession } from "next-auth/react";
+import { Alert, Box, Button, Container } from "@theme-ui/components";
+import { ArrowRight, Search } from "lucide-react";
+import { signIn, useSession } from "next-auth/react";
 
 import { ICON_SIZE } from "lib/actions";
 import CommandBar from "./CommandBar";
@@ -13,8 +13,25 @@ import Header from "./headers/Header";
 import Loader from "./Loader";
 import StatusBar from "./StatusBar";
 
+const StaleSession = () => (
+	<Alert sx={{ display: "flex", justifyContent: "space-between" }}>
+		<span>Stale session</span>
+		<Button
+			bg="transparent"
+			sx={{
+				textTransform: "uppercase",
+				fontSize: 1,
+				fontWeight: "heading",
+			}}
+			onClick={() => signIn("42")}
+		>
+			Sign back in
+		</Button>
+	</Alert>
+);
+
 export default function Shell({ children, headerContent }) {
-	const { status } = useSession({
+	const { status, data: session } = useSession({
 		required: true,
 		onUnauthenticated() {
 			router.push({
@@ -76,6 +93,7 @@ export default function Shell({ children, headerContent }) {
 					flexDirection: "column",
 				}}
 			>
+				{session.tokenExpires < Date.now() / 1000 && <StaleSession />}
 				{children}
 			</Container>
 			<Footer />

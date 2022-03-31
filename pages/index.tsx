@@ -1,5 +1,5 @@
-import { Alert, Button, Grid, Heading } from "theme-ui";
-import { signIn, useSession } from "next-auth/react";
+import { Grid, Heading } from "theme-ui";
+import { useSession } from "next-auth/react";
 
 import { Event } from "types/42";
 import EventCard from "ui/EventCard";
@@ -29,24 +29,6 @@ export default function Home() {
 
 	return (
 		<>
-			{session.tokenExpires < Date.now() / 1000 && (
-				<Alert
-					sx={{ display: "flex", justifyContent: "space-between" }}
-				>
-					<span>Stale session</span>
-					<Button
-						bg="transparent"
-						sx={{
-							textTransform: "uppercase",
-							fontSize: 1,
-							fontWeight: "heading",
-						}}
-						onClick={() => signIn("42")}
-					>
-						Sign back in
-					</Button>
-				</Alert>
-			)}
 			<Heading sx={{ textAlign: "center", mb: 2, fontSize: "2rem" }}>
 				Welcome {session?.user ? session.user.name : "user"}!
 			</Heading>
