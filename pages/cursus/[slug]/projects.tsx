@@ -24,7 +24,7 @@ export default function CursusProjects() {
 					href={`/projects/${project.slug}`}
 					passHref
 				>
-					<Card bg="muted" p={2} sx={{ cursor: "pointer" }}>
+					<Card bg="muted" p={2} as="a">
 						{project.name}
 					</Card>
 				</Link>

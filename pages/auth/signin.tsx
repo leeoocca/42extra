@@ -23,7 +23,7 @@ export default function SignIn() {
 						<>
 							<br />
 							<Link href={String(callbackUrl)} passHref>
-								<ThemeLink sx={{ cursor: "pointer" }}>
+								<ThemeLink as="a">
 									Go to {callbackUrl}
 								</ThemeLink>
 							</Link>
@@ -31,9 +31,7 @@ export default function SignIn() {
 					)}
 					<br />
 					<Link href="/" passHref>
-						<ThemeLink sx={{ cursor: "pointer" }}>
-							Go home
-						</ThemeLink>
+						<ThemeLink as="a">Go home</ThemeLink>
 					</Link>
 				</Text>
 			) : (

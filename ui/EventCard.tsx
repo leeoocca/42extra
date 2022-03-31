@@ -7,8 +7,8 @@ import { locale } from "lib/constants";
 
 export default function EventCard({ event }: { event: Event }) {
 	return (
-		<Link href={`/events/${event.id}`}>
-			<Card bg="muted" px={3} py={2} sx={{ cursor: "pointer" }}>
+		<Link href={`/events/${event.id}`} passHref>
+			<Card bg="muted" px={3} py={2} as="a">
 				<b>{event.name}</b>
 				<Text as="p" sx={{ fontFamily: "monospace" }}>
 					{event.kind}
