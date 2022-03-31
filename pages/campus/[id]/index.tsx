@@ -24,7 +24,7 @@ export default function CampusIndex() {
 	}
 
 	useEffect(() => {
-		const timerId = setInterval(refreshClock, 1000);
+		const timerId = setInterval(refreshClock, 1000 * 60);
 		return function cleanup() {
 			clearInterval(timerId);
 		};
@@ -47,7 +47,11 @@ export default function CampusIndex() {
 			</Heading>
 			<Heading my={2}>Local time</Heading>
 			<time dateTime={time.toISOString()}>
-				{time.toLocaleTimeString(locale, { timeZone: c.time_zone })}
+				{time.toLocaleTimeString(locale, {
+					timeZone: c.time_zone,
+					hour: "numeric",
+					minute: "2-digit",
+				})}
 			</time>
 			<Heading my={2}>Main language</Heading>
 			<p>{c.language.name}</p>
