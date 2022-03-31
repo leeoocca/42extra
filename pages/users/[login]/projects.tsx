@@ -136,6 +136,12 @@ export default function UserProjects() {
 	if (isLoading) return <Loading />;
 	if (!user) return <>Error</>;
 
+	user.projects_users.sort(
+		(curr, next) =>
+			new Date(next.marked_at).valueOf() -
+			new Date(curr.marked_at).valueOf()
+	);
+
 	return user.cursus_users.sort(sortCursus).map((cursus) => (
 		<Box
 			key={cursus.cursus_id}
