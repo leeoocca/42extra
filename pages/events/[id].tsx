@@ -6,10 +6,12 @@ import {
 	Box,
 	Button,
 	Flex,
+	Grid,
 	Heading,
 	Link as ThemeLink,
 	Spinner,
 } from "theme-ui";
+import { CalendarOptions, GoogleCalendar, ICalendar } from "datebook";
 import { useSession } from "next-auth/react";
 import ReactMarkdown from "react-markdown";
 
@@ -20,6 +22,10 @@ import getTimeAgo from "lib/getTimeAgo";
 import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
 import isFuture from "lib/isFuture";
+
+const CalendarButton = (props) => (
+	<Button sx={{ width: "100%" }} bg={"muted"} {...props} />
+);
 
 export default function EventDetails() {
 	const { data: session } = useSession();
@@ -93,6 +99,17 @@ export default function EventDetails() {
 
 	const isDisabled = loading || !isFuture(event.begin_at);
 
+	const config: CalendarOptions = {
+		title: event.name,
+		location: event.location,
+		description: event.description,
+		start: new Date(event.begin_at),
+		end: new Date(event.end_at),
+	};
+
+	const icalendar = new ICalendar(config);
+	const googleCalendar = new GoogleCalendar(config);
+
 	return (
 		<Flex
 			as="article"
@@ -150,6 +167,19 @@ export default function EventDetails() {
 					{event.description}
 				</ReactMarkdown>
 			</Box>
+			<Grid columns={2}>
+				<CalendarButton onClick={() => icalendar.download()}>
+					Download .ics
+				</CalendarButton>
+				<CalendarButton
+					as="a"
+					href={googleCalendar.render()}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					Add to Google Calendar
+				</CalendarButton>
+			</Grid>
 			<Box>
 				<Heading>Campuses</Heading>
 				<ul>
