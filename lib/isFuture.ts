@@ -1,4 +1,3 @@
-export default function isFuture(date: Date) {
-	date = new Date(date);
-	return date.valueOf() - Date.now() > 0;
+export default function isFuture(date: string) {
+	return Date.parse(date) > Date.now();
 }

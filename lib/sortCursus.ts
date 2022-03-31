@@ -1,5 +1,5 @@
 function dateOrNow(date) {
-	return (date ? new Date(date) : Date.now()).valueOf();
+	return date ? Date.parse(date) : Date.now();
 }
 
 export default function sortCursus(a, b) {

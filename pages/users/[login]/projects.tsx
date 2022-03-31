@@ -20,11 +20,11 @@ function CursusDetails({ cursus }) {
 		<Flex sx={{ gap: 1, alignItems: "center" }}>{children}</Flex>
 	);
 	const blackholeDays: number = Math.floor(
-		(new Date(cursus.blackholed_at).valueOf() - Date.now()) /
-			1000 /
-			60 /
-			60 /
-			24
+		(Date.parse(cursus.blackholed_at) - Date.now()) / // milliseconds
+			1000 / // seconds
+			60 / // minutes
+			60 / // hours
+			24 // days
 	);
 
 	return (
@@ -137,9 +137,7 @@ export default function UserProjects() {
 	if (!user) return <>Error</>;
 
 	user.projects_users.sort(
-		(curr, next) =>
-			new Date(next.marked_at).valueOf() -
-			new Date(curr.marked_at).valueOf()
+		(curr, next) => Date.parse(next.marked_at) - Date.parse(curr.marked_at)
 	);
 
 	return user.cursus_users.sort(sortCursus).map((cursus) => (

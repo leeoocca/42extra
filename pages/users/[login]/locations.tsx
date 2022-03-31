@@ -24,10 +24,8 @@ function getDayDuration(day) {
 }
 
 function rawDuration(location) {
-	const start = new Date(location.begin_at).valueOf();
-	const end = location.end_at
-		? new Date(location.end_at).valueOf()
-		: Date.now();
+	const start = Date.parse(location.begin_at);
+	const end = location.end_at ? Date.parse(location.end_at) : Date.now();
 	return end - start;
 }
 

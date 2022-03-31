@@ -18,7 +18,7 @@ const units: { unit: Intl.RelativeTimeFormatUnit; ms: number }[] = [
  * @param pivot     - the dateTime of reference, generally is the current time
  */
 export function getTimeAgo(
-	relative: Date | null,
+	relative: string | null,
 	pivot: Date = new Date()
 ): string {
 	if (!relative) return "";
