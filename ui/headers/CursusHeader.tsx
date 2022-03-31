@@ -4,8 +4,8 @@ import { Box, Flex, Heading, Text } from "@theme-ui/components";
 
 import { Cursus } from "types/42";
 import { CursusNavLinks } from "lib/NavLinks";
+import { setPrimaryColor } from "lib/color";
 import HeaderNav from "./HeaderNav";
-import setPrimaryColor from "lib/setPrimaryColor";
 import useAPI from "lib/useAPI";
 
 export default function CursusHeader() {

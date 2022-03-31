@@ -4,8 +4,8 @@ import { Box, Flex, Text } from "@theme-ui/components";
 
 import { Campus } from "types/42";
 import { CampusNavLinks } from "lib/NavLinks";
+import { setPrimaryColor } from "lib/color";
 import HeaderNav from "./HeaderNav";
-import setPrimaryColor from "lib/setPrimaryColor";
 import useAPI from "lib/useAPI";
 
 export default function CampusHeader() {

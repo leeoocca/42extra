@@ -4,7 +4,7 @@ import { Box, Flex, Heading, Text } from "@theme-ui/components";
 import SVG from "react-inlinesvg";
 
 import { Coalition } from "types/42";
-import setPrimaryColor from "lib/setPrimaryColor";
+import { setPrimaryColor } from "lib/color";
 import useAPI from "lib/useAPI";
 
 export default function CoalitionHeader() {

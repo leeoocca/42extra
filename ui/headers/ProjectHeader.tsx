@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 
 import { Project } from "types/42";
+import { setPrimaryColor } from "lib/color";
 import useAPI from "lib/useAPI";
-import setPrimaryColor from "lib/setPrimaryColor";
 
 export default function ProjectHeader() {
 	const router = useRouter();

@@ -5,13 +5,13 @@ import { Flex, Box, Heading } from "@theme-ui/components";
 import { useRegisterActions } from "kbar";
 import SVG from "react-inlinesvg";
 
-import { getUserNavLinks } from "lib/NavLinks";
 import { Coalition, User } from "types/42";
+import { getUserNavLinks } from "lib/NavLinks";
 import { userActions } from "lib/actions";
+import { setPrimaryColor } from "lib/color";
 import Avatar from "ui/Avatar";
 import HeaderNav from "./HeaderNav";
 import PageTitle from "ui/PageTitle";
-import setPrimaryColor from "lib/setPrimaryColor";
 import useAPI from "lib/useAPI";
 
 function getCustomUserLogin(user: User): string {
