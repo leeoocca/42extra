@@ -1,5 +1,4 @@
-import { Language } from "./Language";
-import { Status } from "./Team";
+import { Language, Status } from ".";
 
 export interface TeamClass {
 	id: number;

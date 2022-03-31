@@ -8,3 +8,13 @@ export interface Coalition {
 	score: number;
 	user_id: number; // master
 }
+
+export interface CoalitionUser {
+	id: number;
+	coalition_id: number;
+	user_id: number;
+	score: number;
+	rank: number;
+	created_at: Date;
+	updated_at: Date;
+}

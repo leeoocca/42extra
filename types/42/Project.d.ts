@@ -1,5 +1,4 @@
-import { Campus } from "./Campus";
-import { Cursus } from "./Cursus";
+import { Campus, Cursus } from ".";
 
 export interface Project {
 	id: number;

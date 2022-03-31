@@ -8,7 +8,7 @@ export interface Team {
 	updated_at: Date;
 	status: Status;
 	terminating_at: Date | null;
-	users: User[];
+	users: TeamUser[];
 	"locked?": boolean;
 	"validated?": boolean;
 	"closed?": boolean;
@@ -69,7 +69,7 @@ export interface TeamsUpload {
 	upload_id: number;
 }
 
-export interface User {
+export interface TeamUser {
 	id: number;
 	login: string;
 	url: string;

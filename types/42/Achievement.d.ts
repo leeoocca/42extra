@@ -22,7 +22,7 @@ export interface AchievementPreview {
 	kind: Kind;
 	visible: boolean;
 	image: string;
-	nbr_of_success: null | null;
+	nbr_of_success: number | null;
 	users_url: string;
 }
 

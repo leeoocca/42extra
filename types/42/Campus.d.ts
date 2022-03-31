@@ -1,4 +1,4 @@
-import { Language } from "./Language";
+import { Language } from ".";
 
 export interface Campus {
 	id: number;

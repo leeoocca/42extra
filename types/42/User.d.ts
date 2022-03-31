@@ -1,6 +1,4 @@
-import { AchievementPreview } from "./Achievement";
-import { Campus } from "./Campus";
-import { Cursus } from "./Cursus";
+import { AchievementPreview, Campus, Cursus } from ".";
 import { Status } from "./Team";
 
 export interface User {
@@ -112,16 +110,6 @@ export interface UserPreview {
 	updated_at: Date;
 	alumni: boolean;
 	"is_launched?": boolean;
-}
-
-export interface CoalitionUser {
-	id: number;
-	coalition_id: number;
-	user_id: number;
-	score: number;
-	rank: number;
-	created_at: Date;
-	updated_at: Date;
 }
 
 export interface CampusUser {
