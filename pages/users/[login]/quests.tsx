@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-import { Heading } from "theme-ui";
+import { Heading, Text } from "theme-ui";
 
 import { QuestUser } from "types/42";
 import Card from "ui/Card";
@@ -46,9 +46,9 @@ export default function UserQuests() {
 
 	if (!quests.length)
 		return (
-			<>
+			<Text>
 				No quests for <b>{login}</b>.
-			</>
+			</Text>
 		);
 
 	let validated = [],
@@ -66,7 +66,7 @@ export default function UserQuests() {
 					<Quest quest={quest} key={quest.id} />
 				))}
 			</CardGrid>
-			{not_validated.length && (
+			{not_validated.length ? (
 				<>
 					<Heading mb={2} mt={4}>
 						Not validated yet
@@ -77,6 +77,8 @@ export default function UserQuests() {
 						))}
 					</CardGrid>
 				</>
+			) : (
+				""
 			)}
 		</>
 	);
