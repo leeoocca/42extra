@@ -8,7 +8,7 @@ import { locale } from "lib/constants";
 import { Location } from "types/42";
 import groupBy from "lib/groupBy";
 import Loading from "ui/Loading";
-import useAPI from "lib/useAPI";
+import useAPI, { useCampuses } from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
 
 const prettyOptions = { secondsDecimalDigits: 0 };
@@ -39,6 +39,8 @@ export default function UserLocations() {
 		`/v2/users/${login}/locations`
 	);
 
+	const { data: campuses } = useCampuses();
+
 	if (isLoading) return <Loading />;
 	if (!locations) return <>Error</>;
 
@@ -67,7 +69,15 @@ export default function UserLocations() {
 							{" "}
 							@{" "}
 							<Link href={`/campus/${location.campus_id}`}>
-								<a>{location.campus_id}</a>
+								<a>
+									{campuses
+										? campuses.find(
+												(campus) =>
+													campus.id ===
+													location.campus_id
+										  ).name
+										: location.campus_id}
+								</a>
 							</Link>
 						</Text>
 					</h4>
