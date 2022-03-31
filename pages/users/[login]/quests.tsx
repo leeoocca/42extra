@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 
 import { Heading } from "theme-ui";
 
-import { Quest } from "types/42";
+import { QuestUser } from "types/42";
 import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
 import getTimeAgo from "lib/getTimeAgo";
@@ -39,7 +39,7 @@ export default function UserQuests() {
 		data: quests,
 		isLoading,
 		isError,
-	} = useAPI<Quest[]>(`/v2/users/${login}/quests_users`);
+	} = useAPI<QuestUser[]>(`/v2/users/${login}/quests_users`);
 
 	if (isLoading) return <Loading />;
 	if (isError) return <>Error</>;
