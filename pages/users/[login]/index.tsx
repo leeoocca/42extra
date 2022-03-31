@@ -24,6 +24,7 @@ import Loading from "ui/Loading";
 import sortCursus from "lib/sortCursus";
 import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
+import { mendColor } from "lib/color";
 // import getCampusFromId from "lib/getCampusFromId";
 
 function getCurrentLocation(locations: any): string {
@@ -300,7 +301,9 @@ export default function UserOverview() {
 													>
 														<Text
 															px={1}
-															bg={c.color}
+															bg={mendColor(
+																c.color
+															)}
 															as="b"
 														>
 															{c.name}

@@ -3,6 +3,7 @@ import Link from "next/link";
 import SVG from "react-inlinesvg";
 
 import { Coalition } from "types/42";
+import { mendColor } from "lib/color";
 import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
 import Loading from "ui/Loading";
@@ -26,7 +27,7 @@ export default function CoalitionsIndex() {
 										"h-32 overflow-hidden bg-white bg-opacity-20 hover:bg-opacity-30"
 									}
 									// backgroundImageURL={c.cover_url}
-									backgroundColor={c.color + "66"}
+									backgroundColor={mendColor(c.color) + "66"}
 								>
 									<div className="flex items-end justify-between w-full h-full">
 										<div>

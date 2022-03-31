@@ -1,4 +1,5 @@
 export function setPrimaryColor(color: string = "") {
+	color = mendColor(color);
 	document.documentElement.style.setProperty(
 		"--theme-ui-colors-primary",
 		color
@@ -14,4 +15,9 @@ export function hexToRGB(hex: string) {
 		parseInt(aRgbHex[2], 16),
 	];
 	return aRgb.join(", ");
+}
+
+export function mendColor(color: string) {
+	if (color.length === 6) color = "#" + color;
+	return color;
 }
