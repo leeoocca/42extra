@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
 
+import { App } from "types/42";
 import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
 import UserCard from "ui/UserCard";
@@ -10,7 +11,7 @@ export default function AppDetails() {
 	const router = useRouter();
 	const { id } = router.query;
 
-	const { data: app } = useAPI(`/v2/apps/${id}`);
+	const { data: app } = useAPI<App>(`/v2/apps/${id}`);
 
 	if (!app) return <Loading />;
 

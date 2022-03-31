@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 
+import { Skill } from "types/42";
 import { Themed } from "@theme-ui/mdx";
 import CursusHeader from "ui/headers/CursusHeader";
 import Loading from "ui/Loading";
@@ -9,7 +10,9 @@ export default function CursusSkills() {
 	const router = useRouter();
 	const { slug } = router.query;
 
-	const { data: skills } = useAPI(`/v2/cursus/${slug}/skills?page[size]=100`);
+	const { data: skills } = useAPI<Skill[]>(
+		`/v2/cursus/${slug}/skills?page[size]=100`
+	);
 
 	if (!skills) return <Loading />;
 

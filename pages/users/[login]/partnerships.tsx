@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-import { User } from "types/42/User";
+import { User } from "types/42";
 import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
 import Loading from "ui/Loading";
@@ -15,9 +15,7 @@ export default function UserPartnerships() {
 		data: user,
 		isLoading,
 		isError,
-	}: { data: User; isLoading: boolean; isError: any } = useAPI(
-		`/v2/users/${login}`
-	);
+	} = useAPI<User>(`/v2/users/${login}`);
 
 	if (isLoading) return <Loading />;
 

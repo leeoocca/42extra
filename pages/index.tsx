@@ -1,17 +1,16 @@
 import { Alert, Button, Grid, Heading } from "theme-ui";
 import { signIn, useSession } from "next-auth/react";
 
-import useAPI from "lib/useAPI";
+import { Event } from "types/42";
 import EventCard from "ui/EventCard";
+import useAPI from "lib/useAPI";
 
 export default function Home() {
 	const { data: session } = useSession();
 
-	const { data: myEvents } = useAPI(
-		`/v2/users/${session.user.id}/events?page[size]=3`
+	const { data: myEvents } = useAPI<Event[]>(
 	);
-	const { data: campusEvents } = useAPI(
-		`/v2/campus/${session.user.campus}/events?page[size]=3`
+	const { data: campusEvents } = useAPI<Event[]>(
 	);
 
 	// const { data } = useAPI("/v2/me/slots?page[size]=100");

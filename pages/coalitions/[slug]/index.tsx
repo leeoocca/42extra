@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 
 import { Heading } from "@theme-ui/components";
 
+import { Coalition, CoalitionUser } from "types/42";
 import CoalitionHeader from "ui/headers/CoalitionHeader";
 import Loader from "ui/Loader";
 import Loading from "ui/Loading";
@@ -14,8 +15,8 @@ export default function CoalitionIndex() {
 	const router = useRouter();
 	const { slug } = router.query;
 
-	const { data: coalition } = useAPI(`/v2/coalitions/${slug}`);
-	const { data: users } = useAPI(
+	const { data: coalition } = useAPI<Coalition>(`/v2/coalitions/${slug}`);
+	const { data: users } = useAPI<CoalitionUser[]>(
 		`/v2/coalitions/${slug}/coalitions_users?page[size]=20&sort=-this_year_score`
 	);
 

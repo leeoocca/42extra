@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 
 import { Grid, Heading } from "theme-ui";
 
-import { Event } from "types/42/Event";
+import { Event } from "types/42";
 import CampusHeader from "ui/headers/CampusHeader";
 import EventCard from "ui/EventCard";
 import Loading from "ui/Loading";
@@ -13,8 +13,9 @@ export default function CampusUsers() {
 	const router = useRouter();
 	const { id } = router.query;
 
-	const { data: events, isLoading }: { data: Event[]; isLoading: boolean } =
-		useAPI(`/v2/campus/${id}/events`); // TODO sort by closest
+	const { data: events, isLoading } = useAPI<Event[]>(
+		`/v2/campus/${id}/events`
+	); // TODO sort by closest
 
 	if (isLoading) return <Loading />;
 

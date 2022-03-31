@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 
+import { App } from "types/42";
 import AppCard from "ui/AppCard";
 import CardGrid from "ui/CardGrid";
 import Loading from "ui/Loading";
@@ -14,7 +15,7 @@ export default function UserApps() {
 		data: apps,
 		isLoading,
 		isError,
-	} = useAPI(`/v2/users/${login}/apps`);
+	} = useAPI<App[]>(`/v2/users/${login}/apps`);
 
 	if (isLoading) return <Loading />;
 	if (isError) return <>Error</>;

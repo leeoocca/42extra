@@ -3,26 +3,26 @@ import Link from "next/link";
 
 import { Box, Card, Grid, Input } from "@theme-ui/components";
 
-import { UserPreview } from "types/42/User";
+import { UserPreview } from "types/42";
 import useAPI from "lib/useAPI";
 
 const Results = memo(function Results({ query }: { query: string }) {
 	const {
 		data: first = [],
-		isLoading: isLoading0,
-	}: { data: UserPreview[]; isLoading: boolean } = useAPI(
+		isLoading: isLoading,
+	}: { data: UserPreview[]; isLoading: boolean } = useAPI<UserPreview[]>(
 		`/v2/users?filter[first_name]=${query}`
 	);
-	const { data: last = [] }: { data: UserPreview[] } = useAPI(
+	const { data: last = [] }: { data: UserPreview[] } = useAPI<UserPreview[]>(
 		`/v2/users?filter[last_name]=${query}`
 	);
-	const { data: login = [] }: { data: UserPreview[] } = useAPI(
+	const { data: login = [] }: { data: UserPreview[] } = useAPI<UserPreview[]>(
 		`/v2/users?filter[login]=${query}`
 	);
 
 	const data = [...first, ...last, ...login];
 
-	if (isLoading0) return <>Loading...</>;
+	if (isLoading) return <>Loading...</>;
 	if (!data.length) return <>No results</>;
 
 	return (

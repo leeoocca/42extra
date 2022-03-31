@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-import { ProjectsUser, User } from "types/42/User";
+import { Project, ProjectsUser, User } from "types/42";
 import PageTitle from "ui/PageTitle";
 import useAPI from "lib/useAPI";
 import { useEffect } from "react";
@@ -11,8 +11,8 @@ export default function ProjectUserHeader() {
 	const router = useRouter();
 	const { login, project } = router.query;
 
-	const { data: projectData } = useAPI(`/v2/projects/${project}`);
-	const { data: user }: { data: User } = useAPI(`/v2/users/${login}`);
+	const { data: projectData } = useAPI<Project>(`/v2/projects/${project}`);
+	const { data: user } = useAPI<User>(`/v2/users/${login}`);
 
 	setPrimaryColor();
 

@@ -14,7 +14,7 @@ import {
 import { useSession } from "next-auth/react";
 import ReactMarkdown from "react-markdown";
 
-import { Event } from "types/42/Event";
+import { Event, EventUser } from "types/42";
 import fetcher from "lib/fetcher";
 import getTimeAgo from "lib/getTimeAgo";
 import Loading from "ui/Loading";
@@ -34,13 +34,9 @@ export default function EventDetails() {
 		data: event,
 		isLoading,
 		isError,
-	}: {
-		data: Event;
-		isLoading: boolean;
-		isError: any;
-	} = useAPI(`/v2/events/${id}`);
+	} = useAPI<Event>(`/v2/events/${id}`);
 
-	const { data: eventUser } = useAPI(
+	const { data: eventUser } = useAPI<EventUser[]>(
 		`/v2/events_users?filter[event_id]=${id}&filter[user_id]=${session.user.id}`
 	);
 

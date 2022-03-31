@@ -13,6 +13,7 @@ import {
 } from "@theme-ui/components";
 import prettyMilliseconds from "pretty-ms";
 
+import { Coalition, CoalitionUser, Location, User } from "types/42";
 import { locale } from "lib/constants";
 import { User } from "types/42/User";
 import getTimeAgo from "lib/getTimeAgo";
@@ -65,12 +66,14 @@ export default function UserOverview() {
 	const router = useRouter();
 	const { login } = router.query;
 
-	const { data: user, isError }: { data: User; isError: any } = useAPI(
-		`/v2/users/${login}`
+	const { data: user, isError } = useAPI<User>(`/v2/users/${login}`);
+	const { data: locations } = useAPI<Location[]>(
+		`/v2/users/${login}/locations`
 	);
-	const { data: locations } = useAPI(`/v2/users/${login}/locations`);
-	const { data: coalitions } = useAPI(`/v2/users/${login}/coalitions`);
-	const { data: coalitions_users } = useAPI(
+	const { data: coalitions } = useAPI<Coalition[]>(
+		`/v2/users/${login}/coalitions`
+	);
+	const { data: coalitions_users } = useAPI<CoalitionUser[]>(
 		`/v2/users/${login}/coalitions_users`
 	);
 

@@ -2,11 +2,12 @@ import { useRouter } from "next/router";
 
 import { Heading } from "theme-ui";
 
-import useAPI from "lib/useAPI";
-import getTimeAgo from "lib/getTimeAgo";
-import Loading from "ui/Loading";
+import { Quest } from "types/42";
 import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
+import getTimeAgo from "lib/getTimeAgo";
+import Loading from "ui/Loading";
+import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
 
 const Quest = ({ quest }) => (
@@ -38,7 +39,7 @@ export default function UserQuests() {
 		data: quests,
 		isLoading,
 		isError,
-	} = useAPI(`/v2/users/${login}/quests_users`);
+	} = useAPI<Quest[]>(`/v2/users/${login}/quests_users`);
 
 	if (isLoading) return <Loading />;
 	if (isError) return <>Error</>;
@@ -65,14 +66,18 @@ export default function UserQuests() {
 					<Quest quest={quest} key={quest.id} />
 				))}
 			</CardGrid>
-			<Heading mb={2} mt={4}>
-				Not validated yet
-			</Heading>
-			<CardGrid>
-				{not_validated.map((quest) => (
-					<Quest quest={quest} key={quest.id} />
-				))}
-			</CardGrid>
+			{not_validated.length && (
+				<>
+					<Heading mb={2} mt={4}>
+						Not validated yet
+					</Heading>
+					<CardGrid>
+						{not_validated.map((quest) => (
+							<Quest quest={quest} key={quest.id} />
+						))}
+					</CardGrid>
+				</>
+			)}
 		</>
 	);
 }

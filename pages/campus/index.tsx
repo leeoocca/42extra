@@ -3,12 +3,15 @@ import Link from "next/link";
 import { Card, Grid } from "@theme-ui/components";
 import { useSession } from "next-auth/react";
 
+import { Campus } from "types/42";
 import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
 
 function CampusesIndex() {
 	const session = useSession();
-	const { data: campuses } = useAPI(`/v2/campus?sort=id&page[size]=100`);
+	const { data: campuses } = useAPI<Campus[]>(
+		`/v2/campus?sort=id&page[size]=100`
+	);
 
 	return (
 		<>

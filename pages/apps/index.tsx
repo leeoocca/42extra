@@ -1,10 +1,11 @@
+import { App } from "types/42";
 import AppCard from "ui/AppCard";
 import CardGrid from "ui/CardGrid";
 import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
 
 function AppsIndex() {
-	const { data: apps } = useAPI(`/v2/apps?sort=id`);
+	const { data: apps } = useAPI<App[]>(`/v2/apps?sort=id`);
 	return (
 		<>
 			<h1 className="text-3xl font-bold leading-relaxed">Apps</h1>

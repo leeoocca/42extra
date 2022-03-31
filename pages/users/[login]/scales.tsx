@@ -22,13 +22,9 @@ export default function UserScales() {
 		data: scales,
 		isLoading,
 		isError,
-	}: {
-		data: any; // @todo add scales interface
-		isLoading: boolean;
-		isError: boolean;
-	} = useAPI(`/v2/users/${login}/scale_teams`);
+	} = useAPI<any>(`/v2/users/${login}/scale_teams`); // TODO add scales interface
 
-	const { data: history } = useAPI(
+	const { data: history } = useAPI<any>( // TODO add historics interface
 		`/v2/users/${login}/correction_point_historics`
 	);
 

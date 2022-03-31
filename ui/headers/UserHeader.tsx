@@ -6,7 +6,7 @@ import { useRegisterActions } from "kbar";
 import SVG from "react-inlinesvg";
 
 import { getUserNavLinks } from "lib/NavLinks";
-import { User } from "types/42/User";
+import { Coalition, User } from "types/42";
 import { userActions } from "lib/actions";
 import Avatar from "ui/Avatar";
 import HeaderNav from "./HeaderNav";
@@ -53,11 +53,9 @@ export default function UserHeader() {
 		data: user,
 		isLoading,
 		isError,
-	}: { data: User; isLoading: boolean; isError: any } = useAPI(
-		`/v2/users/${login}`
-	);
+	} = useAPI<User>(`/v2/users/${login}`);
 
-	const { data: coalitions } = useAPI(
+	const { data: coalitions } = useAPI<Coalition[]>(
 		login && `/v2/users/${login}/coalitions`
 	);
 

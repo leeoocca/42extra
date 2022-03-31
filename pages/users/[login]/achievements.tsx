@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
 
-import { User } from "types/42/User";
+import { User } from "types/42";
 import AchievementCard from "ui/AchievementCard";
 import CardGrid from "ui/CardGrid";
 import Loading from "ui/Loading";
@@ -18,9 +18,7 @@ export default function UserAchievements() {
 		data: user,
 		isLoading,
 		isError,
-	}: { data: User; isLoading: boolean; isError: any } = useAPI(
-		`/v2/users/${login}`
-	);
+	} = useAPI<User>(`/v2/users/${login}`);
 
 	if (isLoading) return <Loading />;
 	if (isError) return <>Error</>;

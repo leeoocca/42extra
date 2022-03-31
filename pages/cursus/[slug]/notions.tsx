@@ -9,7 +9,7 @@ export default function CursusNotions() {
 	const router = useRouter();
 	const { slug } = router.query;
 
-	const { data: notions } = useAPI(`/v2/cursus/${slug}/notions`);
+	const { data: notions } = useAPI<any>(`/v2/cursus/${slug}/notions`); // TODO notion interface
 
 	if (!notions) return <Loading />;
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { Heading, Text, Link as TLink } from "@theme-ui/components";
 
+import { Campus } from "types/42";
 import { locale } from "lib/constants";
 import CampusHeader from "ui/headers/CampusHeader";
 import Loading from "ui/Loading";
@@ -14,7 +15,7 @@ export default function CampusIndex() {
 	const router = useRouter();
 	const { id } = router.query;
 
-	const { data: c } = useAPI(`/v2/campus/${id}`);
+	const { data: c } = useAPI<Campus>(`/v2/campus/${id}`);
 
 	const [time, setTime] = useState(new Date());
 

@@ -13,8 +13,7 @@ export default function CampusUsers() {
 	const router = useRouter();
 	const { id } = router.query;
 
-	const { data: users, isLoading }: { data: User[]; isLoading: boolean } =
-		useAPI(`/v2/campus/${id}/users`);
+	const { data: users, isLoading } = useAPI<User[]>(`/v2/campus/${id}/users`);
 
 	if (isLoading) return <Loading />;
 

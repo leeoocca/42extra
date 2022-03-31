@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { useSession } from "next-auth/react";
 
-import { Project } from "types/42/Project";
+import { Project } from "types/42";
 import Loading from "ui/Loading";
 import PageTitle from "ui/PageTitle";
 import ProjectHeader from "ui/headers/ProjectHeader";
@@ -18,11 +18,7 @@ export default function ProjectIndex() {
 		data: project,
 		isLoading,
 		isError,
-	}: {
-		data: Project;
-		isLoading: boolean;
-		isError: any;
-	} = useAPI(`/v2/projects/${slug}`);
+	} = useAPI<Project>(`/v2/projects/${slug}`);
 
 	if (isLoading) return <Loading />;
 	if (isError) return <>Error</>;

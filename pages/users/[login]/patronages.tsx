@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 
 import { locale } from "lib/constants";
-import { User } from "types/42/User";
+import { User } from "types/42";
 import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
 import UserCardWithDetails from "ui/UserCardWithDetails";
@@ -16,9 +16,7 @@ export default function UserPatronages() {
 		data: user,
 		isLoading,
 		isError,
-	}: { data: User; isLoading: boolean; isError: boolean } = useAPI(
-		`/v2/users/${login}`
-	);
+	} = useAPI<User>(`/v2/users/${login}`);
 
 	if (isLoading) return <Loading />;
 	if (isError) return <>Error</>;

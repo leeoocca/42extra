@@ -24,10 +24,11 @@ import {
 
 import { ICON_SIZE } from "lib/actions";
 import { locale } from "lib/constants";
-import { User } from "types/42/User";
+import { User } from "types/42";
 import getTimeAgo from "lib/getTimeAgo";
 import isFuture from "lib/isFuture";
 import Loading from "ui/Loading";
+import ProjectCard from "ui/ProjectCard";
 import sortCursus from "lib/sortCursus";
 import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
@@ -195,8 +196,7 @@ export default function UserProjects() {
 	const { query } = useRouter();
 	const { login } = query;
 
-	const { data: user, isLoading }: { data: User; isLoading: boolean } =
-		useAPI(`/v2/users/${login}`);
+	const { data: user, isLoading } = useAPI<User>(`/v2/users/${login}`);
 
 	if (isLoading) return <Loading />;
 	if (!user) return <>Error</>;

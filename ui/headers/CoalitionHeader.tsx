@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { Box, Flex, Heading, Text } from "@theme-ui/components";
 import SVG from "react-inlinesvg";
 
+import { Coalition } from "types/42";
 import setPrimaryColor from "lib/setPrimaryColor";
 import useAPI from "lib/useAPI";
 
@@ -10,8 +11,15 @@ export default function CoalitionHeader() {
 	const router = useRouter();
 	const { slug } = router.query;
 
-	const { data: coalition = { name: "Loading...", score: null, id: null } } =
-		useAPI(`/v2/coalitions/${slug}`);
+	const { data } = useAPI<Coalition>(`/v2/coalitions/${slug}`);
+
+	const coalition = data || {
+		name: "Loading...",
+		score: null,
+		id: null,
+		color: null,
+		image_url: null,
+	};
 
 	setPrimaryColor(coalition.color);
 

@@ -5,6 +5,7 @@ import { Box, Heading, Text } from "@theme-ui/components";
 import prettyMilliseconds from "pretty-ms";
 
 import { locale } from "lib/constants";
+import { Location } from "types/42";
 import groupBy from "lib/groupBy";
 import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
@@ -34,7 +35,7 @@ export default function UserLocations() {
 	const router = useRouter();
 	const { login } = router.query;
 
-	const { data: locations, isLoading } = useAPI(
+	const { data: locations, isLoading } = useAPI<Location[]>(
 		`/v2/users/${login}/locations`
 	);
 

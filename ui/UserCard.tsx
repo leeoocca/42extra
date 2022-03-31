@@ -1,4 +1,4 @@
-import { User } from "types/42/User";
+import { User } from "types/42";
 import useAPI from "lib/useAPI";
 import Link from "next/link";
 import Avatar, { ErrorAvatar, LoadingAvatar } from "./Avatar";
@@ -23,13 +23,7 @@ function Template({ id, avatar, title, description }) {
 }
 
 function UserCard({ id }: { id: string | number }) {
-	const {
-		data: user,
-		isLoading,
-		isError,
-	}: { data: User; isLoading: boolean; isError: boolean } = useAPI(
-		`/v2/users/${id}`
-	);
+	const { data: user, isLoading, isError } = useAPI<User>(`/v2/users/${id}`);
 
 	if (isLoading)
 		return (
