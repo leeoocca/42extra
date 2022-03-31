@@ -3,16 +3,13 @@ import Link from "next/link";
 import { Card, Grid } from "@theme-ui/components";
 import { useSession } from "next-auth/react";
 
-import { Campus } from "types/42";
+import { useCampuses } from "lib/useAPI";
 import Loading from "ui/Loading";
 import getPrettyCountry from "lib/getPrettyCountry";
 
 function CampusesIndex() {
 	const session = useSession();
-	const { data: campuses } = useAPI<Campus[]>(
-		`/v2/campus?sort=id&page[size]=100`
-	);
-
+	const { data: campuses } = useCampuses();
 	return (
 		<>
 			<h1 className="text-3xl font-bold leading-relaxed">Campuses</h1>
