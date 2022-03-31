@@ -9,8 +9,10 @@ export default function Home() {
 	const { data: session } = useSession();
 
 	const { data: myEvents } = useAPI<Event[]>(
+		`/v2/users/${session.user.id}/events?page[size]=3&filter[future]=true`
 	);
 	const { data: campusEvents } = useAPI<Event[]>(
+		`/v2/campus/${session.user.campus}/events?page[size]=3&sort=begin_at&filter[future]=true`
 	);
 
 	// const { data } = useAPI("/v2/me/slots?page[size]=100");
@@ -47,7 +49,7 @@ export default function Home() {
 			<Heading sx={{ textAlign: "center", mb: 2, fontSize: "2rem" }}>
 				Welcome {session?.user ? session.user.name : "user"}!
 			</Heading>
-			<Heading>Your events</Heading>
+			<Heading m={2}>Your agenda</Heading>
 			{myEvents && (
 				<Grid variant="cards">
 					{myEvents.map((event) => (
@@ -55,9 +57,9 @@ export default function Home() {
 					))}
 				</Grid>
 			)}
-			<Heading>Campus events</Heading>
+			<Heading m={2}>Campus events</Heading>
 			{campusEvents && (
-				<Grid variant="cards">
+				<Grid variant="cards" my={-1}>
 					{campusEvents.map((event) => (
 						<EventCard key={event.id} event={event} />
 					))}
