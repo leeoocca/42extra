@@ -6,7 +6,7 @@ import { CampusNavLinks } from "lib/NavLinks";
 import { setPrimaryColor } from "lib/color";
 import { useCampuses } from "lib/useAPI";
 import HeaderNav from "./HeaderNav";
-import useAPI from "lib/useAPI";
+import getPrettyCountry from "lib/getPrettyCountry";
 
 export default function CampusHeader() {
 	const {
@@ -29,7 +29,7 @@ export default function CampusHeader() {
 					<Text sx={{ fontFamily: "monosFlexace" }}>#{id}</Text>
 					{c.city && (
 						<Text>
-							{c.city}, {c.country}
+							{c.city}, {getPrettyCountry(c.country)}
 						</Text>
 					)}
 				</Flex>

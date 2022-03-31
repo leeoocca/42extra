@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 
 import { Campus } from "types/42";
 import Loading from "ui/Loading";
-import useAPI from "lib/useAPI";
+import getPrettyCountry from "lib/getPrettyCountry";
 
 function CampusesIndex() {
 	const session = useSession();
@@ -35,7 +35,7 @@ function CampusesIndex() {
 								<div>
 									<h2>{c.name}</h2>
 									<p className="text-xs">
-										{c.city}, {c.country}
+										{c.city}, {getPrettyCountry(c.country)}
 									</p>
 									<p className="text-xs">
 										{c.users_count} users

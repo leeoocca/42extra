@@ -9,6 +9,7 @@ import { useCampuses } from "lib/useAPI";
 import CampusHeader from "ui/headers/CampusHeader";
 import Loading from "ui/Loading";
 import WebsiteLink from "ui/WebsiteLink";
+import getPrettyCountry from "lib/getPrettyCountry";
 
 export default function CampusIndex() {
 	const router = useRouter();
@@ -87,7 +88,7 @@ export default function CampusIndex() {
 			<address>
 				{c.address}
 				<br />
-				{c.zip} {c.city}, {c.country}
+				{c.zip} {c.city}, {getPrettyCountry(c.country)}
 			</address>
 		</>
 	);
