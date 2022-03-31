@@ -14,7 +14,6 @@ import {
 	Text,
 } from "@theme-ui/components";
 import { Check, Hash, Mail, User as UserIcon, X } from "lucide-react";
-import prettyMilliseconds from "pretty-ms";
 
 import { Coalition, CoalitionUser, Location, User } from "types/42";
 import { ICON_SIZE } from "lib/actions";
@@ -24,27 +23,15 @@ import Loading from "ui/Loading";
 import sortCursus from "lib/sortCursus";
 import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
+import getPrettyDuration from "lib/getPrettyDuration";
 import { mendColor } from "lib/color";
 // import getCampusFromId from "lib/getCampusFromId";
 
-function getCurrentLocation(locations: any): string {
-	if (locations)
-		// in ${getCampusFromId(locations[0].campus_id).name}
-		return `${locations[0].host} for ~
-		${prettyMilliseconds(Date.now() - Date.parse(locations[0].begin_at), {
-			unitCount: 2,
-		})}`;
-	return null;
-}
-
 function getLastSeen(locations: any): string {
-	if (locations) {
-		if (locations.length)
-			// in ${getCampusFromId(locations[0].campus_id).name}
-			return `last seen ${getTimeAgo(locations[0].end_at)}`;
-		else return "never seen on any campus";
-	}
-	return "...";
+	if (locations.length)
+		// in ${getCampusFromId(locations[0].campus_id).name}
+		return " " + getTimeAgo(locations[0].end_at);
+	else return " never";
 }
 
 const None = () => <i className="opacity-75">none</i>;
@@ -87,6 +74,12 @@ export default function UserOverview() {
 
 	if (isError) return <>Error</>;
 	if (!user) return <Loading />;
+
+	const location = user.location
+		? `${user.location} for ${
+				locations ? getPrettyDuration(locations[0].begin_at) : "..."
+		  }`
+		: `last seen${locations ? getLastSeen(locations) : "..."}`;
 
 	return (
 		<>
@@ -168,17 +161,13 @@ export default function UserOverview() {
 					title="Location"
 					href={`/users/${login}/locations`}
 				>
-					<Text sx={{ fontSize: 4 }}>
-						{user.location
-							? getCurrentLocation(locations) || user.location
-							: getLastSeen(locations)}
-					</Text>
+					<Text sx={{ fontSize: 4 }}>{location}</Text>
 				</OverviewCard>
 				<OverviewCard title="Last seen online">
 					<Text sx={{ fontSize: 4 }}>
 						{new Date(
-							new Date(user.anonymize_date).valueOf() -
-								365 * 24 * 60 * 60 * 1000
+							Date.parse(user.anonymize_date) -
+								365 * 24 * 60 * 60 * 1000 // 1 year
 						).toLocaleDateString(locale)}
 					</Text>
 				</OverviewCard>
