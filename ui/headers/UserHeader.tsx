@@ -78,11 +78,9 @@ export default function UserHeader() {
 
 	return (
 		<>
-			<PageTitle>
-				{getPageTitle(String(login), router.route.split("/"))}
-			</PageTitle>
-			{coalition && (
-				<Box sx={{ position: "relative" }}>
+			<PageTitle
+				title={getPageTitle(String(login), router.route.split("/"))}
+			/>
 					<SVG
 						src={coalition.image_url}
 						fill="black"

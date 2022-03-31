@@ -1,9 +1,9 @@
 import Head from "next/head";
 
-export default function PageTitle({ children }: { children: string }) {
+export default function PageTitle({ title }: { title: string }) {
 	return (
 		<Head>
-			<title>{children} - 42extra</title>
+			<title>{title} - 42extra</title>
 		</Head>
 	);
 }

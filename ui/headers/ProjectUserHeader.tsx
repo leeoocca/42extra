@@ -38,9 +38,9 @@ export default function ProjectUserHeader() {
 
 	return (
 		<>
-			<PageTitle>
-				{`${login}'s ${projectData ? projectData.name : project}`}
-			</PageTitle>
+			<PageTitle
+				title={`${login}'s ${projectData ? projectData.name : project}`}
+			/>
 			<div className="relative px-4 py-10">
 				<h1 className="text-2xl font-bold">
 					<Link href={`/users/${login}`}>

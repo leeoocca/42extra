@@ -25,7 +25,7 @@ export default function ProjectIndex() {
 
 	return (
 		<>
-			<PageTitle>{project.name}</PageTitle>
+			<PageTitle title={project.name} />
 			<article className="leading-relaxed">
 				<section className="mt-2">
 					<h2 className="text-xl font-bold">Cursuses</h2>
