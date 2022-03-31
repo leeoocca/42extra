@@ -8,7 +8,6 @@ import {
 	Flex,
 	Heading,
 	Link as ThemeLink,
-	Paragraph,
 	Spinner,
 } from "theme-ui";
 import { useSession } from "next-auth/react";
@@ -16,10 +15,11 @@ import ReactMarkdown from "react-markdown";
 
 import { Event, EventUser } from "types/42";
 import fetcher from "lib/fetcher";
+import getPrettyDuration from "lib/getPrettyDuration";
 import getTimeAgo from "lib/getTimeAgo";
 import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
-import prettyMilliseconds from "pretty-ms";
+import isFuture from "lib/isFuture";
 
 export default function EventDetails() {
 	const { data: session } = useSession();
@@ -91,8 +91,7 @@ export default function EventDetails() {
 	if (isLoading) return <Loading />;
 	if (isError) return <>Error</>;
 
-	const isPast = new Date(event.begin_at).valueOf() < Date.now();
-	const isDisabled = loading || isPast;
+	const isDisabled = loading || !isFuture(event.begin_at);
 
 	return (
 		<Flex
@@ -112,10 +111,7 @@ export default function EventDetails() {
 			<Flex sx={{ flexDirection: "column" }}>
 				<time>
 					{getTimeAgo(event.begin_at)} for{" "}
-					{prettyMilliseconds(
-						new Date(event.end_at).valueOf() -
-							new Date(event.begin_at).valueOf()
-					)}
+					{getPrettyDuration(event.begin_at, event.end_at)}
 				</time>
 				<time></time>
 				<time>{event.begin_at}</time>

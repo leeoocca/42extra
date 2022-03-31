@@ -11,7 +11,7 @@ import Loading from "ui/Loading";
 import useAPI, { useCampuses } from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
 
-const prettyOptions = { secondsDecimalDigits: 0 };
+const prettyOptions = { secondsDecimalDigits: 0, millisecondsDecimalDigits: 0 };
 
 function getDayDuration(day) {
 	let duration = 0;
