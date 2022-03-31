@@ -46,5 +46,7 @@ export function LoadingAvatar({ size }: { size: number }) {
 }
 
 export function ErrorAvatar({ size }: { size: number }) {
-	return <Avatar url="https://cdn.intra.42.fr/users/3b3.jpg" size={size} />;
+	return (
+		<Avatar url="https://cdn.intra.42.fr/users/default.jpg" size={size} />
+	);
 }

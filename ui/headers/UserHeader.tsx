@@ -129,7 +129,7 @@ export default function UserHeader() {
 					<Avatar
 						url={
 							isError
-								? "https://cdn.intra.42.fr/users/3b3.jpg"
+								? "https://cdn.intra.42.fr/users/default.jpg"
 								: user
 								? user.image_url
 								: null
