@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 
-import useAPI from "lib/useAPI";
 import { User } from "types/42/User";
 import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
 import Loading from "ui/Loading";
+import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
 
 export default function UserPartnerships() {

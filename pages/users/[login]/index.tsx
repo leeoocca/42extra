@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import {
 	Badge,
@@ -17,9 +17,9 @@ import { locale } from "lib/constants";
 import { User } from "types/42/User";
 import getTimeAgo from "lib/getTimeAgo";
 import Loading from "ui/Loading";
+import sortCursus from "lib/sortCursus";
 import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
-import sortCursus from "lib/sortCursus";
 // import getCampusFromId from "lib/getCampusFromId";
 
 function getCurrentLocation(locations: any): string {

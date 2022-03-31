@@ -2,10 +2,10 @@ import Link from "next/link";
 
 import SVG from "react-inlinesvg";
 
-import useAPI from "lib/useAPI";
-import Loading from "ui/Loading";
 import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
+import Loading from "ui/Loading";
+import useAPI from "lib/useAPI";
 
 export default function CoalitionsIndex() {
 	const { data: coalitions } = useAPI(

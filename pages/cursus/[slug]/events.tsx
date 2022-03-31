@@ -4,9 +4,9 @@ import { Heading, Grid } from "@theme-ui/components";
 import { useSession } from "next-auth/react";
 
 import CursusHeader from "ui/headers/CursusHeader";
+import EventCard from "ui/EventCard";
 import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
-import EventCard from "ui/EventCard";
 
 export default function CursusEvents() {
 	const router = useRouter();

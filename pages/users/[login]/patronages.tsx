@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 
-import useAPI from "lib/useAPI";
+import { locale } from "lib/constants";
 import { User } from "types/42/User";
 import Loading from "ui/Loading";
-import UserGrid from "ui/UserGrid";
+import useAPI from "lib/useAPI";
 import UserCardWithDetails from "ui/UserCardWithDetails";
+import UserGrid from "ui/UserGrid";
 import UserHeader from "ui/headers/UserHeader";
-import { locale } from "lib/constants";
 
 export default function UserPatronages() {
 	const router = useRouter();

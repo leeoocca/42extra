@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 
-import useAPI from "lib/useAPI";
-import CardGrid from "ui/CardGrid";
 import AppCard from "ui/AppCard";
+import CardGrid from "ui/CardGrid";
 import Loading from "ui/Loading";
+import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
 
 export default function UserApps() {

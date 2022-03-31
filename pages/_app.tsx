@@ -2,16 +2,16 @@ import "styles/globals.css";
 import Router from "next/router";
 
 import { KBarProvider } from "kbar";
+import { SessionProvider } from "next-auth/react";
 import { SWRConfig, SWRConfiguration } from "swr";
 import { ThemeProvider } from "theme-ui";
 import ProgressBar from "@badrap/bar-of-progress";
-import { SessionProvider } from "next-auth/react";
 
-import theme from "lib/theme";
-import fetcher from "lib/fetcher";
 import { globalActions } from "lib/actions";
-import Shell from "ui/Shell";
 import Favicons from "ui/Favicons";
+import fetcher from "lib/fetcher";
+import Shell from "ui/Shell";
+import theme from "lib/theme";
 
 const progress = new ProgressBar({
 	size: 2,
@@ -49,7 +49,6 @@ export default function MyApp({
 
 	return (
 		<ThemeProvider theme={theme}>
-			{/* <Splash> */}
 			<SessionProvider session={session} refetchInterval={60 * 60}>
 				<SWRConfig value={SWRSettings}>
 					<KBarProvider actions={globalActions}>
@@ -58,7 +57,6 @@ export default function MyApp({
 					</KBarProvider>
 				</SWRConfig>
 			</SessionProvider>
-			{/* </Splash> */}
 		</ThemeProvider>
 	);
 }

@@ -8,10 +8,10 @@ import {
 	ReferenceLine,
 } from "recharts";
 
-import useAPI from "lib/useAPI";
-import Loading from "ui/Loading";
 import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
+import Loading from "ui/Loading";
+import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
 
 export default function UserScales() {

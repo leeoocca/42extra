@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 
+import { Themed } from "@theme-ui/mdx";
 import CursusHeader from "ui/headers/CursusHeader";
 import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
-import { Themed } from "@theme-ui/mdx";
 
 export default function CursusSkills() {
 	const router = useRouter();

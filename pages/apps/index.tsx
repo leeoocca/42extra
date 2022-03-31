@@ -1,7 +1,7 @@
 import AppCard from "ui/AppCard";
 import CardGrid from "ui/CardGrid";
-import useAPI from "lib/useAPI";
 import Loading from "ui/Loading";
+import useAPI from "lib/useAPI";
 
 function AppsIndex() {
 	const { data: apps } = useAPI(`/v2/apps?sort=id`);

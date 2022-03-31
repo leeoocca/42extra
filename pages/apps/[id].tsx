@@ -1,10 +1,10 @@
-import Image from "next/image";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
+import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
 import UserCard from "ui/UserCard";
 import WebsiteLink from "ui/WebsiteLink";
-import Loading from "ui/Loading";
 
 export default function AppDetails() {
 	const router = useRouter();

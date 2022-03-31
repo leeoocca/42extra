@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
 
+import { Card, Grid } from "@theme-ui/components";
+
 import CursusHeader from "ui/headers/CursusHeader";
 import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
-import { Card, Grid } from "@theme-ui/components";
 
 export default function CursusProjects() {
 	const router = useRouter();
