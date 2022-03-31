@@ -16,8 +16,6 @@ export default function CursusProjects() {
 
 	if (!projects) return <Loading />;
 
-	console.log(projects);
-
 	return (
 		<Grid variant="cards">
 			{projects.map((project) => (
