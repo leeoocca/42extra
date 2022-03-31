@@ -8,12 +8,12 @@ export interface Event {
 	kind: Kind;
 	max_people: number | null;
 	nbr_subscribers: number;
-	begin_at: Date;
-	end_at: Date;
+	begin_at: string; // Date
+	end_at: string; // Date
 	campus_ids: number[];
 	cursus_ids: number[];
-	created_at: Date;
-	updated_at: Date;
+	created_at: string; // Date
+	updated_at: string; // Date
 	prohibition_of_cancellation: null;
 	waitlist: Waitlist | null;
 	themes: any[];
@@ -38,8 +38,8 @@ export interface Waitlist {
 	id: number;
 	waitlistable_id: number;
 	waitlistable_type: string;
-	created_at: Date;
-	updated_at: Date;
+	created_at: string; // Date
+	updated_at: string; // Date
 }
 
 export interface EventUser {

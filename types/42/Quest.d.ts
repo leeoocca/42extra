@@ -7,21 +7,21 @@ export interface Quest {
 	description: string;
 	cursus_id: number;
 	campus_id: null;
-	created_at: Date;
-	updated_at: Date;
+	created_at: string; // Date
+	updated_at: string; // Date
 	grade_id: number | null;
 	position: number;
 }
 
 export interface QuestUser {
 	id: number;
-	end_at: Date | null;
+	end_at: string | null; // Date
 	quest_id: number;
-	validated_at: Date | null;
+	validated_at: string | null; // Date
 	prct: number | null;
 	advancement: string | null;
-	created_at: Date;
-	updated_at: Date;
+	created_at: string; // Date
+	updated_at: string; // Date
 	user: User;
 	quest: Quest;
 }

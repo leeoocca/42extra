@@ -6,8 +6,8 @@ export interface TeamClass {
 	url: string;
 	final_mark: number;
 	project_id: number;
-	created_at: Date;
-	updated_at: Date;
+	created_at: string; // Date
+	updated_at: string; // Date
 	status: Status;
 	terminating_at: null;
 	users: User[];
@@ -16,8 +16,8 @@ export interface TeamClass {
 	"closed?": boolean;
 	repo_url: string;
 	repo_uuid: string;
-	locked_at: Date;
-	closed_at: Date;
+	locked_at: string; // Date
+	closed_at: string; // Date
 	project_session_id: number;
 	project_gitlab_path: string;
 }
@@ -26,16 +26,16 @@ export interface ScaleTeam {
 	id: number;
 	scale_id: number;
 	comment: string;
-	created_at: Date;
-	updated_at: Date;
+	created_at: string; // Date
+	updated_at: string; // Date
 	feedback: string;
 	final_mark: number;
 	flag: Flag;
-	begin_at: Date;
+	begin_at: string; // Date
 	correcteds: Corrector[];
 	corrector: Corrector;
 	truant: Truant;
-	filled_at: Date;
+	filled_at: string; // Date
 	questions_with_answers: any[];
 	scale: Scale;
 	team: TeamClass;
@@ -55,7 +55,7 @@ export interface Feedback {
 	feedbackable_id: number;
 	comment: string;
 	rating: number;
-	created_at: Date;
+	created_at: string; // Date
 }
 
 export enum FeedbackableType {
@@ -67,8 +67,8 @@ export interface Flag {
 	name: FlagName;
 	positive: boolean;
 	icon: Icon;
-	created_at: Date;
-	updated_at: Date;
+	created_at: string; // Date
+	updated_at: string; // Date
 }
 
 export interface Scale {
@@ -80,7 +80,7 @@ export interface Scale {
 	introduction_md: string;
 	disclaimer_md: string;
 	guidelines_md: string;
-	created_at: Date;
+	created_at: string; // Date
 	correction_number: number;
 	duration: number;
 	manual_subscription: boolean;

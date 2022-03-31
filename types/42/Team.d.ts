@@ -4,18 +4,18 @@ export interface Team {
 	url: string;
 	final_mark: number;
 	project_id: number;
-	created_at: Date;
-	updated_at: Date;
+	created_at: string; // Date
+	updated_at: string; // Date
 	status: Status;
-	terminating_at: Date | null;
+	terminating_at: string | null; // Date
 	users: TeamUser[];
 	"locked?": boolean;
 	"validated?": boolean;
 	"closed?": boolean;
 	repo_url: string | null;
 	repo_uuid: string;
-	locked_at: Date;
-	closed_at: Date;
+	locked_at: string; // Date
+	closed_at: string; // Date
 	project_session_id: number;
 	project_gitlab_path: string | null;
 	scale_teams: ScaleTeam[];
@@ -26,16 +26,16 @@ export interface ScaleTeam {
 	id: number;
 	scale_id: number;
 	comment: string;
-	created_at: Date;
-	updated_at: Date;
+	created_at: string; // Date
+	updated_at: string; // Date
 	feedback: string;
 	final_mark: number;
 	flag: Flag;
-	begin_at: Date;
+	begin_at: string; // Date
 	correcteds: CorrectionUser[];
 	corrector: CorrectionUser;
 	truant: any;
-	filled_at: Date;
+	filled_at: string; // Date
 	questions_with_answers: any[];
 }
 
@@ -50,8 +50,8 @@ export interface Flag {
 	name: FlagName;
 	positive: boolean;
 	icon: string;
-	created_at: Date;
-	updated_at: Date;
+	created_at: string; // Date
+	updated_at: string; // Date
 }
 
 export enum FlagName {
@@ -74,7 +74,7 @@ export interface TeamsUpload {
 	id: number;
 	final_mark: number;
 	comment: string;
-	created_at: Date;
+	created_at: string; // Date
 	upload_id: number;
 }
 

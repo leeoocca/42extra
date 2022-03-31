@@ -19,9 +19,9 @@ export interface User {
 	pool_year: string;
 	location: null;
 	wallet: number;
-	anonymize_date: Date;
-	created_at: Date;
-	updated_at: Date;
+	anonymize_date: string; // Date
+	created_at: string; // Date
+	updated_at: string; // Date
 	alumni: boolean;
 	"is_launched?": boolean;
 	groups: Group[];
@@ -55,8 +55,8 @@ export interface TitlesUser {
 	user_id: number;
 	title_id: number;
 	selected: boolean;
-	created_at: Date;
-	updated_at: Date;
+	created_at: string; // Date
+	updated_at: string; // Date
 }
 
 export interface Partnership {
@@ -74,8 +74,8 @@ export interface PartnershipsSkill {
 	partnership_id: number;
 	skill_id: number;
 	value: number;
-	created_at: Date;
-	updated_at: Date;
+	created_at: string; // Date
+	updated_at: string; // Date
 }
 
 export interface Patron {
@@ -83,8 +83,8 @@ export interface Patron {
 	user_id: number;
 	godfather_id: number;
 	ongoing: boolean;
-	created_at: Date;
-	updated_at: Date;
+	created_at: string; // Date
+	updated_at: string; // Date
 }
 
 export interface UserPreview {
@@ -106,9 +106,9 @@ export interface UserPreview {
 	pool_year: string;
 	location: string | null;
 	wallet: number;
-	anonymize_date: Date;
-	created_at: Date;
-	updated_at: Date;
+	anonymize_date: string; // Date
+	created_at: string; // Date
+	updated_at: string; // Date
 	alumni: boolean;
 	"is_launched?": boolean;
 }
@@ -118,22 +118,22 @@ export interface CampusUser {
 	user_id: number;
 	campus_id: number;
 	is_primary: boolean;
-	created_at: Date;
-	updated_at: Date;
+	created_at: string; // Date
+	updated_at: string; // Date
 }
 
 export interface CursusUser {
 	grade: null | string;
 	level: number;
 	skills: Skill[];
-	blackholed_at: Date | null;
+	blackholed_at: string | null; // Date
 	id: number;
-	begin_at: Date;
-	end_at: Date | null;
+	begin_at: string; // Date
+	end_at: string | null; // Date
 	cursus_id: number;
 	has_coalition: boolean;
-	created_at: Date;
-	updated_at: Date;
+	created_at: string; // Date
+	updated_at: string; // Date
 	user: User;
 	cursus: Cursus;
 }
@@ -150,7 +150,7 @@ export interface ExpertisesUser {
 	interested: boolean;
 	value: number;
 	contact_me: boolean;
-	created_at: Date;
+	created_at: string; // Date
 	user_id: number;
 }
 
@@ -159,7 +159,7 @@ export interface LanguagesUser {
 	language_id: number;
 	user_id: number;
 	position: number;
-	created_at: Date;
+	created_at: string; // Date
 }
 
 export interface ProjectsUser {
@@ -171,11 +171,11 @@ export interface ProjectsUser {
 	current_team_id: number;
 	project: ProjectPreview;
 	cursus_ids: number[];
-	marked_at: Date | null;
+	marked_at: string | null; // Date
 	marked: boolean;
-	retriable_at: Date | null;
-	created_at: Date;
-	updated_at: Date;
+	retriable_at: string | null; // Date
+	created_at: string; // Date
+	updated_at: string; // Date
 }
 
 export interface ProjectPreview {

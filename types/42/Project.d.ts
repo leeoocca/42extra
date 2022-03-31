@@ -7,8 +7,8 @@ export interface Project {
 	parent: ProjectPreview;
 	children: ProjectPreview[];
 	attachments: any[];
-	created_at: Date;
-	updated_at: Date;
+	created_at: string; // Date
+	updated_at: string; // Date
 	exam: boolean;
 	git_id: number;
 	repository: string;
@@ -30,8 +30,8 @@ export interface ProjectPreview {
 export interface ProjectSession {
 	id: number;
 	solo: boolean | null;
-	begin_at: Date | null;
-	end_at: Date | null;
+	begin_at: string | null; // Date
+	end_at: string | null; // Date
 	estimate_time: string | null;
 	difficulty: number | null;
 	objectives: string[];
@@ -41,8 +41,8 @@ export interface ProjectSession {
 	project_id: number;
 	campus_id: number | null;
 	cursus_id: number | null;
-	created_at: Date;
-	updated_at: Date;
+	created_at: string; // Date
+	updated_at: string; // Date
 	max_people: null;
 	is_subscriptable: boolean;
 	scales: Scale[];

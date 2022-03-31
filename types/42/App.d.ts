@@ -6,8 +6,8 @@ export interface App {
 	website: string;
 	public: boolean;
 	scopes: any[];
-	created_at: Date;
-	updated_at: Date;
+	created_at: string; // Date
+	updated_at: string; // Date
 	owner: Owner;
 	rate_limit: number;
 	roles: Role[];

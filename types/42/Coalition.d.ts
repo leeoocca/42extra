@@ -15,6 +15,6 @@ export interface CoalitionUser {
 	user_id: number;
 	score: number;
 	rank: number;
-	created_at: Date;
-	updated_at: Date;
+	created_at: string; // Date
+	updated_at: string; // Date
 }
