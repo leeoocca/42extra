@@ -1,6 +1,6 @@
 import router from "next/router";
 
-import { Action } from "kbar";
+import { Action, Priority } from "kbar";
 
 export const userActions = (login: string, section: string): Action[] => [
 	{
@@ -9,6 +9,7 @@ export const userActions = (login: string, section: string): Action[] => [
 		shortcut: ["o"],
 		section: section,
 		perform: () => router.push(`/users/${login}`),
+		priority: Priority.HIGH,
 	},
 	{
 		id: "userProjects",
@@ -17,6 +18,7 @@ export const userActions = (login: string, section: string): Action[] => [
 		keywords: "cursus",
 		section: section,
 		perform: () => router.push(`/users/${login}/projects`),
+		priority: Priority.HIGH,
 	},
 	{
 		id: "userQuests",
@@ -25,6 +27,7 @@ export const userActions = (login: string, section: string): Action[] => [
 		keywords: "common core",
 		section: section,
 		perform: () => router.push(`/users/${login}/quests`),
+		priority: Priority.HIGH,
 	},
 	{
 		id: "userAchievements",
@@ -32,6 +35,7 @@ export const userActions = (login: string, section: string): Action[] => [
 		shortcut: ["a"],
 		section: section,
 		perform: () => router.push(`/users/${login}/achievements`),
+		priority: Priority.HIGH,
 	},
 	{
 		id: "userLocations",
@@ -40,6 +44,7 @@ export const userActions = (login: string, section: string): Action[] => [
 		keywords: "cluster place",
 		section: section,
 		perform: () => router.push(`/users/${login}/locations`),
+		priority: Priority.HIGH,
 	},
 	{
 		id: "userScales",
@@ -47,12 +52,14 @@ export const userActions = (login: string, section: string): Action[] => [
 		keywords: "evaluations",
 		section: section,
 		perform: () => router.push(`/users/${login}/scales`),
+		priority: Priority.HIGH,
 	},
 	{
 		id: "userPatronages",
 		name: "Patronages",
 		section: section,
 		perform: () => router.push(`/users/${login}/patronages`),
+		priority: Priority.HIGH,
 	},
 	{
 		id: "userPartnerships",
@@ -60,11 +67,13 @@ export const userActions = (login: string, section: string): Action[] => [
 		keywords: "company companies",
 		section: section,
 		perform: () => router.push(`/users/${login}/partnerships`),
+		priority: Priority.HIGH,
 	},
 	{
 		id: "userApps",
 		name: "Apps",
 		section: section,
 		perform: () => router.push(`/users/${login}/apps`),
+		priority: Priority.HIGH,
 	},
 ];
