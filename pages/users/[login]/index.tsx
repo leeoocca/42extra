@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -8,12 +9,15 @@ import {
 	Flex,
 	Grid,
 	Heading,
+	Link as ThemeLink,
 	Progress,
 	Text,
 } from "@theme-ui/components";
+import { Check, Hash, Mail, User as UserIcon, X } from "lucide-react";
 import prettyMilliseconds from "pretty-ms";
 
 import { Coalition, CoalitionUser, Location, User } from "types/42";
+import { ICON_SIZE } from "lib/actions";
 import { locale } from "lib/constants";
 import getTimeAgo from "lib/getTimeAgo";
 import Loading from "ui/Loading";
@@ -61,6 +65,10 @@ const OverviewCard = ({ children, title, href = null }) => {
 	);
 };
 
+function checkOrX(bool: boolean) {
+	return bool ? <Check size={ICON_SIZE - 4} /> : <X size={ICON_SIZE - 4} />;
+}
+
 export default function UserOverview() {
 	const router = useRouter();
 	const { login } = router.query;
@@ -83,43 +91,77 @@ export default function UserOverview() {
 		<>
 			<Grid columns={[1, , 3]}>
 				<OverviewCard title="Info">
-					{[
-						{ name: "Id", value: user.id },
-						{ name: "Login", value: user.login },
-						{
-							name: "Email",
-							value: (
-								<a href={`mailto:${user.email}`}>
-									{user.email}
-								</a>
-							),
-						},
-						{
-							name: "Pool",
-							value: user.pool_year
-								? `${user.pool_month} ${user.pool_year}`
-								: "none",
-						},
-						{
-							name: "Alumni",
-							value: user.alumni ? "true" : "false",
-						},
-						{
-							name: "Launched",
-							value: user["is_launched?"] ? "true" : "false",
-						},
-						{
-							name: "Staff",
-							value: user["staff?"] ? "true" : "false",
-						},
-					].map((e) => (
-						<Flex key={e.name} as="dl" sx={{ gap: 2 }}>
-							<Text as="dt" sx={{ opacity: "75%" }}>
-								{e.name}
-							</Text>
-							<Text as="dd">{e.value}</Text>
-						</Flex>
-					))}
+					<Grid
+						columns={`${ICON_SIZE - 4}px 1fr`}
+						sx={{ gap: 2, alignItems: "center" }}
+					>
+						{[
+							{
+								icon: <Hash size={ICON_SIZE - 4} />,
+								value: <Text as="code">{user.id}</Text>,
+							},
+							{
+								icon: <UserIcon size={ICON_SIZE - 4} />,
+								value: user.login,
+							},
+							{
+								icon: <Mail size={ICON_SIZE - 4} />,
+								value: (
+									<ThemeLink href={`mailto:${user.email}`}>
+										{user.email}
+									</ThemeLink>
+								),
+							},
+							{
+								icon: (
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										version="1.0"
+										viewBox="0 0 256 256"
+										width={ICON_SIZE}
+										fill="currentColor"
+									>
+										<path d="M87.5 73.6C56 89.5 37 100.2 34 103.7c-5.4 6.1-3.3 11.3 4.5 11.3 3.1 0 12.6-3.1 32.6-10.6 28.1-10.5 28.2-10.6 30.7-8.7 2.2 1.7 13.2 23.9 13.2 26.8 0 1-33.9 22.2-54.5 34.1l-5 2.9 3 .6c2.8.6 2.8.7.5.8l-2.5.2 3 1.7c2.4 1.3 5.3 1.7 14 1.6 9.7-.1 13.1-.6 29-4.8 37.6-9.9 45.1-11.7 52.2-12.3l7.3-.6v-3.2c0-2.3-2.3-6.9-8.2-16.1-4.4-7.1-13.5-21.5-20-31.9-16.4-26.1-17.9-28.2-20.6-29.4-4.8-2.2-8.6-1.1-25.7 7.5zm99.1 8.8c-6 2.2-10.8 6.7-14.1 13.1-2.5 5-3 6.9-2.9 12.9.1 8.5 1.8 12.9 7.4 19 9.8 10.7 27.1 11.4 38.2 1.6 14.5-12.7 11.4-37.1-5.8-45.5-5.1-2.5-17.4-3.1-22.8-1.1z" />
+										<path d="M1.3 163.3c1.5 4 8.9 13.6 14.9 19.3 19.1 18.3 41.6 25 76.2 22.5 20.5-1.5 31.3-3.6 52.3-10.4 25-8.1 35-9.3 64.8-7.8 11 .6 25.3 1.8 31.9 2.7 6.5.8 12.1 1.3 12.3 1 .8-.8-16.1-11.5-24.1-15.1-13.3-6.2-23.6-8.7-38.3-9.2-16.6-.7-23.9.3-53.8 7.7-38.8 9.5-38.5 9.5-61 9.5-21.5 0-29-1.1-44.5-6.2-7.6-2.6-21.6-9.3-27.9-13.5-2.9-1.9-3.4-2-2.8-.5z" />
+									</svg>
+								),
+
+								value: user.pool_year
+									? `${user.pool_month} ${user.pool_year}`
+									: "none",
+							},
+							{
+								name: "Alumni",
+								icon: checkOrX(user.alumni),
+							},
+							{
+								name: "Launched",
+								icon: checkOrX(user["is_launched?"]),
+							},
+							{
+								name: "Staff",
+								icon: checkOrX(user["staff?"]),
+							},
+						].map((e, index) => (
+							<Fragment key={index}>
+								{e.icon}
+								{e.name && (
+									<Text
+										sx={{
+											opacity: !e.value ? null : "75%",
+										}}
+									>
+										{e.name}
+									</Text>
+								)}
+								{typeof e.value === "string" ? (
+									<Text>{e.value}</Text>
+								) : (
+									e.value
+								)}
+							</Fragment>
+						))}
+					</Grid>
 				</OverviewCard>
 				<OverviewCard
 					title="Location"
