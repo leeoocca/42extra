@@ -6,7 +6,7 @@ import UserCard from "ui/UserCard";
 import WebsiteLink from "ui/WebsiteLink";
 import Loading from "ui/Loading";
 
-function AppDetails() {
+export default function AppDetails() {
 	const router = useRouter();
 	const { id } = router.query;
 
@@ -62,5 +62,3 @@ function AppDetails() {
 		</>
 	);
 }
-
-export default AppDetails;
