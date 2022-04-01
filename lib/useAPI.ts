@@ -26,3 +26,11 @@ export function useCampuses() {
 		revalidateOnReconnect: false,
 	});
 }
+
+export function useCursuses() {
+	return useAPI<Cursus[]>("/v2/cursus?sort=id&page[size]=100", {
+		revalidateIfStale: false,
+		revalidateOnFocus: false,
+		revalidateOnReconnect: false,
+	});
+}
