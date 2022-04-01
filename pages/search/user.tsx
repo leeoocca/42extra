@@ -7,17 +7,14 @@ import { UserPreview } from "types/42";
 import useAPI from "lib/useAPI";
 
 const Results = memo(function Results({ query }: { query: string }) {
-	const {
-		data: first = [],
-		isLoading: isLoading,
-	}: { data: UserPreview[]; isLoading: boolean } = useAPI<UserPreview[]>(
+	const { data: first = [], isLoading } = useAPI<UserPreview[]>(
 		`/v2/users?filter[first_name]=${query}`
 	);
-	const { data: last = [] }: { data: UserPreview[] } = useAPI<UserPreview[]>(
+	const { data: last = [] } = useAPI<UserPreview[]>(
 		`/v2/users?filter[last_name]=${query}`
 	);
-	const { data: login = [] }: { data: UserPreview[] } = useAPI<UserPreview[]>(
-		`/v2/users?filter[login]=${query}`
+	const { data: login = [] } = useAPI<UserPreview[]>(
+		`/v2/users?range[login]=${query},${query.padEnd(8, "z")}`
 	);
 
 	const data = [...first, ...last, ...login];
