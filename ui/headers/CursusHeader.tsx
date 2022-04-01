@@ -6,14 +6,16 @@ import { Cursus } from "types/42";
 import { CursusNavLinks } from "lib/NavLinks";
 import { setPrimaryColor } from "lib/color";
 import HeaderNav from "./HeaderNav";
-import useAPI from "lib/useAPI";
+import useAPI, { useCursuses } from "lib/useAPI";
 
 export default function CursusHeader() {
 	const {
 		query: { slug },
 	} = useRouter();
 
-	const { data: cursus } = useAPI<Cursus>(`/v2/cursus/${slug}`);
+	const { data: cursuses } = useCursuses();
+
+	const cursus = cursuses?.find((cursus) => cursus.slug === slug);
 
 	setPrimaryColor();
 
