@@ -27,7 +27,7 @@ export default function CampusHeader() {
 				<Heading as="h1">{c.name}</Heading>
 				<Flex sx={{ gap: 3 }}>
 					<Text>
-						#<Text as="pre">{id}</Text>
+						<Text variant="mono">#{id}</Text>
 					</Text>
 					{c.city && (
 						<Text>

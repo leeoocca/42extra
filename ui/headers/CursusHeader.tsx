@@ -22,9 +22,7 @@ export default function CursusHeader() {
 			<Box p={3}>
 				<Heading>{cursus ? cursus.name : slug}</Heading>
 				<Flex sx={{ gap: 3 }}>
-					<Text sx={{ fontFamily: "monospace" }}>
-						#{cursus && cursus.id}
-					</Text>
+					<Text variant="mono">#{cursus && cursus.id}</Text>
 				</Flex>
 			</Box>
 			<HeaderNav navLinks={CursusNavLinks()} />

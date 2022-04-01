@@ -46,6 +46,9 @@ const theme: Theme = {
 				background: "rgba(255 255 255 / .1)",
 			},
 		},
+		mono: {
+			fontFamily: "monospace",
+		},
 	},
 	styles: {
 		...base.styles,

@@ -118,9 +118,7 @@ function CursusDetails({ cursus }) {
 						</Detail>
 					</Flex>
 				</Box>
-				<Text sx={{ fontFamily: "monospace", fontSize: 1 }}>
-					{cursus.level.toFixed(2)}
-				</Text>
+				<Text variant="mono">{cursus.level.toFixed(2)}</Text>
 			</Flex>
 			<Progress my={2} max={21} value={cursus.level} />
 		</Box>

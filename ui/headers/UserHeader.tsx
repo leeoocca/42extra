@@ -13,6 +13,7 @@ import Avatar from "ui/Avatar";
 import HeaderNav from "./HeaderNav";
 import PageTitle from "ui/PageTitle";
 import useAPI from "lib/useAPI";
+import { TITLE_DEPRECATED_ID } from "lib/constants";
 
 function getCustomUserLogin(user: User): string {
 	const selectedTitle = user.titles_users.find((title) => title.selected);
@@ -92,7 +93,6 @@ export default function UserHeader() {
 	const coalition = coalitions && coalitions.slice(0).reverse()[0];
 
 	if (coalition) setPrimaryColor(coalition.color);
-	else if (coalitions !== undefined) setPrimaryColor("rgb(0, 186, 188)");
 
 	const customUserLogin = user && getCustomUserLogin(user);
 
@@ -132,7 +132,8 @@ export default function UserHeader() {
 							user &&
 							!!user.titles_users.find(
 								(title) =>
-									title.title_id === 82 && title.selected
+									title.title_id === TITLE_DEPRECATED_ID &&
+									title.selected
 							)
 						}
 					/>
