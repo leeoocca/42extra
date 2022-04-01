@@ -6,22 +6,27 @@ export function getUserNavLinks(): LinkListNode[] {
 		{
 			name: "Overview",
 			href: baseUrl,
+			initial: true,
 		},
 		{
 			name: "Projects",
 			href: `${baseUrl}/projects`,
+			initial: true,
 		},
 		{
 			name: "Quests",
 			href: `${baseUrl}/quests`,
+			initial: true,
 		},
 		{
 			name: "Achievements",
 			href: `${baseUrl}/achievements`,
+			initial: true,
 		},
 		{
 			name: "Locations",
 			href: `${baseUrl}/locations`,
+			initial: true,
 		},
 		{
 			name: "Scales",
@@ -74,6 +79,14 @@ export function CampusNavLinks(): LinkListNode[] {
 		{
 			name: "Events",
 			href: `${baseUrl}/events`,
+		},
+		{
+			name: "Clusters",
+			href: `${baseUrl}/clusters`,
+		},
+		{
+			name: "Checkins",
+			href: `${baseUrl}/checkins`,
 		},
 	];
 }
