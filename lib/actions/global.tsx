@@ -21,6 +21,7 @@ import {
 
 import { ICON_SIZE } from "./constants";
 import Logo from "ui/Logo";
+import { REPO } from "lib/constants";
 
 export const globalActions: Action[] = [
 	{
@@ -135,11 +136,7 @@ export const globalActions: Action[] = [
 		keywords: "github repository",
 		section: "External",
 		icon: <Github size={ICON_SIZE} />,
-		perform: () =>
-			window.open(
-				"https://github.com/leeoocca/42extra",
-				"_blank noopener noreferrer"
-			),
+		perform: () => window.open(REPO, "_blank noopener noreferrer"),
 	},
 	{
 		id: "theme",
