@@ -8,24 +8,95 @@ import {
 	Flex,
 	Grid,
 	Heading,
-	Link as ThemeLink,
+	Link as TLink,
 	Spinner,
+	Text,
 } from "theme-ui";
 import { CalendarOptions, GoogleCalendar, ICalendar } from "datebook";
 import { useSession } from "next-auth/react";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 import { Event, EventUser } from "types/42";
+import { setPrimaryColor } from "lib/color";
 import fetcher from "lib/fetcher";
 import getPrettyDuration from "lib/getPrettyDuration";
 import getTimeAgo from "lib/getTimeAgo";
-import Loading from "ui/Loading";
-import useAPI from "lib/useAPI";
 import isFuture from "lib/isFuture";
+import Loading from "ui/Loading";
+import useAPI, { useCampuses, useCursuses } from "lib/useAPI";
 
-const CalendarButton = (props) => (
-	<Button sx={{ width: "100%" }} bg={"muted"} {...props} />
-);
+const width = ["100%", , "75%"];
+
+const colors = {
+	meet_up: "#932526",
+	event: "#9a72c6",
+	workshop: "#87b121",
+	conference: "#1c455f",
+};
+
+const CalendarButton = (props) => <Button sx={{ width: "100%" }} {...props} />;
+
+function EventHeader() {
+	const {
+		query: { id },
+	} = useRouter();
+
+	const { data } = useAPI<Event>(`/v2/events/${id}`);
+	const { data: campuses } = useCampuses();
+
+	const event = data || { name: "Loading...", kind: "...", location: "..." };
+
+	const campus = data
+		? campuses?.find((campus) => data.campus_ids.includes(campus.id))
+		: null;
+
+	setPrimaryColor(event ? colors[event.kind] || "" : "");
+
+	const isUrl = !!event.location.match(
+		/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+	);
+
+	return (
+		<Box sx={{ m: 3 }}>
+			<Box sx={{ width: width, mx: "auto" }}>
+				<Text variant="mono">{event.kind}</Text>
+				<Heading as="h1" my={1}>
+					{event.name}
+				</Heading>
+				<Box>
+					{!data || (
+						<Text>
+							{campus?.name}
+							{data?.campus_ids.length > 1
+								? ` + ${data.campus_ids.length - 1} other`
+								: ""}
+						</Text>
+					)}
+					{data && event.location && " – "}
+					{isUrl ? (
+						<TLink
+							href={event.location}
+							sx={{
+								textOverflow: "ellipsis",
+								overflow: "hidden",
+								display: "block",
+								whiteSpace: "nowrap",
+								color: "text",
+							}}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							{event.location}
+						</TLink>
+					) : (
+						event.location
+					)}
+				</Box>
+			</Box>
+		</Box>
+	);
+}
 
 export default function EventDetails() {
 	const { data: session } = useSession();
@@ -36,6 +107,8 @@ export default function EventDetails() {
 
 	const [loading, setLoading] = useState<boolean | null>(true); // null = error
 	const [status, setStatus] = useState<boolean | null>(null);
+	const { data: campuses } = useCampuses();
+	const { data: cursuses } = useCursuses();
 
 	const {
 		data: event,
@@ -116,16 +189,11 @@ export default function EventDetails() {
 			as="article"
 			sx={{
 				flexDirection: "column",
-				width: ["100%", , "50%"],
+				width: width,
 				mx: "auto",
-				"& > *": { my: 2 },
+				gap: 3,
 			}}
 		>
-			<pre>{event.kind}</pre>
-			<Heading as="h1" mb={1}>
-				{event.name}
-			</Heading>
-			<Box>{event.location}</Box>
 			<Flex sx={{ flexDirection: "column" }}>
 				<time>
 					{getTimeAgo(event.begin_at)} for{" "}
@@ -141,7 +209,11 @@ export default function EventDetails() {
 					mr={2}
 					disabled={isDisabled}
 					sx={{
-						bg: isDisabled ? "gray" : loading === null ? "red" : "",
+						bg: isDisabled
+							? "muted"
+							: loading === null
+							? "red"
+							: "",
 					}}
 				>
 					{loading && (
@@ -162,8 +234,9 @@ export default function EventDetails() {
 			<Box sx={{}}>
 				<ReactMarkdown
 					components={{
-						a: ({ ...props }) => <ThemeLink {...props} />,
+						a: ({ ...props }) => <TLink {...props} />,
 					}}
+					remarkPlugins={[remarkGfm]}
 				>
 					{event.description}
 				</ReactMarkdown>
@@ -184,29 +257,47 @@ export default function EventDetails() {
 			<Grid columns={2} mt={3}>
 				<Box>
 					<Heading>Campuses</Heading>
-					<ul>
-						{event.campus_ids.map((campus) => (
-							<Link key={campus} href={`/campus/${campus}`}>
-								<a>
-									<li>{campus}</li>
-								</a>
-							</Link>
+					<Text as="ul" pl={3}>
+						{event.campus_ids.map((campus_id) => (
+							<Text as="li">
+								<Link
+									key={campus_id}
+									href={`/campus/${campus_id}`}
+									passHref
+								>
+									<TLink>
+										{campuses?.find(
+											(campus) => campus.id === campus_id
+										).name || campus_id}
+									</TLink>
+								</Link>
+							</Text>
 						))}
-					</ul>
+					</Text>
 				</Box>
 				<Box>
 					<Heading>Cursuses</Heading>
-					<ul>
-						{event.cursus_ids.map((cursus) => (
-							<Link key={cursus} href={`/cursus/${cursus}`}>
-								<a>
-									<li>{cursus}</li>
-								</a>
-							</Link>
+					<Text as="ul" pl={3}>
+						{event.cursus_ids.map((cursus_id) => (
+							<Text as="li">
+								<Link
+									key={cursus_id}
+									href={`/cursus/${cursus_id}`}
+									passHref
+								>
+									<TLink>
+										{cursuses?.find(
+											(campus) => campus.id === cursus_id
+										).name || cursus_id}
+									</TLink>
+								</Link>
+							</Text>
 						))}
-					</ul>
+					</Text>
 				</Box>
 			</Grid>
 		</Flex>
 	);
 }
+
+EventDetails.header = EventHeader;
