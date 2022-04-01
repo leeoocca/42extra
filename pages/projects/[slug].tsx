@@ -50,7 +50,7 @@ export default function ProjectIndex() {
 						<span className="font-mono">{project.name}</span>
 					</a>
 				</Link>
-				<section className="mt-2">
+				{/* <section className="mt-2">
 					<h2 className="text-xl font-bold">Sessions</h2>
 					<ul className="list-disc list-inside">
 						{project.project_sessions.map((session) => (
@@ -62,7 +62,7 @@ export default function ProjectIndex() {
 							</li>
 						))}
 					</ul>
-				</section>
+				</section> */}
 			</article>
 		</>
 	);

@@ -259,12 +259,8 @@ export default function EventDetails() {
 					<Heading>Campuses</Heading>
 					<Text as="ul" pl={3}>
 						{event.campus_ids.map((campus_id) => (
-							<Text as="li">
-								<Link
-									key={campus_id}
-									href={`/campus/${campus_id}`}
-									passHref
-								>
+							<Text key={campus_id} as="li">
+								<Link href={`/campus/${campus_id}`} passHref>
 									<TLink>
 										{campuses?.find(
 											(campus) => campus.id === campus_id
@@ -279,12 +275,8 @@ export default function EventDetails() {
 					<Heading>Cursuses</Heading>
 					<Text as="ul" pl={3}>
 						{event.cursus_ids.map((cursus_id) => (
-							<Text as="li">
-								<Link
-									key={cursus_id}
-									href={`/cursus/${cursus_id}`}
-									passHref
-								>
+							<Text key={cursus_id} as="li">
+								<Link href={`/cursus/${cursus_id}`} passHref>
 									<TLink>
 										{cursuses?.find(
 											(campus) => campus.id === cursus_id
