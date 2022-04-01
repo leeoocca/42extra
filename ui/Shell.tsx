@@ -84,6 +84,7 @@ export default function Shell({ children, headerContent }) {
 		>
 			<CommandBar />
 			<StatusBar />
+			{session.tokenExpires < Date.now() / 1000 && <StaleSession />}
 			<Header>{headerContent}</Header>
 			<Container
 				as="main"
@@ -93,7 +94,6 @@ export default function Shell({ children, headerContent }) {
 					flexDirection: "column",
 				}}
 			>
-				{session.tokenExpires < Date.now() / 1000 && <StaleSession />}
 				{children}
 			</Container>
 			<Footer />
