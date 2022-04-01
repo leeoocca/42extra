@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-import { Box, Flex, Text } from "@theme-ui/components";
+import { Box, Flex, Heading, Text } from "@theme-ui/components";
 
 import { CampusNavLinks } from "lib/NavLinks";
 import { setPrimaryColor } from "lib/color";
@@ -24,7 +24,7 @@ export default function CampusHeader() {
 	return (
 		<>
 			<Box p={3}>
-				<h1 className="text-3xl font-bold leading-relaxed">{c.name}</h1>
+				<Heading as="h1">{c.name}</Heading>
 				<Flex sx={{ gap: 3 }}>
 					<Text>
 						#<Text as="pre">{id}</Text>

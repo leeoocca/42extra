@@ -29,7 +29,7 @@ function UserCard({ id }: { id: string | number }) {
 		return (
 			<Template
 				id={id}
-				avatar={<LoadingAvatar size={40} />}
+				avatar={<Avatar url={null} size={40} />}
 				title={id}
 				description={"Loading..."}
 			/>
@@ -41,7 +41,7 @@ function UserCard({ id }: { id: string | number }) {
 				id={id}
 				title={"Error"}
 				description={`while loading ${id}`}
-				avatar={<ErrorAvatar size={40} />}
+				avatar={<Avatar url={null} size={40} />}
 			/>
 		);
 

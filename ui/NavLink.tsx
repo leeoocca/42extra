@@ -1,25 +1,54 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
 
+import { Box, Link as TLink, Text } from "@theme-ui/components";
+
 import { LinkListNode } from "types/LinkListNode";
 
-function NavLink({ name, href, className }: LinkListNode) {
+const activeOverrides = {
+	borderBottomColor: "white",
+	opacity: "100%",
+	fontWeight: 600,
+};
+
+function NavLink({ name, href, initial }: LinkListNode) {
 	const router = useRouter();
 
 	const active = router.pathname === href;
 
 	return (
-		<Link href={{ pathname: href, query: router.query }}>
-			<a
-				className={`${
-					active
-						? "opacity-100 border-white"
-						: "opacity-75 border-transparent"
-				} hover:opacity-100 hover:text-white border-b-2 px-1 py-2 font-medium ease-in-out transition-opacity focus:opacity-100 ${className}`}
-			>
-				{name}
-			</a>
-		</Link>
+		<Text
+			as="li"
+			sx={{
+				p: 2,
+				minWidth: "auto",
+				borderBottom: "transparent solid 2px",
+				opacity: "75%",
+				fontWeight: 500,
+				...(active && activeOverrides),
+				"&:hover": {
+					opacity: "100%",
+				},
+			}}
+		>
+			<Link href={{ pathname: href, query: router.query }} passHref>
+				<TLink
+					sx={{
+						color: "text",
+						textDecoration: "none",
+					}}
+				>
+					{initial === true ? (
+						<>
+							<Text as="u">{name.slice(0, 1)}</Text>
+							{name.slice(1)}
+						</>
+					) : (
+						name
+					)}
+				</TLink>
+			</Link>
+		</Text>
 	);
 }
 

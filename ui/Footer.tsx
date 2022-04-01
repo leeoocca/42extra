@@ -1,18 +1,29 @@
 import Link from "next/link";
 
+import { Box, Link as TLink } from "@theme-ui/components";
+import { REPO } from "lib/constants";
+
 export default function Footer() {
 	return (
-		<footer className="w-full my-4 text-sm font-light text-center text-gray-400">
-			<a
-				href="https://github.com/leeoocca/42extra"
-				className="font-normal text-gray-200"
-			>
-				42extra
-			</a>{" "}
-			— a project by{" "}
-			<Link href="/users/lrocca">
-				<a className="text-gray-200">lrocca</a>
+		<Box
+			as="footer"
+			my={3}
+			sx={{
+				textAlign: "center",
+				fontWeight: 300,
+				fontSize: 12,
+				color: "gray",
+			}}
+		>
+			<TLink href={REPO}>42extra</TLink> — a project by{" "}
+			<Link href="/users/lrocca" passHref>
+				<TLink>lrocca</TLink>
 			</Link>
-		</footer>
+		</Box>
 	);
 }
+
+// about the project
+// source code
+// open an issue
+// star on gh
