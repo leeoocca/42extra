@@ -33,7 +33,7 @@ export default function CampusUsers() {
 			<Heading>Past</Heading>
 			<Grid variant="cards">
 				{events
-					.filter((event) => isFuture(event.end_at))
+					.filter((event) => !isFuture(event.end_at))
 					.map((event) => (
 						<EventCard key={event.id} event={event} />
 					))}
