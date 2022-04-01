@@ -9,8 +9,9 @@ import Logo from "ui/Logo";
 export default function SignIn() {
 	const { status } = useSession();
 
-	const router = useRouter();
-	const { callbackUrl } = router.query;
+	const {
+		query: { callbackUrl },
+	} = useRouter();
 
 	if (status === "loading") return null;
 

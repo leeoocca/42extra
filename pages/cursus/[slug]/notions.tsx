@@ -6,8 +6,9 @@ import useAPI from "lib/useAPI";
 import { Card, Grid } from "@theme-ui/components";
 
 export default function CursusNotions() {
-	const router = useRouter();
-	const { slug } = router.query;
+	const {
+		query: { slug },
+	} = useRouter();
 
 	const { data: notions } = useAPI<any>(`/v2/cursus/${slug}/notions`); // TODO notion interface
 

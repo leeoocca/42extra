@@ -8,8 +8,9 @@ import UserCard from "ui/UserCard";
 import WebsiteLink from "ui/WebsiteLink";
 
 export default function AppDetails() {
-	const router = useRouter();
-	const { id } = router.query;
+	const {
+		query: { id },
+	} = useRouter();
 
 	const { data: app } = useAPI<App>(`/v2/apps/${id}`);
 

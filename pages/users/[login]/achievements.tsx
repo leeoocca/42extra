@@ -11,8 +11,9 @@ import UserHeader from "ui/headers/UserHeader";
 import emptyState from "public/coding.gif";
 
 export default function UserAchievements() {
-	const router = useRouter();
-	const { login } = router.query;
+	const {
+		query: { login },
+	} = useRouter();
 
 	const {
 		data: user,

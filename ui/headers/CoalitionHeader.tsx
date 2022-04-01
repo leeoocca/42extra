@@ -8,8 +8,9 @@ import { setPrimaryColor } from "lib/color";
 import useAPI from "lib/useAPI";
 
 export default function CoalitionHeader() {
-	const router = useRouter();
-	const { slug } = router.query;
+	const {
+		query: { slug },
+	} = useRouter();
 
 	const { data } = useAPI<Coalition>(`/v2/coalitions/${slug}`);
 

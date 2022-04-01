@@ -12,8 +12,9 @@ import UserCardWithDetails from "ui/UserCardWithDetails";
 import UserGrid from "ui/UserGrid";
 
 export default function CoalitionIndex() {
-	const router = useRouter();
-	const { slug } = router.query;
+	const {
+		query: { slug },
+	} = useRouter();
 
 	const { data: coalition } = useAPI<Coalition>(`/v2/coalitions/${slug}`);
 	const { data: users } = useAPI<CoalitionUser[]>(

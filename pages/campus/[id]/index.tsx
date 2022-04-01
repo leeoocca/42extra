@@ -7,13 +7,14 @@ import { Heading, Text, Link as TLink } from "@theme-ui/components";
 import { locale } from "lib/constants";
 import { useCampuses } from "lib/useAPI";
 import CampusHeader from "ui/headers/CampusHeader";
+import getPrettyCountry from "lib/getPrettyCountry";
 import Loading from "ui/Loading";
 import WebsiteLink from "ui/WebsiteLink";
-import getPrettyCountry from "lib/getPrettyCountry";
 
 export default function CampusIndex() {
-	const router = useRouter();
-	const { id } = router.query;
+	const {
+		query: { id },
+	} = useRouter();
 
 	const { data: campuses } = useCampuses();
 

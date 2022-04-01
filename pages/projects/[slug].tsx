@@ -11,8 +11,9 @@ import useAPI from "lib/useAPI";
 
 export default function ProjectIndex() {
 	const { data: session } = useSession();
-	const router = useRouter();
-	const { slug } = router.query;
+	const {
+		query: { slug },
+	} = useRouter();
 
 	const {
 		data: project,
@@ -49,21 +50,19 @@ export default function ProjectIndex() {
 						<span className="font-mono">{project.name}</span>
 					</a>
 				</Link>
-				{/* <section className="mt-2">
-						<h2 className="text-xl font-bold">Sessions</h2>
-						<p>
-							Sessions available for <code>{project.name}</code>:
-						</p>
-						<ul className="list-disc list-inside">
-							{project.project_sessions.map((session) => (
-								<li>
-									{session.is_subscriptable
-										? "subscriptable"
-										: "not subscriptable"}
-								</li>
-							))}
-						</ul>
-					</section> */}
+				<section className="mt-2">
+					<h2 className="text-xl font-bold">Sessions</h2>
+					<ul className="list-disc list-inside">
+						{project.project_sessions.map((session) => (
+							<li>
+								{session.description}
+								{session.is_subscriptable
+									? "subscriptable"
+									: "not subscriptable"}
+							</li>
+						))}
+					</ul>
+				</section>
 			</article>
 		</>
 	);

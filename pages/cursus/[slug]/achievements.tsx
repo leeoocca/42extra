@@ -8,8 +8,9 @@ import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
 
 export default function CursusAchievements() {
-	const router = useRouter();
-	const { slug } = router.query;
+	const {
+		query: { slug },
+	} = useRouter();
 
 	const { data: achievements } = useAPI<Achievement[]>( // TODO is type AchievementPreview?
 		`/v2/cursus/${slug}/achievements`

@@ -9,8 +9,9 @@ import HeaderNav from "./HeaderNav";
 import useAPI from "lib/useAPI";
 
 export default function CursusHeader() {
-	const router = useRouter();
-	const { slug } = router.query;
+	const {
+		query: { slug },
+	} = useRouter();
 
 	const { data: cursus } = useAPI<Cursus>(`/v2/cursus/${slug}`);
 

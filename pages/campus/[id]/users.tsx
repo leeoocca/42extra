@@ -10,8 +10,9 @@ import UserCard from "ui/UserCard";
 import UserGrid from "ui/UserGrid";
 
 export default function CampusUsers() {
-	const router = useRouter();
-	const { id } = router.query;
+	const {
+		query: { id },
+	} = useRouter();
 
 	const { data: users, isLoading } = useAPI<User[]>(`/v2/campus/${id}/users`);
 

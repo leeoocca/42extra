@@ -30,8 +30,9 @@ const CalendarButton = (props) => (
 export default function EventDetails() {
 	const { data: session } = useSession();
 
-	const router = useRouter();
-	const { id } = router.query;
+	const {
+		query: { id },
+	} = useRouter();
 
 	const [loading, setLoading] = useState<boolean | null>(true); // null = error
 	const [status, setStatus] = useState<boolean | null>(null);

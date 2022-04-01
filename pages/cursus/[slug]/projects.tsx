@@ -9,8 +9,9 @@ import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
 
 export default function CursusProjects() {
-	const router = useRouter();
-	const { slug } = router.query;
+	const {
+		query: { slug },
+	} = useRouter();
 
 	const { data: projects } = useAPI<Project[]>(`/v2/cursus/${slug}/projects`);
 

@@ -30,8 +30,9 @@ function rawDuration(location) {
 }
 
 export default function UserLocations() {
-	const router = useRouter();
-	const { login } = router.query;
+	const {
+		query: { login },
+	} = useRouter();
 
 	const { data: locations, isLoading } = useAPI<Location[]>(
 		`/v2/users/${login}/locations`

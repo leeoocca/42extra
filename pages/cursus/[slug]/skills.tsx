@@ -7,8 +7,9 @@ import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
 
 export default function CursusSkills() {
-	const router = useRouter();
-	const { slug } = router.query;
+	const {
+		query: { slug },
+	} = useRouter();
 
 	const { data: skills } = useAPI<Skill[]>(
 		`/v2/cursus/${slug}/skills?page[size]=100`

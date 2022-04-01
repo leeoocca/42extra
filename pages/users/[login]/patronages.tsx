@@ -9,8 +9,9 @@ import UserGrid from "ui/UserGrid";
 import UserHeader from "ui/headers/UserHeader";
 
 export default function UserPatronages() {
-	const router = useRouter();
-	const { login } = router.query;
+	const {
+		query: { login },
+	} = useRouter();
 
 	const {
 		data: user,

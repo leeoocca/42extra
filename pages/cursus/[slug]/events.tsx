@@ -10,8 +10,9 @@ import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
 
 export default function CursusEvents() {
-	const router = useRouter();
-	const { slug } = router.query;
+	const {
+		query: { slug },
+	} = useRouter();
 
 	const { data: session } = useSession();
 

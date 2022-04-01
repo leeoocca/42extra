@@ -8,8 +8,9 @@ import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
 
 export default function UserApps() {
-	const router = useRouter();
-	const { login } = router.query;
+	const {
+		query: { login },
+	} = useRouter();
 
 	const {
 		data: apps,

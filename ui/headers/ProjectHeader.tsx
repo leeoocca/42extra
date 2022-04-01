@@ -5,8 +5,9 @@ import { setPrimaryColor } from "lib/color";
 import useAPI from "lib/useAPI";
 
 export default function ProjectHeader() {
-	const router = useRouter();
-	const { slug } = router.query;
+	const {
+		query: { slug },
+	} = useRouter();
 
 	// const navLinks = getProjectNavLinks();
 	setPrimaryColor();

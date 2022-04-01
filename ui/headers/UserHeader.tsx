@@ -7,8 +7,8 @@ import SVG from "react-inlinesvg";
 
 import { Coalition, User } from "types/42";
 import { getUserNavLinks } from "lib/NavLinks";
-import { userActions } from "lib/actions";
 import { setPrimaryColor } from "lib/color";
+import { userActions } from "lib/actions";
 import Avatar from "ui/Avatar";
 import HeaderNav from "./HeaderNav";
 import PageTitle from "ui/PageTitle";
@@ -69,8 +69,10 @@ const CoalitionSVGStyles: CSSProperties = {
 };
 
 export default function UserHeader() {
-	const router = useRouter();
-	const { login } = router.query;
+	const {
+		query: { login },
+		route,
+	} = useRouter();
 
 	const {
 		data: user,
@@ -101,9 +103,7 @@ export default function UserHeader() {
 
 	return (
 		<>
-			<PageTitle
-				title={getPageTitle(String(login), router.route.split("/"))}
-			/>
+			<PageTitle title={getPageTitle(String(login), route.split("/"))} />
 			<Box sx={{ position: "relative" }}>
 				{coalition ? (
 					<SVG

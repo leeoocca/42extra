@@ -8,8 +8,9 @@ import PageTitle from "ui/PageTitle";
 import useAPI from "lib/useAPI";
 
 export default function ProjectUserHeader() {
-	const router = useRouter();
-	const { login, project } = router.query;
+	const {
+		query: { login, project },
+	} = useRouter();
 
 	const { data: projectData } = useAPI<Project>(`/v2/projects/${project}`);
 	const { data: user } = useAPI<User>(`/v2/users/${login}`);

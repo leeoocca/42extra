@@ -58,8 +58,9 @@ function checkOrX(bool: boolean) {
 }
 
 export default function UserOverview() {
-	const router = useRouter();
-	const { login } = router.query;
+	const {
+		query: { login },
+	} = useRouter();
 
 	const { data: user, isError } = useAPI<User>(`/v2/users/${login}`);
 	const { data: locations } = useAPI<Location[]>(

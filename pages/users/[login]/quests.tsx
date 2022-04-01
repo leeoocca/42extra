@@ -32,8 +32,9 @@ const Quest = ({ quest }) => (
 );
 
 export default function UserQuests() {
-	const router = useRouter();
-	const { login } = router.query;
+	const {
+		query: { login },
+	} = useRouter();
 
 	const {
 		data: quests,

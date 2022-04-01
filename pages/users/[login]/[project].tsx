@@ -8,8 +8,9 @@ import UserGrid from "ui/UserGrid";
 import ProjectUserHeader from "ui/headers/ProjectUserHeader";
 
 export default function ProjectUser() {
-	const router = useRouter();
-	const { project, login } = router.query;
+	const {
+		query: { login, project },
+	} = useRouter();
 
 	const { data: teams, isError } = useAPI<any>( // TODO which is it?
 		`/v2/users/${login}/projects/${project}/teams`
