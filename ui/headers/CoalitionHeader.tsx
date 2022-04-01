@@ -35,7 +35,7 @@ export default function CoalitionHeader() {
 			/>
 			<Heading>{coalition.name}</Heading>
 			<Flex sx={{ gap: 3 }}>
-				<Text sx={{ fontFamily: "monospace" }}>#{coalition.id}</Text>
+				<Text variant="mono">#{coalition.id}</Text>
 				<Text>Score {coalition.score}</Text>
 			</Flex>
 		</Box>

@@ -93,7 +93,7 @@ export default function UserOverview() {
 						{[
 							{
 								icon: <Hash size={ICON_SIZE - 4} />,
-								value: <Text as="code">{user.id}</Text>,
+								value: <Text variant="mono">{user.id}</Text>,
 							},
 							{
 								icon: <UserIcon size={ICON_SIZE - 4} />,

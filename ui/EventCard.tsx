@@ -10,7 +10,7 @@ export default function EventCard({ event }: { event: Event }) {
 		<Link href={`/events/${event.id}`} passHref>
 			<Card bg="muted" px={3} py={2} as="a">
 				<b>{event.name}</b>
-				<Text as="p" sx={{ fontFamily: "monospace" }}>
+				<Text as="p" variant="mono">
 					{event.kind}
 				</Text>
 				<p>

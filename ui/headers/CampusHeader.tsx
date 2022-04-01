@@ -27,7 +27,7 @@ export default function CampusHeader() {
 				<h1 className="text-3xl font-bold leading-relaxed">{c.name}</h1>
 				<Flex sx={{ gap: 3 }}>
 					<Text>
-						#<Text as="pre">{id}</Text>
+						<Text variant="mono">#{id}</Text>
 					</Text>
 					{c.city && (
 						<Text>
