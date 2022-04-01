@@ -1,6 +1,6 @@
 import useSWR from "swr";
 
-import { Campus } from "types/42";
+import { Campus, Cursus } from "types/42";
 
 export default function useAPI<Type>(
 	uri: string,
