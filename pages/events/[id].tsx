@@ -176,7 +176,7 @@ export default function EventDetails() {
 	const config: CalendarOptions = {
 		title: event.name,
 		location: event.location,
-		description: event.description,
+		description: event.description.replace("\r", ""),
 		start: new Date(event.begin_at),
 		end: new Date(event.end_at),
 	};
