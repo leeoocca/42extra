@@ -42,6 +42,7 @@ export default function SearchUser() {
 
 	function handleSubmit(e) {
 		e.preventDefault();
+		setQuery(input.trim());
 	}
 
 	function handleChange(e) {

@@ -52,7 +52,7 @@ export default function Shell({ children, headerContent }) {
 	const [user, setUser] = useState("");
 
 	useEffect(() => {
-		setUser(queryValue);
+		setUser(queryValue.trim());
 	}, [queryValue]);
 
 	const goToUser: Action = queryValue.length

@@ -53,7 +53,7 @@ export default function Query() {
 							type="text"
 							value={query}
 							placeholder="me"
-							onChange={(e) => setQuery(e.target.value)}
+							onChange={(e) => setQuery(e.target.value.trim())}
 							autoFocus
 							sx={{
 								width: "auto",
@@ -72,13 +72,13 @@ export default function Query() {
 					{error.status} - {error.statusText}
 				</Alert>
 			)}
-			<Themed.pre>
+			<Text as="pre">
 				{data === undefined
 					? "Try `me`"
 					: !data
 					? !error && "loading..."
 					: JSON.stringify(data, null, "\t")}
-			</Themed.pre>
+			</Text>
 		</>
 	);
 }
