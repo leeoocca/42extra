@@ -15,11 +15,11 @@ export default function UserApps() {
 	const {
 		data: apps,
 		isLoading,
-		isError,
+		error,
 	} = useAPI<App[]>(`/v2/users/${login}/apps`);
 
 	if (isLoading) return <Loading />;
-	if (isError) return <>Error</>;
+	if (error) return <>Error</>;
 
 	if (!apps.length)
 		return (

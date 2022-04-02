@@ -1,6 +1,8 @@
-import useSWR from "swr";
+import { useEffect } from "react";
+import useSWR, { KeyedMutator } from "swr";
 
 import { Campus, Cursus } from "types/42";
+import { useAPIError } from "./APIError";
 
 export default function useAPI<Type>(
 	uri: string,
@@ -8,14 +10,22 @@ export default function useAPI<Type>(
 ): {
 	data: Type;
 	isLoading: boolean;
-	isError: any;
+	error: Error;
+	mutate: KeyedMutator<Type>;
 } {
-	const { data, error } = useSWR([`/api${uri}`], { ...options });
+	const { data, error, mutate } = useSWR([`/api${uri}`], { ...options });
+	const { errors, setErrors } = useAPIError();
+
+	useEffect(() => {
+		error && setErrors([error, ...errors]);
+	}, [error]);
+	// setTimeout(() =>, 0);
 
 	return {
 		data,
 		isLoading: !error && !data,
-		isError: error,
+		error,
+		mutate,
 	};
 }
 

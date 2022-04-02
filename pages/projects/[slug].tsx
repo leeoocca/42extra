@@ -18,11 +18,11 @@ export default function ProjectIndex() {
 	const {
 		data: project,
 		isLoading,
-		isError,
+		error,
 	} = useAPI<Project>(`/v2/projects/${slug}`);
 
 	if (isLoading) return <Loading />;
-	if (isError) return <>Error</>;
+	if (error) return <>Error</>;
 
 	return (
 		<>

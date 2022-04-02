@@ -22,7 +22,7 @@ export default function UserScales() {
 	const {
 		data: scales,
 		isLoading,
-		isError,
+		error,
 	} = useAPI<any>(`/v2/users/${login}/scale_teams`); // TODO add scales interface
 
 	const { data: history } = useAPI<any>( // TODO add historics interface
@@ -30,7 +30,7 @@ export default function UserScales() {
 	);
 
 	if (isLoading) return <Loading />;
-	if (isError) return <>Error</>;
+	if (error) return <>Error</>;
 
 	if (!scales.length)
 		return (

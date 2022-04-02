@@ -39,11 +39,11 @@ export default function UserQuests() {
 	const {
 		data: quests,
 		isLoading,
-		isError,
+		error,
 	} = useAPI<QuestUser[]>(`/v2/users/${login}/quests_users`);
 
 	if (isLoading) return <Loading />;
-	if (isError) return <>Error</>;
+	if (error) return <>Error</>;
 
 	if (!quests.length)
 		return (

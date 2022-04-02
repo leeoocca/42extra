@@ -25,10 +25,7 @@ Router.events.on("routeChangeComplete", progress.finish);
 Router.events.on("routeChangeError", progress.finish);
 
 const SWRSettings: SWRConfiguration = {
-	fetcher: fetcher,
-	onError: (err) => {
-		console.error(err);
-	},
+	fetcher,
 	revalidateOnFocus: false,
 	dedupingInterval: 30 * 1000, // 30 seconds
 	shouldRetryOnError: false,

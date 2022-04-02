@@ -109,11 +109,7 @@ export default function EventDetails() {
 	const { data: campuses } = useCampuses();
 	const { data: cursuses } = useCursuses();
 
-	const {
-		data: event,
-		isLoading,
-		isError,
-	} = useAPI<Event>(`/v2/events/${id}`);
+	const { data: event } = useAPI<Event>(`/v2/events/${id}`);
 
 	const { data: eventUser } = useAPI<EventUser[]>(
 		`/v2/events_users?filter[event_id]=${id}&filter[user_id]=${session.user.id}`
@@ -167,8 +163,7 @@ export default function EventDetails() {
 		setLoading(false);
 	}
 
-	if (isLoading) return <Loading />;
-	if (isError) return <>Error</>;
+	if (!event) return <Loading />;
 
 	const isDisabled = loading || !isFuture(event.begin_at);
 

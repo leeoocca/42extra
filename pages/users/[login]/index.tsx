@@ -62,7 +62,7 @@ export default function UserOverview() {
 		query: { login },
 	} = useRouter();
 
-	const { data: user, isError } = useAPI<User>(`/v2/users/${login}`);
+	const { data: user, error } = useAPI<User>(`/v2/users/${login}`);
 	const { data: locations } = useAPI<Location[]>(
 		`/v2/users/${login}/locations`
 	);
@@ -73,7 +73,7 @@ export default function UserOverview() {
 		`/v2/users/${login}/coalitions_users`
 	);
 
-	if (isError) return <>Error</>;
+	if (error) return <>Error</>;
 	if (!user) return <Loading />;
 
 	const location = user.location

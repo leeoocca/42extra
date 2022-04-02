@@ -75,11 +75,7 @@ export default function UserHeader() {
 		route,
 	} = useRouter();
 
-	const {
-		data: user,
-		isLoading,
-		isError,
-	} = useAPI<User>(`/v2/users/${login}`);
+	const { data: user, isLoading, error } = useAPI<User>(`/v2/users/${login}`);
 
 	const { data: coalitions } = useAPI<Coalition[]>(
 		login && `/v2/users/${login}/coalitions`
@@ -127,7 +123,7 @@ export default function UserHeader() {
 			>
 				<Avatar
 					url={
-						isError
+						error
 							? "https://cdn.intra.42.fr/users/default.jpg"
 							: user
 							? user.image_url
@@ -155,7 +151,7 @@ export default function UserHeader() {
 								textAlign: "center",
 							}}
 						>
-							{isError ? (
+							{error ? (
 								"Error"
 							) : (
 								<>
@@ -183,7 +179,7 @@ export default function UserHeader() {
 								textAlign: ["center", , "left"],
 							}}
 						>
-							{isError ? "Don't panic!" : user.usual_full_name}
+							{error ? "Don't panic!" : user.usual_full_name}
 						</Heading>
 					</Box>
 				)}

@@ -12,15 +12,11 @@ export default function UserPartnerships() {
 		query: { login },
 	} = useRouter();
 
-	const {
-		data: user,
-		isLoading,
-		isError,
-	} = useAPI<User>(`/v2/users/${login}`);
+	const { data: user, isLoading, error } = useAPI<User>(`/v2/users/${login}`);
 
 	if (isLoading) return <Loading />;
 
-	if (isError) return <>Error</>;
+	if (error) return <>Error</>;
 
 	if (!user.partnerships.length)
 		return (
