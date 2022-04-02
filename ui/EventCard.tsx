@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Card, Text } from "theme-ui";
+import { Card, Text } from "@theme-ui/components";
 
 import { Event } from "types/42";
 import { locale } from "lib/constants";

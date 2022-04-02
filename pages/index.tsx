@@ -1,4 +1,4 @@
-import { Grid, Heading } from "theme-ui";
+import { Grid, Heading } from "@theme-ui/components";
 import { useSession } from "next-auth/react";
 
 import { Event } from "types/42";

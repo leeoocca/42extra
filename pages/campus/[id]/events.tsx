@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-import { Grid, Heading } from "theme-ui";
+import { Grid, Heading } from "@theme-ui/components";
 
 import { Event } from "types/42";
 import CampusHeader from "ui/headers/CampusHeader";

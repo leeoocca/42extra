@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-import { Heading, Text } from "theme-ui";
+import { Flex, Heading, Text } from "@theme-ui/components";
 
 import { QuestUser } from "types/42";
 import Card from "ui/Card";

@@ -11,7 +11,7 @@ import {
 	Link as TLink,
 	Spinner,
 	Text,
-} from "theme-ui";
+} from "@theme-ui/components";
 import { CalendarOptions, GoogleCalendar, ICalendar } from "datebook";
 import { useSession } from "next-auth/react";
 import ReactMarkdown from "react-markdown";
