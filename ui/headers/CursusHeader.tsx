@@ -15,7 +15,7 @@ export default function CursusHeader() {
 
 	const { data: cursuses } = useCursuses();
 
-	const cursus = cursuses?.find((cursus) => cursus.slug === slug);
+	const cursus = cursuses.find((cursus) => cursus.slug === slug) || null;
 
 	setPrimaryColor();
 
