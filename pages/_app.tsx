@@ -30,7 +30,7 @@ const SWRSettings: SWRConfiguration = {
 		console.error(err);
 	},
 	revalidateOnFocus: false,
-	dedupingInterval: 5000,
+	dedupingInterval: 30 * 1000, // 30 seconds
 	shouldRetryOnError: false,
 };
 
