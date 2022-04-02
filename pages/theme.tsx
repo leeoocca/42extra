@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { Box, Flex, Heading, Input, Label } from "@theme-ui/components";
+import PageTitle from "ui/PageTitle";
 
 function VariableControl({ variable }: { variable: string }) {
 	const def = getComputedStyle(document.documentElement).getPropertyValue(
@@ -45,6 +46,7 @@ function VariableControl({ variable }: { variable: string }) {
 export default function ThemeEditor() {
 	return (
 		<Box>
+			<PageTitle title="Theme editor" />
 			<Heading mb="1rem" sx={{ textAlign: "center" }}>
 				Theme
 			</Heading>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Box, Card, Grid, Input } from "@theme-ui/components";
 
 import { UserPreview } from "types/42";
+import PageTitle from "ui/PageTitle";
 import useAPI from "lib/useAPI";
 
 const Results = memo(function Results({ query }: { query: string }) {
@@ -41,7 +42,6 @@ export default function SearchUser() {
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		setQuery(input);
 	}
 
 	function handleChange(e) {
@@ -50,6 +50,7 @@ export default function SearchUser() {
 
 	return (
 		<>
+			<PageTitle title={["search", "users"]} />
 			<Box as="form" onSubmit={handleSubmit}>
 				<Input value={input} onChange={handleChange} />
 			</Box>

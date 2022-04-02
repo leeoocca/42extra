@@ -11,7 +11,7 @@ import { setPrimaryColor } from "lib/color";
 import { userActions } from "lib/actions";
 import Avatar from "ui/Avatar";
 import HeaderNav from "./HeaderNav";
-import PageTitle from "ui/PageTitle";
+import PageTitle, { PAGE_TITLE_SEPARATOR } from "ui/PageTitle";
 import useAPI from "lib/useAPI";
 import { TITLE_DEPRECATED_ID } from "lib/constants";
 
@@ -26,9 +26,9 @@ function getCustomUserLogin(user: User): string {
 	return null;
 }
 
-function getPageTitle(login: string, routeArray: any) {
+function getPageTitle(login: string, routeArray: string[]): string | string[] {
 	const pageName = routeArray[routeArray.length - 1];
-	return pageName !== "[login]" ? `${login}'s ${pageName}` : login;
+	return pageName !== "[login]" ? [login, pageName] : login;
 }
 
 const BadgeCheckIcon = (props) => (
@@ -93,9 +93,10 @@ export default function UserHeader() {
 
 	const customUserLogin = user && getCustomUserLogin(user);
 
-	useRegisterActions(userActions(String(login), `${login}'s profile`), [
-		login,
-	]);
+	useRegisterActions(
+		userActions(String(login), ["Users", login].join(PAGE_TITLE_SEPARATOR)),
+		[login]
+	);
 
 	return (
 		<>

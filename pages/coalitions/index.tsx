@@ -7,6 +7,7 @@ import { mendColor } from "lib/color";
 import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
 import Loading from "ui/Loading";
+import PageTitle from "ui/PageTitle";
 import useAPI from "lib/useAPI";
 
 export default function CoalitionsIndex() {
@@ -16,6 +17,7 @@ export default function CoalitionsIndex() {
 	// TODO paginate results
 	return (
 		<>
+			<PageTitle title="Coalitions" />
 			<h1 className="text-3xl font-bold leading-relaxed">Coalitions</h1>
 			<CardGrid>
 				{coalitions ? (

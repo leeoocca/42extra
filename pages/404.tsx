@@ -2,6 +2,7 @@ import { SVGProps } from "react";
 import Link from "next/link";
 
 import { Heading, Text, Flex, Link as ThemeLink } from "@theme-ui/components";
+import PageTitle from "ui/PageTitle";
 
 const SadMac = (props: SVGProps<SVGSVGElement>) => (
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 32" {...props}>
@@ -14,28 +15,31 @@ const SadMac = (props: SVGProps<SVGSVGElement>) => (
 
 export default function Custom404() {
 	return (
-		<Flex
-			sx={{
-				flexDirection: "column",
-				alignItems: "center",
-				justifyContent: "center",
-				flex: "1 1 auto",
-				lineHeight: 1.5,
-			}}
-		>
-			<SadMac
-				fill="currentColor"
-				height={100}
-				style={{ marginBottom: "1rem" }}
-			/>
-			<Heading as="h1" sx={{ fontSize: 4, lineHeight: 1.5 }}>
-				404
-			</Heading>
-			<Text>Not found.</Text>
-			<Link href="/" passHref>
-				<ThemeLink as="a">Go home</ThemeLink>
-			</Link>
-		</Flex>
+		<>
+			<PageTitle title="404 Not Found" />
+			<Flex
+				sx={{
+					flexDirection: "column",
+					alignItems: "center",
+					justifyContent: "center",
+					flex: "1 1 auto",
+					lineHeight: 1.5,
+				}}
+			>
+				<SadMac
+					fill="currentColor"
+					height={100}
+					style={{ marginBottom: "1rem" }}
+				/>
+				<Heading as="h1" sx={{ fontSize: 4, lineHeight: 1.5 }}>
+					404
+				</Heading>
+				<Text>Not found.</Text>
+				<Link href="/" passHref>
+					<ThemeLink as="a">Go home</ThemeLink>
+				</Link>
+			</Flex>
+		</>
 	);
 }
 

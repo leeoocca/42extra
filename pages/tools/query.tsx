@@ -10,7 +10,7 @@ import {
 	Grid,
 	Text,
 } from "@theme-ui/components";
-import { Themed } from "@theme-ui/mdx";
+import PageTitle from "ui/PageTitle";
 
 export default function Query() {
 	const { data: session } = useSession();
@@ -35,6 +35,7 @@ export default function Query() {
 
 	return (
 		<>
+			<PageTitle title="Query" />
 			<Box as="form" onSubmit={handleSubmit} mb={3}>
 				<Grid columns={[1, , "6fr 1fr"]}>
 					<Flex sx={{ alignItems: "baseline" }}>

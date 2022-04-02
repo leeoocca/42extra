@@ -1,9 +1,8 @@
 import { useRouter } from "next/router";
 
-import { Cursus } from "types/42";
+import { useCursuses } from "lib/useAPI";
 import CursusHeader from "ui/headers/CursusHeader";
 import Loading from "ui/Loading";
-import useAPI, { useCursuses } from "lib/useAPI";
 
 export default function CursusOverview() {
 	const {

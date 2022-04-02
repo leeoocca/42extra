@@ -2,15 +2,16 @@ import { useRouter } from "next/router";
 
 import { Box, Flex, Heading, Text } from "@theme-ui/components";
 
-import { Cursus } from "types/42";
 import { CursusNavLinks } from "lib/NavLinks";
 import { setPrimaryColor } from "lib/color";
+import { useCursuses } from "lib/useAPI";
 import HeaderNav from "./HeaderNav";
-import useAPI, { useCursuses } from "lib/useAPI";
+import PageTitle from "ui/PageTitle";
 
 export default function CursusHeader() {
 	const {
 		query: { slug },
+		route,
 	} = useRouter();
 
 	const { data: cursuses } = useCursuses();
@@ -19,8 +20,18 @@ export default function CursusHeader() {
 
 	setPrimaryColor();
 
+	const routeArray = route.split("/");
+	const pageName = routeArray[routeArray.length - 1];
+
 	return (
 		<>
+			<PageTitle
+				title={
+					pageName !== "[slug]"
+						? [pageName, cursus.name]
+						: cursus.name
+				}
+			/>
 			<Box p={3}>
 				<Heading>{cursus ? cursus.name : slug}</Heading>
 				<Flex sx={{ gap: 3 }}>

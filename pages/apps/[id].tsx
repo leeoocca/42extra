@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import { App } from "types/42";
 import Loading from "ui/Loading";
+import PageTitle from "ui/PageTitle";
 import useAPI from "lib/useAPI";
 import UserCard from "ui/UserCard";
 import WebsiteLink from "ui/WebsiteLink";
@@ -18,6 +19,7 @@ export default function AppDetails() {
 
 	return (
 		<>
+			<PageTitle title={`${app.name} by ${app.owner.login}`} />
 			<div className="flex items-center space-x-4">
 				{app.image && (
 					<div className="grid w-24 h-w-24 place-items-center">
