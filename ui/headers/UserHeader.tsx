@@ -125,26 +125,24 @@ export default function UserHeader() {
 					flexDirection: ["column", , "row"],
 				}}
 			>
-				<Box sx={{ w: 6, h: 6 }}>
-					<Avatar
-						url={
-							isError
-								? "https://cdn.intra.42.fr/users/default.jpg"
-								: user
-								? user.image_url
-								: null
-						}
-						size={128}
-						deprecated={
-							user &&
-							!!user.titles_users.find(
-								(title) =>
-									title.title_id === TITLE_DEPRECATED_ID &&
-									title.selected
-							)
-						}
-					/>
-				</Box>
+				<Avatar
+					url={
+						isError
+							? "https://cdn.intra.42.fr/users/default.jpg"
+							: user
+							? user.image_url
+							: null
+					}
+					size={128}
+					deprecated={
+						user &&
+						!!user.titles_users.find(
+							(title) =>
+								title.title_id === TITLE_DEPRECATED_ID &&
+								title.selected
+						)
+					}
+				/>
 				{!isLoading && (
 					<Box>
 						<Heading
