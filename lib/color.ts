@@ -18,6 +18,7 @@ export function hexToRGB(hex: string) {
 }
 
 export function mendColor(color: string) {
+	if (!color) return color;
 	if (color.length === 6) color = "#" + color;
 	return color;
 }
