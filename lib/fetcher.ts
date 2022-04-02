@@ -16,7 +16,7 @@ export default async function fetcher(url: string, method: string = "GET") {
 	const data = await res.json().catch(() => null);
 
 	// bad request excluding no teams for user
-	if (!res.ok && res.status !== 404 && !url.endsWith("/teams")) {
+	if (!res.ok && !(res.status === 404 && url.endsWith("/teams"))) {
 		const error = new Error(data?.error || res.status);
 		error.name = url;
 		throw error;
