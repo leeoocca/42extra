@@ -5,28 +5,26 @@ import { Flex, Heading, Text } from "@theme-ui/components";
 import { QuestUser } from "types/42";
 import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
-import getTimeAgo from "lib/getTimeAgo";
 import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
+import RelativeTime from "ui/RelativeTime";
 
 const Quest = ({ quest }) => (
 	<Card>
 		<div className="flex flex-col h-32 overflow-hidden text-sm place-content-end">
 			<h2 className="text-base font-semibold">{quest.quest.name}</h2>
 			<p>{quest.quest.description}</p>
-			<p>
-				<span className="text-xs uppercase">{quest.quest.kind}</span>
+			<Flex sx={{ gap: 2 }}>
+				<Text sx={{ fontVariant: "all-small-caps" }}>
+					{quest.quest.kind}
+				</Text>
 				{quest.validated_at && (
-					<>
-						{" "}
-						–{" "}
-						<time title={quest.validated_at} className="opacity-75">
-							{getTimeAgo(quest.validated_at)}
-						</time>
-					</>
+					<Text sx={{ fontSize: 1, color: "gray" }}>
+						<RelativeTime date={quest.validated_at} />
+					</Text>
 				)}
-			</p>
+			</Flex>
 		</div>
 	</Card>
 );

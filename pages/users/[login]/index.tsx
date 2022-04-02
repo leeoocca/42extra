@@ -15,23 +15,29 @@ import {
 } from "@theme-ui/components";
 import { Check, Hash, Mail, User as UserIcon, X } from "lucide-react";
 
-import { Coalition, CoalitionUser, Location, User } from "types/42";
+import { Campus, Coalition, CoalitionUser, Location, User } from "types/42";
 import { ICON_SIZE } from "lib/actions";
-import { locale } from "lib/constants";
-import getTimeAgo from "lib/getTimeAgo";
+import { mendColor } from "lib/color";
+import getPrettyDuration from "lib/getPrettyDuration";
 import Loading from "ui/Loading";
+import RelativeTime from "ui/RelativeTime";
 import sortCursus from "lib/sortCursus";
 import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
-import getPrettyDuration from "lib/getPrettyDuration";
-import { mendColor } from "lib/color";
-// import getCampusFromId from "lib/getCampusFromId";
 
-function getLastSeen(locations: any): string {
-	if (locations.length)
-		// in ${getCampusFromId(locations[0].campus_id).name}
-		return " " + getTimeAgo(locations[0].end_at);
-	else return " never";
+function getLastSeen(locations: Location[], campuses: Campus[]) {
+	if (locations.length) {
+		const campus =
+			campuses.find((campus) => campus.id === locations[0].campus_id)
+				.name || null;
+		return (
+			<>
+				last seen {campus && `in ${campus} `}
+				<RelativeTime date={locations[0].end_at} clickable={false} />
+			</>
+		);
+	}
+	return "never seen anywhere";
 }
 
 const None = () => <i className="opacity-75">none</i>;
@@ -77,10 +83,14 @@ export default function UserOverview() {
 	if (!user) return <Loading />;
 
 	const location = user.location
-		? `${user.location} for ${
-				locations ? getPrettyDuration(locations[0].begin_at) : "..."
-		  }`
-		: `last seen${locations ? getLastSeen(locations) : "..."}`;
+		? `${user.location} in ${
+				user.campus.find(
+					(campus) => campus.id === locations[0].campus_id
+				).name
+		  } for ${locations ? getPrettyDuration(locations[0].begin_at) : "..."}`
+		: locations
+		? getLastSeen(locations, user.campus)
+		: "last seen...";
 
 	return (
 		<>
@@ -166,10 +176,13 @@ export default function UserOverview() {
 				</OverviewCard>
 				<OverviewCard title="Last seen online">
 					<Text sx={{ fontSize: 4 }}>
-						{new Date(
-							Date.parse(user.anonymize_date) -
-								365 * 24 * 60 * 60 * 1000 // 1 year
-						).toLocaleDateString(locale)}
+						<RelativeTime
+							date={new Date(
+								Date.parse(user.anonymize_date) -
+									365 * 24 * 60 * 60 * 1000 // 1 year
+							).toISOString()}
+							precisionDay
+						/>
 					</Text>
 				</OverviewCard>
 				<Grid columns={2}>

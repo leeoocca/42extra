@@ -1,10 +1,10 @@
 import Link from "next/link";
 
-import { Card, Flex } from "@theme-ui/components";
+import { Card, Flex, Text } from "@theme-ui/components";
 import { Check, X } from "lucide-react";
 
 import { ICON_SIZE } from "lib/actions";
-import getTimeAgo from "lib/getTimeAgo";
+import RelativeTime from "./RelativeTime";
 
 export default function ProjectCard({ project, login }) {
 	return (
@@ -13,7 +13,7 @@ export default function ProjectCard({ project, login }) {
 				<div className="flex items-end justify-between w-full h-24">
 					<div>
 						<h2 className="text-lg">{project.project.name}</h2>
-						<p className="text-sm">
+						<Flex sx={{ gap: 2, fontSize: 1 }}>
 							<span
 								className={`${
 									project.status === "in_progress" &&
@@ -22,15 +22,15 @@ export default function ProjectCard({ project, login }) {
 							>
 								{project.status.replace(/_/g, " ")}
 							</span>
-							{project.marked_at && (
-								<time
-									title={project.marked_at.toString()}
-									className="ml-1 opacity-75"
-								>
-									{getTimeAgo(project.marked_at)}
-								</time>
-							)}
-						</p>
+							<Text sx={{ color: "gray" }}>
+								{project.marked_at && (
+									<RelativeTime
+										date={project.marked_at}
+										clickable={false}
+									/>
+								)}
+							</Text>
+						</Flex>
 					</div>
 					<Flex
 						className={`${
