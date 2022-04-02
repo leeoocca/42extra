@@ -84,10 +84,14 @@ export default function UserOverview() {
 
 	const location = user.location
 		? `${user.location} in ${
-				user.campus.find(
-					(campus) => campus.id === locations[0].campus_id
-				).name
-		  } for ${locations ? getPrettyDuration(locations[0].begin_at) : "..."}`
+				locations
+					? `${
+							user.campus.find(
+								(campus) => campus.id === locations[0].campus_id
+							).name
+					  } for ${getPrettyDuration(locations[0].begin_at)}`
+					: "..."
+		  }`
 		: locations
 		? getLastSeen(locations, user.campus)
 		: "last seen...";
