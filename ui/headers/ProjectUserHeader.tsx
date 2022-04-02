@@ -19,28 +19,27 @@ export default function ProjectUserHeader() {
 
 	let userProject: ProjectsUser | null = null;
 
-	useEffect(
-		function () {
-			if (user) {
-				userProject = user.projects_users.find(
-					(projectsUsers) => projectsUsers.project.slug === project
-				);
-				if (!userProject) {
-					setPrimaryColor();
-				} else if (userProject["validated?"])
-					setPrimaryColor("rgb(52, 211, 153)");
-				else if (userProject.status === "in_progress")
-					setPrimaryColor("rgb(251, 191, 36)");
-				else setPrimaryColor("rgb(220, 38, 38)");
-			}
-		},
-		[user]
-	);
+	useEffect(() => {
+		if (!user) return;
+		userProject = user.projects_users.find(
+			(projectsUsers) => projectsUsers.project.slug === project
+		);
+		if (!userProject) {
+			setPrimaryColor();
+		} else if (userProject["validated?"])
+			setPrimaryColor("rgb(52, 211, 153)");
+		else if (userProject.status === "in_progress")
+			setPrimaryColor("rgb(251, 191, 36)");
+		else setPrimaryColor("rgb(220, 38, 38)");
+	}, [user]);
 
 	return (
 		<>
 			<PageTitle
-				title={`${login}'s ${projectData ? projectData.name : project}`}
+				title={[
+					String(login),
+					projectData ? projectData.name : String(project),
+				]}
 			/>
 			<div className="relative px-4 py-10">
 				<h1 className="text-2xl font-bold">

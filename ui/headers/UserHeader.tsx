@@ -8,12 +8,12 @@ import SVG from "react-inlinesvg";
 import { Coalition, User } from "types/42";
 import { getUserNavLinks } from "lib/NavLinks";
 import { setPrimaryColor } from "lib/color";
+import { TITLE_DEPRECATED_ID } from "lib/constants";
 import { userActions } from "lib/actions";
 import Avatar from "ui/Avatar";
 import HeaderNav from "./HeaderNav";
 import PageTitle, { PAGE_TITLE_SEPARATOR } from "ui/PageTitle";
 import useAPI from "lib/useAPI";
-import { TITLE_DEPRECATED_ID } from "lib/constants";
 
 function getCustomUserLogin(user: User): string {
 	const selectedTitle = user.titles_users.find((title) => title.selected);
@@ -24,11 +24,6 @@ function getCustomUserLogin(user: User): string {
 		return selectedTitleName.name.replace("%login", user.login);
 	}
 	return null;
-}
-
-function getPageTitle(login: string, routeArray: string[]): string | string[] {
-	const pageName = routeArray[routeArray.length - 1];
-	return pageName !== "[login]" ? [login, pageName] : login;
 }
 
 const BadgeCheckIcon = (props) => (
@@ -83,7 +78,12 @@ export default function UserHeader() {
 
 	setPrimaryColor();
 
+	let pageTitle: string | string[] = [];
+
 	useEffect(() => {
+		const routeArray = route.split("/");
+		const pageName = routeArray[routeArray.length - 1];
+		pageTitle = pageName !== "[login]" ? [String(login), pageName] : login;
 		return () => setPrimaryColor();
 	}, []);
 
@@ -100,7 +100,7 @@ export default function UserHeader() {
 
 	return (
 		<>
-			<PageTitle title={getPageTitle(String(login), route.split("/"))} />
+			<PageTitle title={pageTitle} />
 			<Box sx={{ position: "relative" }}>
 				{coalition ? (
 					<SVG

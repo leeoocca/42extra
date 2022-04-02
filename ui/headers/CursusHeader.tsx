@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 
 import { Box, Flex, Heading, Text } from "@theme-ui/components";
@@ -20,18 +21,18 @@ export default function CursusHeader() {
 
 	setPrimaryColor();
 
-	const routeArray = route.split("/");
-	const pageName = routeArray[routeArray.length - 1];
+	let pageTitle: string | string[] = [];
+
+	useEffect(() => {
+		const routeArray = route.split("/");
+		const pageName = routeArray[routeArray.length - 1];
+		pageTitle =
+			pageName !== "[slug]" ? [cursus.name, pageName] : cursus.name;
+	}, []);
 
 	return (
 		<>
-			<PageTitle
-				title={
-					pageName !== "[slug]"
-						? [pageName, cursus.name]
-						: cursus.name
-				}
-			/>
+			<PageTitle title={pageTitle} />
 			<Box p={3}>
 				<Heading>{cursus ? cursus.name : slug}</Heading>
 				<Flex sx={{ gap: 3 }}>
