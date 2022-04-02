@@ -25,6 +25,7 @@ import getTimeAgo from "lib/getTimeAgo";
 import isFuture from "lib/isFuture";
 import Loading from "ui/Loading";
 import useAPI, { useCampuses, useCursuses } from "lib/useAPI";
+import isUrl from "lib/isUrl";
 
 const width = ["100%", , "75%"];
 
@@ -51,11 +52,9 @@ function EventHeader() {
 		? campuses?.find((campus) => data.campus_ids.includes(campus.id))
 		: null;
 
-	setPrimaryColor(event ? colors[event.kind] || "" : "");
+	setPrimaryColor(data ? colors[event.kind] || "" : "");
 
-	const isUrl = !!event.location.match(
-		/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
-	);
+	const locatonIsUrl = isUrl(event.location);
 
 	return (
 		<Box sx={{ m: 3 }}>
@@ -74,7 +73,7 @@ function EventHeader() {
 						</Text>
 					)}
 					{data && event.location && " – "}
-					{isUrl ? (
+					{locatonIsUrl ? (
 						<TLink
 							href={event.location}
 							sx={{
