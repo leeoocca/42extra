@@ -17,6 +17,7 @@ import {
 	Hexagon,
 	Thermometer,
 	Database,
+	Disc,
 } from "lucide-react";
 
 import { ICON_SIZE } from "./constants";
@@ -95,6 +96,13 @@ export const globalActions: Action[] = [
 		section: "Tools",
 		icon: <Database size={ICON_SIZE} />,
 		perform: () => router.push("/tools/query"),
+	},
+	{
+		id: "blackhole",
+		name: "Blackhole",
+		section: "Tools",
+		icon: <Disc size={ICON_SIZE} />,
+		perform: () => router.push("/tools/blackhole"),
 	},
 	{
 		id: "intra",
