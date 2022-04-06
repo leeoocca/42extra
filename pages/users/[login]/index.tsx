@@ -183,9 +183,9 @@ export default function UserOverview() {
 						<RelativeTime
 							date={new Date(
 								Date.parse(user.anonymize_date) -
-									365 * 24 * 60 * 60 * 1000 // 1 year
+									365 * 24 * 60 * 60 * 1000
 							).toISOString()}
-							precisionDay
+							unit="day"
 						/>
 					</Text>
 				</OverviewCard>
@@ -343,7 +343,7 @@ export default function UserOverview() {
 							{user.languages_users
 								.sort((a, b) => a.position - b.position)
 								.map((language) => (
-									<Text key={language.id.toString()} as="li">
+									<Text key={language.id} as="li">
 										{language.language_id}
 									</Text>
 								))}
@@ -357,7 +357,7 @@ export default function UserOverview() {
 						<ul>
 							{user.titles.map((title) => (
 								<Flex
-									key={title.id.toString()}
+									key={title.id}
 									as="li"
 									sx={{ gap: 2, alignItems: "baseline" }}
 								>

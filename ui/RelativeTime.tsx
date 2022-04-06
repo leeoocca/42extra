@@ -5,18 +5,14 @@ import getTimeAgo from "lib/getTimeAgo";
 export default function RelativeTime({
 	date,
 	clickable = true,
-	precisionDay = false,
+	unit,
 }: {
 	date: string;
 	clickable?: boolean;
-	precisionDay?: boolean;
+	unit?: Intl.RelativeTimeFormatUnit;
 }) {
-	const [relative, setRelative] = useState(true);
-	const relativeValue = getTimeAgo(
-		date,
-		new Date(),
-		precisionDay ? "day" : null
-	);
+	const [relative, setRelative] = useState(reset);
+	const relativeValue = getTimeAgo(date, new Date(), unit);
 
 	const wrap = clickable
 		? (value) => (
