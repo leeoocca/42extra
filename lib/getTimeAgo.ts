@@ -16,14 +16,14 @@ const units: { unit: Intl.RelativeTimeFormatUnit; ms: number }[] = [
  * Get language-sensitive relative time message from Dates.
  * @param relative  - the relative dateTime, generally is in the past or future
  * @param pivot     - the dateTime of reference, generally is the current time
- * @param unit      - minimum unit to be used
+ * @param unit      - the minimum unit to be used
  */
 export function getTimeAgo(
-	relative: string | null,
+	relative: string,
 	pivot: Date = new Date(),
-	unit: Intl.RelativeTimeFormatUnit | null = null
+	unit: Intl.RelativeTimeFormatUnit = "second"
 ): string {
-	if (!relative) return "";
+	if (!relative.length) return null;
 	const date = new Date(relative);
 	const elapsed = date.getTime() - pivot.getTime();
 	return relativeTimeFromElapsed(elapsed, unit);
@@ -32,16 +32,17 @@ export function getTimeAgo(
 /**
  * Get language-sensitive relative time message from elapsed time.
  * @param elapsed   - the elapsed time in milliseconds
+ * @param minUnit   - the minimum unit to be used
  */
 export function relativeTimeFromElapsed(
 	elapsed: number,
-	minUnit: Intl.RelativeTimeFormatUnit | null
+	minUnit: Intl.RelativeTimeFormatUnit
 ): string {
 	const rtf = new Intl.RelativeTimeFormat(locale, {
 		numeric: "auto",
 	});
 	for (const { unit, ms } of units) {
-		if (Math.abs(elapsed) > ms || unit === "second" || unit === minUnit) {
+		if (Math.abs(elapsed) > ms || unit === minUnit) {
 			return rtf.format(Math.round(elapsed / ms), unit);
 		}
 	}
