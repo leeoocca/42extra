@@ -1,8 +1,11 @@
-export default function groupBy(list: any[], keyGetter) {
+export default function groupBy<TItem, TKey>(
+	list: TItem[],
+	keyGetter: (arg: TItem) => TKey
+): { name: TKey; value: TItem[] }[] {
 	const map = new Map();
 	list.forEach((item) => {
 		const key = keyGetter(item);
-		const collection = map.get(key);
+		const collection: TItem[] = map.get(key);
 		if (!collection) {
 			map.set(key, [item]);
 		} else {
