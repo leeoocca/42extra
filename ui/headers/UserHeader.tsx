@@ -90,7 +90,10 @@ export default function UserHeader() {
 
 	const coalition = coalitions && coalitions.slice(0).reverse()[0];
 
-	if (coalition) setPrimaryColor(coalition.color);
+	useEffect(() => {
+		setPrimaryColor(coalition?.color || null);
+		return () => setPrimaryColor();
+	}, [coalition]);
 
 	const customUserLogin = user && getCustomUserLogin(user);
 

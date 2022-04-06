@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 
 import { Project } from "types/42";
-import { setPrimaryColor } from "lib/color";
 import useAPI from "lib/useAPI";
 
 export default function ProjectHeader() {
@@ -10,7 +9,6 @@ export default function ProjectHeader() {
 	} = useRouter();
 
 	// const navLinks = getProjectNavLinks();
-	setPrimaryColor();
 
 	const { data: project } = useAPI<Project>(`/v2/projects/${slug}`);
 

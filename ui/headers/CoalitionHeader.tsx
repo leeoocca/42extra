@@ -1,10 +1,9 @@
-import { useRouter } from "next/router";
-
 import { Box, Flex, Heading, Text } from "@theme-ui/components";
-import SVG from "react-inlinesvg";
-
 import { Coalition } from "types/42";
 import { setPrimaryColor } from "lib/color";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import SVG from "react-inlinesvg";
 import useAPI from "lib/useAPI";
 
 export default function CoalitionHeader() {
@@ -22,7 +21,10 @@ export default function CoalitionHeader() {
 		image_url: null,
 	};
 
-	setPrimaryColor(coalition.color);
+	useEffect(() => {
+		setPrimaryColor(coalition.color);
+		return () => setPrimaryColor();
+	}, [coalition]);
 
 	return (
 		<Box p={3}>

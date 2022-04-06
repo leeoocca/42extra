@@ -15,8 +15,6 @@ export default function ProjectUserHeader() {
 	const { data: projectData } = useAPI<Project>(`/v2/projects/${project}`);
 	const { data: user } = useAPI<User>(`/v2/users/${login}`);
 
-	setPrimaryColor();
-
 	let userProject: ProjectsUser | null = null;
 
 	useEffect(() => {
@@ -32,6 +30,10 @@ export default function ProjectUserHeader() {
 			setPrimaryColor("rgb(251, 191, 36)");
 		else setPrimaryColor("rgb(220, 38, 38)");
 	}, [user]);
+
+	useEffect(() => {
+		return () => setPrimaryColor();
+	}, []);
 
 	return (
 		<>

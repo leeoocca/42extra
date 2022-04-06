@@ -54,7 +54,10 @@ function EventHeader() {
 		? campuses?.find((campus) => data.campus_ids.includes(campus.id))
 		: null;
 
-	setPrimaryColor(data ? colors[event.kind] || "" : "");
+	useEffect(() => {
+		setPrimaryColor(data ? colors[event.kind] : "" || "");
+		return () => setPrimaryColor();
+	}, []);
 
 	const locatonIsUrl = isUrl(event.location);
 
@@ -172,7 +175,7 @@ export default function EventDetails() {
 	const config: CalendarOptions = {
 		title: event.name,
 		location: event.location,
-		description: event.description.replace("\r", ""),
+		description: event.description.replace("\r", ""), // TODO check if it's working
 		// description: ReactDOMServer.renderToStaticMarkup(
 		// 	<ReactMarkdown remarkPlugins={[remarkGfm]}>
 		// 		{event.description}
