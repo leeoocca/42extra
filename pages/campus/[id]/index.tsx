@@ -25,10 +25,12 @@ export default function CampusIndex() {
 	}
 
 	useEffect(() => {
-		const timerId = setInterval(refreshClock, 1000 * 60);
-		return function cleanup() {
-			clearInterval(timerId);
-		};
+		const offset = 60000 - (time.valueOf() % 60000);
+		const timerId = setTimeout(() => {
+			refreshClock();
+			setInterval(refreshClock, 60000);
+		}, offset);
+		return () => clearInterval(timerId);
 	}, []);
 
 	if (!campuses) return <Loading />;
