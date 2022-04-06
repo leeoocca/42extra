@@ -6,13 +6,23 @@ export default function RelativeTime({
 	date,
 	clickable = true,
 	unit,
+	bh = false,
 }: {
 	date: string;
 	clickable?: boolean;
 	unit?: Intl.RelativeTimeFormatUnit;
+	bh?: boolean;
 }) {
+	const reset = bh ? 3 : 2;
 	const [relative, setRelative] = useState(reset);
 	const relativeValue = getTimeAgo(date, new Date(), unit);
+	const days = (
+		(Date.parse(date) - Date.now()) /
+		1000 /
+		60 /
+		60 /
+		24
+	).toFixed();
 
 	const wrap = clickable
 		? (value) => (
@@ -27,7 +37,9 @@ export default function RelativeTime({
 				>
 					<Checkbox
 						sx={{ display: "none!important" }}
-						onChange={() => setRelative(!relative)}
+						onChange={() =>
+							setRelative(relative - 1 ? relative - 1 : reset)
+						}
 					/>
 					{value}
 				</Label>
@@ -36,7 +48,9 @@ export default function RelativeTime({
 
 	return wrap(
 		<time dateTime={date} title={date}>
-			{relative ? relativeValue : date}
+			{(relative === 2 && relativeValue) ||
+				(relative === 1 && date) ||
+				(relative === 3 && days)}
 		</time>
 	);
 }
