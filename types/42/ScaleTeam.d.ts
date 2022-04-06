@@ -58,9 +58,8 @@ export interface Feedback {
 	created_at: string; // Date
 }
 
-export enum FeedbackableType {
-	ScaleTeam = "ScaleTeam",
-}
+// TODO verify
+export type FeedbackableType = "ScaleTeam";
 
 export interface Flag {
 	id: number;

@@ -54,21 +54,19 @@ export interface Flag {
 	updated_at: string; // Date
 }
 
-export enum FlagName {
-	Cheat = "Cheat",
-	EmptyWork = "Empty work",
-	ForbiddenFunction = "Forbidden Function",
-	NoAuthorFile = "No author file",
-	Norme = "Norme",
-	Ok = "Ok",
-}
+export type FlagName =
+	| "Cheat"
+	| "Empty work"
+	| "Forbidden Function"
+	| "No author file"
+	| "Norme"
+	| "Ok";
 
-export enum Status {
-	Finished = "finished",
-	InProgress = "in_progress",
-	Parent = "parent",
-	WaitingForCorrection = "waiting_for_correction",
-}
+export type Status =
+	| "finished"
+	| "in_progress"
+	| "parent"
+	| "waiting_for_correction";
 
 export interface TeamsUpload {
 	id: number;
