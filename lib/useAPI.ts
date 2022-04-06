@@ -19,7 +19,6 @@ export default function useAPI<Type>(
 	useEffect(() => {
 		error && setErrors([error, ...errors]);
 	}, [error]);
-	// setTimeout(() =>, 0);
 
 	return {
 		data,
