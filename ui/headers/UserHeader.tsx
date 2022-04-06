@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import { Flex, Box, Heading } from "@theme-ui/components";
@@ -76,16 +76,17 @@ export default function UserHeader() {
 		login && `/v2/users/${login}/coalitions`
 	);
 
-	setPrimaryColor();
-
-	let pageTitle: string | string[] = [];
+	const [title, setTitle] = useState<string | string[]>(String(login));
 
 	useEffect(() => {
 		const routeArray = route.split("/");
-		const pageName = routeArray[routeArray.length - 1];
-		pageTitle = pageName !== "[login]" ? [String(login), pageName] : login;
-		return () => setPrimaryColor();
-	}, []);
+		const page = routeArray[routeArray.length - 1];
+		setTitle(
+			page !== "[login]"
+				? [String(login), page.replace(/^\w/, (c) => c.toUpperCase())]
+				: login
+		);
+	}, [route]);
 
 	const coalition = coalitions && coalitions.slice(0).reverse()[0];
 
@@ -100,7 +101,7 @@ export default function UserHeader() {
 
 	return (
 		<>
-			<PageTitle title={pageTitle} />
+			<PageTitle title={title} />
 			<Box sx={{ position: "relative" }}>
 				{coalition ? (
 					<SVG
@@ -156,16 +157,12 @@ export default function UserHeader() {
 								"Error"
 							) : (
 								<>
-									{/* maybe just always use user.login? */}
-									{/* useful when loading though */}
 									{customUserLogin
 										? customUserLogin
-										: Number(login) > 0
-										? user.login
-										: login}
+										: user.login}
 									{user["staff?"] && (
 										<span
-											title={`${login} is a member of the staff`}
+											title={`${user.login} is a member of the staff`}
 										>
 											<BadgeCheckIcon />
 										</span>
