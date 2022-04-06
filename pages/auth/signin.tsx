@@ -12,6 +12,7 @@ export default function SignIn() {
 
 	const {
 		query: { callbackUrl },
+		back,
 	} = useRouter();
 
 	if (status === "loading") return null;
@@ -27,8 +28,18 @@ export default function SignIn() {
 							<>
 								<br />
 								<Link href={String(callbackUrl)} passHref>
-									<ThemeLink as="a">
-										Go to {callbackUrl}
+									<ThemeLink
+										as="a"
+										onClick={(e) => {
+											// TODO check if it's actually better
+											if (window.length > 2) {
+												e.preventDefault();
+												back();
+											}
+										}}
+									>
+										Go {window.length > 2 ? "back" : ""} to{" "}
+										{callbackUrl}
 									</ThemeLink>
 								</Link>
 							</>
