@@ -3,11 +3,17 @@ import { useRouter } from "next/router";
 
 import { Box, Flex, Heading, Text } from "@theme-ui/components";
 
+import { Cursus } from "types/42";
 import { CursusNavLinks } from "lib/NavLinks";
-import { setPrimaryColor } from "lib/color";
 import { useCursuses } from "lib/useAPI";
 import HeaderNav from "./HeaderNav";
+import isNumber from "lib/isNumber";
 import PageTitle from "ui/PageTitle";
+
+export function findCursus(id: string) {
+	return (cursus: Cursus) =>
+		isNumber(id) ? String(cursus.id) === id : cursus.slug === id;
+}
 
 export default function CursusHeader() {
 	const {
@@ -17,11 +23,12 @@ export default function CursusHeader() {
 
 	const { data: cursuses } = useCursuses();
 
-	const cursus = cursuses.find((cursus) => cursus.slug === slug) || null;
+	const cursus = cursuses?.find(findCursus(String(slug)));
+
+	const cursusName = cursus?.name || String(slug);
+
 
 	setPrimaryColor();
-
-	let pageTitle: string | string[] = [];
 
 	useEffect(() => {
 		const routeArray = route.split("/");
@@ -34,7 +41,7 @@ export default function CursusHeader() {
 		<>
 			<PageTitle title={pageTitle} />
 			<Box p={3}>
-				<Heading>{cursus ? cursus.name : slug}</Heading>
+				<Heading>{cursusName}</Heading>
 				<Flex sx={{ gap: 3 }}>
 					<Text variant="mono">#{cursus && cursus.id}</Text>
 				</Flex>

@@ -36,7 +36,7 @@ function CursusDetails({ cursus }) {
 				}}
 			>
 				<Box>
-					<Link href={`/cursus/${cursus.cursus_id}`}>
+					<Link href={`/cursus/${cursus.cursus.slug}`}>
 						<a>
 							<Heading sx={{ fontSize: 3, lineHeight: 1.5 }}>
 								{cursus.cursus.name}
