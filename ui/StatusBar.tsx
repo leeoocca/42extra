@@ -32,7 +32,14 @@ export default function StatusBar() {
 				<Link href="/" passHref>
 					<IconButton
 						sx={{
-							"& > svg": { width: "2rem", mr: "auto" },
+							"& > svg": {
+								width: "2rem",
+								mr: "auto",
+								fill:
+									process.env.NEXT_PUBLIC_DEV === "true"
+										? "primary"
+										: "currentColor",
+							},
 						}}
 					>
 						<Logo />
