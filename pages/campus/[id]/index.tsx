@@ -33,7 +33,7 @@ export default function CampusIndex() {
 
 	if (!campuses) return <Loading />;
 
-	const c = campuses.find((campus) => campus.id === parseInt(String(id)));
+	const c = campuses.find((campus) => String(campus.id) === String(id));
 
 	return (
 		<>
