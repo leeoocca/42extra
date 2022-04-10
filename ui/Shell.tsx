@@ -66,7 +66,7 @@ export default function Shell({ children, headerContent }) {
 				name: "Start typing or open search page",
 				parent: "users",
 				icon: <Search size={ICON_SIZE} />,
-				perform: () => router.push("/search/user"),
+				perform: () => router.push("/search/users"),
 		  };
 
 	useRegisterActions([goToUser], [user]);
