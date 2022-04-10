@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-
-import { Action, useKBar, useRegisterActions } from "kbar";
 import { Alert, Box, Button, Container } from "@theme-ui/components";
+import { Action, useKBar, useRegisterActions } from "kbar";
+import { ICON_SIZE } from "lib/actions";
+import { APIErrorOutlet, APIErrorProvider } from "lib/APIError";
 import { ArrowRight, Search } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
-
-import { APIErrorOutlet, APIErrorProvider } from "lib/APIError";
-import { ICON_SIZE } from "lib/actions";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import CommandBar from "./CommandBar";
 import Footer from "./Footer";
 import Header from "./headers/Header";

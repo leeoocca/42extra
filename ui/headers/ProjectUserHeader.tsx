@@ -1,11 +1,10 @@
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
-
-import { Project, ProjectsUser, User } from "types/42";
 import { setPrimaryColor } from "lib/color";
-import PageTitle from "ui/PageTitle";
 import useAPI from "lib/useAPI";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { Project, ProjectsUser, User } from "types/42";
+import PageTitle from "ui/PageTitle";
 
 export default function ProjectUserHeader() {
 	const {

@@ -1,10 +1,10 @@
 import { Box, Flex, Heading, Text } from "@theme-ui/components";
-import { Coalition } from "types/42";
 import { setPrimaryColor } from "lib/color";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-import SVG from "react-inlinesvg";
 import useAPI from "lib/useAPI";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import SVG from "react-inlinesvg";
+import { Coalition } from "types/42";
 
 export default function CoalitionHeader() {
 	const {

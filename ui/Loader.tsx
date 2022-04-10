@@ -1,6 +1,6 @@
 /** @jsxImportSource theme-ui */
-import { Grid } from "@theme-ui/components";
 import { keyframes } from "@emotion/react";
+import { Grid } from "@theme-ui/components";
 
 const animation = "5s ease-in-out forwards infinite";
 

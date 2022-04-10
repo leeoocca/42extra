@@ -1,14 +1,12 @@
-import Link from "next/link";
-
-import SVG from "react-inlinesvg";
-
-import { Coalition } from "types/42";
 import { mendColor } from "lib/color";
+import useAPI from "lib/useAPI";
+import Link from "next/link";
+import SVG from "react-inlinesvg";
+import { Coalition } from "types/42";
 import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
 import Loading from "ui/Loading";
 import PageTitle from "ui/PageTitle";
-import useAPI from "lib/useAPI";
 
 export default function CoalitionsIndex() {
 	const { data: coalitions } = useAPI<Coalition[]>(

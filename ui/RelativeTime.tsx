@@ -1,6 +1,6 @@
-import { Checkbox, Label, Text } from "@theme-ui/components";
-import { useState } from "react";
+import { Checkbox, Label } from "@theme-ui/components";
 import getTimeAgo from "lib/getTimeAgo";
+import { useState } from "react";
 
 export default function RelativeTime({
 	date,

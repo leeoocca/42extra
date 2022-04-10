@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
-
 import { Box, Flex, Heading, Input, Label } from "@theme-ui/components";
+import { useEffect, useState } from "react";
 import PageTitle from "ui/PageTitle";
 
 function VariableControl({ variable }: { variable: string }) {

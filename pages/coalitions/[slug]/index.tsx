@@ -1,13 +1,11 @@
-import { useRouter } from "next/router";
-
 import { Heading } from "@theme-ui/components";
-
+import useAPI from "lib/useAPI";
+import { useRouter } from "next/router";
 import { Coalition, CoalitionUser } from "types/42";
 import CoalitionHeader from "ui/headers/CoalitionHeader";
 import Loader from "ui/Loader";
 import Loading from "ui/Loading";
 import PageTitle from "ui/PageTitle";
-import useAPI from "lib/useAPI";
 import UserCard from "ui/UserCard";
 import UserCardWithDetails from "ui/UserCardWithDetails";
 import UserGrid from "ui/UserGrid";

@@ -1,9 +1,7 @@
-import { useRouter } from "next/router";
-import Link from "next/link";
-
-import { Button, Grid, Text, Link as ThemeLink } from "@theme-ui/components";
+import { Button, Grid, Link as ThemeLink, Text } from "@theme-ui/components";
 import { signIn, useSession } from "next-auth/react";
-
+import Link from "next/link";
+import { useRouter } from "next/router";
 import Logo from "ui/Logo";
 import PageTitle from "ui/PageTitle";
 

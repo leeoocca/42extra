@@ -1,13 +1,11 @@
-import { useRouter } from "next/router";
-import Link from "next/link";
-
+import useAPI from "lib/useAPI";
 import { useSession } from "next-auth/react";
-
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { Project } from "types/42";
+import ProjectHeader from "ui/headers/ProjectHeader";
 import Loading from "ui/Loading";
 import PageTitle from "ui/PageTitle";
-import ProjectHeader from "ui/headers/ProjectHeader";
-import useAPI from "lib/useAPI";
 
 export default function ProjectIndex() {
 	const { data: session } = useSession();

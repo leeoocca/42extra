@@ -1,10 +1,9 @@
-import { useRouter } from "next/router";
+import useAPI from "lib/useAPI";
 import Image from "next/image";
-
+import { useRouter } from "next/router";
 import { App } from "types/42";
 import Loading from "ui/Loading";
 import PageTitle from "ui/PageTitle";
-import useAPI from "lib/useAPI";
 import UserCard from "ui/UserCard";
 import WebsiteLink from "ui/WebsiteLink";
 

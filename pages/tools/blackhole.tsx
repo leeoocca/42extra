@@ -1,28 +1,27 @@
-import { ChangeEvent, Fragment } from "react";
 import {
+	Avatar,
 	Box,
+	Divider,
 	Flex,
+	Input,
+	Label,
+	Link as TLink,
 	Select,
 	Text,
-	Link as TLink,
-	Avatar,
-	Divider,
-	Label,
-	Input,
 } from "@theme-ui/components";
-import { CursusUser } from "types/42";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { locale } from "lib/constants";
 import groupBy from "lib/groupBy";
+import isFuture from "lib/isFuture";
+import { useCampuses } from "lib/useAPI";
+import { useDebouncedValue } from "lib/useDebouncedValue";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { Fragment, useEffect, useState } from "react";
+import useSWR from "swr";
+import { CursusUser } from "types/42";
 import Loading from "ui/Loading";
 import PageTitle from "ui/PageTitle";
 import RelativeTime from "ui/RelativeTime";
-import useAPI, { useCampuses } from "lib/useAPI";
-import useSWR from "swr";
-import Link from "next/link";
-import isFuture from "lib/isFuture";
-import { locale } from "lib/constants";
-import { useDebouncedValue } from "lib/useDebouncedValue";
 
 function Results({
 	campus,

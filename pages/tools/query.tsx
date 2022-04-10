@@ -1,15 +1,14 @@
-import { useState } from "react";
-
-import { useSession } from "next-auth/react";
 import {
 	Alert,
+	Box,
 	Button,
 	Flex,
-	Input,
-	Box,
 	Grid,
+	Input,
 	Text,
 } from "@theme-ui/components";
+import { useSession } from "next-auth/react";
+import { useState } from "react";
 import PageTitle from "ui/PageTitle";
 
 export default function Query() {

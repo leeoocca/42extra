@@ -1,19 +1,17 @@
-import { CSSProperties, useEffect, useState } from "react";
-import { useRouter } from "next/router";
-
-import { Flex, Box, Heading } from "@theme-ui/components";
+import { Box, Flex, Heading } from "@theme-ui/components";
 import { useRegisterActions } from "kbar";
-import SVG from "react-inlinesvg";
-
-import { Coalition, User } from "types/42";
-import { getUserNavLinks } from "lib/NavLinks";
+import { userActions } from "lib/actions";
 import { setPrimaryColor } from "lib/color";
 import { TITLE_DEPRECATED_ID } from "lib/constants";
-import { userActions } from "lib/actions";
-import Avatar from "ui/Avatar";
-import HeaderNav from "./HeaderNav";
-import PageTitle, { PAGE_TITLE_SEPARATOR } from "ui/PageTitle";
+import { getUserNavLinks } from "lib/NavLinks";
 import useAPI from "lib/useAPI";
+import { useRouter } from "next/router";
+import { CSSProperties, useEffect, useState } from "react";
+import SVG from "react-inlinesvg";
+import { Coalition, User } from "types/42";
+import Avatar from "ui/Avatar";
+import PageTitle, { PAGE_TITLE_SEPARATOR } from "ui/PageTitle";
+import HeaderNav from "./HeaderNav";
 
 function getCustomUserLogin(user: User): string {
 	const selectedTitle = user.titles_users.find((title) => title.selected);

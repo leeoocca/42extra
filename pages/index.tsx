@@ -1,10 +1,9 @@
 import { Grid, Heading } from "@theme-ui/components";
+import isFuture from "lib/isFuture";
+import useAPI from "lib/useAPI";
 import { useSession } from "next-auth/react";
-
 import { Event } from "types/42";
 import EventCard from "ui/EventCard";
-import useAPI from "lib/useAPI";
-import isFuture from "lib/isFuture";
 
 export default function Home() {
 	const { data: session } = useSession();

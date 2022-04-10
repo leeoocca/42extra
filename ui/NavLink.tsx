@@ -1,6 +1,5 @@
-import { useRouter } from "next/router";
 import Link from "next/link";
-
+import { useRouter } from "next/router";
 import { LinkListNode } from "types/LinkListNode";
 
 function NavLink({ name, href, className }: LinkListNode) {

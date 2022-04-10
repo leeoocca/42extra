@@ -1,10 +1,10 @@
-import { useRouter } from "next/router";
-import Link from "next/link";
-
-import { Team } from "types/42";
-import Loading from "ui/Loading";
-import ProjectUserHeader from "ui/headers/ProjectUserHeader";
+import { Text } from "@theme-ui/components";
 import useAPI from "lib/useAPI";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { Team } from "types/42";
+import ProjectUserHeader from "ui/headers/ProjectUserHeader";
+import Loading from "ui/Loading";
 import UserCard from "ui/UserCard";
 import UserGrid from "ui/UserGrid";
 

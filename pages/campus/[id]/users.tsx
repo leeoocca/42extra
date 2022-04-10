@@ -1,11 +1,9 @@
-import { useRouter } from "next/router";
-
 import { Heading } from "@theme-ui/components";
+import useAPI from "lib/useAPI";
 import { User } from "next-auth";
-
+import { useRouter } from "next/router";
 import CampusHeader from "ui/headers/CampusHeader";
 import Loading from "ui/Loading";
-import useAPI from "lib/useAPI";
 import UserCard from "ui/UserCard";
 import UserGrid from "ui/UserGrid";
 

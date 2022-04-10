@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import useSWR, { KeyedMutator } from "swr";
-
 import { Campus, Cursus } from "types/42";
 import { useAPIError } from "./APIError";
 

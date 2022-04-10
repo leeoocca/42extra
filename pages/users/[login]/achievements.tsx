@@ -1,14 +1,12 @@
-import { useRouter } from "next/router";
+import useAPI from "lib/useAPI";
 import Image from "next/image";
-
+import { useRouter } from "next/router";
+import emptyState from "public/coding.gif";
 import { User } from "types/42";
 import AchievementCard from "ui/AchievementCard";
 import CardGrid from "ui/CardGrid";
-import Loading from "ui/Loading";
-import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
-
-import emptyState from "public/coding.gif";
+import Loading from "ui/Loading";
 
 export default function UserAchievements() {
 	const {

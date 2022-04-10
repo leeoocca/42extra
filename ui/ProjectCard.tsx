@@ -1,9 +1,7 @@
-import Link from "next/link";
-
 import { Card, Flex, Text } from "@theme-ui/components";
-import { Check, X } from "lucide-react";
-
 import { ICON_SIZE } from "lib/actions";
+import { Check, X } from "lucide-react";
+import Link from "next/link";
 import RelativeTime from "./RelativeTime";
 
 export default function ProjectCard({ project, login }) {

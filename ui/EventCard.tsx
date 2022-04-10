@@ -1,9 +1,7 @@
-import Link from "next/link";
-
 import { Card, Text } from "@theme-ui/components";
-
-import { Event } from "types/42";
 import { locale } from "lib/constants";
+import Link from "next/link";
+import { Event } from "types/42";
 
 export default function EventCard({ event }: { event: Event }) {
 	return (

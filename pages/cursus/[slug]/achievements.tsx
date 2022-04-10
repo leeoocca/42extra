@@ -1,11 +1,10 @@
+import useAPI from "lib/useAPI";
 import { useRouter } from "next/router";
-
 import { Achievement } from "types/42";
 import AchievementCard from "ui/AchievementCard";
 import CardGrid from "ui/CardGrid";
 import CursusHeader from "ui/headers/CursusHeader";
 import Loading from "ui/Loading";
-import useAPI from "lib/useAPI";
 
 export default function CursusAchievements() {
 	const {

@@ -1,14 +1,12 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-
 import { Box, Flex, Heading, Text } from "@theme-ui/components";
-
-import { Cursus } from "types/42";
+import isNumber from "lib/isNumber";
 import { CursusNavLinks } from "lib/NavLinks";
 import { useCursuses } from "lib/useAPI";
-import HeaderNav from "./HeaderNav";
-import isNumber from "lib/isNumber";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { Cursus } from "types/42";
 import PageTitle from "ui/PageTitle";
+import HeaderNav from "./HeaderNav";
 
 export function findCursus(id: string) {
 	return (cursus: Cursus) =>

@@ -1,8 +1,3 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
-// import ReactDOMServer from "react-dom/server";
-
 import {
 	Box,
 	Button,
@@ -14,20 +9,22 @@ import {
 	Text,
 } from "@theme-ui/components";
 import { CalendarOptions, GoogleCalendar, ICalendar } from "datebook";
-import { useSession } from "next-auth/react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-
-import { Event, EventUser } from "types/42";
 import { setPrimaryColor } from "lib/color";
 import fetcher from "lib/fetcher";
 import getPrettyDuration from "lib/getPrettyDuration";
 import isFuture from "lib/isFuture";
 import isUrl from "lib/isUrl";
+import useAPI, { useCampuses, useCursuses } from "lib/useAPI";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { Event, EventUser } from "types/42";
 import Loading from "ui/Loading";
 import PageTitle from "ui/PageTitle";
 import RelativeTime from "ui/RelativeTime";
-import useAPI, { useCampuses, useCursuses } from "lib/useAPI";
 
 const width = ["100%", , "75%"];
 

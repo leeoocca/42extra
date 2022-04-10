@@ -1,6 +1,5 @@
-import router from "next/router";
-
 import { Action, Priority } from "kbar";
+import router from "next/router";
 
 export const userActions = (login: string, section: string): Action[] => [
 	{

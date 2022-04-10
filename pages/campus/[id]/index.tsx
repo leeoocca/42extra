@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
-
-import { Heading, Text, Link as TLink } from "@theme-ui/components";
-
+import { Heading, Link as TLink, Text } from "@theme-ui/components";
 import { locale } from "lib/constants";
-import { useCampuses } from "lib/useAPI";
-import CampusHeader from "ui/headers/CampusHeader";
 import getPrettyCountry from "lib/getPrettyCountry";
+import { useCampuses } from "lib/useAPI";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import CampusHeader from "ui/headers/CampusHeader";
 import Loading from "ui/Loading";
 import WebsiteLink from "ui/WebsiteLink";
 

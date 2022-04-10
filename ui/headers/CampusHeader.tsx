@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-
 import { Box, Flex, Text } from "@theme-ui/components";
-
+import getPrettyCountry from "lib/getPrettyCountry";
 import { CampusNavLinks } from "lib/NavLinks";
 import { useCampuses } from "lib/useAPI";
-import HeaderNav from "./HeaderNav";
-import getPrettyCountry from "lib/getPrettyCountry";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import PageTitle from "ui/PageTitle";
+import HeaderNav from "./HeaderNav";
 
 export default function CampusHeader() {
 	const {

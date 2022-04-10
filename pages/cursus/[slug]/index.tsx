@@ -1,6 +1,5 @@
-import { useRouter } from "next/router";
-
 import { useCursuses } from "lib/useAPI";
+import { useRouter } from "next/router";
 import CursusHeader, { findCursus } from "ui/headers/CursusHeader";
 import Loading from "ui/Loading";
 

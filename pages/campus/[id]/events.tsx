@@ -1,13 +1,11 @@
-import { useRouter } from "next/router";
-
 import { Grid, Heading } from "@theme-ui/components";
-
-import { Event } from "types/42";
-import CampusHeader from "ui/headers/CampusHeader";
-import EventCard from "ui/EventCard";
 import isFuture from "lib/isFuture";
-import Loading from "ui/Loading";
 import useAPI from "lib/useAPI";
+import { useRouter } from "next/router";
+import { Event } from "types/42";
+import EventCard from "ui/EventCard";
+import CampusHeader from "ui/headers/CampusHeader";
+import Loading from "ui/Loading";
 
 export default function CampusUsers() {
 	const {

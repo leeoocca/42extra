@@ -1,10 +1,8 @@
-import Link from "next/link";
-
 import { Card, Grid } from "@theme-ui/components";
-import { useSession } from "next-auth/react";
-
-import { useCampuses } from "lib/useAPI";
 import getPrettyCountry from "lib/getPrettyCountry";
+import { useCampuses } from "lib/useAPI";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 import Loading from "ui/Loading";
 import PageTitle from "ui/PageTitle";
 

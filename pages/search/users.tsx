@@ -1,11 +1,9 @@
-import { memo, useState } from "react";
-import Link from "next/link";
-
 import { Box, Card, Grid, Input } from "@theme-ui/components";
-
+import useAPI from "lib/useAPI";
+import Link from "next/link";
+import { memo, useState } from "react";
 import { UserPreview } from "types/42";
 import PageTitle from "ui/PageTitle";
-import useAPI from "lib/useAPI";
 
 const Results = memo(function Results({ query }: { query: string }) {
 	const { data: first = [], isLoading } = useAPI<UserPreview[]>(

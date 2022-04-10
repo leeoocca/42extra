@@ -1,7 +1,6 @@
-import { SVGProps } from "react";
+import { Flex, Heading, Link as ThemeLink, Text } from "@theme-ui/components";
 import Link from "next/link";
-
-import { Heading, Text, Flex, Link as ThemeLink } from "@theme-ui/components";
+import { SVGProps } from "react";
 import PageTitle from "ui/PageTitle";
 
 const SadMac = (props: SVGProps<SVGSVGElement>) => (

@@ -1,28 +1,26 @@
-import router from "next/router";
-
 import { Action } from "kbar";
-import { signOut } from "next-auth/react";
+import { REPO } from "lib/constants";
 import {
 	BookOpen,
+	Database,
+	Disc,
 	Flag,
 	Github,
-	MapPin,
+	Hexagon,
 	Home,
 	Link,
 	LogOut,
+	MapPin,
 	Slack,
 	Star,
+	Thermometer,
 	User,
 	Users,
-	Hexagon,
-	Thermometer,
-	Database,
-	Disc,
 } from "lucide-react";
-
-import { ICON_SIZE } from "./constants";
+import { signOut } from "next-auth/react";
+import router from "next/router";
 import Logo from "ui/Logo";
-import { REPO } from "lib/constants";
+import { ICON_SIZE } from "./constants";
 
 export const globalActions: Action[] = [
 	{
