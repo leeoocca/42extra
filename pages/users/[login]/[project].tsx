@@ -19,7 +19,7 @@ export default function ProjectUser() {
 
 	if (!teams) return <Loading />;
 
-	if (!Object.keys(teams).length) return `No teams for ${login}`;
+	if (!Object.keys(teams).length) return <Text>No teams for {login}</Text>;
 
 	return teams.map((team, i) => (
 		<section key={team.id} className="mb-8">
