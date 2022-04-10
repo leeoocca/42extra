@@ -1,21 +1,17 @@
-import { useRouter } from "next/router";
-import Link from "next/link";
-
-import { Asterisk, Skull, Smile, Award, Meh, Frown } from "lucide-react";
 import { Box, Flex, Grid, Heading, Progress, Text } from "@theme-ui/components";
-
 import { ICON_SIZE } from "lib/actions";
-import { locale } from "lib/constants";
-import { User } from "types/42";
 import isFuture from "lib/isFuture";
+import sortCursus from "lib/sortCursus";
+import useAPI from "lib/useAPI";
+import { Asterisk, Award, Frown, Meh, Skull, Smile } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { CursusUser, User } from "types/42";
+import UserHeader from "ui/headers/UserHeader";
 import Loading from "ui/Loading";
 import ProjectCard from "ui/ProjectCard";
 import RelativeTime from "ui/RelativeTime";
-import sortCursus from "lib/sortCursus";
-import useAPI from "lib/useAPI";
-import UserHeader from "ui/headers/UserHeader";
 
-function CursusDetails({ cursus }) {
 	const Detail = ({ children }) => (
 		<Flex sx={{ gap: 1, alignItems: "center" }}>{children}</Flex>
 	);

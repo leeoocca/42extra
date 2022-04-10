@@ -1,15 +1,13 @@
+import { Box, Heading, Text } from "@theme-ui/components";
+import { locale } from "lib/constants";
+import groupBy from "lib/groupBy";
+import useAPI, { useCampuses } from "lib/useAPI";
 import Link from "next/link";
 import { useRouter } from "next/router";
-
-import { Box, Heading, Text } from "@theme-ui/components";
 import prettyMilliseconds from "pretty-ms";
-
-import { locale } from "lib/constants";
 import { Location } from "types/42";
-import groupBy from "lib/groupBy";
-import Loading from "ui/Loading";
-import useAPI, { useCampuses } from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
+import Loading from "ui/Loading";
 
 const prettyOptions = { secondsDecimalDigits: 0, millisecondsDecimalDigits: 0 };
 

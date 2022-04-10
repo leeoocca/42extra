@@ -1,7 +1,3 @@
-import { Fragment } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
-
 import {
 	Badge,
 	Box,
@@ -13,17 +9,19 @@ import {
 	Progress,
 	Text,
 } from "@theme-ui/components";
-import { Check, Hash, Mail, User as UserIcon, X } from "lucide-react";
-
-import { Campus, Coalition, CoalitionUser, Location, User } from "types/42";
 import { ICON_SIZE } from "lib/actions";
 import { mendColor } from "lib/color";
 import getPrettyDuration from "lib/getPrettyDuration";
-import Loading from "ui/Loading";
-import RelativeTime from "ui/RelativeTime";
 import sortCursus from "lib/sortCursus";
 import useAPI from "lib/useAPI";
+import { Check, Hash, Mail, User as UserIcon, X } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { Fragment } from "react";
+import { Campus, Coalition, CoalitionUser, Location, User } from "types/42";
 import UserHeader from "ui/headers/UserHeader";
+import Loading from "ui/Loading";
+import RelativeTime from "ui/RelativeTime";
 
 function getLastSeen(locations: Location[], campuses: Campus[]) {
 	if (locations.length) {

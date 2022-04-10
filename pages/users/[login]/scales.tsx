@@ -1,18 +1,16 @@
+import useAPI from "lib/useAPI";
 import { useRouter } from "next/router";
-
 import {
-	ResponsiveContainer,
-	LineChart,
 	Line,
-	Tooltip,
+	LineChart,
 	ReferenceLine,
+	ResponsiveContainer,
+	Tooltip,
 } from "recharts";
-
 import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
-import Loading from "ui/Loading";
-import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
+import Loading from "ui/Loading";
 
 export default function UserScales() {
 	const {

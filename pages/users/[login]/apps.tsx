@@ -1,11 +1,10 @@
+import useAPI from "lib/useAPI";
 import { useRouter } from "next/router";
-
 import { App } from "types/42";
 import AppCard from "ui/AppCard";
 import CardGrid from "ui/CardGrid";
-import Loading from "ui/Loading";
-import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
+import Loading from "ui/Loading";
 
 export default function UserApps() {
 	const {
