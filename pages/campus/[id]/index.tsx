@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
-
-import { Heading, Text, Link as TLink } from "@theme-ui/components";
-
+import { Heading, Link as TLink, Text } from "@theme-ui/components";
 import { locale } from "lib/constants";
-import { useCampuses } from "lib/useAPI";
-import CampusHeader from "ui/headers/CampusHeader";
 import getPrettyCountry from "lib/getPrettyCountry";
+import { useCampuses } from "lib/useAPI";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import CampusHeader from "ui/headers/CampusHeader";
 import Loading from "ui/Loading";
 import WebsiteLink from "ui/WebsiteLink";
 
@@ -25,15 +23,17 @@ export default function CampusIndex() {
 	}
 
 	useEffect(() => {
-		const timerId = setInterval(refreshClock, 1000 * 60);
-		return function cleanup() {
-			clearInterval(timerId);
-		};
+		const offset = 60000 - (time.valueOf() % 60000);
+		const timerId = setTimeout(() => {
+			refreshClock();
+			setInterval(refreshClock, 60000);
+		}, offset);
+		return () => clearInterval(timerId);
 	}, []);
 
 	if (!campuses) return <Loading />;
 
-	const c = campuses.find((campus) => campus.id === parseInt(String(id)));
+	const c = campuses.find((campus) => String(campus.id) === String(id));
 
 	return (
 		<>

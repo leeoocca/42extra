@@ -1,13 +1,11 @@
-import { useRouter } from "next/router";
-
-import { Heading, Grid } from "@theme-ui/components";
-import { useSession } from "next-auth/react";
-
-import { Event } from "types/42";
-import CursusHeader from "ui/headers/CursusHeader";
-import EventCard from "ui/EventCard";
-import Loading from "ui/Loading";
+import { Grid, Heading } from "@theme-ui/components";
 import useAPI from "lib/useAPI";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { Event } from "types/42";
+import EventCard from "ui/EventCard";
+import CursusHeader from "ui/headers/CursusHeader";
+import Loading from "ui/Loading";
 
 export default function CursusEvents() {
 	const {

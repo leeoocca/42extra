@@ -1,10 +1,9 @@
-import { memo, useState } from "react";
-import Link from "next/link";
-
 import { Box, Card, Grid, Input } from "@theme-ui/components";
-
-import { UserPreview } from "types/42";
 import useAPI from "lib/useAPI";
+import Link from "next/link";
+import { memo, useState } from "react";
+import { UserPreview } from "types/42";
+import PageTitle from "ui/PageTitle";
 
 const Results = memo(function Results({ query }: { query: string }) {
 	const { data: first = [], isLoading } = useAPI<UserPreview[]>(
@@ -41,7 +40,7 @@ export default function SearchUser() {
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		setQuery(input);
+		setQuery(input.trim());
 	}
 
 	function handleChange(e) {
@@ -50,6 +49,7 @@ export default function SearchUser() {
 
 	return (
 		<>
+			<PageTitle title={["search", "users"]} />
 			<Box as="form" onSubmit={handleSubmit}>
 				<Input value={input} onChange={handleChange} />
 			</Box>

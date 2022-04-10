@@ -1,10 +1,9 @@
-import { useRouter } from "next/router";
-
-import { Skill } from "types/42";
 import { Themed } from "@theme-ui/mdx";
+import useAPI from "lib/useAPI";
+import { useRouter } from "next/router";
+import { Skill } from "types/42";
 import CursusHeader from "ui/headers/CursusHeader";
 import Loading from "ui/Loading";
-import useAPI from "lib/useAPI";
 
 export default function CursusSkills() {
 	const {

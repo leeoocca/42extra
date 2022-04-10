@@ -1,13 +1,12 @@
-import Link from "next/link";
-
-import SVG from "react-inlinesvg";
-
-import { Coalition } from "types/42";
 import { mendColor } from "lib/color";
+import useAPI from "lib/useAPI";
+import Link from "next/link";
+import SVG from "react-inlinesvg";
+import { Coalition } from "types/42";
 import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
 import Loading from "ui/Loading";
-import useAPI from "lib/useAPI";
+import PageTitle from "ui/PageTitle";
 
 export default function CoalitionsIndex() {
 	const { data: coalitions } = useAPI<Coalition[]>(
@@ -16,6 +15,7 @@ export default function CoalitionsIndex() {
 	// TODO paginate results
 	return (
 		<>
+			<PageTitle title="Coalitions" />
 			<h1 className="text-3xl font-bold leading-relaxed">Coalitions</h1>
 			<CardGrid>
 				{coalitions ? (

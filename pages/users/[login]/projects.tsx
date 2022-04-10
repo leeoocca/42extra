@@ -1,21 +1,17 @@
-import { useRouter } from "next/router";
-import Link from "next/link";
-
-import { Asterisk, Skull, Smile, Award, Meh, Frown } from "lucide-react";
 import { Box, Flex, Grid, Heading, Progress, Text } from "@theme-ui/components";
-
 import { ICON_SIZE } from "lib/actions";
-import { locale } from "lib/constants";
-import { User } from "types/42";
-import getTimeAgo from "lib/getTimeAgo";
 import isFuture from "lib/isFuture";
-import Loading from "ui/Loading";
-import ProjectCard from "ui/ProjectCard";
 import sortCursus from "lib/sortCursus";
 import useAPI from "lib/useAPI";
+import { Asterisk, Award, Frown, Meh, Skull, Smile } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { CursusUser, User } from "types/42";
 import UserHeader from "ui/headers/UserHeader";
+import Loading from "ui/Loading";
+import ProjectCard from "ui/ProjectCard";
+import RelativeTime from "ui/RelativeTime";
 
-function CursusDetails({ cursus }) {
 	const Detail = ({ children }) => (
 		<Flex sx={{ gap: 1, alignItems: "center" }}>{children}</Flex>
 	);
@@ -36,7 +32,7 @@ function CursusDetails({ cursus }) {
 				}}
 			>
 				<Box>
-					<Link href={`/cursus/${cursus.cursus_id}`}>
+					<Link href={`/cursus/${cursus.cursus.slug}`}>
 						<a>
 							<Heading sx={{ fontSize: 3, lineHeight: 1.5 }}>
 								{cursus.cursus.name}
@@ -60,14 +56,7 @@ function CursusDetails({ cursus }) {
 							{isFuture(cursus.begin_at)
 								? "will start "
 								: "started "}
-							<time
-								dateTime={cursus.begin_at.toLocaleString(
-									locale
-								)}
-								title={cursus.begin_at.toLocaleString(locale)}
-							>
-								{getTimeAgo(cursus.begin_at)}
-							</time>
+							<RelativeTime date={cursus.begin_at} />
 						</Detail>
 						{cursus.end_at && (
 							<Detail>
@@ -75,14 +64,7 @@ function CursusDetails({ cursus }) {
 								{isFuture(cursus.end_at)
 									? "will end "
 									: "ended "}
-								<time
-									dateTime={cursus.end_at.toLocaleString(
-										locale
-									)}
-									title={cursus.end_at.toLocaleString(locale)}
-								>
-									{getTimeAgo(cursus.end_at)}
-								</time>
+								<RelativeTime date={cursus.end_at} />
 							</Detail>
 						)}
 
@@ -94,16 +76,11 @@ function CursusDetails({ cursus }) {
 									) : (
 										<Meh size={ICON_SIZE} />
 									)}
-									BlackHole in{" "}
-									<time
-										dateTime={cursus.blackholed_at.toLocaleString(
-											locale
-										)}
-										title={cursus.blackholed_at.toLocaleString(
-											locale
-										)}
-									>
-										{blackholeDays} days
+									BlackHole absorption{" "}
+									<RelativeTime date={cursus.blackholed_at} />{" "}
+									or{" "}
+									<time dateTime={cursus.blackholed_at}>
+										in {blackholeDays} days
 									</time>
 								</>
 							) : (
@@ -111,7 +88,9 @@ function CursusDetails({ cursus }) {
 									<>
 										<Frown size={ICON_SIZE} />
 										Absorbed by the Black Hole{" "}
-										{getTimeAgo(cursus.blackholed_at)}
+										<RelativeTime
+											date={cursus.blackholed_at}
+										/>
 									</>
 								)
 							)}

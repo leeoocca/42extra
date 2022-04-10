@@ -1,8 +1,7 @@
-import NextAuth from "next-auth";
-
 import { apiBaseUrl } from "lib/constants";
-import { User } from "types/42";
 import refreshAccessToken from "lib/refreshAccessToken";
+import NextAuth from "next-auth";
+import { User } from "types/42";
 
 export default NextAuth({
 	providers: [

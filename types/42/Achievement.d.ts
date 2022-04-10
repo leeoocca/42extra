@@ -26,20 +26,9 @@ export interface AchievementPreview {
 	users_url: string;
 }
 
-export enum Kind {
-	Pedagogy = "pedagogy",
-	Project = "project",
-	Scolarity = "scolarity",
-	Social = "social",
-}
+export type Kind = "pedagogy" | "project" | "scolarity" | "social";
 
-export enum Tier {
-	Challenge = "challenge",
-	Easy = "easy",
-	Hard = "hard",
-	Medium = "medium",
-	None = "none",
-}
+export type Tier = "challenge" | "easy" | "hard" | "medium" | "none";
 
 export interface Title {
 	id: number;

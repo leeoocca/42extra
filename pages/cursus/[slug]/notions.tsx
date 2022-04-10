@@ -1,9 +1,8 @@
+import { Card, Grid } from "@theme-ui/components";
+import useAPI from "lib/useAPI";
 import { useRouter } from "next/router";
-
 import CursusHeader from "ui/headers/CursusHeader";
 import Loading from "ui/Loading";
-import useAPI from "lib/useAPI";
-import { Card, Grid } from "@theme-ui/components";
 
 export default function CursusNotions() {
 	const {

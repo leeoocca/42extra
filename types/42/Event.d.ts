@@ -19,20 +19,19 @@ export interface Event {
 	themes: any[];
 }
 
-export enum Kind {
-	Association = "association",
-	Atelier = "atelier",
-	Challenge = "challenge",
-	Conference = "conference",
-	Event = "event",
-	Extern = "extern",
-	Hackathon = "hackathon",
-	MeetUp = "meet_up",
-	Other = "other",
-	Partnership = "partnership",
-	SpeedWorking = "speed_working",
-	Workshop = "workshop",
-}
+export type Kind =
+	| "association"
+	| "atelier"
+	| "challenge"
+	| "conference"
+	| "event"
+	| "extern"
+	| "hackathon"
+	| "meet_up"
+	| "other"
+	| "partnership"
+	| "speed_working"
+	| "workshop";
 
 export interface Waitlist {
 	id: number;

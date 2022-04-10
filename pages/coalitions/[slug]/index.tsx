@@ -1,12 +1,11 @@
-import { useRouter } from "next/router";
-
 import { Heading } from "@theme-ui/components";
-
+import useAPI from "lib/useAPI";
+import { useRouter } from "next/router";
 import { Coalition, CoalitionUser } from "types/42";
 import CoalitionHeader from "ui/headers/CoalitionHeader";
 import Loader from "ui/Loader";
 import Loading from "ui/Loading";
-import useAPI from "lib/useAPI";
+import PageTitle from "ui/PageTitle";
 import UserCard from "ui/UserCard";
 import UserCardWithDetails from "ui/UserCardWithDetails";
 import UserGrid from "ui/UserGrid";
@@ -25,6 +24,7 @@ export default function CoalitionIndex() {
 
 	return (
 		<>
+			<PageTitle title={coalition.name} />
 			<Heading my={2}>Master</Heading>
 			<UserCard id={coalition.user_id} />
 			<Heading my={2}>Leaderboard</Heading>

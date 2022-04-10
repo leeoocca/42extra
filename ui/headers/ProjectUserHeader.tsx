@@ -1,11 +1,10 @@
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
-
-import { Project, ProjectsUser, User } from "types/42";
 import { setPrimaryColor } from "lib/color";
-import PageTitle from "ui/PageTitle";
 import useAPI from "lib/useAPI";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { Project, ProjectsUser, User } from "types/42";
+import PageTitle from "ui/PageTitle";
 
 export default function ProjectUserHeader() {
 	const {
@@ -15,37 +14,39 @@ export default function ProjectUserHeader() {
 	const { data: projectData } = useAPI<Project>(`/v2/projects/${project}`);
 	const { data: user } = useAPI<User>(`/v2/users/${login}`);
 
-	setPrimaryColor();
-
 	let userProject: ProjectsUser | null = null;
 
-	useEffect(
-		function () {
-			if (user) {
-				userProject = user.projects_users.find(
-					(projectsUsers) => projectsUsers.project.slug === project
-				);
-				if (!userProject) {
-					setPrimaryColor();
-				} else if (userProject["validated?"])
-					setPrimaryColor("rgb(52, 211, 153)");
-				else if (userProject.status === "in_progress")
-					setPrimaryColor("rgb(251, 191, 36)");
-				else setPrimaryColor("rgb(220, 38, 38)");
-			}
-		},
-		[user]
-	);
+	useEffect(() => {
+		if (!user) return;
+		userProject = user.projects_users.find(
+			(projectsUsers) => projectsUsers.project.slug === project
+		);
+		const color =
+			(!userProject && null) ||
+			(userProject.status !== "finished" && "rgb(251, 191, 36)") ||
+			(!userProject["validated?"] && "rgb(220, 38, 38)") ||
+			"rgb(52, 211, 153)";
+		setPrimaryColor(color);
+	}, [user]);
+
+	useEffect(() => {
+		return () => setPrimaryColor();
+	}, []);
+
+	const userLogin = user ? user.login : String(login);
 
 	return (
 		<>
 			<PageTitle
-				title={`${login}'s ${projectData ? projectData.name : project}`}
+				title={[
+					userLogin,
+					projectData ? projectData.name : String(project),
+				]}
 			/>
 			<div className="relative px-4 py-10">
 				<h1 className="text-2xl font-bold">
-					<Link href={`/users/${login}`}>
-						<a>{login}</a>
+					<Link href={`/users/${userLogin}`}>
+						<a>{userLogin}</a>
 					</Link>
 					's{" "}
 					<Link href={`/projects/${project}`}>

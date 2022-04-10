@@ -1,12 +1,10 @@
-import { useRouter } from "next/router";
-import Link from "next/link";
-
 import { Card, Grid } from "@theme-ui/components";
-
+import useAPI from "lib/useAPI";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { Project } from "types/42";
 import CursusHeader from "ui/headers/CursusHeader";
 import Loading from "ui/Loading";
-import useAPI from "lib/useAPI";
 
 export default function CursusProjects() {
 	const {

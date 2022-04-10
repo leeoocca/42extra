@@ -1,5 +1,4 @@
 import { Box, Flex } from "@theme-ui/components";
-
 import NavLink from "ui/NavLink";
 
 export default function HeaderNav({ navLinks }) {

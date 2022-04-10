@@ -13,9 +13,14 @@ export default async function fetcher(url: string, method: string = "GET") {
 		method: method,
 	});
 
-	if (!res.ok) {
-		throw res;
+	const data = await res.json().catch(() => null);
+
+	// bad request excluding no teams for user
+	if (!res.ok && !(res.status === 404 && url.endsWith("/teams"))) {
+		const error = new Error(data.error || res.statusText || res.status);
+		error.name = url;
+		throw error;
 	}
 
-	return method === "GET" ? await res.json() : res;
+	return data;
 }

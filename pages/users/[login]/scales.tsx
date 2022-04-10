@@ -1,18 +1,16 @@
+import useAPI from "lib/useAPI";
 import { useRouter } from "next/router";
-
 import {
-	ResponsiveContainer,
-	LineChart,
 	Line,
-	Tooltip,
+	LineChart,
 	ReferenceLine,
+	ResponsiveContainer,
+	Tooltip,
 } from "recharts";
-
 import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
-import Loading from "ui/Loading";
-import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
+import Loading from "ui/Loading";
 
 export default function UserScales() {
 	const {
@@ -22,7 +20,7 @@ export default function UserScales() {
 	const {
 		data: scales,
 		isLoading,
-		isError,
+		error,
 	} = useAPI<any>(`/v2/users/${login}/scale_teams`); // TODO add scales interface
 
 	const { data: history } = useAPI<any>( // TODO add historics interface
@@ -30,7 +28,7 @@ export default function UserScales() {
 	);
 
 	if (isLoading) return <Loading />;
-	if (isError) return <>Error</>;
+	if (error) return <>Error</>;
 
 	if (!scales.length)
 		return (

@@ -1,5 +1,4 @@
-import { CSSProperties, useMemo } from "react";
-
+import { Flex, Text } from "@theme-ui/components";
 import {
 	KBarAnimator,
 	KBarPortal,
@@ -8,8 +7,7 @@ import {
 	KBarSearch,
 	useMatches,
 } from "kbar";
-import { NO_GROUP } from "kbar/lib/useMatches";
-import { Flex, Text } from "@theme-ui/components";
+import { CSSProperties } from "react";
 
 const searchStyle: CSSProperties = {
 	padding: "12px 16px",

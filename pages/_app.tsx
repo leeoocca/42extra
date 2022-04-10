@@ -1,17 +1,15 @@
-import "styles/globals.css";
-import Router from "next/router";
-
+import ProgressBar from "@badrap/bar-of-progress";
 import { KBarProvider } from "kbar";
+import { globalActions } from "lib/actions";
+import fetcher from "lib/fetcher";
+import theme from "lib/theme";
 import { SessionProvider } from "next-auth/react";
+import Router from "next/router";
+import "styles/globals.css";
 import { SWRConfig, SWRConfiguration } from "swr";
 import { ThemeProvider } from "theme-ui";
-import ProgressBar from "@badrap/bar-of-progress";
-
-import { globalActions } from "lib/actions";
 import Favicons from "ui/Favicons";
-import fetcher from "lib/fetcher";
 import Shell from "ui/Shell";
-import theme from "lib/theme";
 
 const progress = new ProgressBar({
 	size: 2,
@@ -25,12 +23,9 @@ Router.events.on("routeChangeComplete", progress.finish);
 Router.events.on("routeChangeError", progress.finish);
 
 const SWRSettings: SWRConfiguration = {
-	fetcher: fetcher,
-	onError: (err) => {
-		console.error(err);
-	},
+	fetcher,
 	revalidateOnFocus: false,
-	dedupingInterval: 5000,
+	dedupingInterval: 30 * 1000, // 30 seconds
 	shouldRetryOnError: false,
 };
 

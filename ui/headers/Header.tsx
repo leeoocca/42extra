@@ -1,4 +1,4 @@
-import { Container, Box } from "@theme-ui/components";
+import { Box, Container } from "@theme-ui/components";
 
 export default function Header({ children }) {
 	return (

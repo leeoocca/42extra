@@ -34,15 +34,7 @@ export { Quest, QuestUser, Kind } from "./Quest";
 // 	Truant,
 // } from "./ScaleTeam";
 export { Skill } from "./Skill";
-// export {
-// 	Team,
-// 	ScaleTeam,
-// 	CorrectionUser,
-// 	Flag,
-// 	Status,
-// 	TeamsUpload,
-// 	User,
-// } from "./Team";
+export { Team, ScaleTeam } from "./Team";
 export {
 	User,
 	Group,

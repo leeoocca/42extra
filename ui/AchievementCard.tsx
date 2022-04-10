@@ -1,5 +1,4 @@
 import Image from "next/image";
-
 import { AchievementPreview } from "types/42";
 import Card from "./Card";
 

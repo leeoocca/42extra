@@ -1,16 +1,15 @@
-import { useState } from "react";
-
-import { useSession } from "next-auth/react";
 import {
 	Alert,
+	Box,
 	Button,
 	Flex,
-	Input,
-	Box,
 	Grid,
+	Input,
 	Text,
 } from "@theme-ui/components";
-import { Themed } from "@theme-ui/mdx";
+import { useSession } from "next-auth/react";
+import { useState } from "react";
+import PageTitle from "ui/PageTitle";
 
 export default function Query() {
 	const { data: session } = useSession();
@@ -35,6 +34,7 @@ export default function Query() {
 
 	return (
 		<>
+			<PageTitle title="Query" />
 			<Box as="form" onSubmit={handleSubmit} mb={3}>
 				<Grid columns={[1, , "6fr 1fr"]}>
 					<Flex sx={{ alignItems: "baseline" }}>
@@ -52,7 +52,7 @@ export default function Query() {
 							type="text"
 							value={query}
 							placeholder="me"
-							onChange={(e) => setQuery(e.target.value)}
+							onChange={(e) => setQuery(e.target.value.trim())}
 							autoFocus
 							sx={{
 								width: "auto",
@@ -71,13 +71,13 @@ export default function Query() {
 					{error.status} - {error.statusText}
 				</Alert>
 			)}
-			<Themed.pre>
+			<Text as="pre">
 				{data === undefined
 					? "Try `me`"
 					: !data
 					? !error && "loading..."
 					: JSON.stringify(data, null, "\t")}
-			</Themed.pre>
+			</Text>
 		</>
 	);
 }

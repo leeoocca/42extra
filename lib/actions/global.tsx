@@ -1,27 +1,26 @@
-import router from "next/router";
-
 import { Action } from "kbar";
-import { signOut } from "next-auth/react";
+import { REPO } from "lib/constants";
 import {
 	BookOpen,
+	Database,
+	Disc,
 	Flag,
 	Github,
-	MapPin,
+	Hexagon,
 	Home,
 	Link,
 	LogOut,
+	MapPin,
 	Slack,
 	Star,
+	Thermometer,
 	User,
 	Users,
-	Hexagon,
-	Thermometer,
-	Database,
 } from "lucide-react";
-
-import { ICON_SIZE } from "./constants";
+import { signOut } from "next-auth/react";
+import router from "next/router";
 import Logo from "ui/Logo";
-import { REPO } from "lib/constants";
+import { ICON_SIZE } from "./constants";
 
 export const globalActions: Action[] = [
 	{
@@ -95,6 +94,13 @@ export const globalActions: Action[] = [
 		section: "Tools",
 		icon: <Database size={ICON_SIZE} />,
 		perform: () => router.push("/tools/query"),
+	},
+	{
+		id: "blackhole",
+		name: "Blackhole",
+		section: "Tools",
+		icon: <Disc size={ICON_SIZE} />,
+		perform: () => router.push("/tools/blackhole"),
 	},
 	{
 		id: "intra",

@@ -1,11 +1,10 @@
+import useAPI from "lib/useAPI";
 import { useRouter } from "next/router";
-
 import { App } from "types/42";
 import AppCard from "ui/AppCard";
 import CardGrid from "ui/CardGrid";
-import Loading from "ui/Loading";
-import useAPI from "lib/useAPI";
 import UserHeader from "ui/headers/UserHeader";
+import Loading from "ui/Loading";
 
 export default function UserApps() {
 	const {
@@ -15,11 +14,11 @@ export default function UserApps() {
 	const {
 		data: apps,
 		isLoading,
-		isError,
+		error,
 	} = useAPI<App[]>(`/v2/users/${login}/apps`);
 
 	if (isLoading) return <Loading />;
-	if (isError) return <>Error</>;
+	if (error) return <>Error</>;
 
 	if (!apps.length)
 		return (

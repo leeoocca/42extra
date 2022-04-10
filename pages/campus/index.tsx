@@ -1,17 +1,17 @@
-import Link from "next/link";
-
 import { Card, Grid } from "@theme-ui/components";
-import { useSession } from "next-auth/react";
-
-import { useCampuses } from "lib/useAPI";
-import Loading from "ui/Loading";
 import getPrettyCountry from "lib/getPrettyCountry";
+import { useCampuses } from "lib/useAPI";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import Loading from "ui/Loading";
+import PageTitle from "ui/PageTitle";
 
 function CampusesIndex() {
 	const session = useSession();
 	const { data: campuses } = useCampuses();
 	return (
 		<>
+			<PageTitle title="Campuses" />
 			<h1 className="text-3xl font-bold leading-relaxed">Campuses</h1>
 			<Grid variant="cards">
 				{!campuses ? (

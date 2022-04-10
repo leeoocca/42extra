@@ -1,7 +1,3 @@
-import { Fragment } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
-
 import {
 	Badge,
 	Box,
@@ -13,25 +9,33 @@ import {
 	Progress,
 	Text,
 } from "@theme-ui/components";
-import { Check, Hash, Mail, User as UserIcon, X } from "lucide-react";
-
-import { Coalition, CoalitionUser, Location, User } from "types/42";
 import { ICON_SIZE } from "lib/actions";
-import { locale } from "lib/constants";
-import getTimeAgo from "lib/getTimeAgo";
-import Loading from "ui/Loading";
+import { mendColor } from "lib/color";
+import getPrettyDuration from "lib/getPrettyDuration";
 import sortCursus from "lib/sortCursus";
 import useAPI from "lib/useAPI";
+import { Check, Hash, Mail, User as UserIcon, X } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { Fragment } from "react";
+import { Campus, Coalition, CoalitionUser, Location, User } from "types/42";
 import UserHeader from "ui/headers/UserHeader";
-import getPrettyDuration from "lib/getPrettyDuration";
-import { mendColor } from "lib/color";
-// import getCampusFromId from "lib/getCampusFromId";
+import Loading from "ui/Loading";
+import RelativeTime from "ui/RelativeTime";
 
-function getLastSeen(locations: any): string {
-	if (locations.length)
-		// in ${getCampusFromId(locations[0].campus_id).name}
-		return " " + getTimeAgo(locations[0].end_at);
-	else return " never";
+function getLastSeen(locations: Location[], campuses: Campus[]) {
+	if (locations.length) {
+		const campus =
+			campuses.find((campus) => campus.id === locations[0].campus_id)
+				.name || null;
+		return (
+			<>
+				last seen {campus && `in ${campus} `}
+				<RelativeTime date={locations[0].end_at} clickable={false} />
+			</>
+		);
+	}
+	return "never seen anywhere";
 }
 
 const None = () => <i className="opacity-75">none</i>;
@@ -62,7 +66,7 @@ export default function UserOverview() {
 		query: { login },
 	} = useRouter();
 
-	const { data: user, isError } = useAPI<User>(`/v2/users/${login}`);
+	const { data: user, error } = useAPI<User>(`/v2/users/${login}`);
 	const { data: locations } = useAPI<Location[]>(
 		`/v2/users/${login}/locations`
 	);
@@ -73,14 +77,22 @@ export default function UserOverview() {
 		`/v2/users/${login}/coalitions_users`
 	);
 
-	if (isError) return <>Error</>;
+	if (error) return <>Error</>;
 	if (!user) return <Loading />;
 
 	const location = user.location
-		? `${user.location} for ${
-				locations ? getPrettyDuration(locations[0].begin_at) : "..."
+		? `${user.location} in ${
+				locations
+					? `${
+							user.campus.find(
+								(campus) => campus.id === locations[0].campus_id
+							).name
+					  } for ${getPrettyDuration(locations[0].begin_at)}`
+					: "..."
 		  }`
-		: `last seen${locations ? getLastSeen(locations) : "..."}`;
+		: locations
+		? getLastSeen(locations, user.campus)
+		: "last seen...";
 
 	return (
 		<>
@@ -166,10 +178,13 @@ export default function UserOverview() {
 				</OverviewCard>
 				<OverviewCard title="Last seen online">
 					<Text sx={{ fontSize: 4 }}>
-						{new Date(
-							Date.parse(user.anonymize_date) -
-								365 * 24 * 60 * 60 * 1000 // 1 year
-						).toLocaleDateString(locale)}
+						<RelativeTime
+							date={new Date(
+								Date.parse(user.anonymize_date) -
+									365 * 24 * 60 * 60 * 1000
+							).toISOString()}
+							unit="day"
+						/>
 					</Text>
 				</OverviewCard>
 				<Grid columns={2}>
@@ -326,7 +341,7 @@ export default function UserOverview() {
 							{user.languages_users
 								.sort((a, b) => a.position - b.position)
 								.map((language) => (
-									<Text key={language.id.toString()} as="li">
+									<Text key={language.id} as="li">
 										{language.language_id}
 									</Text>
 								))}
@@ -340,7 +355,7 @@ export default function UserOverview() {
 						<ul>
 							{user.titles.map((title) => (
 								<Flex
-									key={title.id.toString()}
+									key={title.id}
 									as="li"
 									sx={{ gap: 2, alignItems: "baseline" }}
 								>

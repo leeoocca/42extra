@@ -1,8 +1,6 @@
-import { useRouter } from "next/router";
+import { Link as TLink, Text } from "@theme-ui/components";
 import Link from "next/link";
-
-import { Box, Link as TLink, Text } from "@theme-ui/components";
-
+import { useRouter } from "next/router";
 import { LinkListNode } from "types/LinkListNode";
 
 const activeOverrides = {

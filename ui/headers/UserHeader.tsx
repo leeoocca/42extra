@@ -1,19 +1,17 @@
-import { CSSProperties, useEffect } from "react";
-import { useRouter } from "next/router";
-
-import { Flex, Box, Heading } from "@theme-ui/components";
+import { Box, Flex, Heading } from "@theme-ui/components";
 import { useRegisterActions } from "kbar";
-import SVG from "react-inlinesvg";
-
-import { Coalition, User } from "types/42";
-import { getUserNavLinks } from "lib/NavLinks";
-import { setPrimaryColor } from "lib/color";
 import { userActions } from "lib/actions";
-import Avatar from "ui/Avatar";
-import HeaderNav from "./HeaderNav";
-import PageTitle from "ui/PageTitle";
-import useAPI from "lib/useAPI";
+import { setPrimaryColor } from "lib/color";
 import { TITLE_DEPRECATED_ID } from "lib/constants";
+import { getUserNavLinks } from "lib/NavLinks";
+import useAPI from "lib/useAPI";
+import { useRouter } from "next/router";
+import { CSSProperties, useEffect, useState } from "react";
+import SVG from "react-inlinesvg";
+import { Coalition, User } from "types/42";
+import Avatar from "ui/Avatar";
+import PageTitle, { PAGE_TITLE_SEPARATOR } from "ui/PageTitle";
+import HeaderNav from "./HeaderNav";
 
 function getCustomUserLogin(user: User): string {
 	const selectedTitle = user.titles_users.find((title) => title.selected);
@@ -24,11 +22,6 @@ function getCustomUserLogin(user: User): string {
 		return selectedTitleName.name.replace("%login", user.login);
 	}
 	return null;
-}
-
-function getPageTitle(login: string, routeArray: any) {
-	const pageName = routeArray[routeArray.length - 1];
-	return pageName !== "[login]" ? `${login}'s ${pageName}` : login;
 }
 
 const BadgeCheckIcon = (props) => (
@@ -74,35 +67,41 @@ export default function UserHeader() {
 		route,
 	} = useRouter();
 
-	const {
-		data: user,
-		isLoading,
-		isError,
-	} = useAPI<User>(`/v2/users/${login}`);
+	const { data: user, isLoading, error } = useAPI<User>(`/v2/users/${login}`);
 
 	const { data: coalitions } = useAPI<Coalition[]>(
 		login && `/v2/users/${login}/coalitions`
 	);
 
-	setPrimaryColor();
+	const [title, setTitle] = useState<string | string[]>(String(login));
 
 	useEffect(() => {
-		return () => setPrimaryColor();
-	}, []);
+		const routeArray = route.split("/");
+		const page = routeArray[routeArray.length - 1];
+		setTitle(
+			page !== "[login]"
+				? [String(login), page.replace(/^\w/, (c) => c.toUpperCase())]
+				: login
+		);
+	}, [route]);
 
 	const coalition = coalitions && coalitions.slice(0).reverse()[0];
 
-	if (coalition) setPrimaryColor(coalition.color);
+	useEffect(() => {
+		setPrimaryColor(coalition?.color || null);
+		return () => setPrimaryColor();
+	}, [coalition]);
 
 	const customUserLogin = user && getCustomUserLogin(user);
 
-	useRegisterActions(userActions(String(login), `${login}'s profile`), [
-		login,
-	]);
+	useRegisterActions(
+		userActions(String(login), ["Users", login].join(PAGE_TITLE_SEPARATOR)),
+		[login]
+	);
 
 	return (
 		<>
-			<PageTitle title={getPageTitle(String(login), route.split("/"))} />
+			<PageTitle title={title} />
 			<Box sx={{ position: "relative" }}>
 				{coalition ? (
 					<SVG
@@ -150,7 +149,7 @@ export default function UserHeader() {
 								textAlign: "center",
 							}}
 						>
-							{isError ? (
+							{error ? (
 								"Error"
 							) : (
 								<>
@@ -176,7 +175,7 @@ export default function UserHeader() {
 								textAlign: ["center", , "left"],
 							}}
 						>
-							{isError ? "Don't panic!" : user.usual_full_name}
+							{error ? "Don't panic!" : user.usual_full_name}
 						</Heading>
 					</Box>
 				)}

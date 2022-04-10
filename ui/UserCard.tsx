@@ -23,7 +23,7 @@ function Template({ id, avatar, title, description }) {
 }
 
 function UserCard({ id }: { id: string | number }) {
-	const { data: user, isLoading, isError } = useAPI<User>(`/v2/users/${id}`);
+	const { data: user, isLoading, error } = useAPI<User>(`/v2/users/${id}`);
 
 	if (isLoading)
 		return (
@@ -35,7 +35,7 @@ function UserCard({ id }: { id: string | number }) {
 			/>
 		);
 
-	if (isError)
+	if (error)
 		return (
 			<Template
 				id={id}

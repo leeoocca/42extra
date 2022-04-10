@@ -1,23 +1,25 @@
+import { Text } from "@theme-ui/components";
+import useAPI from "lib/useAPI";
 import Link from "next/link";
 import { useRouter } from "next/router";
-
-import useAPI from "lib/useAPI";
+import { Team } from "types/42";
+import ProjectUserHeader from "ui/headers/ProjectUserHeader";
 import Loading from "ui/Loading";
 import UserCard from "ui/UserCard";
 import UserGrid from "ui/UserGrid";
-import ProjectUserHeader from "ui/headers/ProjectUserHeader";
 
 export default function ProjectUser() {
 	const {
 		query: { login, project },
 	} = useRouter();
 
-	const { data: teams, isError } = useAPI<any>( // TODO which is it?
+	const { data: teams, error } = useAPI<Team[]>( // TODO which is it?
 		`/v2/users/${login}/projects/${project}/teams`
 	);
 
-	if (isError) return <p>{isError.status === 404 ? `No teams.` : "Error"}</p>;
 	if (!teams) return <Loading />;
+
+	if (!Object.keys(teams).length) return <Text>No teams for {login}</Text>;
 
 	return teams.map((team, i) => (
 		<section key={team.id} className="mb-8">

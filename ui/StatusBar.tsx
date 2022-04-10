@@ -1,11 +1,9 @@
-import Link from "next/link";
-
-import { IconButton, Container, Text, Flex, Box } from "@theme-ui/components";
+import { Box, Container, Flex, IconButton, Text } from "@theme-ui/components";
 import { useKBar } from "kbar";
 import { useSession } from "next-auth/react";
-
-import Logo from "./Logo";
+import Link from "next/link";
 import Avatar from "./Avatar";
+import Logo from "./Logo";
 
 export default function StatusBar() {
 	const { query } = useKBar();
@@ -32,7 +30,14 @@ export default function StatusBar() {
 				<Link href="/" passHref>
 					<IconButton
 						sx={{
-							"& > svg": { width: "2rem", mr: "auto" },
+							"& > svg": {
+								width: "2rem",
+								mr: "auto",
+								fill:
+									process.env.NEXT_PUBLIC_DEV === "true"
+										? "primary"
+										: "currentColor",
+							},
 						}}
 					>
 						<Logo />

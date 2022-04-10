@@ -1,16 +1,16 @@
+import { useCursuses } from "lib/useAPI";
 import Link from "next/link";
-
-import { Cursus } from "types/42";
 import Card from "ui/Card";
 import CardGrid from "ui/CardGrid";
 import Loading from "ui/Loading";
-import useAPI, { useCursuses } from "lib/useAPI";
+import PageTitle from "ui/PageTitle";
 
 export default function Cursuses() {
 	const { data: cursuses } = useCursuses();
 
 	return (
 		<>
+			<PageTitle title="Cursuses" />
 			<h1 className="text-3xl font-bold leading-relaxed">Cursuses</h1>
 			<CardGrid>
 				{cursuses ? (
