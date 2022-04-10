@@ -84,8 +84,15 @@ export default function Shell({ children, headerContent }) {
 			>
 				<CommandBar />
 				<StatusBar />
-				{session.tokenExpires < Date.now() / 1000 && <StaleSession />}
-				<APIErrorOutlet />
+				<Container
+					pt={0}
+					sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+				>
+					{session.tokenExpires < Date.now() / 1000 && (
+						<StaleSession />
+					)}
+					<APIErrorOutlet />
+				</Container>
 				<Header>{headerContent}</Header>
 				<Container
 					as="main"

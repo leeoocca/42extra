@@ -1,4 +1,4 @@
-import { Alert, Link, Close, Container, Text } from "@theme-ui/components";
+import { Alert, Close, Link, Text } from "@theme-ui/components";
 import {
 	createContext,
 	Dispatch,
@@ -40,10 +40,7 @@ export function APIErrorOutlet() {
 	if (!errors.length) return null;
 
 	return (
-		<Container
-			pt={0}
-			sx={{ display: "flex", flexDirection: "column", gap: 2 }}
-		>
+		<>
 			<Link
 				as="small"
 				sx={{ textAlign: "center" }}
@@ -71,6 +68,6 @@ export function APIErrorOutlet() {
 					/>
 				</Alert>
 			))}
-		</Container>
+		</>
 	);
 }
