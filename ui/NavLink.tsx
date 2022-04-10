@@ -14,6 +14,26 @@ function NavLink({ name, href, initial }: LinkListNode) {
 
 	const active = router.pathname === href;
 
+	const Wrap = ({ children }) =>
+		active ? (
+			children
+		) : (
+			<Link
+				href={{ pathname: href, query: router.query }}
+				passHref
+				scroll={false}
+			>
+				<TLink
+					sx={{
+						color: "text",
+						textDecoration: "none",
+					}}
+				>
+					{children}
+				</TLink>
+			</Link>
+		);
+
 	return (
 		<Text
 			as="li"
@@ -29,23 +49,16 @@ function NavLink({ name, href, initial }: LinkListNode) {
 				},
 			}}
 		>
-			<Link href={{ pathname: href, query: router.query }} passHref>
-				<TLink
-					sx={{
-						color: "text",
-						textDecoration: "none",
-					}}
-				>
-					{initial === true ? (
-						<>
-							<Text as="u">{name.slice(0, 1)}</Text>
-							{name.slice(1)}
-						</>
-					) : (
-						name
-					)}
-				</TLink>
-			</Link>
+			<Wrap>
+				{initial === true ? (
+					<>
+						<Text as="u">{name.slice(0, 1)}</Text>
+						{name.slice(1)}
+					</>
+				) : (
+					name
+				)}
+			</Wrap>
 		</Text>
 	);
 }
