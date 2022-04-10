@@ -21,31 +21,32 @@ export default function ProjectUserHeader() {
 		userProject = user.projects_users.find(
 			(projectsUsers) => projectsUsers.project.slug === project
 		);
-		if (!userProject) {
-			setPrimaryColor();
-		} else if (userProject["validated?"])
-			setPrimaryColor("rgb(52, 211, 153)");
-		else if (userProject.status === "in_progress")
-			setPrimaryColor("rgb(251, 191, 36)");
-		else setPrimaryColor("rgb(220, 38, 38)");
+		const color =
+			(!userProject && null) ||
+			(userProject.status !== "finished" && "rgb(251, 191, 36)") ||
+			(!userProject["validated?"] && "rgb(220, 38, 38)") ||
+			"rgb(52, 211, 153)";
+		setPrimaryColor(color);
 	}, [user]);
 
 	useEffect(() => {
 		return () => setPrimaryColor();
 	}, []);
 
+	const userLogin = user ? user.login : String(login);
+
 	return (
 		<>
 			<PageTitle
 				title={[
-					String(login),
+					userLogin,
 					projectData ? projectData.name : String(project),
 				]}
 			/>
 			<div className="relative px-4 py-10">
 				<h1 className="text-2xl font-bold">
-					<Link href={`/users/${login}`}>
-						<a>{login}</a>
+					<Link href={`/users/${userLogin}`}>
+						<a>{userLogin}</a>
 					</Link>
 					's{" "}
 					<Link href={`/projects/${project}`}>
