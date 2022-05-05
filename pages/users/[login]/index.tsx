@@ -232,7 +232,7 @@ export default function UserOverview() {
 													{cursus.cursus.name}
 												</Text>
 												<Text sx={{ opacity: "75%" }}>
-													{cursus.level}
+													{cursus.level.toFixed(2)}
 												</Text>
 											</Flex>
 										</Link>
