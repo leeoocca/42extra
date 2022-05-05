@@ -46,10 +46,12 @@ export default function RelativeTime({
 		  )
 		: (value) => value;
 
+	const formattedDate = new Date(date).toLocaleString();
+
 	return wrap(
 		<time dateTime={date} title={date}>
 			{(relative === 2 && relativeValue) ||
-				(relative === 1 && date) ||
+				(relative === 1 && formattedDate) ||
 				(relative === 3 && `${days} days`)}
 		</time>
 	);
