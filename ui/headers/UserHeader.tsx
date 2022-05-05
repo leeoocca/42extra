@@ -27,7 +27,6 @@ function getCustomUserLogin(user: User): string {
 const BadgeCheckIcon = (props) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
-		className="mt-2 ml-1.5 w-7"
 		viewBox="0 0 20 20"
 		fill="currentColor"
 		{...props}
@@ -124,24 +123,20 @@ export default function UserHeader() {
 					flexDirection: ["column", , "row"],
 				}}
 			>
-				<Avatar
-					url={
-						error
-							? "https://cdn.intra.42.fr/users/default.jpg"
-							: user
-							? user.image_url
-							: null
-					}
-					size={128}
-					deprecated={
-						user &&
-						!!user.titles_users.find(
-							(title) =>
-								title.title_id === TITLE_DEPRECATED_ID &&
-								title.selected
-						)
-					}
-				/>
+				<Box sx={{ w: 6, h: 6 }}>
+					<Avatar
+						url={user?.image_url}
+						size={128}
+						deprecated={
+							user &&
+							!!user.titles_users.find(
+								(title) =>
+									title.title_id === TITLE_DEPRECATED_ID &&
+									title.selected
+							)
+						}
+					/>
+				</Box>
 				{!isLoading && (
 					<Box>
 						<Heading
@@ -149,7 +144,7 @@ export default function UserHeader() {
 							sx={{
 								fontSize: 36,
 								display: "flex",
-								justifyContent: ["center", , "flex-start"],
+								justifyContent: ["center", , ""],
 								lineHeight: "2.5rem",
 								textAlign: "center",
 							}}
@@ -158,15 +153,17 @@ export default function UserHeader() {
 								"Error"
 							) : (
 								<>
-									{customUserLogin
-										? customUserLogin
-										: user.login}
+									{/* maybe just always use user.login? */}
+									{/* useful when loading though */}
+									{customUserLogin || user.login || login}
 									{user["staff?"] && (
-										<span
-											title={`${user.login} is a member of the staff`}
+										<Flex
+											ml={1}
+											sx={{ width: 32 }}
+											title={`${login} is a member of the staff`}
 										>
 											<BadgeCheckIcon />
-										</span>
+										</Flex>
 									)}{" "}
 								</>
 							)}

@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@theme-ui/components";
+import { Box, Flex, Heading, Text } from "@theme-ui/components";
 import getPrettyCountry from "lib/getPrettyCountry";
 import { CampusNavLinks } from "lib/NavLinks";
 import { useCampuses } from "lib/useAPI";
@@ -35,9 +35,7 @@ export default function CampusHeader() {
 		<>
 			<PageTitle title={title} />
 			<Box p={3}>
-				<h1 className="text-3xl font-bold leading-relaxed">
-					{campus.name}
-				</h1>
+				<Heading as="h1">{campus.name}</Heading>
 				<Flex sx={{ gap: 3 }}>
 					<Text>
 						<Text variant="mono">#{id}</Text>

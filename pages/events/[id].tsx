@@ -54,7 +54,7 @@ function EventHeader() {
 	useEffect(() => {
 		setPrimaryColor(data ? colors[event.kind] : "" || "");
 		return () => setPrimaryColor();
-	}, []);
+	}, [event]);
 
 	const locatonIsUrl = isUrl(event.location);
 
