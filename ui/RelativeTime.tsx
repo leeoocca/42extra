@@ -15,7 +15,7 @@ export default function RelativeTime({
 }) {
 	const reset = bh ? 3 : 2;
 	const [relative, setRelative] = useState(reset);
-	const relativeValue = getTimeAgo(date, new Date(), unit);
+	const relativeValue = getTimeAgo(date || "", new Date(), unit);
 	const days = (
 		(Date.parse(date) - Date.now()) /
 		1000 /
@@ -46,11 +46,13 @@ export default function RelativeTime({
 		  )
 		: (value) => value;
 
+	const formattedDate = new Date(date).toLocaleString();
+
 	return wrap(
 		<time dateTime={date} title={date}>
 			{(relative === 2 && relativeValue) ||
-				(relative === 1 && date) ||
-				(relative === 3 && days)}
+				(relative === 1 && formattedDate) ||
+				(relative === 3 && `${days} days`)}
 		</time>
 	);
 }
