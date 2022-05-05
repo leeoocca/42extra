@@ -1,25 +1,36 @@
-import Link from "next/link";
-
-import { Box, Link as TLink } from "@theme-ui/components";
+import { Container, Link as TLink, Text } from "@theme-ui/components";
 import { REPO } from "lib/constants";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Footer() {
+	const { pathname } = useRouter();
 	return (
-		<Box
+		<Container
 			as="footer"
 			my={3}
 			sx={{
-				textAlign: "center",
+				display: "flex",
+				justifyContent: "space-between",
 				fontWeight: 300,
 				fontSize: 12,
 				color: "gray",
 			}}
 		>
-			<TLink href={REPO}>42extra</TLink> — a project by{" "}
-			<Link href="/users/lrocca" passHref>
-				<TLink>lrocca</TLink>
-			</Link>
-		</Box>
+			<Text>
+				<TLink href={REPO}>42extra</TLink> — a project by{" "}
+				<Link href="/users/lrocca" passHref>
+					<TLink>lrocca</TLink>
+				</Link>
+			</Text>
+			<TLink
+				href={`${REPO}/blob/main/pages${
+					pathname === "/" ? "/index" : pathname
+				}.tsx`}
+			>
+				Edit this page on GitHub
+			</TLink>
+		</Container>
 	);
 }
 
