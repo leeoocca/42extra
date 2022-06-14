@@ -24,7 +24,7 @@ export default function UserScales() {
 	} = useAPI<any>(`/v2/users/${login}/scale_teams`); // TODO add scales interface
 
 	const { data: history } = useAPI<any>( // TODO add historics interface
-		`/v2/users/${login}/correction_point_historics`
+		`/v2/users/${login}/correction_point_historics?sort=-created_at`
 	);
 
 	if (isLoading) return <Loading />;
@@ -41,7 +41,7 @@ export default function UserScales() {
 		<>
 			{history && (
 				<ResponsiveContainer height={100}>
-					<LineChart data={history}>
+					<LineChart data={history.slice().reverse()}>
 						<ReferenceLine
 							y={0}
 							label="0"
@@ -52,7 +52,7 @@ export default function UserScales() {
 						<Line
 							type="monotone"
 							dataKey="total"
-							stroke="var(--foreground)"
+							stroke="var(--theme-ui-colors-primary)"
 						/>
 					</LineChart>
 				</ResponsiveContainer>
