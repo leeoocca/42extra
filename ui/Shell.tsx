@@ -50,16 +50,16 @@ export default function Shell({ children, headerContent }) {
 	const [user, setUser] = useState("");
 
 	useEffect(() => {
-		setUser(queryValue.trim());
+		setUser(queryValue.trim().toLowerCase());
 	}, [queryValue]);
 
 	const goToUser: Action = queryValue.length
 		? {
 				id: "goToUser",
-				name: `Go to ${queryValue}'s profile`,
+				name: `Go to ${user}'s profile`,
 				parent: "users",
 				icon: <ArrowRight size={ICON_SIZE} />,
-				perform: () => router.push(`/users/${queryValue}`),
+				perform: () => router.push(`/users/${user}`),
 		  }
 		: {
 				id: "userSearch",

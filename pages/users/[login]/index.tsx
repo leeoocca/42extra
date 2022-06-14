@@ -181,8 +181,10 @@ export default function UserOverview() {
 						<RelativeTime
 							date={new Date(
 								Date.parse(user.anonymize_date) -
-									365 * 24 * 60 * 60 * 1000
+									365 * 24 * 60 * 60 * 1000 +
+									2 * 60 * 60 * 1000
 							).toISOString()}
+							// TODO check if works fine with other time zones
 							unit="day"
 						/>
 					</Text>
@@ -230,7 +232,7 @@ export default function UserOverview() {
 													{cursus.cursus.name}
 												</Text>
 												<Text sx={{ opacity: "75%" }}>
-													{cursus.level}
+													{cursus.level.toFixed(2)}
 												</Text>
 											</Flex>
 										</Link>
