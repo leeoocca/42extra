@@ -27,7 +27,7 @@ function getLastSeen(locations: Location[], campuses: Campus[]) {
 	if (locations.length) {
 		const campus =
 			campuses.find((campus) => campus.id === locations[0].campus_id)
-				.name || null;
+				?.name || null;
 		return (
 			<>
 				last seen {campus && `in ${campus} `}
@@ -91,7 +91,7 @@ export default function UserOverview() {
 					: "..."
 		  }`
 		: locations
-		? getLastSeen(locations, user.campus)
+		? getLastSeen(locations, user.campus) // TODO consider using useCampuses
 		: "last seen...";
 
 	return (
