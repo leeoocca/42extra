@@ -84,7 +84,7 @@ export default function UserHeader() {
 				? [String(login), page.replace(/^\w/, (c) => c.toUpperCase())]
 				: login
 		);
-	}, [route]);
+	}, [login, route]);
 
 	const coalition = coalitions && coalitions.slice(0).reverse()[0];
 
