@@ -124,6 +124,11 @@ export default function UserHeader() {
 					flexDirection: ["column", , "row"],
 				}}
 			>
+				<a
+					href={user.image_url}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
 				<Avatar
 					url={
 						error
@@ -142,6 +147,7 @@ export default function UserHeader() {
 						)
 					}
 				/>
+				</a>
 				{!isLoading && (
 					<Box>
 						<Heading
