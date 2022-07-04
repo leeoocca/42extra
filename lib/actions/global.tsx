@@ -91,6 +91,7 @@ export const globalActions: Action[] = [
 	{
 		id: "query",
 		name: "Query",
+		shortcut: ["g", "q"],
 		section: "Tools",
 		icon: <Database size={ICON_SIZE} />,
 		perform: () => router.push("/tools/query"),
@@ -98,6 +99,7 @@ export const globalActions: Action[] = [
 	{
 		id: "blackhole",
 		name: "Blackhole",
+		shortcut: ["b", "h"],
 		section: "Tools",
 		icon: <Disc size={ICON_SIZE} />,
 		perform: () => router.push("/tools/blackhole"),

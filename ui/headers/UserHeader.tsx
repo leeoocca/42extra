@@ -125,7 +125,7 @@ export default function UserHeader() {
 				}}
 			>
 				<a
-					href={user.image_url}
+					href={user?.image_url || ""}
 					target="_blank"
 					rel="noopener noreferrer"
 				>
