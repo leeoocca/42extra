@@ -138,11 +138,10 @@ export default function UserScales() {
 	let totalPoints = history[0].total + history[0].sum;
 	return (
 		<>
-			<ResponsivePointLine data={pointDatas} points={totalPoints}/>
-			<><br/>
+			{<ResponsivePointLine data={pointDatas} points={totalPoints}/>}
+			<br/>
 			<CardGrid>
 				{scales.map((s) => (
-					<>
 					<Card key={s.id}>
 						<div className="w-full">
 							<b style={{ fontSize: 15, fontFamily: "Futura" }}>
@@ -205,9 +204,8 @@ export default function UserScales() {
 							</Box>
 						</div>
 					</Card>
-					</>
 				))}
-			</CardGrid></>
+			</CardGrid>
 		</>
 	);
 }
