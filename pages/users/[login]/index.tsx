@@ -27,7 +27,7 @@ function getLastSeen(locations: Location[], campuses: Campus[]) {
 	if (locations.length) {
 		const campus =
 			campuses.find((campus) => campus.id === locations[0].campus_id)
-				.name || null;
+				?.name || null;
 		return (
 			<>
 				last seen {campus && `in ${campus} `}
@@ -91,7 +91,7 @@ export default function UserOverview() {
 					: "..."
 		  }`
 		: locations
-		? getLastSeen(locations, user.campus)
+		? getLastSeen(locations, user.campus) // TODO consider using useCampuses
 		: "last seen...";
 
 	return (
@@ -181,8 +181,7 @@ export default function UserOverview() {
 						<RelativeTime
 							date={new Date(
 								Date.parse(user.anonymize_date) -
-									365 * 24 * 60 * 60 * 1000 +
-									2 * 60 * 60 * 1000
+									3 * 365 * 24 * 60 * 60 * 1000
 							).toISOString()}
 							// TODO check if works fine with other time zones
 							unit="day"

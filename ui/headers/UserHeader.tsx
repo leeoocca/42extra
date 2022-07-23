@@ -84,7 +84,7 @@ export default function UserHeader() {
 				? [String(login), page.replace(/^\w/, (c) => c.toUpperCase())]
 				: login
 		);
-	}, [route]);
+	}, [login, route]);
 
 	const coalition = coalitions && coalitions.slice(0).reverse()[0];
 
@@ -124,6 +124,11 @@ export default function UserHeader() {
 					flexDirection: ["column", , "row"],
 				}}
 			>
+				<a
+					href={user?.image_url || ""}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
 				<Avatar
 					url={
 						error
@@ -142,6 +147,7 @@ export default function UserHeader() {
 						)
 					}
 				/>
+				</a>
 				{!isLoading && (
 					<Box>
 						<Heading
