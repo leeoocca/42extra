@@ -1,3 +1,4 @@
+import { ResponsiveRadar } from "@nivo/radar";
 import {
 	Badge,
 	Box,
@@ -40,7 +41,7 @@ function getLastSeen(locations: Location[], campuses: Campus[]) {
 
 const None = () => <i className="opacity-75">none</i>;
 
-const OverviewCard = ({ children, title, href = null }) => {
+const OverviewCard = ({ children, title, href = null, heigth = null }) => {
 	const link = href
 		? (el) => (
 				<Link href={href} passHref>
@@ -52,10 +53,40 @@ const OverviewCard = ({ children, title, href = null }) => {
 	return link(
 		<Card bg="muted" p={3} as={href ? "a" : null} sx={{ borderRadius: 5 }}>
 			<Heading mb={2}>{title}</Heading>
-			<Box>{children}</Box>
+			<Box sx={{ height: heigth }}>{children}</Box>
 		</Card>
 	);
 };
+
+const MyResponsiveRadar = ({ data }) => (
+	<ResponsiveRadar
+		data={data}
+		theme={{
+			textColor: "var(--theme-ui-colors-text)",
+			tooltip: {
+				container: {
+					background: "var(--theme-ui-colors-background)",
+					color: "var(--theme-ui-colors-text)",
+					fontSize: 12,
+				},
+			},
+			crosshair: {
+				line: {
+					stroke: "var(--theme-ui-colors-primary)",
+					strokeWidth: 1,
+					strokeOpacity: 1,
+				},
+			},
+		}}
+		keys={["level"]}
+		indexBy="name"
+		valueFormat=">-.2f"
+		margin={{ top: 40, right: 100, bottom: 40, left: 100 }}
+		maxValue={26}
+		fillOpacity={0.7}
+		colors="var(--theme-ui-colors-primary)"
+	/>
+);
 
 function checkOrX(bool: boolean) {
 	return bool ? <Check size={ICON_SIZE - 4} /> : <X size={ICON_SIZE - 4} />;
@@ -93,7 +124,6 @@ export default function UserOverview() {
 		: locations
 		? getLastSeen(locations, user.campus) // TODO consider using useCampuses
 		: "last seen...";
-
 	return (
 		<>
 			<Grid columns={[1, , 3]}>
@@ -109,7 +139,13 @@ export default function UserOverview() {
 							},
 							{
 								icon: <UserIcon size={ICON_SIZE - 4} />,
-								value: user.login,
+								value: (
+									<ThemeLink
+										href={`https://profile.intra.42.fr/users/${user.login}`}
+									>
+										{user.login}
+									</ThemeLink>
+								),
 							},
 							{
 								icon: <Mail size={ICON_SIZE - 4} />,
@@ -237,7 +273,7 @@ export default function UserOverview() {
 										</Link>
 										<Progress
 											value={cursus.level}
-											max={21}
+											max={26}
 											// sx={{ borderRadius: 0 }}
 										/>
 									</Box>
@@ -373,6 +409,11 @@ export default function UserOverview() {
 						<None />
 					)}
 				</OverviewCard>
+				<Grid columns={0.1}>
+					<OverviewCard title="Skills" heigth={300}>
+						<MyResponsiveRadar data={user.cursus_users[0].skills} />
+					</OverviewCard>
+				</Grid>
 			</Grid>
 		</>
 	);
