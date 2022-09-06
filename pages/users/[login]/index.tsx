@@ -1,3 +1,4 @@
+import { ResponsiveRadar } from "@nivo/radar";
 import {
 	Badge,
 	Box,
@@ -22,7 +23,6 @@ import { Campus, Coalition, CoalitionUser, Location, User } from "types/42";
 import UserHeader from "ui/headers/UserHeader";
 import Loading from "ui/Loading";
 import RelativeTime from "ui/RelativeTime";
-import { ResponsiveRadar } from "@nivo/radar";
 
 function getLastSeen(locations: Location[], campuses: Campus[]) {
 	if (locations.length) {
@@ -62,7 +62,7 @@ const MyResponsiveRadar = ({ data }) => (
 	<ResponsiveRadar
 		data={data}
 		theme={{
-			textColor: 'var(--theme-ui-colors-text)',
+			textColor: "var(--theme-ui-colors-text)",
 			tooltip: {
 				container: {
 					background: "var(--theme-ui-colors-background)",
@@ -72,11 +72,11 @@ const MyResponsiveRadar = ({ data }) => (
 			},
 			crosshair: {
 				line: {
-					stroke: 'var(--theme-ui-colors-primary)',
+					stroke: "var(--theme-ui-colors-primary)",
 					strokeWidth: 1,
 					strokeOpacity: 1,
 				},
-			}
+			},
 		}}
 		keys={["level"]}
 		indexBy="name"
@@ -84,7 +84,7 @@ const MyResponsiveRadar = ({ data }) => (
 		margin={{ top: 40, right: 100, bottom: 40, left: 100 }}
 		maxValue={26}
 		fillOpacity={0.7}
-		colors='var(--theme-ui-colors-primary)'
+		colors="var(--theme-ui-colors-primary)"
 	/>
 );
 
@@ -140,7 +140,9 @@ export default function UserOverview() {
 							{
 								icon: <UserIcon size={ICON_SIZE - 4} />,
 								value: (
-									<ThemeLink href={`https://profile.intra.42.fr/users/${user.login}`}>
+									<ThemeLink
+										href={`https://profile.intra.42.fr/users/${user.login}`}
+									>
 										{user.login}
 									</ThemeLink>
 								),
@@ -409,11 +411,9 @@ export default function UserOverview() {
 				</OverviewCard>
 				<Grid columns={0.1}>
 					<OverviewCard title="Skills" heigth={300}>
-							<MyResponsiveRadar data={user.cursus_users[0].skills} />
+						<MyResponsiveRadar data={user.cursus_users[0].skills} />
 					</OverviewCard>
 				</Grid>
-			</Grid>
-			<Grid>
 			</Grid>
 		</>
 	);
