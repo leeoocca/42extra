@@ -1,4 +1,3 @@
-import { Themed } from "@theme-ui/mdx";
 import useAPI from "lib/useAPI";
 import { useRouter } from "next/router";
 import { Skill } from "types/42";
@@ -17,11 +16,11 @@ export default function CursusSkills() {
 	if (!skills) return <Loading />;
 
 	return (
-		<Themed.ul>
+		<ul>
 			{skills.map((skill) => (
-				<Themed.li key={skill.id}>{skill.name}</Themed.li>
+				<li key={skill.id}>{skill.name}</li>
 			))}
-		</Themed.ul>
+		</ul>
 	);
 }
 
