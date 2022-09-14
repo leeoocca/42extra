@@ -8,7 +8,7 @@ function NavLink({ name, href, className }: LinkListNode) {
 	const active = router.pathname === href;
 
 	return (
-		<Link href={{ pathname: href, query: router.query }}>
+		<Link href={{ pathname: href, query: router.query }} scroll={false}>
 			<a
 				className={`${
 					active
