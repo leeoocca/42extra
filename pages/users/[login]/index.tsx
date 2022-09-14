@@ -51,7 +51,12 @@ const OverviewCard = ({ children, title, href = null, heigth = null }) => {
 		: (el) => el;
 
 	return link(
-		<Card bg="muted" p={3} as={href ? "a" : null} sx={{ borderRadius: 5 }}>
+		<Card
+			bg="muted"
+			p={3}
+			as={href ? "a" : undefined}
+			sx={{ borderRadius: 5 }}
+		>
 			<Heading mb={2}>{title}</Heading>
 			<Box sx={{ height: heigth }}>{children}</Box>
 		</Card>
