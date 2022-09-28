@@ -26,8 +26,8 @@ export default function Footer({ intraLink }) {
 				42extra
 			</a>{" "}
 			— a project by{" "}
-			<Link href="/users/lrocca">
-				<a className="text-gray-200">lrocca</a>
+			<Link href="/users/lrocca" className="text-gray-200">
+				lrocca
 			</Link>
 		</footer>
 	);
