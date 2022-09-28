@@ -1,8 +1,8 @@
 import useAPI from "lib/useAPI";
 import { useRouter } from "next/router";
 import { User } from "types/42";
-import Card from "ui/Card";
-import CardGrid from "ui/CardGrid";
+import Card from "ui/cards/Card";
+import CardGrid from "ui/grids/CardGrid";
 import UserHeader from "ui/headers/UserHeader";
 import Loading from "ui/Loading";
 

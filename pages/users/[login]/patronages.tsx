@@ -2,10 +2,10 @@ import { locale } from "lib/constants";
 import useAPI from "lib/useAPI";
 import { useRouter } from "next/router";
 import { User } from "types/42";
+import UserCardWithDetails from "ui/cards/UserCardWithDetails";
+import UserGrid from "ui/grids/UserGrid";
 import UserHeader from "ui/headers/UserHeader";
 import Loading from "ui/Loading";
-import UserCardWithDetails from "ui/UserCardWithDetails";
-import UserGrid from "ui/UserGrid";
 
 export default function UserPatronages() {
 	const {

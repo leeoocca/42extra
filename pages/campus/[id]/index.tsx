@@ -1,5 +1,5 @@
 import { Heading, Link as TLink, Text } from "@theme-ui/components";
-import { locale } from "lib/constants";
+import { formatTime } from "lib/dateTime";
 import getPrettyCountry from "lib/getPrettyCountry";
 import { useCampuses } from "lib/useAPI";
 import Link from "next/link";
@@ -48,11 +48,7 @@ export default function CampusIndex() {
 			</Heading>
 			<Heading my={2}>Local time</Heading>
 			<time dateTime={time.toISOString()}>
-				{time.toLocaleTimeString(locale, {
-					timeZone: c.time_zone,
-					hour: "numeric",
-					minute: "2-digit",
-				})}
+				{formatTime(time, { timeZone: c.time_zone })}
 			</time>
 			<Heading my={2}>Main language</Heading>
 			<p>{c.language.name}</p>

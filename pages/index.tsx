@@ -9,7 +9,7 @@ import useAPI from "lib/useAPI";
 import { useSession } from "next-auth/react";
 import { Fragment } from "react";
 import { Event, ScaleTeam } from "types/42";
-import EventCard from "ui/EventCard";
+import EventCard from "ui/cards/EventCard";
 import Link from "ui/Link";
 
 function scaleDescription(scale_team: ScaleTeam, current_user: string) {

@@ -3,7 +3,7 @@ import useAPI from "lib/useAPI";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { Event } from "types/42";
-import EventCard from "ui/EventCard";
+import EventCard from "ui/cards/EventCard";
 import CursusHeader from "ui/headers/CursusHeader";
 import Loading from "ui/Loading";
 

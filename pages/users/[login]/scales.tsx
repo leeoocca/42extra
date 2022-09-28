@@ -2,8 +2,8 @@ import { ResponsiveLine } from "@nivo/line";
 import { Box } from "@theme-ui/components";
 import useAPI from "lib/useAPI";
 import { useRouter } from "next/router";
-import Card from "ui/Card";
-import CardGrid from "ui/CardGrid";
+import Card from "ui/cards/Card";
+import CardGrid from "ui/grids/CardGrid";
 import UserHeader from "ui/headers/UserHeader";
 import Loading from "ui/Loading";
 

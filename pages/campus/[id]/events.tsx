@@ -3,7 +3,7 @@ import isFuture from "lib/isFuture";
 import useAPI from "lib/useAPI";
 import { useRouter } from "next/router";
 import { Event } from "types/42";
-import EventCard from "ui/EventCard";
+import EventCard from "ui/cards/EventCard";
 import CampusHeader from "ui/headers/CampusHeader";
 import Loading from "ui/Loading";
 

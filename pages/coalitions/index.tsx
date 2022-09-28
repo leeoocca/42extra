@@ -3,8 +3,8 @@ import useAPI from "lib/useAPI";
 import Link from "next/link";
 import SVG from "react-inlinesvg";
 import { Coalition } from "types/42";
-import Card from "ui/Card";
-import CardGrid from "ui/CardGrid";
+import Card from "ui/cards/Card";
+import CardGrid from "ui/grids/CardGrid";
 import Loading from "ui/Loading";
 import PageTitle from "ui/PageTitle";
 

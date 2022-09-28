@@ -1,7 +1,7 @@
 import { useCursuses } from "lib/useAPI";
 import Link from "next/link";
-import Card from "ui/Card";
-import CardGrid from "ui/CardGrid";
+import Card from "ui/cards/Card";
+import CardGrid from "ui/grids/CardGrid";
 import Loading from "ui/Loading";
 import PageTitle from "ui/PageTitle";
 

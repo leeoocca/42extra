@@ -4,10 +4,10 @@ import useAPI from "lib/useAPI";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Team } from "types/42";
+import UserCard from "ui/cards/UserCard";
+import UserGrid from "ui/grids/UserGrid";
 import ProjectUserHeader from "ui/headers/ProjectUserHeader";
 import Loading from "ui/Loading";
-import UserCard from "ui/UserCard";
-import UserGrid from "ui/UserGrid";
 
 export default function ProjectUser() {
 	const {

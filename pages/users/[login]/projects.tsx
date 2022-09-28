@@ -10,9 +10,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { ProjectsUser, User } from "types/42";
+import ProjectCard from "ui/cards/ProjectCard";
 import UserHeader from "ui/headers/UserHeader";
 import Loading from "ui/Loading";
-import ProjectCard from "ui/ProjectCard";
 import RelativeTime from "ui/RelativeTime";
 
 function CursusDetails({ cursus }) {
@@ -197,6 +197,7 @@ export default function UserProjects() {
 
 	const { data: user, isLoading } = useAPI<User>(`/v2/users/${login}`);
 
+	// TODO useEffect really necessary?
 	useEffect(() => {
 		if (!user || !user.projects_users) return;
 		setProjectsUsers(groupBy(user.projects_users, (pu) => pu.cursus_ids));
