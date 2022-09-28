@@ -1,5 +1,6 @@
 import { Box, Flex, Grid, Heading, Progress, Text } from "@theme-ui/components";
 import { ICON_SIZE } from "lib/actions";
+import { FTCURSUS_ID } from "lib/constants";
 import isFuture from "lib/isFuture";
 import sortCursus from "lib/sortCursus";
 import useAPI from "lib/useAPI";
@@ -69,33 +70,37 @@ function CursusDetails({ cursus }) {
 							</Detail>
 						)}
 
-						<Detail>
-							{isFuture(cursus.blackholed_at) ? (
-								<>
-									{blackholeDays > 30 ? (
-										<Smile size={ICON_SIZE} />
-									) : (
-										<Meh size={ICON_SIZE} />
-									)}
-									BlackHole absorption{" "}
-									<RelativeTime date={cursus.blackholed_at} />{" "}
-									or{" "}
-									<time dateTime={cursus.blackholed_at}>
-										in {blackholeDays} days
-									</time>
-								</>
-							) : (
-								!cursus.end_at && (
+						{cursus.cursus.id === FTCURSUS_ID && (
+							<Detail>
+								{isFuture(cursus.blackholed_at) ? (
 									<>
-										<Frown size={ICON_SIZE} />
-										Absorbed by the Black Hole{" "}
+										{blackholeDays > 30 ? (
+											<Smile size={ICON_SIZE} />
+										) : (
+											<Meh size={ICON_SIZE} />
+										)}
+										BlackHole absorption{" "}
 										<RelativeTime
 											date={cursus.blackholed_at}
-										/>
+										/>{" "}
+										or{" "}
+										<time dateTime={cursus.blackholed_at}>
+											in {blackholeDays} days
+										</time>
 									</>
-								)
-							)}
-						</Detail>
+								) : (
+									!cursus.end_at && (
+										<>
+											<Frown size={ICON_SIZE} />
+											Absorbed by the Black Hole{" "}
+											<RelativeTime
+												date={cursus.blackholed_at}
+											/>
+										</>
+									)
+								)}
+							</Detail>
+						)}
 					</Flex>
 				</Box>
 				<Text variant="mono">{cursus.level.toFixed(2)}</Text>
