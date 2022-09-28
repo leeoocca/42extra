@@ -5,6 +5,7 @@ import {
 	Heading,
 	Link as ThemeLink,
 } from "@theme-ui/components";
+import { formatDateTime, formatTime } from "lib/dateTime";
 import useAPI from "lib/useAPI";
 import { useSession } from "next-auth/react";
 import { Fragment } from "react";
@@ -103,17 +104,6 @@ export default function Home() {
 		"/v2/me/slots?page[size]=100&sort=begin_at&filter[future]=true"
 	);
 
-	const dateOpts: Intl.DateTimeFormatOptions = {
-		year: "numeric",
-		month: "2-digit",
-		day: "2-digit",
-	};
-	const timeOpts: Intl.DateTimeFormatOptions = {
-		hour: "numeric",
-		minute: "numeric",
-		hour12: false,
-	};
-
 	return (
 		<>
 			<Heading sx={{ textAlign: "center", mb: 2, fontSize: "2rem" }}>
@@ -166,22 +156,12 @@ export default function Home() {
 								return (
 									<Box as="li" key={slot.id} my={2}>
 										<small>
-											{begin_at
-												.toISOString()
-												.slice(0, 10)}{" "}
-											{begin_at.toLocaleTimeString(
-												"en",
-												timeOpts
-											)}{" "}
-											-{" "}
+											{formatDateTime(begin_at)} -{" "}
 											{!isSameDate(begin_at, end_at) &&
 												end_at
 													.toISOString()
 													.slice(0, 10)}{" "}
-											{end_at.toLocaleTimeString(
-												"en",
-												timeOpts
-											)}
+											{formatTime(end_at)}
 										</small>
 										<br />
 										{/* {JSON.stringify(slot.scale_team)} */}

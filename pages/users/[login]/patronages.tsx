@@ -1,4 +1,4 @@
-import { locale } from "lib/constants";
+import { formatDateTime } from "lib/dateTime";
 import useAPI from "lib/useAPI";
 import { useRouter } from "next/router";
 import { User } from "types/42";
@@ -32,15 +32,11 @@ export default function UserPatronages() {
 							},
 							{
 								name: "Started",
-								value: new Date(
-									patron.created_at
-								).toLocaleString(locale),
+								value: formatDateTime(patron.created_at),
 							},
 							{
 								name: "Updated",
-								value: new Date(
-									patron.updated_at
-								).toLocaleString(locale),
+								value: formatDateTime(patron.updated_at),
 							},
 						];
 						return (
@@ -66,15 +62,11 @@ export default function UserPatronages() {
 							},
 							{
 								name: "Started",
-								value: new Date(
-									patron.created_at
-								).toLocaleString(locale),
+								value: formatDateTime(patron.created_at),
 							},
 							{
 								name: "Updated",
-								value: new Date(
-									patron.updated_at
-								).toLocaleString(locale),
+								value: formatDateTime(patron.updated_at),
 							},
 						];
 						return (

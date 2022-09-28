@@ -1,5 +1,5 @@
 import { Box, Heading, Text } from "@theme-ui/components";
-import { locale } from "lib/constants";
+import { formatDate, formatTime } from "lib/dateTime";
 import groupBy from "lib/groupBy";
 import useAPI, { useCampuses } from "lib/useAPI";
 import Link from "next/link";
@@ -43,9 +43,7 @@ export default function UserLocations() {
 
 	if (!locations.length) return <>Never seen on any campus.</>;
 
-	const byDay = groupBy(locations, (l) =>
-		new Date(l.begin_at).toDateString()
-	);
+	const byDay = groupBy(locations, (l) => formatDate(l.begin_at));
 
 	return byDay.map((day) => (
 		<Box key={day.name} as="section" my={2}>
@@ -80,16 +78,12 @@ export default function UserLocations() {
 					</h4>
 					<small>
 						<time dateTime={location.begin_at}>
-							{new Date(location.begin_at).toLocaleTimeString(
-								locale
-							)}
+							{formatTime(location.begin_at)}
 						</time>{" "}
 						–{" "}
 						{location.end_at ? (
 							<time dateTime={location.end_at}>
-								{new Date(location.end_at).toLocaleTimeString(
-									locale
-								)}
+								{formatTime(location.end_at)}
 							</time>
 						) : (
 							<Text color="#01FF70">active</Text>

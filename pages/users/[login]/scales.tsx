@@ -1,5 +1,6 @@
 import { ResponsiveLine } from "@nivo/line";
 import { Box } from "@theme-ui/components";
+import { formatDate } from "lib/dateTime";
 import useAPI from "lib/useAPI";
 import { useRouter } from "next/router";
 import Card from "ui/cards/Card";
@@ -212,13 +213,7 @@ export default function UserScales() {
 											: "corrected"}{" "}
 									</b>
 									<br />
-									Date:{" "}
-									<b>
-										{new Date(
-											s.begin_at
-										).toLocaleDateString()}
-									</b>
-									<br />
+						Date: <b>{formatDate(scale.begin_at)}</b>
 									ID: <b>{s.scale_id}</b>
 									<br />
 									Duration:{" "}
