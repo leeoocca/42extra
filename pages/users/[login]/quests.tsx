@@ -1,4 +1,5 @@
 import { Flex, Heading, Text } from "@theme-ui/components";
+import { getUserQuestsLink } from "lib/intraLink";
 import useAPI from "lib/useAPI";
 import { useRouter } from "next/router";
 import { QuestUser } from "types/42";
@@ -82,3 +83,4 @@ export default function UserQuests() {
 }
 
 UserQuests.header = UserHeader;
+UserQuests.getApiLink = getUserQuestsLink();

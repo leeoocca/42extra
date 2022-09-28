@@ -37,7 +37,10 @@ export default function MyApp({
 		Component.shell === false ? (
 			child
 		) : (
-			<Shell headerContent={Component.header && <Component.header />}>
+			<Shell
+				headerContent={Component.header && <Component.header />}
+				intraLink={Component.getIntraLink && Component.getIntraLink()}
+			>
 				{child}
 			</Shell>
 		);

@@ -13,6 +13,7 @@ import {
 import { ICON_SIZE } from "lib/actions";
 import { mendColor } from "lib/color";
 import getPrettyDuration from "lib/getPrettyDuration";
+import { getUserLink } from "lib/intraLink";
 import sortCursus from "lib/sortCursus";
 import useAPI from "lib/useAPI";
 import { Check, Hash, Mail, User as UserIcon, X } from "lucide-react";
@@ -63,7 +64,7 @@ const OverviewCard = ({ children, title, href = null, heigth = null }) => {
 	);
 };
 
-const MyResponsiveRadar = ({ data }) => (
+const MyResponsiveRadar = ({ data, keys }) => (
 	<ResponsiveRadar
 		data={data}
 		theme={{
@@ -83,11 +84,10 @@ const MyResponsiveRadar = ({ data }) => (
 				},
 			},
 		}}
-		keys={["level"]}
+		keys={keys}
 		indexBy="name"
 		valueFormat=">-.2f"
 		margin={{ top: 40, right: 100, bottom: 40, left: 100 }}
-		maxValue={26}
 		fillOpacity={0.7}
 		colors="var(--theme-ui-colors-primary)"
 	/>
@@ -115,6 +115,17 @@ export default function UserOverview() {
 
 	if (error) return <>Error</>;
 	if (!user) return <Loading />;
+
+	let tmp = new Map<string, any>();
+	user.cursus_users.forEach((cursus) =>
+		cursus.skills.map((skill) => {
+			const prevValue = tmp.get(skill.name);
+			let tmpSkill = { name: skill.name };
+			tmpSkill[cursus.cursus.name] = skill.level;
+			tmp.set(skill.name, { ...prevValue, ...tmpSkill });
+		})
+	);
+	const skillsWithCursus = [...tmp.values()];
 
 	const location = user.location
 		? `${user.location} in ${
@@ -416,7 +427,12 @@ export default function UserOverview() {
 				</OverviewCard>
 				<Grid columns={0.1}>
 					<OverviewCard title="Skills" heigth={300}>
-						<MyResponsiveRadar data={user.cursus_users[0].skills} />
+						<MyResponsiveRadar
+							data={skillsWithCursus}
+							keys={user.cursus_users.map(
+								(cursus) => cursus.cursus.name
+							)}
+						/>
 					</OverviewCard>
 				</Grid>
 			</Grid>
@@ -425,3 +441,4 @@ export default function UserOverview() {
 }
 
 UserOverview.header = UserHeader;
+UserOverview.getIntraLink = getUserLink;

@@ -1,4 +1,5 @@
 import { Text } from "@theme-ui/components";
+import { getUserProjectLink } from "lib/intraLink";
 import useAPI from "lib/useAPI";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -115,3 +116,4 @@ export default function ProjectUser() {
 }
 
 ProjectUser.header = ProjectUserHeader;
+ProjectUser.getIntraLink = getUserProjectLink;
