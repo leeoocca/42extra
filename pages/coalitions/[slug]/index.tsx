@@ -6,9 +6,9 @@ import CoalitionHeader from "ui/headers/CoalitionHeader";
 import Loader from "ui/Loader";
 import Loading from "ui/Loading";
 import PageTitle from "ui/PageTitle";
-import UserCard from "ui/UserCard";
-import UserCardWithDetails from "ui/UserCardWithDetails";
-import UserGrid from "ui/UserGrid";
+import UserCard from "ui/cards/UserCard";
+import UserCardWithDetails from "ui/cards/UserCardWithDetails";
+import UserGrid from "ui/grids/UserGrid";
 
 export default function CoalitionIndex() {
 	const {

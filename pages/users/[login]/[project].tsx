@@ -1,5 +1,5 @@
 import { Text } from "@theme-ui/components";
-import { getUserProjectLink } from "lib/intraLink";
+import { GetUserProjectLink } from "lib/intraLink";
 import useAPI from "lib/useAPI";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -29,10 +29,9 @@ export default function ProjectUser() {
 					<h2 className="text-lg font-medium">{team.name}</h2>
 					<p>
 						<span
-							className={`${
-								team.status === "in_progress" &&
+							className={`${team.status === "in_progress" &&
 								"text-yellow-400"
-							}`}
+								}`}
 						>
 							{team.status.replace(/_/g, " ")}
 						</span>
@@ -41,11 +40,10 @@ export default function ProjectUser() {
 								{" "}
 								–{" "}
 								<span
-									className={`${
-										team["validated?"]
+									className={`${team["validated?"]
 											? "text-green-400"
 											: "text-red-600"
-									}`}
+										}`}
 								>
 									{team.final_mark}
 								</span>
@@ -68,11 +66,10 @@ export default function ProjectUser() {
 							{team.scale_teams.map((scale) => (
 								<li key={scale.id}>
 									<span
-										className={`${
-											scale.flag.positive
+										className={`${scale.flag.positive
 												? "text-green-400"
 												: "text-red-600"
-										}`}
+											}`}
 									>
 										{scale.final_mark}
 									</span>{" "}
@@ -116,4 +113,4 @@ export default function ProjectUser() {
 }
 
 ProjectUser.header = ProjectUserHeader;
-ProjectUser.getIntraLink = getUserProjectLink;
+ProjectUser.getIntraLink = GetUserProjectLink;

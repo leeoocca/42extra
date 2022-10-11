@@ -1,11 +1,11 @@
-import { getAppLink } from "lib/intraLink";
+import { GetAppLink } from "lib/intraLink";
 import useAPI from "lib/useAPI";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { App } from "types/42";
 import Loading from "ui/Loading";
 import PageTitle from "ui/PageTitle";
-import UserCard from "ui/UserCard";
+import UserCard from "ui/cards/UserCard";
 import WebsiteLink from "ui/WebsiteLink";
 
 export default function AppDetails() {
@@ -67,4 +67,4 @@ export default function AppDetails() {
 	);
 }
 
-AppDetails.getIntraLink = getAppLink;
+AppDetails.getIntraLink = GetAppLink;

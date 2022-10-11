@@ -13,7 +13,7 @@ import {
 import { ICON_SIZE } from "lib/actions";
 import { mendColor } from "lib/color";
 import getPrettyDuration from "lib/getPrettyDuration";
-import { getUserLink } from "lib/intraLink";
+import { GetUserLink } from "lib/intraLink";
 import sortCursus from "lib/sortCursus";
 import useAPI from "lib/useAPI";
 import { Check, Hash, Mail, User as UserIcon, X } from "lucide-react";
@@ -45,10 +45,10 @@ const None = () => <i className="opacity-75">none</i>;
 const OverviewCard = ({ children, title, href = null, heigth = null }) => {
 	const link = href
 		? (el) => (
-				<Link href={href} passHref>
-					{el}
-				</Link>
-		  )
+			<Link href={href} passHref>
+				{el}
+			</Link>
+		)
 		: (el) => el;
 
 	return link(
@@ -128,18 +128,16 @@ export default function UserOverview() {
 	const skillsWithCursus = [...tmp.values()];
 
 	const location = user.location
-		? `${user.location} in ${
-				locations
-					? `${
-							user.campus.find(
-								(campus) => campus.id === locations[0].campus_id
-							).name
-					  } for ${getPrettyDuration(locations[0].begin_at)}`
-					: "..."
-		  }`
+		? `${user.location} in ${locations
+			? `${user.campus.find(
+				(campus) => campus.id === locations[0].campus_id
+			).name
+			} for ${getPrettyDuration(locations[0].begin_at)}`
+			: "..."
+		}`
 		: locations
-		? getLastSeen(locations, user.campus) // TODO consider using useCampuses
-		: "last seen...";
+			? getLastSeen(locations, user.campus) // TODO consider using useCampuses
+			: "last seen...";
 	return (
 		<>
 			<Grid columns={[1, , 3]}>
@@ -233,7 +231,7 @@ export default function UserOverview() {
 						<RelativeTime
 							date={new Date(
 								Date.parse(user.anonymize_date) -
-									3 * 365 * 24 * 60 * 60 * 1000
+								3 * 365 * 24 * 60 * 60 * 1000
 							).toISOString()}
 							// TODO check if works fine with other time zones
 							unit="day"
@@ -290,7 +288,7 @@ export default function UserOverview() {
 										<Progress
 											value={cursus.level}
 											max={26}
-											// sx={{ borderRadius: 0 }}
+										// sx={{ borderRadius: 0 }}
 										/>
 									</Box>
 								))}
@@ -320,8 +318,8 @@ export default function UserOverview() {
 											{user.campus_users.find(
 												(c) => c.campus_id === campus.id
 											).is_primary && (
-												<Badge>Primary</Badge>
-											)}
+													<Badge>Primary</Badge>
+												)}
 										</Flex>
 									</a>
 								</Link>
@@ -441,4 +439,4 @@ export default function UserOverview() {
 }
 
 UserOverview.header = UserHeader;
-UserOverview.getIntraLink = getUserLink;
+UserOverview.getIntraLink = GetUserLink;

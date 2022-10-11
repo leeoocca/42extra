@@ -29,16 +29,15 @@ function ScaleCard({ scale, login }) {
 				{/* <Link
 					href={`/users/${scale.correcteds[0].login}/${project_name}`}
 				> */}
-				{scale.correcteds.map((user) => user.login)}'s{" "}
+				{scale.correcteds.map((user) => user.login)}&apos;s{" "}
 				<b style={{ fontSize: 15 }}>
 					{project_name}
 					{" ["}
 					<span
-						className={`${
-							scale.team["validated?"]
-								? "text-green-400"
-								: "text-red-600"
-						}`}
+						className={`${scale.team["validated?"]
+							? "text-green-400"
+							: "text-red-600"
+							}`}
 					>
 						{scale.final_mark}
 					</span>
@@ -78,11 +77,10 @@ function ScaleCard({ scale, login }) {
 					<hr className="my-1 opacity-50" />
 					<p className="text-xs">
 						<span
-							className={`${
-								scale.team["validated?"]
-									? "text-green-400"
-									: "text-red-600"
-							}`}
+							className={`${scale.team["validated?"]
+								? "text-green-400"
+								: "text-red-600"
+								}`}
 						>
 							{scale.final_mark}
 						</span>
@@ -161,7 +159,7 @@ export default function UserScales() {
 			{scales && (
 				<CardGrid>
 					{scales.map((scale) => (
-						<ScaleCard scale={scale} login={login} />
+						<ScaleCard key={scale.id} scale={scale} login={login} />
 					))}
 				</CardGrid>
 			)}

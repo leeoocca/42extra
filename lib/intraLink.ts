@@ -5,21 +5,21 @@ const PROJECTS_BASE = "https://projects.intra.42.fr";
 
 // USER
 
-export function getUserLink() {
+export function GetUserLink() {
 	const {
 		query: { login },
 	} = useRouter();
 	return PROFILE_BASE + "/users/" + login;
 }
 
-export function getUserQuestsLink() {
+export function GetUserQuestsLink() {
 	const {
 		query: { login },
 	} = useRouter();
 	return PROFILE_BASE + "/users/" + login + "/quests";
 }
 
-export function getUserAchievementsLink() {
+export function GetUserAchievementsLink() {
 	const {
 		query: { login },
 	} = useRouter();
@@ -35,7 +35,7 @@ export function getUserAchievementsLink() {
 
 // PROJECT
 
-export function getProjectLink() {
+export function GetProjectLink() {
 	const {
 		query: { slug },
 	} = useRouter();
@@ -44,7 +44,7 @@ export function getProjectLink() {
 
 // PROJECT USER
 
-export function getUserProjectLink() {
+export function GetUserProjectLink() {
 	const {
 		query: { project, login },
 	} = useRouter();
@@ -73,7 +73,7 @@ export function getUserProjectLink() {
 
 // EVENTS
 
-export function getEventLink() {
+export function GetEventLink() {
 	const {
 		query: { id },
 	} = useRouter();
@@ -89,7 +89,7 @@ export function getEventLink() {
 
 // https://profile.intra.42.fr/oauth/applications
 
-export function getAppLink() {
+export function GetAppLink() {
 	const {
 		query: { id },
 	} = useRouter();
