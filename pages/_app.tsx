@@ -4,7 +4,7 @@ import { globalActions } from "lib/actions";
 import fetcher from "lib/fetcher";
 import theme from "lib/theme";
 import { SessionProvider } from "next-auth/react";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import "styles/globals.css";
 import { SWRConfig, SWRConfiguration } from "swr";
 import { ThemeProvider } from "theme-ui";
@@ -33,13 +33,17 @@ export default function MyApp({
 	Component,
 	pageProps: { session, ...pageProps },
 }) {
+	const { query } = useRouter();
+
 	const getShell = (child) =>
 		Component.shell === false ? (
 			child
 		) : (
 			<Shell
 				headerContent={Component.header && <Component.header />}
-				intraLink={Component.getIntraLink && Component.getIntraLink()}
+				intraLink={
+					Component.getIntraLink && Component.getIntraLink(query)
+				}
 			>
 				{child}
 			</Shell>

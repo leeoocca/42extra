@@ -1,4 +1,4 @@
-import { GetProjectLink } from "lib/intraLink";
+import { getProjectLink } from "lib/intraLink";
 import useAPI from "lib/useAPI";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -68,4 +68,4 @@ export default function ProjectIndex() {
 }
 
 ProjectIndex.header = ProjectHeader;
-ProjectIndex.getIntraLink = GetProjectLink;
+ProjectIndex.getIntraLink = getProjectLink;

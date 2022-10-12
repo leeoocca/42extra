@@ -1,29 +1,18 @@
-import { useRouter } from "next/router";
-
 const PROFILE_BASE = "https://profile.intra.42.fr";
 const PROJECTS_BASE = "https://projects.intra.42.fr";
 
 // USER
 
-export function GetUserLink() {
-	const {
-		query: { login },
-	} = useRouter();
-	return PROFILE_BASE + "/users/" + login;
+export function getUserLink(query) {
+	return PROFILE_BASE + "/users/" + query.login;
 }
 
-export function GetUserQuestsLink() {
-	const {
-		query: { login },
-	} = useRouter();
-	return PROFILE_BASE + "/users/" + login + "/quests";
+export function getUserQuestsLink(query) {
+	return PROFILE_BASE + "/users/" + query.login + "/quests";
 }
 
-export function GetUserAchievementsLink() {
-	const {
-		query: { login },
-	} = useRouter();
-	return PROFILE_BASE + "/users/" + login + "/achievements";
+export function getUserAchievementsLink(query) {
+	return PROFILE_BASE + "/users/" + query.login + "/achievements";
 }
 
 // https://profile.intra.42.fr/users/lrocca/correction_point_historics
@@ -35,20 +24,14 @@ export function GetUserAchievementsLink() {
 
 // PROJECT
 
-export function GetProjectLink() {
-	const {
-		query: { slug },
-	} = useRouter();
-	return PROJECTS_BASE + "/projects/" + slug;
+export function getProjectLink(query) {
+	return PROJECTS_BASE + "/projects/" + query.slug;
 }
 
 // PROJECT USER
 
-export function GetUserProjectLink() {
-	const {
-		query: { project, login },
-	} = useRouter();
-	return PROJECTS_BASE + "/" + project + "/" + login;
+export function getUserProjectLink(query) {
+	return PROJECTS_BASE + "/" + query.project + "/" + query.login;
 }
 
 // COALITIONS
@@ -73,11 +56,8 @@ export function GetUserProjectLink() {
 
 // EVENTS
 
-export function GetEventLink() {
-	const {
-		query: { id },
-	} = useRouter();
-	return PROFILE_BASE + "/events/" + id;
+export function getEventLink(query) {
+	return PROFILE_BASE + "/events/" + query.id;
 }
 
 // https://profile.intra.42.fr/events/12228/feedbacks
@@ -89,11 +69,8 @@ export function GetEventLink() {
 
 // https://profile.intra.42.fr/oauth/applications
 
-export function GetAppLink() {
-	const {
-		query: { id },
-	} = useRouter();
-	return PROFILE_BASE + "/oauth/applications/" + id;
+export function getAppLink(query) {
+	return PROFILE_BASE + "/oauth/applications/" + query.id;
 }
 
 // https://profile.intra.42.fr/oauth/applications/5406/edit
