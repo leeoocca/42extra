@@ -31,7 +31,7 @@ export default NextAuth({
 					name: profile.usual_first_name || profile.first_name,
 					fullName: profile.usual_full_name,
 					email: profile.email,
-					image: profile.image_url,
+					image: profile.image.link,
 					campus: primaryCampus?.campus_id,
 					staff: profile["staff?"],
 					cursus: profile.cursus_users.map((c) => c.cursus_id),

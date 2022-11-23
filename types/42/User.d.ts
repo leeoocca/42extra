@@ -12,7 +12,15 @@ export interface User {
 	url: string;
 	phone: string;
 	displayname: string;
-	image_url: string;
+	image: {
+		link: string;
+		versions: {
+			large: string;
+			medium: string;
+			small: string;
+			micro: string;
+		}
+	}
 	"staff?": boolean;
 	correction_point: number;
 	pool_month: string;

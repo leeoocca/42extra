@@ -125,28 +125,28 @@ export default function UserHeader() {
 				}}
 			>
 				<a
-					href={user?.image_url || ""}
+					href={user?.image?.link || ""}
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-				<Avatar
-					url={
-						error
-							? "https://cdn.intra.42.fr/users/default.jpg"
-							: user
-							? user.image_url
-							: null
-					}
-					size={128}
-					deprecated={
-						user &&
-						!!user.titles_users.find(
-							(title) =>
-								title.title_id === TITLE_DEPRECATED_ID &&
-								title.selected
-						)
-					}
-				/>
+					<Avatar
+						url={
+							error
+								? "/default.jpg"
+								: user
+									? user.image.versions.medium
+									: null
+						}
+						size={128}
+						deprecated={
+							user &&
+							!!user.titles_users.find(
+								(title) =>
+									title.title_id === TITLE_DEPRECATED_ID &&
+									title.selected
+							)
+						}
+					/>
 				</a>
 				{!isLoading && (
 					<Box>
