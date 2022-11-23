@@ -83,4 +83,4 @@ export default function UserQuests() {
 }
 
 UserQuests.header = UserHeader;
-UserQuests.getApiLink = getUserQuestsLink;
+UserQuests.getIntraLink = getUserQuestsLink;
