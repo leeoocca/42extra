@@ -82,7 +82,7 @@ function Results({
 										objectFit: "cover",
 										objectPosition: "center",
 									}}
-									src={projectUser.user.image_url}
+									src={projectUser.user.image.versions.small}
 								/>
 								{projectUser.user.login}
 							</TLink>

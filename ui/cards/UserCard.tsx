@@ -53,7 +53,7 @@ function UserCard({ id }: { id: string | number }) {
 	return (
 		<Template
 			id={id}
-			avatar={<Avatar url={user.image_url} size={40} />}
+			avatar={<Avatar url={user.image.versions.small} size={40} />}
 			title={user.login}
 			description={
 				campus !== undefined ? campus.name : user.usual_full_name
