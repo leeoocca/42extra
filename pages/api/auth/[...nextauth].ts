@@ -67,7 +67,6 @@ export default NextAuth({
 		async session({ session, token }) {
 			session.user = token.user;
 			session.accessToken = token.accessToken;
-			session.error = token.error;
 			session.tokenExpires = token.expires;
 
 			return session;
