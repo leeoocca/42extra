@@ -12,6 +12,7 @@ import { CalendarOptions, GoogleCalendar, ICalendar } from "datebook";
 import { setPrimaryColor } from "lib/color";
 import fetcher from "lib/fetcher";
 import getPrettyDuration from "lib/getPrettyDuration";
+import { getEventLink } from "lib/intraLink";
 import isFuture from "lib/isFuture";
 import isUrl from "lib/isUrl";
 import useAPI, { useCampuses, useCursuses } from "lib/useAPI";
@@ -305,3 +306,4 @@ export default function EventDetails() {
 }
 
 EventDetails.header = EventHeader;
+EventDetails.getIntraLink = getEventLink;

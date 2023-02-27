@@ -1,7 +1,7 @@
-import { User } from "types/42";
 import useAPI from "lib/useAPI";
 import Link from "next/link";
-import Avatar, { ErrorAvatar, LoadingAvatar } from "./Avatar";
+import { User } from "types/42";
+import Avatar, { ErrorAvatar, LoadingAvatar } from "ui/Avatar";
 import Card from "./Card";
 
 function Template({ id, avatar, title, description }) {
@@ -53,7 +53,7 @@ function UserCard({ id }: { id: string | number }) {
 	return (
 		<Template
 			id={id}
-			avatar={<Avatar url={user.image_url} size={40} />}
+			avatar={<Avatar url={user.image.versions.small} size={40} />}
 			title={user.login}
 			description={
 				campus !== undefined ? campus.name : user.usual_full_name

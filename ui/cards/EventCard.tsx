@@ -1,5 +1,5 @@
 import { Card, Text } from "@theme-ui/components";
-import { locale } from "lib/constants";
+import { formatDateTime } from "lib/dateTime";
 import Link from "next/link";
 import { Event } from "types/42";
 
@@ -16,7 +16,7 @@ export default function EventCard({ event }: { event: Event }) {
 					{event.max_people && ` / ${event.max_people}`}
 				</p>
 				<p>{event.location}</p>
-				<p>{new Date(event.begin_at).toLocaleString(locale)}</p>
+				<p>{formatDateTime(event.begin_at)}</p>
 			</Card>
 		</Link>
 	);

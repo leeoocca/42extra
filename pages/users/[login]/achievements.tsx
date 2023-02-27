@@ -1,10 +1,11 @@
+import { getUserAchievementsLink } from "lib/intraLink";
 import useAPI from "lib/useAPI";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import emptyState from "public/coding.gif";
 import { User } from "types/42";
-import AchievementCard from "ui/AchievementCard";
-import CardGrid from "ui/CardGrid";
+import AchievementCard from "ui/cards/AchievementCard";
+import CardGrid from "ui/grids/CardGrid";
 import UserHeader from "ui/headers/UserHeader";
 import Loading from "ui/Loading";
 
@@ -53,3 +54,4 @@ export default function UserAchievements() {
 }
 
 UserAchievements.header = UserHeader;
+UserAchievements.getIntraLink = getUserAchievementsLink;

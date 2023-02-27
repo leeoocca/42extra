@@ -29,7 +29,7 @@ const StaleSession = () => (
 	</Alert>
 );
 
-export default function Shell({ children, headerContent }) {
+export default function Shell({ children, headerContent, intraLink }) {
 	const { status, data: session } = useSession({
 		required: true,
 		onUnauthenticated() {
@@ -104,7 +104,7 @@ export default function Shell({ children, headerContent }) {
 				>
 					{children}
 				</Container>
-				<Footer />
+				<Footer intraLink={intraLink} />
 			</Box>
 		</APIErrorProvider>
 	);

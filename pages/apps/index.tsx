@@ -1,7 +1,7 @@
 import useAPI from "lib/useAPI";
 import { App } from "types/42";
-import AppCard from "ui/AppCard";
-import CardGrid from "ui/CardGrid";
+import AppCard from "ui/cards/AppCard";
+import CardGrid from "ui/grids/CardGrid";
 import Loading from "ui/Loading";
 import PageTitle from "ui/PageTitle";
 

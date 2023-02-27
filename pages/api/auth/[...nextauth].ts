@@ -31,7 +31,7 @@ export default NextAuth({
 					name: profile.usual_first_name || profile.first_name,
 					fullName: profile.usual_full_name,
 					email: profile.email,
-					image: profile.image_url,
+					image: profile.image.link,
 					campus: primaryCampus?.campus_id,
 					staff: profile["staff?"],
 					cursus: profile.cursus_users.map((c) => c.cursus_id),
@@ -67,7 +67,6 @@ export default NextAuth({
 		async session({ session, token }) {
 			session.user = token.user;
 			session.accessToken = token.accessToken;
-			session.error = token.error;
 			session.tokenExpires = token.expires;
 
 			return session;

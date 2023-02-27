@@ -1,4 +1,5 @@
 import { Checkbox, Label } from "@theme-ui/components";
+import { formatDate } from "lib/dateTime";
 import getTimeAgo from "lib/getTimeAgo";
 import { useState } from "react";
 
@@ -46,7 +47,7 @@ export default function RelativeTime({
 		  )
 		: (value) => value;
 
-	const formattedDate = new Date(date).toLocaleString();
+	const formattedDate = formatDate(date);
 
 	return wrap(
 		<time dateTime={date} title={date}>

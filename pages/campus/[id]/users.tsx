@@ -4,8 +4,8 @@ import { User } from "next-auth";
 import { useRouter } from "next/router";
 import CampusHeader from "ui/headers/CampusHeader";
 import Loading from "ui/Loading";
-import UserCard from "ui/UserCard";
-import UserGrid from "ui/UserGrid";
+import UserCard from "ui/cards/UserCard";
+import UserGrid from "ui/grids/UserGrid";
 
 export default function CampusUsers() {
 	const {

@@ -1,9 +1,10 @@
 import { Flex, Heading, Text } from "@theme-ui/components";
+import { getUserQuestsLink } from "lib/intraLink";
 import useAPI from "lib/useAPI";
 import { useRouter } from "next/router";
 import { QuestUser } from "types/42";
-import Card from "ui/Card";
-import CardGrid from "ui/CardGrid";
+import Card from "ui/cards/Card";
+import CardGrid from "ui/grids/CardGrid";
 import UserHeader from "ui/headers/UserHeader";
 import Loading from "ui/Loading";
 import RelativeTime from "ui/RelativeTime";
@@ -82,3 +83,4 @@ export default function UserQuests() {
 }
 
 UserQuests.header = UserHeader;
+UserQuests.getIntraLink = getUserQuestsLink;
