@@ -16,7 +16,7 @@ import getPrettyDuration from "lib/getPrettyDuration";
 import { getUserLink } from "lib/intraLink";
 import sortCursus from "lib/sortCursus";
 import useAPI from "lib/useAPI";
-import { Check, Hash, Mail, User as UserIcon, X } from "lucide-react";
+import { Check, Dna, Hash, Mail, User as UserIcon, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
@@ -190,16 +190,12 @@ export default function UserOverview() {
 									: "none",
 							},
 							{
+								value: user.kind,
+								icon: <Dna size={ICON_SIZE - 4} />,
+							},
+							{
 								name: "Alumni",
 								icon: checkOrX(user.alumni),
-							},
-							{
-								name: "Launched",
-								icon: checkOrX(user["is_launched?"]),
-							},
-							{
-								name: "Staff",
-								icon: checkOrX(user["staff?"]),
 							},
 						].map((e, index) => (
 							<Fragment key={index}>

@@ -22,7 +22,7 @@
     "datebook": "^7.0.8",
     "kbar": "^0.1.0-beta.36",
     "limiter": "^2.1.0",
-    "lucide-react": "^0.88.0",
+    "lucide-react": "^0.115.0",
     "next": "12.2.5",
     "next-auth": "^4.17.0",
     "normalize-url": "^7.1.0",
