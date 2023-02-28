@@ -75,6 +75,10 @@ export function CampusNavLinks(): LinkListNode[] {
 			name: "Events",
 			href: `${baseUrl}/events`,
 		},
+		{
+			name: "Shop",
+			href: `${baseUrl}/shop`,
+		},
 	];
 }
 
