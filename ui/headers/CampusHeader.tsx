@@ -14,16 +14,24 @@ export default function CampusHeader() {
 	} = useRouter();
 
 	const { data: campuses } = useCampuses();
-
-	const campus = campuses
-		? campuses.find((campus) => campus.id === parseInt(String(id)))
-		: { name: "Loading...", city: null, country: null };
-
 	const [title, setTitle] = useState<string | string[]>("");
+	const [campus, setCampus] = useState({
+		name: "Loading...",
+		city: null,
+		country: null,
+	});
+
+	useEffect(() => {
+		if (campuses)
+			setCampus(
+				campuses.find((campus) => campus.id === parseInt(String(id)))
+			);
+	}, [campuses]);
 
 	useEffect(() => {
 		const routeArray = route.split("/");
 		const page = routeArray[routeArray.length - 1];
+
 		setTitle(
 			page !== "[id]"
 				? [campus.name, page.replace(/^\w/, (c) => c.toUpperCase())]
