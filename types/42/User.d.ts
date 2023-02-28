@@ -19,8 +19,8 @@ export interface User {
 			medium: string;
 			small: string;
 			micro: string;
-		}
-	}
+		};
+	};
 	"staff?": boolean;
 	correction_point: number;
 	pool_month: string;
@@ -31,7 +31,7 @@ export interface User {
 	created_at: string; // Date
 	updated_at: string; // Date
 	alumni: boolean;
-	"is_launched?": boolean;
+	kind: "admin" | "student" | "external";
 	groups: Group[];
 	cursus_users: CursusUser[];
 	projects_users: ProjectsUser[];
