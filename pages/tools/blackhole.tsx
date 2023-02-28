@@ -5,7 +5,6 @@ import {
 	Flex,
 	Input,
 	Label,
-	Link as TLink,
 	Select,
 	Text,
 } from "@theme-ui/components";
@@ -15,10 +14,10 @@ import isFuture from "lib/isFuture";
 import { useCampuses } from "lib/useAPI";
 import { useDebouncedValue } from "lib/useDebouncedValue";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
 import useSWR from "swr";
 import { CursusUser } from "types/42";
+import Link from "ui/Link";
 import Loading from "ui/Loading";
 import PageTitle from "ui/PageTitle";
 import RelativeTime from "ui/RelativeTime";
@@ -65,27 +64,23 @@ function Results({
 					<Flex as="li" sx={{ justifyContent: "space-between" }}>
 						<Link
 							href={`/users/${projectUser.user.login}`}
-							passHref
+							sx={{
+								display: "flex",
+								alignItems: "center",
+								gap: 2,
+							}}
 						>
-							<TLink
+							<Avatar
 								sx={{
-									display: "flex",
-									alignItems: "center",
-									gap: 2,
+									minWidth: "auto",
+									width: 32,
+									height: 32,
+									objectFit: "cover",
+									objectPosition: "center",
 								}}
-							>
-								<Avatar
-									sx={{
-										minWidth: "auto",
-										width: 32,
-										height: 32,
-										objectFit: "cover",
-										objectPosition: "center",
-									}}
-									src={projectUser.user.image.versions.small}
-								/>
-								{projectUser.user.login}
-							</TLink>
+								src={projectUser.user.image.versions.small}
+							/>
+							{projectUser.user.login}
 						</Link>
 						<RelativeTime date={projectUser.blackholed_at} bh />
 					</Flex>

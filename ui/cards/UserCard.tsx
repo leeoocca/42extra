@@ -6,7 +6,7 @@ import Card from "./Card";
 
 function Template({ id, avatar, title, description }) {
 	return (
-		<Link href={`/users/${id}`}>
+		<Link href={`/users/${id}`} legacyBehavior>
 			<a className="w-full">
 				<Card className="flex w-full">
 					{avatar}

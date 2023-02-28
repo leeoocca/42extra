@@ -1,12 +1,12 @@
 import { Text } from "@theme-ui/components";
 import { getUserProjectLink } from "lib/intraLink";
 import useAPI from "lib/useAPI";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { Team } from "types/42";
 import UserCard from "ui/cards/UserCard";
 import UserGrid from "ui/grids/UserGrid";
 import ProjectUserHeader from "ui/headers/ProjectUserHeader";
+import Link from "ui/Link";
 import Loading from "ui/Loading";
 
 export default function ProjectUser() {
@@ -80,9 +80,7 @@ export default function ProjectUser() {
 									<Link
 										href={`/users/${scale.corrector.login}`}
 									>
-										<a className="underline">
-											{scale.corrector.login}
-										</a>
+										{scale.corrector.login}
 									</Link>
 								</li>
 							))}

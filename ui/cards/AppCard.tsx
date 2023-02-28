@@ -8,29 +8,28 @@ function AppCard({ app }) {
 
 	return (
 		<Link key={app.id} href={`/apps/${app.id}`}>
-			<a>
-				<Card className="h-20 overflow-hidden">
-					{app.image && app.image.length && (
-						<div className="relative w-16 h-16 mr-2">
-							<Image
-								src={
-									"https://cdn.intra.42.fr" +
-									app.image.replace("/uploads", "")
-								}
-								layout="fill"
-								objectFit="contain"
-							/>
-						</div>
-					)}
-					<div className="text-sm">
-						<h2 className="text-base font-semibold">{app.name}</h2>
-						<p>{app.description}</p>
-						{app.owner.login === session?.user.login && (
-							<p>{app.public ? "public" : "hidden"}</p>
-						)}
+			<Card className="h-20 overflow-hidden">
+				{app.image && app.image.length && (
+					<div className="relative w-16 h-16 mr-2">
+						<Image
+							alt="app icon"
+							src={
+								"https://cdn.intra.42.fr" +
+								app.image.replace("/uploads", "")
+							}
+							fill
+							style={{ objectFit: "contain" }}
+						/>
 					</div>
-				</Card>
-			</a>
+				)}
+				<div className="text-sm">
+					<h2 className="text-base font-semibold">{app.name}</h2>
+					<p>{app.description}</p>
+					{app.owner.login === session?.user.login && (
+						<p>{app.public ? "public" : "hidden"}</p>
+					)}
+				</div>
+			</Card>
 		</Link>
 	);
 }

@@ -21,31 +21,29 @@ export default function CoalitionsIndex() {
 				{coalitions ? (
 					coalitions.map((c) => (
 						<Link href={`/coalitions/${c.slug}`} key={c.id}>
-							<a>
-								<Card
-									className={
-										"h-32 overflow-hidden bg-white bg-opacity-20 hover:bg-opacity-30"
-									}
-									// backgroundImageURL={c.cover_url}
-									backgroundColor={mendColor(c.color) + "66"}
-								>
-									<div className="flex items-end justify-between w-full h-full">
-										<div>
-											<h2 className="text-lg font-semibold">
-												{c.name}
-											</h2>
-											<p className="text-xs uppercase">
-												Score: {c.score}
-											</p>
-										</div>
-										<SVG
-											src={c.image_url}
-											fill="white"
-											className="w-16 h-16 mix-blend-soft-light"
-										/>
+							<Card
+								className={
+									"h-32 overflow-hidden bg-white bg-opacity-20 hover:bg-opacity-30"
+								}
+								// backgroundImageURL={c.cover_url}
+								backgroundColor={mendColor(c.color) + "66"}
+							>
+								<div className="flex items-end justify-between w-full h-full">
+									<div>
+										<h2 className="text-lg font-semibold">
+											{c.name}
+										</h2>
+										<p className="text-xs uppercase">
+											Score: {c.score}
+										</p>
 									</div>
-								</Card>
-							</a>
+									<SVG
+										src={c.image_url}
+										fill="white"
+										className="w-16 h-16 mix-blend-soft-light"
+									/>
+								</div>
+							</Card>
 						</Link>
 					))
 				) : (

@@ -25,7 +25,7 @@ const Results = memo(function Results({ query }: { query: string }) {
 		<Grid variant="cards" mt={3}>
 			{data.map((user) => (
 				<Link key={user.login} href={`/users/${user.login}`} passHref>
-					<Card bg="muted" p={2} as="a">
+					<Card bg="muted" p={2}>
 						{user.login} - {user.displayname}
 					</Card>
 				</Link>

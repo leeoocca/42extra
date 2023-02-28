@@ -1,6 +1,6 @@
-import { Flex, Heading, Link as ThemeLink, Text } from "@theme-ui/components";
-import Link from "next/link";
+import { Flex, Heading, Text } from "@theme-ui/components";
 import { SVGProps } from "react";
+import Link from "ui/Link";
 import PageTitle from "ui/PageTitle";
 
 const SadMac = (props: SVGProps<SVGSVGElement>) => (
@@ -34,9 +34,7 @@ export default function Custom404() {
 					404
 				</Heading>
 				<Text>Not found.</Text>
-				<Link href="/" passHref>
-					<ThemeLink as="a">Go home</ThemeLink>
-				</Link>
+				<Link href="/">Go home</Link>
 			</Flex>
 		</>
 	);

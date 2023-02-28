@@ -68,9 +68,7 @@ export default function StatusBar() {
 				}}
 			>
 				<Link href={`/users/${session.user.login}`} passHref>
-					<a>
-						<Avatar url={session.user.image} size={25} />
-					</a>
+					<Avatar url={session.user.image} size={25} />
 				</Link>
 			</Flex>
 		</Container>

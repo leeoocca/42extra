@@ -7,8 +7,8 @@ import {
 	Text,
 } from "@theme-ui/components";
 import { signIn, useSession } from "next-auth/react";
-import Link from "next/link";
 import { useRouter } from "next/router";
+import Link from "ui/Link";
 import Logo from "ui/Logo";
 import PageTitle from "ui/PageTitle";
 
@@ -24,20 +24,17 @@ function Authenticated() {
 			{callbackUrl && callbackUrl !== "/" && (
 				<>
 					<br />
-					<Link href={String(callbackUrl)} passHref>
-						<ThemeLink
-							as="a"
-							onClick={(e) => {
-								// TODO check if it's actually better
-								if (window.length > 2) {
-									e.preventDefault();
-									back();
-								}
-							}}
-						>
-							Go {window.length > 2 ? "back" : ""} to{" "}
-							{callbackUrl}
-						</ThemeLink>
+					<Link
+						href={String(callbackUrl)}
+						onClick={(e) => {
+							// TODO check if it's actually better
+							if (window.length > 2) {
+								e.preventDefault();
+								back();
+							}
+						}}
+					>
+						Go {window.length > 2 ? "back" : ""} to {callbackUrl}
 					</Link>
 				</>
 			)}

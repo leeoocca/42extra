@@ -17,12 +17,12 @@ import isFuture from "lib/isFuture";
 import isUrl from "lib/isUrl";
 import useAPI, { useCampuses, useCursuses } from "lib/useAPI";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Event, EventUser } from "types/42";
+import UILink from "ui/Link";
 import Loading from "ui/Loading";
 import PageTitle from "ui/PageTitle";
 import RelativeTime from "ui/RelativeTime";
@@ -264,17 +264,14 @@ export default function EventDetails() {
 						<Text as="ul" pl={3}>
 							{event.campus_ids.map((campus_id) => (
 								<Text key={campus_id} as="li">
-									<Link
+									<UILink
 										href={`/campus/${campus_id}`}
 										passHref
 									>
-										<TLink>
-											{campuses?.find(
-												(campus) =>
-													campus.id === campus_id
-											).name || campus_id}
-										</TLink>
-									</Link>
+										{campuses?.find(
+											(campus) => campus.id === campus_id
+										).name || campus_id}
+									</UILink>
 								</Text>
 							))}
 						</Text>
@@ -284,17 +281,11 @@ export default function EventDetails() {
 						<Text as="ul" pl={3}>
 							{event.cursus_ids.map((cursus_id) => (
 								<Text key={cursus_id} as="li">
-									<Link
-										href={`/cursus/${cursus_id}`}
-										passHref
-									>
-										<TLink>
-											{cursuses?.find(
-												(campus) =>
-													campus.id === cursus_id
-											).name || cursus_id}
-										</TLink>
-									</Link>
+									<UILink href={`/cursus/${cursus_id}`}>
+										{cursuses?.find(
+											(campus) => campus.id === cursus_id
+										).name || cursus_id}
+									</UILink>
 								</Text>
 							))}
 						</Text>

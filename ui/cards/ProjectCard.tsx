@@ -7,7 +7,7 @@ import RelativeTime from "ui/RelativeTime";
 export default function ProjectCard({ project, login }) {
 	return (
 		<Link href={`/users/${login}/${project.project.slug}`} passHref>
-			<Card as="a" bg="muted" p={2}>
+			<Card bg="muted" p={2}>
 				<div className="flex items-end justify-between w-full h-24">
 					<div>
 						<h2 className="text-lg">{project.project.name}</h2>

@@ -7,7 +7,7 @@ export default function Link({
 	...props
 }: ComponentProps<typeof NextLink> & ComponentProps<typeof ThemeLink>) {
 	return (
-		<NextLink passHref {...props}>
+		<NextLink passHref {...props} legacyBehavior>
 			<ThemeLink as="a" sx={sx} {...props}>
 				{props.children}
 			</ThemeLink>

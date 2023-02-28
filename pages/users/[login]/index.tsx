@@ -45,7 +45,7 @@ const None = () => <i className="opacity-75">none</i>;
 const OverviewCard = ({ children, title, href = null, heigth = null }) => {
 	const link = href
 		? (el) => (
-				<Link href={href} passHref>
+				<Link href={href} passHref legacyBehavior>
 					{el}
 				</Link>
 		  )
@@ -269,7 +269,6 @@ export default function UserOverview() {
 											passHref
 										>
 											<Flex
-												as="a"
 												sx={{
 													justifyContent:
 														"space-between",
@@ -304,22 +303,18 @@ export default function UserOverview() {
 									key={campus.id}
 									href={`/campus/${campus.id}`}
 								>
-									<a>
-										<Flex
-											as="li"
-											sx={{
-												gap: 2,
-												alignItems: "baseline",
-											}}
-										>
-											{campus.name}
-											{user.campus_users.find(
-												(c) => c.campus_id === campus.id
-											).is_primary && (
-												<Badge>Primary</Badge>
-											)}
-										</Flex>
-									</a>
+									<Flex
+										as="li"
+										sx={{
+											gap: 2,
+											alignItems: "baseline",
+										}}
+									>
+										{campus.name}
+										{user.campus_users.find(
+											(c) => c.campus_id === campus.id
+										).is_primary && <Badge>Primary</Badge>}
+									</Flex>
 								</Link>
 							))}
 						</ul>
@@ -344,35 +339,28 @@ export default function UserOverview() {
 												key={c.slug}
 												href={`/coalitions/${c.slug}`}
 											>
-												<a>
-													<Flex
-														as="li"
-														sx={{
-															gap: 2,
-															alignItems:
-																"center",
-														}}
+												<Flex
+													as="li"
+													sx={{
+														gap: 2,
+														alignItems: "center",
+													}}
+												>
+													<Text
+														px={1}
+														bg={mendColor(c.color)}
+														as="b"
 													>
-														<Text
-															px={1}
-															bg={mendColor(
-																c.color
-															)}
-															as="b"
-														>
-															{c.name}
-														</Text>
-														{c_u && (
-															<>
-																{" "}
-																- Rank:{" "}
-																{c_u.rank} -
-																Score:{" "}
-																{c_u.score}
-															</>
-														)}
-													</Flex>
-												</a>
+														{c.name}
+													</Text>
+													{c_u && (
+														<>
+															{" "}
+															- Rank: {c_u.rank} -
+															Score: {c_u.score}
+														</>
+													)}
+												</Flex>
 											</Link>
 										);
 									})}

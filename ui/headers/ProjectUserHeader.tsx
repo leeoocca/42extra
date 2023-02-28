@@ -1,9 +1,9 @@
 import { setPrimaryColor } from "lib/color";
 import useAPI from "lib/useAPI";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { Project, ProjectsUser, User } from "types/42";
+import Link from "ui/Link";
 import PageTitle from "ui/PageTitle";
 
 export default function ProjectUserHeader() {
@@ -45,12 +45,10 @@ export default function ProjectUserHeader() {
 			/>
 			<div className="relative px-4 py-10">
 				<h1 className="text-2xl font-bold">
-					<Link href={`/users/${userLogin}`}>
-						<a>{userLogin}</a>
-					</Link>
+					<Link href={`/users/${userLogin}`}>{userLogin}</Link>
 					's{" "}
 					<Link href={`/projects/${project}`}>
-						<a>{projectData ? projectData.name : project}</a>
+						{projectData ? projectData.name : project}
 					</Link>
 				</h1>
 				{userProject && (

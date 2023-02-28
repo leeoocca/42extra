@@ -20,7 +20,6 @@ function CampusesIndex() {
 					campuses.map((c) => (
 						<Link key={c.id} href={`/campus/${c.id}`} passHref>
 							<Card
-								as="a"
 								bg={
 									c.id === session.data.user.campus
 										? "highlight"

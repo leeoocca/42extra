@@ -36,13 +36,14 @@ export default function CampusShop() {
 									}}
 								>
 									<Image
+										alt="product"
 										src={`https://cdn.intra.42.fr${product.image.url.replace(
 											"/uploads",
 											""
 										)}`}
 										width={300}
 										height={300}
-										objectFit="contain"
+										style={{ objectFit: "contain" }}
 									/>
 								</Flex>
 							)}

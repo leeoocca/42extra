@@ -6,7 +6,7 @@ import { Event } from "types/42";
 export default function EventCard({ event }: { event: Event }) {
 	return (
 		<Link href={`/events/${event.id}`} passHref>
-			<Card bg="muted" px={3} py={2} as="a">
+			<Card bg="muted" px={3} py={2}>
 				<b>{event.name}</b>
 				<Text as="p" variant="mono">
 					{event.kind}

@@ -1,6 +1,6 @@
 import { useCursuses } from "lib/useAPI";
 import Link from "next/link";
-import Card from "ui/cards/Card";
+import { Card } from "theme-ui";
 import CardGrid from "ui/grids/CardGrid";
 import Loading from "ui/Loading";
 import PageTitle from "ui/PageTitle";
@@ -15,15 +15,17 @@ export default function Cursuses() {
 			<CardGrid>
 				{cursuses ? (
 					cursuses.map((cursus) => (
-						<Link key={cursus.id} href={`/cursus/${cursus.slug}`}>
-							<a>
-								<Card className="h-32 overflow-hidden">
-									<div>
-										<h2>{cursus.name}</h2>
-										<p className="text-xs">#{cursus.id}</p>
-									</div>
-								</Card>
-							</a>
+						<Link
+							key={cursus.id}
+							href={`/cursus/${cursus.slug}`}
+							passHref
+						>
+							<Card bg="muted" px={3} py={2}>
+								<div>
+									<h2>{cursus.name}</h2>
+									<p className="text-xs">#{cursus.id}</p>
+								</div>
+							</Card>
 						</Link>
 					))
 				) : (

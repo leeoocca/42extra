@@ -2,11 +2,11 @@ import { Box, Heading, Text } from "@theme-ui/components";
 import { formatDate, formatTime } from "lib/dateTime";
 import groupBy from "lib/groupBy";
 import useAPI, { useCampuses } from "lib/useAPI";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import prettyMilliseconds from "pretty-ms";
 import { Location } from "types/42";
 import UserHeader from "ui/headers/UserHeader";
+import Link from "ui/Link";
 import Loading from "ui/Loading";
 
 const prettyOptions = { secondsDecimalDigits: 0, millisecondsDecimalDigits: 0 };
@@ -64,15 +64,12 @@ export default function UserLocations() {
 							{" "}
 							@{" "}
 							<Link href={`/campus/${location.campus_id}`}>
-								<a>
-									{campuses
-										? campuses.find(
-												(campus) =>
-													campus.id ===
-													location.campus_id
-										  ).name
-										: location.campus_id}
-								</a>
+								{campuses
+									? campuses.find(
+											(campus) =>
+												campus.id === location.campus_id
+									  ).name
+									: location.campus_id}
 							</Link>
 						</Text>
 					</h4>

@@ -1,11 +1,11 @@
-import { Heading, Link as TLink, Text } from "@theme-ui/components";
+import { Heading, Text } from "@theme-ui/components";
 import { formatTime } from "lib/dateTime";
 import getPrettyCountry from "lib/getPrettyCountry";
 import { useCampuses } from "lib/useAPI";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import CampusHeader from "ui/headers/CampusHeader";
+import Link from "ui/Link";
 import Loading from "ui/Loading";
 import WebsiteLink from "ui/WebsiteLink";
 
@@ -39,12 +39,7 @@ export default function CampusIndex() {
 		<>
 			<WebsiteLink url={c.website} />
 			<Heading my={2}>
-				Users{" "}
-				<Link href={`/campus/${id}/users`} passHref>
-					<TLink>
-						<p>{c.users_count}</p>
-					</TLink>
-				</Link>
+				Users <Link href={`/campus/${id}/users`}>{c.users_count}</Link>
 			</Heading>
 			<Heading my={2}>Local time</Heading>
 			<time dateTime={time.toISOString()}>

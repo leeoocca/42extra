@@ -1,10 +1,10 @@
 import { getProjectLink } from "lib/intraLink";
 import useAPI from "lib/useAPI";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { Project } from "types/42";
 import ProjectHeader from "ui/headers/ProjectHeader";
+import Link from "ui/Link";
 import Loading from "ui/Loading";
 import PageTitle from "ui/PageTitle";
 
@@ -37,17 +37,15 @@ export default function ProjectIndex() {
 						{project.cursus.map((cursus) => (
 							<li key={cursus.id}>
 								<Link href={`/cursus/${cursus.id}`}>
-									<a>{cursus.name}</a>
+									{cursus.name}
 								</Link>
 							</li>
 						))}
 					</ul>
 				</section>
 				<Link href={`/users/${session.user.login}/${project.slug}`}>
-					<a>
-						{session.user.login}&apos;s{" "}
-						<span className="font-mono">{project.name}</span>
-					</a>
+					{session.user.login}&apos;s{" "}
+					<span className="font-mono">{project.name}</span>
 				</Link>
 				{/* <section className="mt-2">
 					<h2 className="text-xl font-bold">Sessions</h2>
