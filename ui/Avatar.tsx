@@ -28,6 +28,7 @@ function Avatar({
 					width={size * 2}
 					className={styles.avatar}
 					quality={75}
+					alt="user avatar"
 				/>
 			)}
 		</div>

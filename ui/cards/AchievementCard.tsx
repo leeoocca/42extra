@@ -13,6 +13,7 @@ export default function AchievementCard({ a }: { a: AchievementPreview }) {
 					)}`}
 					width={48}
 					height={48}
+					alt={a.name}
 				/>
 			)}
 			<div className="flex flex-col justify-center ml-2 leading-relaxed pt-0.5 pb-1.5">

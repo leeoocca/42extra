@@ -36,7 +36,7 @@ export default function CampusShop() {
 									}}
 								>
 									<Image
-										alt="product"
+										alt={product.name}
 										src={`https://cdn.intra.42.fr${product.image.url.replace(
 											"/uploads",
 											""

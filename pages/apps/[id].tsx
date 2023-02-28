@@ -27,7 +27,8 @@ export default function AppDetails() {
 							height={96}
 							width={96}
 							src={
-								"https://cdn.intra.42.fr" + app.image.substr(8)
+								"https://cdn.intra.42.fr" +
+								app.image.substring(8)
 							}
 							className="object-contain"
 							alt={app.name}

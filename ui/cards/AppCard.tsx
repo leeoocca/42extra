@@ -12,7 +12,7 @@ function AppCard({ app }) {
 				{app.image && app.image.length && (
 					<div className="relative w-16 h-16 mr-2">
 						<Image
-							alt="app icon"
+							alt={app.name}
 							src={
 								"https://cdn.intra.42.fr" +
 								app.image.replace("/uploads", "")
