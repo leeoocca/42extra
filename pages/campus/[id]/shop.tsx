@@ -31,7 +31,8 @@ export default function CampusShop() {
 								<Flex
 									sx={{
 										width: "100%",
-										backgroundColor: "text",
+										aspectRatio: "16/9",
+										backgroundColor: "#ffffffdd",
 										justifyContent: "center",
 									}}
 								>
@@ -41,13 +42,12 @@ export default function CampusShop() {
 											"/uploads",
 											""
 										)}`}
-										width={300}
-										height={300}
+										width={600}
+										height={600}
 										style={{ objectFit: "contain" }}
 									/>
 								</Flex>
 							)}
-							<code>#{product.id}</code>
 							<Heading>{product.name}</Heading>
 							<p>{product.description}</p>
 							<p>{product.price}₳</p>
