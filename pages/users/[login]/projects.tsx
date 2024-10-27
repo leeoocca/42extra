@@ -15,16 +15,52 @@ import UserHeader from "ui/headers/UserHeader";
 import Loading from "ui/Loading";
 import RelativeTime from "ui/RelativeTime";
 
-function CursusDetails({ cursus }) {
-	const Detail = ({ children }) => (
-		<Flex sx={{ gap: 1, alignItems: "center" }}>{children}</Flex>
-	);
+function CursusEnd({ cursus }) {
 	const blackholeDays: number = Math.floor(
 		(Date.parse(cursus.end_at) - Date.now()) / // milliseconds
 			1000 / // seconds
 			60 / // minutes
 			60 / // hours
 			24 // days
+	);
+
+	if (!cursus.end_at) return;
+	if (cursus.cursus.id !== FTCURSUS_ID)
+		return (
+			<>
+				<Skull size={ICON_SIZE} />
+				{isFuture(cursus.end_at) ? "will end " : "ended "}
+				<RelativeTime date={cursus.end_at} />
+			</>
+		);
+	if (cursus.cursus.id === FTCURSUS_ID)
+		if (isFuture(cursus.end_at))
+			return (
+				<>
+					{blackholeDays > 30 ? (
+						<Smile size={ICON_SIZE} />
+					) : (
+						<Meh size={ICON_SIZE} />
+					)}
+					Black Hole absorption <RelativeTime date={cursus.end_at} />{" "}
+					or{" "}
+					<time dateTime={cursus.end_at}>
+						in {blackholeDays} days
+					</time>
+				</>
+			);
+
+	return (
+		<>
+			<Frown size={ICON_SIZE} />
+			Absorbed by the Black Hole <RelativeTime date={cursus.end_at} />
+		</>
+	);
+}
+
+function CursusDetails({ cursus }) {
+	const Detail = ({ children }) => (
+		<Flex sx={{ gap: 1, alignItems: "center" }}>{children}</Flex>
 	);
 
 	return (
@@ -60,44 +96,9 @@ function CursusDetails({ cursus }) {
 								: "started "}
 							<RelativeTime date={cursus.begin_at} />
 						</Detail>
-						{cursus.end_at && (
-							<Detail>
-								<Skull size={ICON_SIZE} />
-								{isFuture(cursus.end_at)
-									? "will end "
-									: "ended "}
-								<RelativeTime date={cursus.end_at} />
-							</Detail>
-						)}
-
-						{cursus.cursus.id === FTCURSUS_ID && (
-							<Detail>
-								{isFuture(cursus.end_at) ? (
-									<>
-										{blackholeDays > 30 ? (
-											<Smile size={ICON_SIZE} />
-										) : (
-											<Meh size={ICON_SIZE} />
-										)}
-										Black Hole absorption{" "}
-										<RelativeTime date={cursus.end_at} /> or{" "}
-										<time dateTime={cursus.end_at}>
-											in {blackholeDays} days
-										</time>
-									</>
-								) : (
-									cursus.end_at && (
-										<>
-											<Frown size={ICON_SIZE} />
-											Absorbed by the Black Hole{" "}
-											<RelativeTime
-												date={cursus.end_at}
-											/>
-										</>
-									)
-								)}
-							</Detail>
-						)}
+						<Detail>
+							<CursusEnd cursus={cursus} />
+						</Detail>
 					</Flex>
 				</Box>
 				<Text variant="mono">{cursus.level.toFixed(2)}</Text>
