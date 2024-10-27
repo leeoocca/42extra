@@ -1,7 +1,4 @@
 module.exports = {
-	images: {
-		domains: ["cdn.intra.42.fr"],
-	},
 	async rewrites() {
 		return [
 			{
