@@ -98,7 +98,7 @@ export const globalActions: Action[] = [
 	},
 	{
 		id: "blackhole",
-		name: "Blackhole",
+		name: "Black Hole",
 		shortcut: ["b", "h"],
 		section: "Tools",
 		icon: <Disc size={ICON_SIZE} />,

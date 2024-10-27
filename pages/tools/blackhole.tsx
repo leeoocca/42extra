@@ -119,7 +119,7 @@ export default function BlackHoleByCampus() {
 
 	return (
 		<>
-			<PageTitle title="BlackHole" />
+			<PageTitle title="Black Hole" />
 			<Box sx={{ width: ["100%", , "50%"], mx: "auto" }}>
 				<Flex sx={{ gap: 2 }}>
 					<Box>
