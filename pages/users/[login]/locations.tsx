@@ -42,14 +42,19 @@ function prepareDays(locations) {
 	locations.forEach((location) => {
 		delete location.user;
 	});
-	let days = groupBy(locations, (l) => formatDate(l.begin_at));
-	days.forEach((day) => {
-		day.day = day.name;
-		delete day.name;
+	const daysGouped = groupBy(locations, (l: Location) =>
+		formatDate(l.begin_at)
+	);
+	let days = [];
+	daysGouped.forEach((day) => {
 		const duration = getRawDuration(day);
-		day.locations = day.value;
-		day.value = duration / 1000 / 60;
-		day.prettyDuration = prettyDuration(duration);
+		let tmp = {
+			day: day.name,
+			locations: day.value,
+			value: duration / 1000 / 60,
+			prettyDuration: prettyDuration(duration),
+		};
+		days.push(tmp);
 	});
 	return days;
 }
