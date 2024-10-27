@@ -1,4 +1,11 @@
-import { ResponsiveLine, Serie } from "@nivo/line";
+import { type Serie } from "@nivo/line";
+
+import dynamic from "next/dynamic";
+
+const ResponsiveLine = dynamic(
+	() => import("@nivo/line").then((m) => m.ResponsiveLine),
+	{ ssr: false }
+);
 
 function getSerie(history): Serie[] {
 	let serie: Serie[] = [{ id: "Evaluation Points", data: [] }];

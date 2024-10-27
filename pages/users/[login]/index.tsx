@@ -1,4 +1,10 @@
-import { ResponsiveRadar } from "@nivo/radar";
+import dynamic from "next/dynamic";
+
+const ResponsiveRadar = dynamic(
+	() => import("@nivo/radar").then((m) => m.ResponsiveRadar),
+	{ ssr: false }
+);
+
 import {
 	Badge,
 	Box,
