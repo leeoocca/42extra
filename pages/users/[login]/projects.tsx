@@ -20,7 +20,7 @@ function CursusDetails({ cursus }) {
 		<Flex sx={{ gap: 1, alignItems: "center" }}>{children}</Flex>
 	);
 	const blackholeDays: number = Math.floor(
-		(Date.parse(cursus.blackholed_at) - Date.now()) / // milliseconds
+		(Date.parse(cursus.end_at) - Date.now()) / // milliseconds
 			1000 / // seconds
 			60 / // minutes
 			60 / // hours
@@ -72,29 +72,26 @@ function CursusDetails({ cursus }) {
 
 						{cursus.cursus.id === FTCURSUS_ID && (
 							<Detail>
-								{isFuture(cursus.blackholed_at) ? (
+								{isFuture(cursus.end_at) ? (
 									<>
 										{blackholeDays > 30 ? (
 											<Smile size={ICON_SIZE} />
 										) : (
 											<Meh size={ICON_SIZE} />
 										)}
-										BlackHole absorption{" "}
-										<RelativeTime
-											date={cursus.blackholed_at}
-										/>{" "}
-										or{" "}
-										<time dateTime={cursus.blackholed_at}>
+										Black Hole absorption{" "}
+										<RelativeTime date={cursus.end_at} /> or{" "}
+										<time dateTime={cursus.end_at}>
 											in {blackholeDays} days
 										</time>
 									</>
 								) : (
-									!cursus.end_at && (
+									cursus.end_at && (
 										<>
 											<Frown size={ICON_SIZE} />
 											Absorbed by the Black Hole{" "}
 											<RelativeTime
-												date={cursus.blackholed_at}
+												date={cursus.end_at}
 											/>
 										</>
 									)

@@ -46,7 +46,7 @@ function Results({
 						now.valueOf() + 1000 * 60 * 60 * 24 * +future
 					).toISOString(),
 				].join(","),
-				sort: "blackholed_at",
+				sort: "end_at",
 			})
 	);
 
@@ -58,7 +58,7 @@ function Results({
 		<Flex as="ul" sx={{ flexDirection: "column", gap: 3 }}>
 			{data.map((projectUser) => (
 				<Fragment key={projectUser.id}>
-					{isFuture(projectUser.blackholed_at) &&
+					{isFuture(projectUser.end_at) &&
 						firstFuture &&
 						!(firstFuture = !firstFuture) && <Divider />}
 					<Flex as="li" sx={{ justifyContent: "space-between" }}>
@@ -82,7 +82,7 @@ function Results({
 							/>
 							{projectUser.user.login}
 						</Link>
-						<RelativeTime date={projectUser.blackholed_at} bh />
+						<RelativeTime date={projectUser.end_at} bh />
 					</Flex>
 				</Fragment>
 			))}
