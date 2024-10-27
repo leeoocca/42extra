@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import useSWR from "swr";
 import Card from "./Card";
@@ -11,13 +10,12 @@ function AppCard({ app }) {
 			<Card className="h-20 overflow-hidden">
 				{app.image && app.image.length && (
 					<div className="relative w-16 h-16 mr-2">
-						<Image
+						<img
 							alt={app.name}
 							src={
 								"https://cdn.intra.42.fr" +
 								app.image.replace("/uploads", "")
 							}
-							fill
 							style={{ objectFit: "contain" }}
 						/>
 					</div>

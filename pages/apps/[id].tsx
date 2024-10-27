@@ -1,6 +1,5 @@
 import { getAppLink } from "lib/intraLink";
 import useAPI from "lib/useAPI";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { App } from "types/42";
 import UserCard from "ui/cards/UserCard";
@@ -23,7 +22,7 @@ export default function AppDetails() {
 			<div className="flex items-center space-x-4">
 				{app.image && (
 					<div className="grid w-24 h-w-24 place-items-center">
-						<Image
+						<img
 							height={96}
 							width={96}
 							src={

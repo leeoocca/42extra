@@ -1,8 +1,6 @@
 import { getUserAchievementsLink } from "lib/intraLink";
 import useAPI from "lib/useAPI";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import emptyState from "public/coding.gif";
 import { User } from "types/42";
 import AchievementCard from "ui/cards/AchievementCard";
 import CardGrid from "ui/grids/CardGrid";
@@ -22,7 +20,7 @@ export default function UserAchievements() {
 	if (!user.achievements.length)
 		return (
 			<div className="flex flex-col items-center w-full mt-4">
-				<Image src={emptyState} alt="" />
+				<img src="/coding.gif" alt="" />
 				<p>
 					No achievements for{" "}
 					<span className="font-bold">{login}</span>.

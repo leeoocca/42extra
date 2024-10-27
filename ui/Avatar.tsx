@@ -1,4 +1,3 @@
-import Image from "next/image";
 import styles from "./Avatar.module.css";
 
 function Avatar({
@@ -22,12 +21,11 @@ function Avatar({
 			}}
 		>
 			{url && (
-				<Image
+				<img
 					src={url}
 					height={size * 2}
 					width={size * 2}
 					className={styles.avatar}
-					quality={75}
 					alt="user avatar"
 				/>
 			)}

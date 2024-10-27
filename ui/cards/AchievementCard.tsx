@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { AchievementPreview } from "types/42";
 import Card from "./Card";
 
@@ -6,7 +5,7 @@ export default function AchievementCard({ a }: { a: AchievementPreview }) {
 	return (
 		<Card className="items-center">
 			{a.image && (
-				<Image
+				<img
 					src={`https://cdn.intra.42.fr${a.image.replace(
 						"/uploads",
 						""

@@ -1,6 +1,5 @@
 import { Card, Flex, Grid, Heading, Link } from "@theme-ui/components";
 import useAPI from "lib/useAPI";
-import Image from "next/image";
 import { useRouter } from "next/router";
 
 import CampusHeader from "ui/headers/CampusHeader";
@@ -36,7 +35,7 @@ export default function CampusShop() {
 										justifyContent: "center",
 									}}
 								>
-									<Image
+									<img
 										alt={product.name}
 										src={`https://cdn.intra.42.fr${product.image.url.replace(
 											"/uploads",
