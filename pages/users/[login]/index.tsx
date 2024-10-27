@@ -25,7 +25,7 @@ import useAPI from "lib/useAPI";
 import { Check, Dna, Hash, Mail, User as UserIcon, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Fragment } from "react";
+import { Fragment, useMemo } from "react";
 import { Campus, Coalition, CoalitionUser, Location, User } from "types/42";
 import UserHeader from "ui/headers/UserHeader";
 import Loading from "ui/Loading";
@@ -70,11 +70,13 @@ const OverviewCard = ({ children, title, href = null, heigth = null }) => {
 	);
 };
 
-const MyResponsiveRadar = ({ data, keys }) => (
+const MyResponsiveRadar = ({ data, keys, max }) => (
 	<ResponsiveRadar
 		data={data}
 		theme={{
-			textColor: "var(--theme-ui-colors-text)",
+			text: {
+				fill: "var(--theme-ui-colors-text)",
+			},
 			tooltip: {
 				container: {
 					background: "var(--theme-ui-colors-background)",
@@ -91,11 +93,11 @@ const MyResponsiveRadar = ({ data, keys }) => (
 			},
 		}}
 		keys={keys}
-		indexBy="name"
+		indexBy="skill"
 		valueFormat=">-.2f"
 		margin={{ top: 40, right: 100, bottom: 40, left: 100 }}
-		fillOpacity={0.7}
-		colors="var(--theme-ui-colors-primary)"
+		maxValue={max}
+		colors={{ scheme: "accent" }}
 	/>
 );
 
@@ -118,20 +120,27 @@ export default function UserOverview() {
 	const { data: coalitions_users } = useAPI<CoalitionUser[]>(
 		`/v2/users/${login}/coalitions_users`
 	);
+	const { skills, maxSkills } = useMemo(prepareSkills, user?.cursus_users);
+
+	function prepareSkills() {
+		let maxSkills = 0;
+		if (!user) return { skills: [], maxSkills };
+		let skills = new Map<string, any>();
+		user.cursus_users.forEach((cursus) => {
+			cursus.skills.map((skill) => {
+				let tmpSkill = { skill: skill.name };
+				tmpSkill[cursus.cursus.name] = skill.level;
+				if (maxSkills < skill.level) maxSkills = skill.level;
+				const prevValue = skills.get(skill.name);
+				skills.set(skill.name, { ...prevValue, ...tmpSkill });
+			});
+		});
+		if (maxSkills == 0) maxSkills = 21;
+		return { skills: [...skills.values()], maxSkills };
+	}
 
 	if (error) return <>Error</>;
 	if (!user) return <Loading />;
-
-	let tmp = new Map<string, any>();
-	user.cursus_users.forEach((cursus) =>
-		cursus.skills.map((skill) => {
-			const prevValue = tmp.get(skill.name);
-			let tmpSkill = { name: skill.name };
-			tmpSkill[cursus.cursus.name] = skill.level;
-			tmp.set(skill.name, { ...prevValue, ...tmpSkill });
-		})
-	);
-	const skillsWithCursus = [...tmp.values()];
 
 	const location = user.location
 		? `${user.location} in ${
@@ -418,10 +427,11 @@ export default function UserOverview() {
 				<Grid columns={0.1}>
 					<OverviewCard title="Skills" heigth={300}>
 						<MyResponsiveRadar
-							data={skillsWithCursus}
+							data={skills}
 							keys={user.cursus_users.map(
 								(cursus) => cursus.cursus.name
 							)}
+							max={maxSkills}
 						/>
 					</OverviewCard>
 				</Grid>
