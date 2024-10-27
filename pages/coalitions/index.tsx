@@ -41,6 +41,8 @@ export default function CoalitionsIndex() {
 										src={c.image_url}
 										fill="white"
 										className="w-16 h-16 mix-blend-soft-light"
+										height="auto"
+										width="auto"
 									/>
 								</div>
 							</Card>

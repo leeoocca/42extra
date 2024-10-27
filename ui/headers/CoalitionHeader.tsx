@@ -31,9 +31,9 @@ export default function CoalitionHeader() {
 			<SVG
 				src={coalition.image_url}
 				fill="white"
-				width="4rem"
-				height="4rem"
 				className="object-contain w-16 h-16"
+				height="auto"
+				width="auto"
 			/>
 			<Heading>{coalition.name}</Heading>
 			<Flex sx={{ gap: 3 }}>

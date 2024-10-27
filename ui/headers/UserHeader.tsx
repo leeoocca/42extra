@@ -109,6 +109,8 @@ export default function UserHeader() {
 						src={coalition.image_url}
 						fill="black"
 						style={CoalitionSVGStyles}
+						height="auto"
+						width="auto"
 					/>
 				) : (
 					<UnknownCoalition fill="black" style={CoalitionSVGStyles} />
@@ -134,8 +136,8 @@ export default function UserHeader() {
 							error
 								? "/default.jpg"
 								: user
-									? user.image.versions.medium
-									: null
+								? user.image.versions.medium
+								: null
 						}
 						size={128}
 						deprecated={
