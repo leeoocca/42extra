@@ -20,6 +20,7 @@ import { ICON_SIZE } from "lib/actions";
 import { mendColor } from "lib/color";
 import getPrettyDuration from "lib/getPrettyDuration";
 import { getUserLink } from "lib/intraLink";
+import nivoTheme from "lib/nivoTheme";
 import sortCursus from "lib/sortCursus";
 import useAPI from "lib/useAPI";
 import { Check, Dna, Hash, Mail, User as UserIcon, X } from "lucide-react";
@@ -73,25 +74,7 @@ const OverviewCard = ({ children, title, href = null, heigth = null }) => {
 const MyResponsiveRadar = ({ data, keys, max }) => (
 	<ResponsiveRadar
 		data={data}
-		theme={{
-			text: {
-				fill: "var(--theme-ui-colors-text)",
-			},
-			tooltip: {
-				container: {
-					background: "var(--theme-ui-colors-background)",
-					color: "var(--theme-ui-colors-text)",
-					fontSize: 12,
-				},
-			},
-			crosshair: {
-				line: {
-					stroke: "var(--theme-ui-colors-primary)",
-					strokeWidth: 1,
-					strokeOpacity: 1,
-				},
-			},
-		}}
+		theme={nivoTheme}
 		keys={keys}
 		indexBy="skill"
 		valueFormat=">-.2f"

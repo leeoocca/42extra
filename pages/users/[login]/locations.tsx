@@ -1,6 +1,7 @@
 import { Box, Heading, Text } from "@theme-ui/components";
 import { formatDate, formatTime } from "lib/dateTime";
 import groupBy from "lib/groupBy";
+import nivoTheme from "lib/nivoTheme";
 import useAPI, { useCampuses } from "lib/useAPI";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
@@ -72,25 +73,7 @@ const MyResponsiveCalendar = ({ data }) => {
 				monthBorderColor="transparent"
 				dayBorderWidth={1}
 				dayBorderColor="var(--theme-ui-colors-background)"
-				theme={{
-					text: {
-						fill: "var(--theme-ui-colors-text)",
-					},
-					tooltip: {
-						container: {
-							background: "var(--theme-ui-colors-background)",
-							color: "var(--theme-ui-colors-text)",
-							fontSize: 12,
-						},
-					},
-					crosshair: {
-						line: {
-							stroke: "var(--theme-ui-colors-primary)",
-							strokeWidth: 1,
-							strokeOpacity: 1,
-						},
-					},
-				}}
+				theme={nivoTheme}
 				valueFormat={prettyDuration}
 				onClick={(day, event) => router.push(`#${day.day}`)}
 			/>

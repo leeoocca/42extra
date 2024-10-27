@@ -1,4 +1,5 @@
 import { type Serie } from "@nivo/line";
+import nivoTheme from "lib/nivoTheme";
 
 import dynamic from "next/dynamic";
 
@@ -60,23 +61,7 @@ export default function ScalesGraph({ history }) {
 					legendOffset: 7,
 					legend: totalPoints + " points",
 				}}
-				theme={{
-					textColor: "var(--theme-ui-colors-text)",
-					tooltip: {
-						container: {
-							background: "var(--theme-ui-colors-background)",
-							color: "var(--theme-ui-colors-text)",
-							fontSize: 12,
-						},
-					},
-					crosshair: {
-						line: {
-							stroke: "var(--theme-ui-colors-primary)",
-							strokeWidth: 1,
-							strokeOpacity: 1,
-						},
-					},
-				}}
+				theme={nivoTheme}
 				pointLabelYOffset={20}
 				pointSize={10}
 				areaOpacity={0.4}
