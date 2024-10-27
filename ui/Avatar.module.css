@@ -4,7 +4,7 @@
 }
 
 .avatar {
-	@apply object-cover object-center rounded-full;
+	@apply object-cover object-center rounded-full h-[inherit];
 }
 
 .error {
