@@ -1,7 +1,6 @@
 import {
 	Avatar,
 	Box,
-	Divider,
 	Flex,
 	Input,
 	Label,
@@ -10,11 +9,10 @@ import {
 } from "@theme-ui/components";
 import { locale } from "lib/constants";
 import groupBy from "lib/groupBy";
-import isFuture from "lib/isFuture";
 import { useCampuses } from "lib/useAPI";
 import { useDebouncedValue } from "lib/useDebouncedValue";
 import { useSession } from "next-auth/react";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { CursusUser } from "types/42";
 import Link from "ui/Link";
@@ -22,15 +20,7 @@ import Loading from "ui/Loading";
 import PageTitle from "ui/PageTitle";
 import RelativeTime from "ui/RelativeTime";
 
-function Results({
-	campus,
-	past,
-	future,
-}: {
-	campus: string;
-	past: string;
-	future: string;
-}) {
+function Results({ campus, past }: { campus: string; past: string }) {
 	const [now] = useState(new Date());
 
 	const { data } = useSWR<CursusUser[]>(
@@ -38,13 +28,11 @@ function Results({
 			`/api/v2/cursus/21/cursus_users?` +
 			new URLSearchParams({
 				"filter[campus_id]": campus,
-				"range[blackholed_at]": [
+				"range[end_at]": [
 					new Date(
 						now.valueOf() - 1000 * 60 * 60 * 24 * +past
 					).toISOString(),
-					new Date(
-						now.valueOf() + 1000 * 60 * 60 * 24 * +future
-					).toISOString(),
+					new Date(now).toISOString(),
 				].join(","),
 				sort: "end_at",
 			})
@@ -52,41 +40,60 @@ function Results({
 
 	if (!data) return <Text>Loading...</Text>;
 
-	let firstFuture = true;
-
 	return (
-		<Flex as="ul" sx={{ flexDirection: "column", gap: 3 }}>
-			{data.map((projectUser) => (
-				<Fragment key={projectUser.id}>
-					{isFuture(projectUser.end_at) &&
-						firstFuture &&
-						!(firstFuture = !firstFuture) && <Divider />}
-					<Flex as="li" sx={{ justifyContent: "space-between" }}>
-						<Link
-							href={`/users/${projectUser.user.login}`}
-							sx={{
-								display: "flex",
-								alignItems: "center",
-								gap: 2,
-							}}
-						>
-							<Avatar
+		<Box as="table" sx={{ width: "100%" }}>
+			<thead>
+				<tr>
+					<th align="left">User</th>
+					<th>Level</th>
+					<th>Kickoff</th>
+					<th>Days</th>
+				</tr>
+			</thead>
+			<tbody>
+				{data.map((projectUser) => (
+					<tr key={projectUser.id}>
+						<Box as="td" paddingTop={2}>
+							<Link
+								href={`/users/${projectUser.user.login}`}
 								sx={{
-									minWidth: "auto",
-									width: 32,
-									height: 32,
-									objectFit: "cover",
-									objectPosition: "center",
+									display: "flex",
+									alignItems: "center",
+									gap: 2,
 								}}
-								src={projectUser.user.image.versions.small}
-							/>
-							{projectUser.user.login}
-						</Link>
-						<RelativeTime date={projectUser.end_at} bh />
-					</Flex>
-				</Fragment>
-			))}
-		</Flex>
+							>
+								<Avatar
+									sx={{
+										minWidth: "auto",
+										width: 32,
+										height: 32,
+										objectFit: "cover",
+										objectPosition: "center",
+									}}
+									src={projectUser.user.image.versions.small}
+								/>
+								{projectUser.user.login}
+							</Link>
+						</Box>
+						<td align="center">
+							{projectUser.level != 0 ? (
+								projectUser.level.toPrecision(3)
+							) : (
+								<Text sx={{ opacity: 0.5 }}>0</Text>
+							)}
+						</td>
+						<td align="center">
+							{new Date(projectUser.begin_at)
+								.toISOString()
+								.slice(0, 7)}
+						</td>
+						<td align="center">
+							<RelativeTime date={projectUser.end_at} bh />{" "}
+						</td>
+					</tr>
+				))}
+			</tbody>
+		</Box>
 	);
 }
 
@@ -96,19 +103,15 @@ export default function BlackHoleByCampus() {
 	const [campus, setCampus] = useState<string>(
 		String(session.user.campus) || "1"
 	);
-	const [past, setPast] = useState<string>("7");
-	const [future, setFuture] = useState<string>("30");
+	const [past, setPast] = useState<string>("14");
 
 	const [debouncedPast, setDebouncedPast] = useState<string>(past);
-	const [debouncedFuture, setDebouncedFuture] = useState<string>(future);
 
 	const { data: campuses } = useCampuses();
 
 	const dPast = useDebouncedValue(past, 1000);
-	const dFuture = useDebouncedValue(future, 1000);
 
 	useEffect(() => setDebouncedPast(dPast), [dPast]);
-	useEffect(() => setDebouncedFuture(dFuture), [dFuture]);
 
 	if (!campus || !campuses) return <Loading />;
 
@@ -160,27 +163,8 @@ export default function BlackHoleByCampus() {
 							}
 						/>
 					</Box>
-					<Box>
-						<Label htmlFor="future">Days in the future</Label>
-						<Input
-							name="future"
-							type="number"
-							value={future}
-							min="0"
-							max="90"
-							onChange={(e) =>
-								setFuture(
-									e.target.value.length && e.target.value
-								)
-							}
-						/>
-					</Box>
 				</Flex>
-				<Results
-					campus={campus}
-					past={debouncedPast}
-					future={debouncedFuture}
-				/>
+				<Results campus={campus} past={debouncedPast} />
 			</Box>
 		</>
 	);
