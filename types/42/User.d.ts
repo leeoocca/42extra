@@ -27,7 +27,7 @@ export interface User {
 	pool_year: string;
 	location: null;
 	wallet: number;
-	anonymize_date: string; // Date
+	anonymize_date: string | null; // Date
 	created_at: string; // Date
 	updated_at: string; // Date
 	alumni: boolean;
