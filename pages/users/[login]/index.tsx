@@ -193,7 +193,7 @@ export default function UserOverview() {
 							},
 							{
 								name: "Alumni",
-								icon: checkOrX(user.alumni),
+								icon: checkOrX(user["alumni?"]),
 							},
 						].map((e, index) => (
 							<Fragment key={index}>
