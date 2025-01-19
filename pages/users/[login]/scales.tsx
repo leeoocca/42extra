@@ -2,10 +2,12 @@ import { Box } from "@theme-ui/components";
 import { formatDate } from "lib/dateTime";
 import useAPI from "lib/useAPI";
 import { useRouter } from "next/router";
+import { ScaleTeam } from "types/42/ScaleTeam";
 import Card from "ui/cards/Card";
 import ScalesGraph from "ui/graphs/ScalesGraph";
 import CardGrid from "ui/grids/CardGrid";
 import UserHeader from "ui/headers/UserHeader";
+import Link from "ui/Link";
 import Loading from "ui/Loading";
 
 function getDuration(begin, end) {
@@ -17,7 +19,7 @@ function getDuration(begin, end) {
 	return minutes + "min";
 }
 
-function ScaleCard({ scale, login }) {
+function ScaleCard({ scale, login }: { scale: ScaleTeam; login: string }) {
 	const project_name = scale.team.project_gitlab_path
 		?.split("/")
 		.pop()
@@ -25,31 +27,72 @@ function ScaleCard({ scale, login }) {
 
 	return (
 		<Card key={scale.id}>
-			<div className="w-full">
-				{/* <Link
-					href={`/users/${scale.correcteds[0].login}/${project_name}`}
-				> */}
-				{scale.correcteds.map((user) => user.login).join(", ")}&apos;s{" "}
-				<b style={{ fontSize: 15 }}>
-					{project_name}
+			<div className="w-full flex flex-col gap-2">
+				<p>
+					<Link
+						href={`/users/${scale.correcteds[0].login}/${scale.team.project_id}`}
+					>
+						{project_name}
+					</Link>{" "}
+					{scale.team.name}
 					{" ["}
 					<span
-						className={`${scale.team["validated?"]
-							? "text-green-400"
-							: "text-red-600"
-							}`}
+						className={`${
+							scale.team["validated?"]
+								? "text-green-400"
+								: "text-red-600"
+						}`}
 					>
-						{scale.final_mark}
+						{scale.final_mark ?? "no grade"}
 					</span>
 					{"]"}
-				</b>
-				{/* </Link> */}
+				</p>
+				<p>
+					Team:{" "}
+					{scale.correcteds.map((user, index) => (
+						<>
+							{user.login !== login ? (
+								<Link
+									href={`/users/${user.login}`}
+									sx={{
+										color: "text",
+									}}
+								>
+									{user.login}
+								</Link>
+							) : (
+								<b
+									style={{
+										color: "var(--theme-ui-colors-primary)",
+									}}
+								>
+									{user.login}
+								</b>
+							)}
+							{index !== scale.correcteds.length - 1 && ", "}
+						</>
+					))}
+				</p>
 				<p className="text-xs">
-					{scale.corrector.login == login ? (
-						<b>{scale.corrector.login}: </b>
+					{scale.corrector.login !== login ? (
+						<Link
+							href={`/users/${scale.corrector.login}`}
+							sx={{
+								color: "text",
+							}}
+						>
+							{scale.corrector.login}
+						</Link>
 					) : (
-						scale.corrector.login + ": "
+						<b
+							style={{
+								color: "var(--theme-ui-colors-primary)",
+							}}
+						>
+							{scale.corrector.login}
+						</b>
 					)}
+					<br />
 					<span
 						className="text-xs opacity-75"
 						style={{ wordBreak: "break-word" }}
@@ -57,13 +100,27 @@ function ScaleCard({ scale, login }) {
 						{scale.comment}
 					</span>
 				</p>
-				<hr className="my-1 opacity-50" />
 				<p className="text-xs">
-					{scale.correcteds[0].login == login ? (
-						<b>{scale.correcteds[0].login}: </b>
+					{scale.correcteds[0].login !== login ? (
+						<Link
+							href={`/users/${scale.correcteds[0].login}`}
+							sx={{
+								color: "text",
+								fontWeight: "bold",
+							}}
+						>
+							{scale.correcteds[0].login}
+						</Link>
 					) : (
-						scale.correcteds[0].login + ": "
+						<b
+							style={{
+								color: "var(--theme-ui-colors-primary)",
+							}}
+						>
+							{scale.correcteds[0].login}
+						</b>
 					)}
+					<br />
 					<span
 						className="text-xs opacity-75"
 						style={{ wordBreak: "break-word" }}
@@ -71,16 +128,15 @@ function ScaleCard({ scale, login }) {
 						{scale.feedback}
 					</span>
 				</p>
-				<hr className="my-1 opacity-50" style={{ height: 20 }} />
-				<Box as="details" mt={-2}>
+				<Box as="details" mt={1}>
 					<summary>Details</summary>
-					<hr className="my-1 opacity-50" />
 					<p className="text-xs">
 						<span
-							className={`${scale.team["validated?"]
-								? "text-green-400"
-								: "text-red-600"
-								}`}
+							className={`${
+								scale.team["validated?"]
+									? "text-green-400"
+									: "text-red-600"
+							}`}
 						>
 							{scale.final_mark}
 						</span>
@@ -111,13 +167,6 @@ function ScaleCard({ scale, login }) {
 							{scale.team.users[0].occurrence + 1 > 1
 								? "times"
 								: "time"}
-						</b>
-						<br />
-						<b>
-							{" "}
-							{scale.correcteds.length > 1
-								? "Team name: " + scale.team.name
-								: ""}
 						</b>
 					</p>
 				</Box>
@@ -153,17 +202,21 @@ export default function UserScales() {
 		);
 
 	return (
-		<>
+		<div className="flex flex-col gap-2">
 			{history && <ScalesGraph history={history} />}
 			{(!history || !scales) && <Loading />}
 			{scales && (
 				<CardGrid>
 					{scales.map((scale) => (
-						<ScaleCard key={scale.id} scale={scale} login={login} />
+						<ScaleCard
+							key={scale.id}
+							scale={scale}
+							login={login.toString()}
+						/>
 					))}
 				</CardGrid>
 			)}
-		</>
+		</div>
 	);
 }
 
