@@ -30,6 +30,7 @@ export interface User {
 	anonymize_date: string | null; // Date
 	created_at: string; // Date
 	updated_at: string; // Date
+	alumnized_at: string | null; // Date
 	"alumni?": boolean;
 	kind: "admin" | "student" | "external";
 	groups: Group[];
