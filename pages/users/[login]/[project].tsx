@@ -1,8 +1,9 @@
-import { Text } from "@theme-ui/components";
+import { Heading, Text } from "@theme-ui/components";
 import { getUserProjectLink } from "lib/intraLink";
 import useAPI from "lib/useAPI";
 import { useRouter } from "next/router";
 import { Team } from "types/42";
+import Card from "ui/cards/Card";
 import UserCard from "ui/cards/UserCard";
 import UserGrid from "ui/grids/UserGrid";
 import ProjectUserHeader from "ui/headers/ProjectUserHeader";
@@ -63,25 +64,44 @@ export default function ProjectUser() {
 				</code>
 				{team.scale_teams.length > 0 && (
 					<>
-						<h3>Evaluations</h3>
-						<ul>
+						<Heading as="h3">Evaluations</Heading>
+						<ul className="flex flex-col gap-2">
 							{team.scale_teams.map((scale) => (
 								<li key={scale.id}>
-									<span
-										className={`${
-											scale.flag.positive
-												? "text-green-400"
-												: "text-red-600"
-										}`}
-									>
-										{scale.final_mark}
-									</span>{" "}
-									– {scale.flag.name} from{" "}
-									<Link
-										href={`/users/${scale.corrector.login}`}
-									>
-										{scale.corrector.login}
-									</Link>
+									<Card>
+										<div className="flex flex-col gap-2 p-2">
+											<p>
+												<span
+													className={`${
+														scale.flag.positive
+															? "text-green-400"
+															: "text-red-600"
+													}`}
+												>
+													{scale.final_mark}
+												</span>{" "}
+												– {scale.flag.name}
+											</p>
+											<p>
+												<Link
+													href={`/users/${scale.corrector.login}`}
+												>
+													{scale.corrector.login}
+												</Link>
+												<br />
+												{scale.comment}
+											</p>
+											<p>
+												<Link
+													href={`/users/${scale.correcteds[0].login}`}
+												>
+													{scale.correcteds[0].login}
+												</Link>
+												<br />
+												{scale.feedback}
+											</p>
+										</div>
+									</Card>
 								</li>
 							))}
 						</ul>
