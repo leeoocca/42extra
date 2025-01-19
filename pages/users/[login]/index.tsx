@@ -222,18 +222,20 @@ export default function UserOverview() {
 				>
 					<Text sx={{ fontSize: 4 }}>{location}</Text>
 				</OverviewCard>
-				<OverviewCard title="Last seen online">
-					<Text sx={{ fontSize: 4 }}>
-						<RelativeTime
-							date={new Date(
-								Date.parse(user.anonymize_date) -
-									3 * 365 * 24 * 60 * 60 * 1000
-							).toISOString()}
-							// TODO check if works fine with other time zones
-							unit="day"
-						/>
-					</Text>
-				</OverviewCard>
+				{user.anonymize_date && (
+					<OverviewCard title="Last seen online">
+						<Text sx={{ fontSize: 4 }}>
+							<RelativeTime
+								date={new Date(
+									Date.parse(user.anonymize_date) -
+										3 * 365 * 24 * 60 * 60 * 1000
+								).toISOString()}
+								// TODO check if works fine with other time zones
+								unit="day"
+							/>
+						</Text>
+					</OverviewCard>
+				)}
 				<Grid columns={2}>
 					<OverviewCard
 						title="Correction points"
