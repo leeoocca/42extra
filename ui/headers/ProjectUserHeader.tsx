@@ -19,7 +19,9 @@ export default function ProjectUserHeader() {
 	useEffect(() => {
 		if (!user) return;
 		userProject = user.projects_users.find(
-			(projectsUsers) => projectsUsers.project.slug === project
+			(projectsUsers) =>
+				projectsUsers.project.slug === project ||
+				projectsUsers.project.id
 		);
 		const color =
 			(!userProject && null) ||
