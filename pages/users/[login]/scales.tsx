@@ -29,7 +29,7 @@ function ScaleCard({ scale, login }) {
 				{/* <Link
 					href={`/users/${scale.correcteds[0].login}/${project_name}`}
 				> */}
-				{scale.correcteds.map((user) => user.login)}&apos;s{" "}
+				{scale.correcteds.map((user) => user.login).join(", ")}&apos;s{" "}
 				<b style={{ fontSize: 15 }}>
 					{project_name}
 					{" ["}
