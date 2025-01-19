@@ -236,7 +236,7 @@ export default function UserOverview() {
 						</Text>
 					</OverviewCard>
 				)}
-        {user.alumnized_at && (
+				{user.alumnized_at && (
 					<OverviewCard title="Alumni since">
 						<Text sx={{ fontSize: 4 }}>
 							<RelativeTime
