@@ -23,7 +23,7 @@
     "kbar": "^0.1.0-beta.40",
     "limiter": "^2.1.0",
     "lucide-react": "^0.115.0",
-    "next": "^15.0.1",
+    "next": "^15.4.4",
     "next-auth": "^4.19.2",
     "normalize-url": "^8.0.0",
     "pretty-ms": "^8.0.0",
