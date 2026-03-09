@@ -39,6 +39,7 @@
 	import NavMain from './nav-main.svelte';
 	import NavProjects from './nav-projects.svelte';
 	import NavUser from './nav-user.svelte';
+	import ApiEndpointTracker from './api-endpoint-tracker.svelte';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import type { ComponentProps } from 'svelte';
 	import { page } from '$app/state';
@@ -73,6 +74,7 @@
 	<Sidebar.Content>
 		<NavMain items={data.navMain} />
 		<NavProjects projects={data.projects} />
+		<ApiEndpointTracker />
 	</Sidebar.Content>
 	<Sidebar.Footer>
 		<NavUser
