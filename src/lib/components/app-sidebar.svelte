@@ -53,20 +53,22 @@
 
 <Sidebar.Root {collapsible} {...restProps}>
 	<Sidebar.Header>
-		<Sidebar.MenuButton
-			size="lg"
-			class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-		>
-			<div
-				class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground"
+		<a href="/">
+			<Sidebar.MenuButton
+				size="lg"
+				class="cursor-pointer data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
 			>
-				<E class="size-4" />
-			</div>
-			<div class="grid flex-1 text-start text-sm leading-tight">
-				<span class="truncate font-medium">42extra</span>
-				<span class="truncate text-xs">Your intra</span>
-			</div>
-		</Sidebar.MenuButton>
+				<div
+					class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground"
+				>
+					<E class="size-4" />
+				</div>
+				<div class="grid flex-1 text-start text-sm leading-tight">
+					<span class="truncate font-medium">42extra</span>
+					<span class="truncate text-xs">Your intra</span>
+				</div>
+			</Sidebar.MenuButton>
+		</a>
 	</Sidebar.Header>
 	<Sidebar.Content>
 		<NavMain items={data.navMain} />
