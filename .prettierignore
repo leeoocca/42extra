@@ -7,3 +7,8 @@ bun.lockb
 
 # Miscellaneous
 /static/
+
+# Shadcn
+/src/lib/components/ui
+/src/lib/hooks/is-mobile.svelte.ts
+/src/lib/utils.ts
