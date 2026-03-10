@@ -77,9 +77,9 @@
 	<Sidebar.Footer>
 		<NavUser
 			user={{
-				name: page.data.session?.user?.name as string,
-				email: page.data.session?.user?.email as string,
-				avatar: page.data.session?.user?.image as string
+				name: page.data.user?.name as string,
+				email: page.data.user?.email as string,
+				avatar: page.data.user?.image as string
 			}}
 		/>
 	</Sidebar.Footer>

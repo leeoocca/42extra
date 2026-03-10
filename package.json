@@ -43,7 +43,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@auth/sveltekit": "^1.11.1",
+		"better-auth": "^1.5.4",
 		"mode-watcher": "^1.1.0"
 	}
 }

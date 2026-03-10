@@ -3,13 +3,23 @@
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import { useSidebar } from '$lib/components/ui/sidebar/index.js';
-	import { SignOut } from '@auth/sveltekit/components';
+	import { authClient } from '$lib/client';
 	import ChevronsUpDownIcon from '@lucide/svelte/icons/chevrons-up-down';
 	import LogOutIcon from '@lucide/svelte/icons/log-out';
 	import SparklesIcon from '@lucide/svelte/icons/sparkles';
 
 	let { user }: { user: { name: string; email: string; avatar: string } } = $props();
 	const sidebar = useSidebar();
+
+	async function handleSignOut() {
+		await authClient.signOut({
+			fetchOptions: {
+				onSuccess: () => {
+					window.location.href = '/signin';
+				}
+			}
+		});
+	}
 </script>
 
 <Sidebar.Menu>
@@ -60,12 +70,10 @@
 					</DropdownMenu.Item>
 				</DropdownMenu.Group>
 				<DropdownMenu.Separator />
-				<SignOut class="[&>button]:w-full">
-					<DropdownMenu.Item slot="submitButton">
-						<LogOutIcon />
-						Log out
-					</DropdownMenu.Item>
-				</SignOut>
+				<DropdownMenu.Item onclick={handleSignOut} class="cursor-pointer">
+					<LogOutIcon />
+					Log out
+				</DropdownMenu.Item>
 			</DropdownMenu.Content>
 		</DropdownMenu.Root>
 	</Sidebar.MenuItem>

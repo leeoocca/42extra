@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { HTMLAttributes } from 'svelte/elements';
 	import { cn, type WithElementRef } from '$lib/utils.js';
-	import { SignIn } from '@auth/sveltekit/components';
-	import { buttonVariants } from './ui/button/button.svelte';
+	import { authClient } from '$lib/client';
+	import Button from './ui/button/button.svelte';
 	import E from './logos/e.svelte';
 	import Ft from './logos/ft.svelte';
 
@@ -11,6 +11,22 @@
 		class: className,
 		...restProps
 	}: WithElementRef<HTMLAttributes<HTMLDivElement>> = $props();
+
+	let isLoading = $state(false);
+
+	async function handleSignIn() {
+		isLoading = true;
+		try {
+			await authClient.signIn.oauth2({
+				providerId: '42',
+				callbackURL: '/'
+			});
+		} catch (error) {
+			console.error('Sign in error:', error);
+		} finally {
+			isLoading = false;
+		}
+	}
 </script>
 
 <div class={cn('flex flex-col gap-6', className)} bind:this={ref} {...restProps}>
@@ -23,13 +39,18 @@
 		</div>
 		<h1 class="text-xl font-bold">42extra</h1>
 	</div>
-	<SignIn provider="42-school" className="flex justify-center">
-		<div
-			slot="submitButton"
-			class={cn(buttonVariants({ variant: 'outline' }), 'cursor-pointer gap-1')}
-		>
-			Sign in with <span class="sr-only">42</span>
+	<Button
+		variant="outline"
+		class="flex justify-center gap-1"
+		onclick={handleSignIn}
+		disabled={isLoading}
+	>
+		{#if isLoading}
+			<span>Signing in...</span>
+		{:else}
+			<span>Sign in with</span>
+			<span class="sr-only">42</span>
 			<Ft class="size-6" />
-		</div>
-	</SignIn>
+		{/if}
+	</Button>
 </div>
