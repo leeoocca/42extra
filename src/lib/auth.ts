@@ -9,6 +9,7 @@ export const auth = betterAuth({
 	session: {
 		expiresIn: 60 * 60 * 24 * 7 // 7 days
 	},
+	baseURL: PUBLIC_BETTER_AUTH_URL,
 	trustedOrigins: [PUBLIC_BETTER_AUTH_URL || 'http://localhost:5173'],
 	plugins: [
 		genericOAuth({
