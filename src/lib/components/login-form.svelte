@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { HTMLAttributes } from 'svelte/elements';
-	import { cn, type WithElementRef } from '$lib/utils.js';
-	import { authClient } from '$lib/client';
+	import { cn, type WithElementRef } from '#lib/utils.js';
+	import { authClient } from '#lib/client.ts';
 	import Button from './ui/button/button.svelte';
 	import E from './logos/e.svelte';
 	import Ft from './logos/ft.svelte';

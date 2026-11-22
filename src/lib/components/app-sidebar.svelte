@@ -39,7 +39,7 @@
 	import NavMain from './nav-main.svelte';
 	import NavProjects from './nav-projects.svelte';
 	import NavUser from './nav-user.svelte';
-	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
+	import * as Sidebar from '#lib/components/ui/sidebar/index.js';
 	import type { ComponentProps } from 'svelte';
 	import { page } from '$app/state';
 	import E from './logos/e.svelte';

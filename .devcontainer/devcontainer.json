@@ -5,9 +5,7 @@
 	},
 	"customizations": {
 		"vscode": {
-			"extensions": [
-				"svelte.svelte-vscode"
-			]
+			"extensions": ["svelte.svelte-vscode"]
 		}
 	}
 }
