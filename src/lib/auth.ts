@@ -1,9 +1,9 @@
-import { betterAuth } from 'better-auth';
+import { betterAuth, type OAuthMappedUser } from 'better-auth';
 import { sveltekitCookies } from 'better-auth/svelte-kit';
 import { genericOAuth } from 'better-auth/plugins';
 import { getRequestEvent } from '$app/server';
-import { BETTER_AUTH_42_SCHOOL_ID, BETTER_AUTH_42_SCHOOL_SECRET } from '$env/static/private';
-import { PUBLIC_BETTER_AUTH_URL } from '$env/static/public';
+import { BETTER_AUTH_42_SCHOOL_ID, BETTER_AUTH_42_SCHOOL_SECRET } from '$app/env/private';
+import { PUBLIC_BETTER_AUTH_URL } from '$app/env/public';
 
 export const auth = betterAuth({
 	session: {
@@ -31,7 +31,7 @@ export const auth = betterAuth({
 							emailVerified: true,
 							name: profile.usual_full_name,
 							image: profile.image?.link
-						};
+						} as OAuthMappedUser;
 					}
 				}
 			]
