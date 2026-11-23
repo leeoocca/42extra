@@ -13,6 +13,7 @@
 	import { Button } from '#lib/components/ui/button/index.js';
 	import { Kbd } from '#lib/components/ui/kbd/index.js';
 	import { authClient } from '#lib/client.ts';
+	import { getCdnProxyUrl } from '#lib/cdn.js';
 	import SearchIcon from '@lucide/svelte/icons/search';
 	import SquareArrowLeftExitIcon from '@lucide/svelte/icons/square-arrow-left-exit';
 	import UserRoundIcon from '@lucide/svelte/icons/user-round';
@@ -87,33 +88,50 @@
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger>
 						{#snippet child({ props })}
-							<Button {...props} variant="ghost" size="icon" aria-label="User menu">
+							<Button
+								{...props}
+								variant="ghost"
+								size="icon"
+								class="size-8 overflow-hidden rounded-full p-0 ring-offset-background hover:ring-2 hover:ring-ring hover:ring-offset-1 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+								aria-label="User menu"
+							>
 								<Avatar.Root class="size-8">
 									<Avatar.Image
-										src={page.data.user?.image}
+										src={getCdnProxyUrl(page.data.user?.image)}
 										alt={page.data.user?.name ?? 'User'}
 										class="object-cover"
+										referrerpolicy="no-referrer"
 									/>
-									<Avatar.Fallback class="text-xs font-semibold">42</Avatar.Fallback>
+									<Avatar.Fallback class="text-xs font-semibold">
+										{page.data.user?.name?.slice(0, 2)?.toUpperCase() ?? '42'}
+									</Avatar.Fallback>
 								</Avatar.Root>
 							</Button>
 						{/snippet}
 					</DropdownMenu.Trigger>
-					<DropdownMenu.Content align="end" class="w-56">
-						<DropdownMenu.Label class="px-2 py-1.5">
-							<div class="flex flex-col">
-								<span class="text-sm font-semibold">{page.data.user?.name ?? 'Student'}</span>
-								<span class="truncate text-xs text-muted-foreground">
-									{page.data.user?.email ?? 'student@42.fr'}
-								</span>
-							</div>
-						</DropdownMenu.Label>
-						<DropdownMenu.Separator />
+					<DropdownMenu.Content align="end" class="w-60">
 						<DropdownMenu.Item>
 							{#snippet child({ props })}
-								<a href="/me" class="flex w-full items-center gap-2 px-2 py-1.5 text-sm" {...props}>
-									<UserRoundIcon class="size-4 text-muted-foreground" />
-									<span>My Profile</span>
+								<a href="/me" class="flex items-center gap-2.5" {...props}>
+									<Avatar.Root class="size-9">
+										<Avatar.Image
+											src={getCdnProxyUrl(page.data.user?.image)}
+											alt={page.data.user?.name ?? 'User'}
+											class="object-cover"
+											referrerpolicy="no-referrer"
+										/>
+										<Avatar.Fallback class="text-xs font-semibold">
+											{page.data.user?.name?.slice(0, 2)?.toUpperCase() ?? '42'}
+										</Avatar.Fallback>
+									</Avatar.Root>
+									<div class="flex min-w-0 flex-1 flex-col">
+										<span class="truncate text-sm font-semibold">
+											{page.data.user?.name ?? 'Student'}
+										</span>
+										<span class="truncate text-xs font-normal text-muted-foreground">
+											{page.data.user?.email ?? 'student@42.fr'}
+										</span>
+									</div>
 								</a>
 							{/snippet}
 						</DropdownMenu.Item>
@@ -121,11 +139,7 @@
 						<!-- Theme Selection Radio Group -->
 						<DropdownMenu.Separator />
 						<DropdownMenu.Group>
-							<DropdownMenu.GroupHeading
-								class="px-2 py-1 text-xs font-semibold tracking-wider text-muted-foreground uppercase"
-							>
-								Theme
-							</DropdownMenu.GroupHeading>
+							<DropdownMenu.GroupHeading>Theme</DropdownMenu.GroupHeading>
 							<DropdownMenu.RadioGroup
 								value={userPrefersMode.current}
 								onValueChange={(val) => {

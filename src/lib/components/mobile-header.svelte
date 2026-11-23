@@ -5,6 +5,7 @@
 	import { getDomainForPath } from '#lib/config/navigation.js';
 	import * as Avatar from '#lib/components/ui/avatar/index.js';
 	import { Button } from '#lib/components/ui/button/index.js';
+	import { getCdnProxyUrl } from '#lib/cdn.js';
 
 	const activeDomain = $derived(getDomainForPath(page.url.pathname));
 </script>
@@ -35,10 +36,21 @@
 	</div>
 
 	<div class="flex items-center">
-		<a href="/me" class="block cursor-pointer" aria-label="Your profile">
-			<Avatar.Root>
-				<Avatar.Image src={page.data.user?.image} alt={page.data.user?.name ?? 'User'} />
-				<Avatar.Fallback>42</Avatar.Fallback>
+		<a
+			href="/me"
+			class="flex items-center rounded-full ring-offset-background hover:ring-2 hover:ring-ring hover:ring-offset-1 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+			aria-label="Your profile"
+		>
+			<Avatar.Root class="size-8">
+				<Avatar.Image
+					src={getCdnProxyUrl(page.data.user?.image)}
+					alt={page.data.user?.name ?? 'User'}
+					class="object-cover"
+					referrerpolicy="no-referrer"
+				/>
+				<Avatar.Fallback class="text-xs font-semibold">
+					{page.data.user?.name?.slice(0, 2)?.toUpperCase() ?? '42'}
+				</Avatar.Fallback>
 			</Avatar.Root>
 		</a>
 	</div>

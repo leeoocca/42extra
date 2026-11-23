@@ -32,13 +32,17 @@
 		"tw-animate-css": "^1.4.0",
 		"typescript": "^6.0.3",
 		"typescript-eslint": "^8.73.0",
-		"vite": "^8.3.8"
+		"vite": "^8.3.8",
+		"vitest": "^5.1.1"
 	},
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:live": "vitest run src/lib/schemas/42.live.test.ts",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -48,7 +52,8 @@
 	"type": "module",
 	"dependencies": {
 		"better-auth": "^1.7.27",
-		"mode-watcher": "^1.1.0"
+		"mode-watcher": "^1.1.0",
+		"zod": "^4.6.7"
 	},
 	"imports": {
 		"#lib": "./src/lib/index.js",
