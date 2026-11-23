@@ -1,36 +1,42 @@
 <script lang="ts">
-	import AppSidebar from '#lib/components/app-sidebar.svelte';
-	import * as Breadcrumb from '#lib/components/ui/breadcrumb/index.js';
-	import { Separator } from '#lib/components/ui/separator/index.js';
-	import * as Sidebar from '#lib/components/ui/sidebar/index.js';
+	import DesktopHeader from '#lib/components/desktop-header.svelte';
+	import MobileHeader from '#lib/components/mobile-header.svelte';
+	import MobileSubnavPills from '#lib/components/mobile-subnav-pills.svelte';
+	import MobileDomainSheet from '#lib/components/mobile-domain-sheet.svelte';
+	import CommandMenu from '#lib/components/command-menu.svelte';
+	import { Button } from '#lib/components/ui/button/index.js';
+	import { navState } from '#lib/state/nav-state.svelte.js';
+	import SearchIcon from '@lucide/svelte/icons/search';
 
 	let { children } = $props();
 </script>
 
-<Sidebar.Provider>
-	<AppSidebar />
-	<Sidebar.Inset>
-		<header
-			class="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12"
-		>
-			<div class="flex items-center gap-2 px-4">
-				<Sidebar.Trigger class="-ms-1" />
-				<Separator orientation="vertical" class="me-2 data-[orientation=vertical]:h-4" />
-				<Breadcrumb.Root>
-					<Breadcrumb.List>
-						<Breadcrumb.Item class="hidden md:block">
-							<Breadcrumb.Link href="##">Parent</Breadcrumb.Link>
-						</Breadcrumb.Item>
-						<Breadcrumb.Separator class="hidden md:block" />
-						<Breadcrumb.Item>
-							<Breadcrumb.Page>Current</Breadcrumb.Page>
-						</Breadcrumb.Item>
-					</Breadcrumb.List>
-				</Breadcrumb.Root>
-			</div>
-		</header>
-		<div class="flex flex-1 flex-col gap-4 p-4 pt-0">
-			{@render children()}
-		</div>
-	</Sidebar.Inset>
-</Sidebar.Provider>
+<CommandMenu />
+<MobileDomainSheet />
+
+<!-- Mobile layout (< 768px, no bottom bar, floating search button) -->
+<div class="flex min-h-svh flex-col md:hidden">
+	<MobileHeader />
+	<MobileSubnavPills />
+	<main class="flex-1 p-4 pb-28">
+		{@render children()}
+	</main>
+
+	<!-- Mobile Floating Search Button (Bottom Right) -->
+	<Button
+		size="icon"
+		onclick={navState.openCommand}
+		class="fixed right-5 bottom-6 z-40 size-12 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-transform"
+		aria-label="Search or open command palette"
+	>
+		<SearchIcon class="size-5" />
+	</Button>
+</div>
+
+<!-- Desktop Centered Layout (>= 768px, no sidebar) -->
+<div class="hidden min-h-svh flex-col md:flex">
+	<DesktopHeader />
+	<main class="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 lg:px-8">
+		{@render children()}
+	</main>
+</div>

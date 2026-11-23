@@ -1,1 +1,2 @@
-Ciao
+<script lang="ts">
+</script>

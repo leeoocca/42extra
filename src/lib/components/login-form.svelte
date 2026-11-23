@@ -17,8 +17,8 @@
 	async function handleSignIn() {
 		isLoading = true;
 		try {
-			await authClient.signIn.oauth2({
-				providerId: '42',
+			await authClient.signIn.social({
+				provider: '42',
 				callbackURL: '/'
 			});
 		} catch (error) {
