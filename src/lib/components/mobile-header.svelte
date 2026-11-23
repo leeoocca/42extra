@@ -36,13 +36,9 @@
 
 	<div class="flex items-center">
 		<a href="/me" class="block cursor-pointer" aria-label="Your profile">
-			<Avatar.Root class="size-8 rounded-lg border border-border">
-				<Avatar.Image
-					src={page.data.user?.image}
-					alt={page.data.user?.name ?? 'User'}
-					class="object-cover"
-				/>
-				<Avatar.Fallback class="text-xs font-semibold">42</Avatar.Fallback>
+			<Avatar.Root>
+				<Avatar.Image src={page.data.user?.image} alt={page.data.user?.name ?? 'User'} />
+				<Avatar.Fallback>42</Avatar.Fallback>
 			</Avatar.Root>
 		</a>
 	</div>

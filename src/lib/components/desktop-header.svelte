@@ -87,13 +87,7 @@
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger>
 						{#snippet child({ props })}
-							<Button
-								{...props}
-								variant="ghost"
-								size="icon"
-								class="size-8 rounded-lg p-0 hover:ring-2 hover:ring-border"
-								aria-label="User menu"
-							>
+							<Button {...props} variant="ghost" size="icon" aria-label="User menu">
 								<Avatar.Root class="size-8">
 									<Avatar.Image
 										src={page.data.user?.image}
@@ -156,11 +150,7 @@
 						</DropdownMenu.Group>
 
 						<DropdownMenu.Separator />
-						<DropdownMenu.Item
-							variant="destructive"
-							onclick={handleSignOut}
-							class="cursor-pointer"
-						>
+						<DropdownMenu.Item variant="destructive" onclick={handleSignOut} class="cursor-pointer">
 							<SquareArrowLeftExitIcon class="me-2 size-4" />
 							<span>Sign out</span>
 						</DropdownMenu.Item>
@@ -174,7 +164,7 @@
 	{#if activeDomain && activeDomain.items.length > 1}
 		<div class="border-b border-border bg-muted/20">
 			<div
-				class="no-scrollbar mx-auto flex h-10 max-w-7xl items-center overflow-x-auto px-4 sm:px-6 lg:px-8"
+				class="mx-auto no-scrollbar flex h-10 max-w-7xl items-center overflow-x-auto px-4 sm:px-6 lg:px-8"
 			>
 				<nav class="-mb-px flex items-center space-x-1" aria-label="Sub Navigation">
 					{#each activeDomain.items as item (item.href)}

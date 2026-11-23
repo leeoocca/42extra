@@ -1,16 +1,16 @@
 <script lang="ts" module>
 	import { type VariantProps, tv } from "tailwind-variants";
-	import { cn, type WithElementRef } from "#lib/utils.js";
-	import type { HTMLAnchorAttributes, HTMLAttributes } from "svelte/elements";
 
 	export const badgeVariants = tv({
-		base: "focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:aria-invalid:border-destructive/50 inline-flex items-center justify-center rounded-full border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none transition-colors outline-none",
+		base: "h-5 gap-1 rounded-4xl border border-transparent px-2 py-0.5 text-xs font-medium transition-all has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&>svg]:size-3! group/badge inline-flex w-fit shrink-0 items-center justify-center overflow-hidden whitespace-nowrap focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none",
 		variants: {
 			variant: {
-				default: "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
-				secondary: "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
-				destructive: "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
-				outline: "text-foreground",
+				default: "bg-primary text-primary-foreground [a]:hover:bg-primary/80",
+				secondary: "bg-secondary text-secondary-foreground [a]:hover:bg-secondary/80",
+				destructive: "bg-destructive/10 [a]:hover:bg-destructive/20 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 text-destructive dark:bg-destructive/20",
+				outline: "border-border text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground",
+				ghost: "hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50",
+				link: "text-primary underline-offset-4 hover:underline",
 			},
 		},
 		defaultVariants: {
@@ -19,40 +19,31 @@
 	});
 
 	export type BadgeVariant = VariantProps<typeof badgeVariants>["variant"];
-	export type BadgeProps = WithElementRef<HTMLAttributes<HTMLSpanElement>> &
-		WithElementRef<HTMLAnchorAttributes> & {
-			variant?: BadgeVariant;
-		};
 </script>
 
 <script lang="ts">
+	import { cn, type WithElementRef } from "#lib/utils.js";
+	import type { HTMLAnchorAttributes } from "svelte/elements";
+
 	let {
+		ref = $bindable(null),
+		href,
 		class: className,
 		variant = "default",
-		ref = $bindable(null),
-		href = undefined,
 		children,
 		...restProps
-	}: BadgeProps = $props();
+	}: WithElementRef<HTMLAnchorAttributes> & {
+		variant?: BadgeVariant;
+	} = $props();
 </script>
 
-{#if href}
-	<a
-		bind:this={ref}
-		data-slot="badge"
-		class={cn(badgeVariants({ variant }), className)}
-		{href}
-		{...restProps}
-	>
-		{@render children?.()}
-	</a>
-{:else}
-	<span
-		bind:this={ref}
-		data-slot="badge"
-		class={cn(badgeVariants({ variant }), className)}
-		{...restProps}
-	>
-		{@render children?.()}
-	</span>
-{/if}
+<svelte:element
+	this={href ? "a" : "span"}
+	bind:this={ref}
+	data-slot="badge"
+	{href}
+	class={cn(badgeVariants({ variant }), className)}
+	{...restProps}
+>
+	{@render children?.()}
+</svelte:element>
