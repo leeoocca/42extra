@@ -15,11 +15,13 @@ export const load: PageLoad = async ({ fetch }) => {
 		const data = await res.json();
 		return {
 			campuses: (Array.isArray(data) ? data : data.campuses ?? []) as FtCampus[],
+			title: 'Campuses',
 			error: null
 		};
 	} catch (err: any) {
 		return {
 			campuses: [] as FtCampus[],
+			title: 'Campuses',
 			error: err?.message || 'Network error while loading campuses'
 		};
 	}

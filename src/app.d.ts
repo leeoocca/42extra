@@ -9,7 +9,9 @@ declare global {
 			user?: User;
 			session?: Session;
 		}
-		// interface PageData {}
+		interface PageData {
+			title?: string | string[];
+		}
 		// interface PageState {}
 		// interface Platform {}
 	}

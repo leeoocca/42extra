@@ -4,6 +4,7 @@
 	import MobileSubnavPills from '#lib/components/mobile-subnav-pills.svelte';
 	import MobileDomainSheet from '#lib/components/mobile-domain-sheet.svelte';
 	import CommandMenu from '#lib/components/command-menu.svelte';
+	import Footer from '#lib/components/footer.svelte';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import { navState } from '#lib/state/nav-state.svelte.js';
 	import SearchIcon from '@lucide/svelte/icons/search';
@@ -21,6 +22,7 @@
 	<main class="flex-1 p-4 pb-28">
 		{@render children()}
 	</main>
+	<Footer />
 
 	<!-- Mobile Floating Search Button (Bottom Right) -->
 	<Button
@@ -39,4 +41,5 @@
 	<main class="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 lg:px-8">
 		{@render children()}
 	</main>
+	<Footer />
 </div>

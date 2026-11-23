@@ -1,0 +1,30 @@
+{
+	"lang": "en",
+	"name": "42extra",
+	"short_name": "42extra",
+	"start_url": "/",
+	"scope": "https://42e.leeoo.cc",
+	"display": "standalone",
+	"theme_color": "#121212",
+	"background_color": "#121212",
+	"icons": [
+		{
+			"src": "icon.svg",
+			"sizes": "150x150",
+			"type": "image/svg+xml",
+			"purpose": "any monochrome"
+		},
+		{
+			"src": "/icon_x192.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "maskable"
+		},
+		{
+			"src": "/icon_x512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "maskable"
+		}
+	]
+}

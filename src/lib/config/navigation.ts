@@ -205,6 +205,18 @@ export function getDomainForPath(pathname: string): NavDomain | undefined {
 	return undefined;
 }
 
+export function getItemForPath(pathname: string): SubNavItem | undefined {
+	for (const domain of NAV_DOMAINS) {
+		for (const item of domain.items) {
+			if (item.href === pathname || (item.href !== '/' && pathname.startsWith(item.href))) {
+				return item;
+			}
+		}
+	}
+
+	return undefined;
+}
+
 export function isItemActive(itemHref: string, pathname: string): boolean {
 	if (itemHref === '/') {
 		return pathname === '/';

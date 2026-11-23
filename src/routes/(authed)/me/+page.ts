@@ -15,11 +15,13 @@ export const load: PageLoad = async ({ fetch }) => {
 		const data = await res.json();
 		return {
 			profile: data as FtUserMe,
+			title: data?.login ? ['Users', data.login] : 'My Profile',
 			error: null
 		};
 	} catch (err: any) {
 		return {
 			profile: null as FtUserMe | null,
+			title: 'My Profile',
 			error: err?.message || 'Network error while loading profile'
 		};
 	}
