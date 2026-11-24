@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { HTMLAttributes } from 'svelte/elements';
+	import { page } from '$app/state';
 	import { cn, type WithElementRef } from '#lib/utils.js';
 	import { authClient } from '#lib/client.ts';
 	import Button from './ui/button/button.svelte';
@@ -17,9 +18,15 @@
 	async function handleSignIn() {
 		isLoading = true;
 		try {
+			const redirectParam = page.url.searchParams.get('redirect');
+			const callbackURL =
+				redirectParam && redirectParam.startsWith('/') && !redirectParam.startsWith('//')
+					? redirectParam
+					: '/';
+
 			await authClient.signIn.social({
 				provider: '42',
-				callbackURL: '/'
+				callbackURL
 			});
 		} catch (error) {
 			console.error('Sign in error:', error);

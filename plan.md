@@ -54,7 +54,7 @@
 accent colors
 active nav indicators
 [x] branding and page title
-redirect to
+[x] redirect to
 [x] this page on intra
 
 ---

@@ -2,10 +2,14 @@ import { redirect } from '@sveltejs/kit';
 import type { LayoutLoad } from './$types';
 import type { FtUserMe } from '#lib/schemas/42.js';
 
-export const load: LayoutLoad = async ({ parent, fetch }) => {
+export const load: LayoutLoad = async ({ parent, fetch, url }) => {
 	const { user, session } = await parent();
 
 	if (!user) {
+		const redirectTo = `${url.pathname}${url.search}`;
+		if (redirectTo && redirectTo !== '/') {
+			redirect(307, `/signin?redirect=${encodeURIComponent(redirectTo)}`);
+		}
 		redirect(307, '/signin');
 	}
 
