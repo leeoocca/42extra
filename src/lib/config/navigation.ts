@@ -164,21 +164,9 @@ export const NAV_DOMAINS: NavDomain[] = [
 	{
 		id: 'network',
 		title: 'Network',
-		defaultHref: '/stats',
+		defaultHref: '/campuses',
 		icon: EarthIcon,
 		items: [
-			{
-				title: 'Stats',
-				href: '/stats',
-				description: 'Global 42 stats & progression metrics',
-				icon: ChartColumnIcon
-			},
-			{
-				title: 'Leaderboard',
-				href: '/leaderboard',
-				description: 'Network-wide ranking & scale leaderboards',
-				icon: MedalIcon
-			},
 			{
 				title: 'Campuses',
 				href: '/campuses',
