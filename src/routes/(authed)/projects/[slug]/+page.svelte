@@ -272,12 +272,15 @@
 				<h2 class="text-base font-semibold tracking-tight text-foreground">Sub-projects ({p.children.length})</h2>
 				<div class="border rounded-md divide-y text-sm">
 					{#each p.children as child}
-						<div class="flex items-center justify-between p-3 hover:bg-muted/30 transition-colors">
-							<a href={`/projects/${child.slug}`} class="font-medium text-foreground hover:underline">
+						<a
+							href={`/projects/${child.slug}`}
+							class="flex items-center justify-between p-3 hover:bg-muted/30 transition-colors group block text-inherit"
+						>
+							<span class="font-medium text-foreground group-hover:underline">
 								{child.name}
-							</a>
+							</span>
 							<span class="text-muted-foreground text-xs">#{child.id}</span>
-						</div>
+						</a>
 					{/each}
 				</div>
 			</div>
@@ -407,6 +410,13 @@
 													({userObj.displayname})
 												</span>
 											{/if}
+											<a
+												href={`/users/${userObj.login}`}
+												class="text-[11px] text-muted-foreground hover:text-foreground hover:underline shrink-0"
+												title="View user profile"
+											>
+												profile &rarr;
+											</a>
 										{:else}
 											<span class="font-semibold text-foreground text-sm">Student #{pu.id}</span>
 										{/if}

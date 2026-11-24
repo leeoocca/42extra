@@ -50,15 +50,15 @@
 	}
 </script>
 
-<div class="flex items-center justify-between p-3.5 gap-3 hover:bg-muted/30 transition-colors">
+<a
+	href={projectHref}
+	class="flex items-center justify-between p-3.5 gap-3 hover:bg-muted/30 transition-colors group block text-inherit"
+>
 	<div class="min-w-0 space-y-1">
 		<div class="flex items-center gap-2 flex-wrap">
-			<a
-				href={projectHref}
-				class="font-semibold text-foreground hover:underline truncate"
-			>
+			<span class="font-semibold text-foreground group-hover:underline truncate">
 				{projectUser.project.name}
-			</a>
+			</span>
 			{#if projectUser.occurrence > 0}
 				<span class="text-xs text-muted-foreground">
 					retry #{projectUser.occurrence}
@@ -82,9 +82,8 @@
 	<!-- Right: Mark & Status Icon (always on the right) -->
 	<div class="flex items-center gap-2 shrink-0">
 		{#if projectUser.final_mark !== null && projectUser.final_mark !== undefined}
-			<a
-				href={projectHref}
-				class="font-bold text-sm tabular-nums flex items-center gap-1.5 hover:underline {isValidated ? 'text-emerald-600' : 'text-destructive'}"
+			<span
+				class="font-bold text-sm tabular-nums flex items-center gap-1.5 {isValidated ? 'text-emerald-600' : 'text-destructive'}"
 			>
 				<span>{projectUser.final_mark}</span>
 				{#if isValidated}
@@ -92,7 +91,7 @@
 				{:else}
 					<XCircleIcon class="w-4 h-4 text-destructive" />
 				{/if}
-			</a>
+			</span>
 		{/if}
 	</div>
-</div>
+</a>

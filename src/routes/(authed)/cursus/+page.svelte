@@ -84,14 +84,17 @@
 		{:else}
 			<div class="border rounded-md divide-y text-sm">
 				{#each activeCursuses as item}
-					<div class="flex items-center justify-between p-3 hover:bg-muted/30 transition-colors gap-3">
+					<a
+						href={`/cursus/${item.slug}`}
+						class="flex items-center justify-between p-3 hover:bg-muted/30 transition-colors gap-3 group block text-inherit"
+					>
 						<div class="flex items-center gap-2.5 min-w-0">
 							<span class="text-muted-foreground text-xs shrink-0 w-8">
 								#{item.id}
 							</span>
-							<a href={`/cursus/${item.slug}`} class="font-semibold text-foreground hover:underline truncate">
+							<span class="font-semibold text-foreground group-hover:underline truncate">
 								{item.name}
-							</a>
+							</span>
 							<span class="hidden md:inline font-mono text-muted-foreground text-xs truncate">
 								{item.slug}
 							</span>
@@ -108,7 +111,7 @@
 								{item.kind || 'main'}
 							</Badge>
 						</div>
-					</div>
+					</a>
 				{/each}
 			</div>
 		{/if}
@@ -131,14 +134,17 @@
 		{:else}
 			<div class="border rounded-md divide-y text-sm opacity-85">
 				{#each archivedCursuses as item}
-					<div class="flex items-center justify-between p-3 hover:bg-muted/30 transition-colors gap-3">
+					<a
+						href={`/cursus/${item.slug}`}
+						class="flex items-center justify-between p-3 hover:bg-muted/30 transition-colors gap-3 group block text-inherit"
+					>
 						<div class="flex items-center gap-2.5 min-w-0">
 							<span class="text-muted-foreground text-xs shrink-0 w-8">
 								#{item.id}
 							</span>
-							<a href={`/cursus/${item.slug}`} class="font-medium text-foreground hover:underline truncate">
+							<span class="font-medium text-foreground group-hover:underline truncate">
 								{item.name}
-							</a>
+							</span>
 							<span class="hidden md:inline font-mono text-muted-foreground text-xs truncate">
 								{item.slug}
 							</span>
@@ -155,7 +161,7 @@
 								{item.kind}
 							</Badge>
 						</div>
-					</div>
+					</a>
 				{/each}
 			</div>
 		{/if}

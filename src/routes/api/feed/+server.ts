@@ -299,7 +299,7 @@ export const GET: RequestHandler = async (event) => {
 				title: `unlocked ${ach?.name || `Achievement #${au.achievement_id}`}`,
 				subtitle: ach?.description || undefined,
 				status: ach?.tier || 'none',
-				link: `/users/${au.login}`,
+				link: `/achievements/${au.achievement_id}`,
 				metadata: {
 					achievement_id: au.achievement_id,
 					achievement_name: ach?.name,

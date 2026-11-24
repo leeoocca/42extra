@@ -96,13 +96,13 @@
 		};
 	});
 
-	// Cursus ID to Cursus name map
+	// Cursus ID to Cursus object map (name and slug)
 	let cursusMap = $derived.by(() => {
-		const map = new Map<number, string>();
+		const map = new Map<number, { name: string; slug: string }>();
 		if (data.profile?.cursus_users) {
 			for (const cu of data.profile.cursus_users) {
 				if (cu.cursus) {
-					map.set(cu.cursus_id, cu.cursus.name);
+					map.set(cu.cursus_id, { name: cu.cursus.name, slug: cu.cursus.slug });
 				}
 			}
 		}
@@ -169,21 +169,27 @@
 	// Grouping calculation
 	let groupedProjectSections = $derived.by(() => {
 		if (groupBy === 'cursus') {
-			const groups = new Map<string, FtProjectUser[]>();
+			const groups = new Map<string, { title: string; slug?: string; projects: FtProjectUser[] }>();
 
 			for (const pu of filteredProjects) {
 				const cursusId = pu.cursus_ids?.[0] ?? null;
-				const cursusName = cursusId ? cursusMap.get(cursusId) ?? `Cursus #${cursusId}` : 'Other Curriculum';
+				const cursusInfo = cursusId ? cursusMap.get(cursusId) : undefined;
+				const cursusName = cursusInfo?.name ?? (cursusId ? `Cursus #${cursusId}` : 'Other Curriculum');
 
 				if (!groups.has(cursusName)) {
-					groups.set(cursusName, []);
+					groups.set(cursusName, {
+						title: cursusName,
+						slug: cursusInfo?.slug,
+						projects: []
+					});
 				}
-				groups.get(cursusName)!.push(pu);
+				groups.get(cursusName)!.projects.push(pu);
 			}
 
-			return Array.from(groups.entries()).map(([title, projects]) => ({
-				title,
-				projects: projects.sort((a, b) => (b.updated_at || '').localeCompare(a.updated_at || ''))
+			return Array.from(groups.values()).map((g) => ({
+				title: g.title,
+				slug: g.slug,
+				projects: g.projects.sort((a, b) => (b.updated_at || '').localeCompare(a.updated_at || ''))
 			}));
 		} else {
 			// Group by Status (in_progress, waiting_for_correction, finished, etc.)
@@ -201,6 +207,7 @@
 
 			return Array.from(groups.entries()).map(([title, projects]) => ({
 				title: title.charAt(0).toUpperCase() + title.slice(1),
+				slug: undefined,
 				projects: projects.sort((a, b) => (b.updated_at || '').localeCompare(a.updated_at || ''))
 			}));
 		}
@@ -366,7 +373,13 @@
 					<div class="flex items-center justify-between">
 						<h2 class="text-base font-semibold tracking-tight flex items-center gap-2">
 							<FolderGit2Icon class="w-4 h-4 text-muted-foreground" />
-							{group.title}
+							{#if group.slug}
+								<a href={`/cursus/${group.slug}`} class="hover:underline">
+									{group.title}
+								</a>
+							{:else}
+								<span>{group.title}</span>
+							{/if}
 						</h2>
 						<span class="text-xs text-muted-foreground">
 							{group.projects.length} project{group.projects.length === 1 ? '' : 's'}

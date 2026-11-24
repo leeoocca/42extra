@@ -218,15 +218,17 @@
 				<div class="border rounded-md divide-y overflow-hidden">
 					{#each allProjects as p (p.id)}
 						{@const userStatus = userProjectMap.get(p.id)}
-						<div class="flex flex-col sm:flex-row sm:items-center justify-between p-3 gap-2 hover:bg-muted/30 transition-colors">
+						<a
+							href="/projects/{p.slug}"
+							class="flex flex-col sm:flex-row sm:items-center justify-between p-3 gap-2 hover:bg-muted/30 transition-colors group block text-inherit"
+						>
 							<div class="space-y-1 min-w-0">
 								<div class="flex items-center gap-2">
-									<a
-										href="/projects/{p.slug}"
-										class="text-sm font-medium text-foreground hover:underline hover:text-primary truncate"
+									<span
+										class="text-sm font-medium text-foreground group-hover:underline group-hover:text-primary truncate"
 									>
 										{p.name}
-									</a>
+									</span>
 									{#if p.exam}
 										<Badge variant="destructive" class="text-xs px-1.5 py-0">Exam</Badge>
 									{/if}
@@ -250,7 +252,7 @@
 								</div>
 							</div>
 
-							<!-- Right side: User status badge or view link -->
+							<!-- Right side: User status badge and view indicator -->
 							<div class="flex items-center gap-2 self-start sm:self-center shrink-0">
 								{#if userStatus}
 									{#if userStatus.status === 'finished'}
@@ -267,14 +269,13 @@
 									{/if}
 								{/if}
 
-								<a
-									href="/projects/{p.slug}"
-									class="text-xs text-muted-foreground hover:text-foreground border rounded px-2 py-1 transition-colors"
+								<span
+									class="text-xs text-muted-foreground group-hover:text-foreground border rounded px-2 py-1 transition-colors"
 								>
 									View &rarr;
-								</a>
+								</span>
 							</div>
-						</div>
+						</a>
 					{/each}
 				</div>
 

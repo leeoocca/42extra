@@ -11,13 +11,13 @@
 
 	let campusName = $derived(data.primaryCampus?.name ?? `Campus #${data.primaryCampusId}`);
 
-	// Cursus ID to Cursus name map
+	// Cursus ID to Cursus object map (name and slug)
 	let cursusMap = $derived.by(() => {
-		const map = new Map<number, string>();
+		const map = new Map<number, { name: string; slug: string }>();
 		if (data.profile?.cursus_users) {
 			for (const cu of data.profile.cursus_users) {
 				if (cu.cursus) {
-					map.set(cu.cursus_id, cu.cursus.name);
+					map.set(cu.cursus_id, { name: cu.cursus.name, slug: cu.cursus.slug });
 				}
 			}
 		}
@@ -71,12 +71,19 @@
 	{:else}
 		<div class="space-y-6">
 			{#each blocsWithSortedCoalitions as bloc}
-				{@const cursusName = cursusMap.get(bloc.cursus_id) ?? `Cursus #${bloc.cursus_id}`}
+				{@const cursusInfo = cursusMap.get(bloc.cursus_id)}
+				{@const cursusName = cursusInfo?.name ?? `Cursus #${bloc.cursus_id}`}
 				<div class="space-y-2">
 					<div class="flex items-center justify-between">
 						<h2 class="text-base font-semibold tracking-tight flex items-center gap-2">
 							<ShieldIcon class="w-4 h-4 text-muted-foreground" />
-							{cursusName}
+							{#if cursusInfo?.slug}
+								<a href={`/cursus/${cursusInfo.slug}`} class="hover:underline">
+									{cursusName}
+								</a>
+							{:else}
+								<span>{cursusName}</span>
+							{/if}
 							<span class="text-xs text-muted-foreground font-normal">
 								(Bloc #{bloc.id})
 							</span>

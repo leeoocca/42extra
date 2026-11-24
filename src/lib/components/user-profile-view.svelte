@@ -198,7 +198,9 @@
 			<div>
 				<dt class="text-xs font-medium text-muted-foreground">Primary Campus</dt>
 				<dd class="mt-0.5 font-medium text-foreground">
-					{primaryCampus}
+					<a href="/campuses" class="hover:underline">
+						{primaryCampus}
+					</a>
 				</dd>
 			</div>
 
@@ -206,10 +208,14 @@
 				<dt class="text-xs font-medium text-muted-foreground">Active Workstation</dt>
 				<dd class="mt-0.5">
 					{#if profile?.location}
-						<span class="inline-flex items-center gap-1 font-mono font-semibold text-emerald-600">
+						<a
+							href="/clusters"
+							class="inline-flex items-center gap-1 font-mono font-semibold text-emerald-600 hover:underline"
+							title="View clusters"
+						>
 							<span class="h-2 w-2 rounded-full bg-emerald-500"></span>
 							{profile.location}
-						</span>
+						</a>
 					{:else}
 						<span class="text-muted-foreground">Unavailable (Off-campus)</span>
 					{/if}
@@ -267,7 +273,9 @@
 			<div>
 				<dt class="text-xs font-medium text-muted-foreground">Total Achievements</dt>
 				<dd class="mt-0.5 font-medium text-foreground">
-					{profile?.achievements?.length ?? 0} badges unlocked
+					<a href="/achievements" class="hover:underline text-primary">
+						{profile?.achievements?.length ?? 0} badges unlocked &rarr;
+					</a>
 				</dd>
 			</div>
 		</dl>
@@ -283,29 +291,57 @@
 		{:else}
 			<div class="divide-y rounded-md border text-sm">
 				{#each profile.cursus_users as cu}
-					<div
-						class="flex items-center justify-between gap-3 p-3.5 transition-colors hover:bg-muted/30"
-					>
-						<div class="min-w-0 space-y-0.5">
-							<div class="flex items-center gap-2">
-								<span class="font-semibold text-foreground">
-									{cu.cursus?.name ?? `Cursus #${cu.cursus_id}`}
-								</span>
-								{#if cu.grade}
-									<Badge variant="outline" class="px-2 py-0.5 text-xs capitalize">
-										{cu.grade}
-									</Badge>
-								{/if}
+					{@const cursusHref = cu.cursus?.slug ? `/cursus/${cu.cursus.slug}` : null}
+					{#if cursusHref}
+						<a
+							href={cursusHref}
+							class="flex items-center justify-between gap-3 p-3.5 transition-colors hover:bg-muted/30 group block text-inherit"
+						>
+							<div class="min-w-0 space-y-0.5">
+								<div class="flex items-center gap-2">
+									<span class="font-semibold text-foreground group-hover:underline">
+										{cu.cursus?.name ?? `Cursus #${cu.cursus_id}`}
+									</span>
+									{#if cu.grade}
+										<Badge variant="outline" class="px-2 py-0.5 text-xs capitalize">
+											{cu.grade}
+										</Badge>
+									{/if}
+								</div>
+								<div class="text-xs text-muted-foreground">
+									level {cu.level.toFixed(2)} &bull; {cu.skills?.length ?? 0} skills
+								</div>
 							</div>
-							<div class="text-xs text-muted-foreground">
-								level {cu.level.toFixed(2)} &bull; {cu.skills?.length ?? 0} skills
-							</div>
-						</div>
 
-						<div class="shrink-0 text-right text-xs text-muted-foreground">
-							{cu.end_at ? `Ended ${formatDate(cu.end_at)}` : 'In Progress'}
+							<div class="shrink-0 text-right text-xs text-muted-foreground">
+								{cu.end_at ? `Ended ${formatDate(cu.end_at)}` : 'In Progress'}
+							</div>
+						</a>
+					{:else}
+						<div
+							class="flex items-center justify-between gap-3 p-3.5 transition-colors hover:bg-muted/30"
+						>
+							<div class="min-w-0 space-y-0.5">
+								<div class="flex items-center gap-2">
+									<span class="font-semibold text-foreground">
+										{cu.cursus?.name ?? `Cursus #${cu.cursus_id}`}
+									</span>
+									{#if cu.grade}
+										<Badge variant="outline" class="px-2 py-0.5 text-xs capitalize">
+											{cu.grade}
+										</Badge>
+									{/if}
+								</div>
+								<div class="text-xs text-muted-foreground">
+									level {cu.level.toFixed(2)} &bull; {cu.skills?.length ?? 0} skills
+								</div>
+							</div>
+
+							<div class="shrink-0 text-right text-xs text-muted-foreground">
+								{cu.end_at ? `Ended ${formatDate(cu.end_at)}` : 'In Progress'}
+							</div>
 						</div>
-					</div>
+					{/if}
 				{/each}
 			</div>
 		{/if}
