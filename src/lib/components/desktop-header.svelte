@@ -14,6 +14,9 @@
 	import { Kbd } from '#lib/components/ui/kbd/index.js';
 	import { authClient } from '#lib/client.ts';
 	import { getCdnProxyUrl } from '#lib/cdn.js';
+	import { invalidateAll } from '$app/navigation';
+	import ExternalLinkIcon from '@lucide/svelte/icons/external-link';
+	import RefreshCwIcon from '@lucide/svelte/icons/refresh-cw';
 	import SearchIcon from '@lucide/svelte/icons/search';
 	import SquareArrowLeftExitIcon from '@lucide/svelte/icons/square-arrow-left-exit';
 	import UserRoundIcon from '@lucide/svelte/icons/user-round';
@@ -21,8 +24,28 @@
 	import MoonIcon from '@lucide/svelte/icons/moon';
 	import MonitorIcon from '@lucide/svelte/icons/monitor';
 	import { setMode, userPrefersMode } from 'mode-watcher';
+	import { getIntraUrl } from '#lib/intra.js';
 
 	const activeDomain = $derived(getDomainForPath(page.url.pathname));
+	const currentIntraUrl = $derived(getIntraUrl(page.url.pathname, page.data));
+
+	let isRefreshing = $state(false);
+
+	async function handleRefreshData() {
+		isRefreshing = true;
+		try {
+			await invalidateAll();
+			if (navState.onRefresh) {
+				await navState.onRefresh();
+			}
+		} catch (e) {
+			console.error('Data refresh error:', e);
+		} finally {
+			setTimeout(() => {
+				isRefreshing = false;
+			}, 300);
+		}
+	}
 
 	async function handleSignOut() {
 		await authClient.signOut({
@@ -70,7 +93,47 @@
 			</div>
 
 			<!-- Right: Quick Search & User Menu -->
-			<div class="flex items-center gap-3">
+			<div class="flex items-center gap-2 sm:gap-2.5">
+				<!-- See this page on Intra Link (to the left of search bar) -->
+				{#if currentIntraUrl}
+					<Button
+						href={currentIntraUrl}
+						target="_blank"
+						rel="noreferrer"
+						variant="outline"
+						size="sm"
+						class="h-9 px-2.5 text-xs text-muted-foreground hover:text-foreground bg-muted/30"
+						title="See this page on 42 Intra"
+					>
+						<ExternalLinkIcon class="size-3.5" />
+						<span>Intra</span>
+					</Button>
+				{:else}
+					<Button
+						variant="outline"
+						size="sm"
+						disabled
+						class="h-9 px-2.5 text-xs text-muted-foreground/40 bg-muted/10 cursor-not-allowed opacity-50"
+						title="No 42 Intra page associated with this route"
+					>
+						<ExternalLinkIcon class="size-3.5" />
+						<span>Intra</span>
+					</Button>
+				{/if}
+
+				<!-- Data Refresh Button (on top) -->
+				<Button
+					variant="outline"
+					size="sm"
+					onclick={handleRefreshData}
+					disabled={isRefreshing}
+					class="h-9 px-2.5 text-xs text-muted-foreground hover:text-foreground bg-muted/30"
+					title="Refresh data"
+					aria-label="Refresh data"
+				>
+					<RefreshCwIcon class="size-3.5 {isRefreshing ? 'animate-spin text-primary' : ''}" />
+				</Button>
+
 				<!-- Quick Command Palette Button -->
 				<Button
 					variant="outline"

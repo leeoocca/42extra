@@ -68,6 +68,12 @@ describe('42 API Live Verification', () => {
 			}
 		});
 
+		if (campusRes.status === 429) {
+			console.warn('42 API rate limit hit (429), skipping live test turn');
+			ctx.skip();
+			return;
+		}
+
 		expect(campusRes.ok).toBe(true);
 		const rawCampuses = await campusRes.json();
 		expect(Array.isArray(rawCampuses)).toBe(true);

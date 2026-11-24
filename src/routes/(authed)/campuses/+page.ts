@@ -14,14 +14,16 @@ export const load: PageLoad = async ({ fetch }) => {
 
 		const data = await res.json();
 		return {
-			campuses: (Array.isArray(data) ? data : data.campuses ?? []) as FtCampus[],
+			campuses: (Array.isArray(data) ? data : (data.campuses ?? [])) as FtCampus[],
 			title: 'Campuses',
+			intraUrl: null,
 			error: null
 		};
 	} catch (err: any) {
 		return {
 			campuses: [] as FtCampus[],
 			title: 'Campuses',
+			intraUrl: null,
 			error: err?.message || 'Network error while loading campuses'
 		};
 	}

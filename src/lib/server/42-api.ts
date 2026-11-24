@@ -20,11 +20,15 @@ export interface FetchFtApiOptions<T> {
  * - Error reporting and throwing SvelteKit HTTP errors
  * - Optional Zod schema validation with resilient fallback
  */
-export async function fetchFtApi<T = unknown>(
+/**
+ * Raw response helper to make authenticated requests to 42 API.
+ * Returns the raw fetch Response object (preserving headers like x-total, x-page, etc.)
+ */
+export async function fetchFtApiResponse(
 	event: RequestEvent,
 	endpoint: string,
-	options?: FetchFtApiOptions<T>
-): Promise<T> {
+	options?: FetchFtApiOptions<any>
+): Promise<Response> {
 	const tokenResult = await getUserBearerToken(event);
 	if (!tokenResult?.token) {
 		throw error(401, 'Unauthorized: Valid user session or Bearer token is required');
@@ -32,7 +36,6 @@ export async function fetchFtApi<T = unknown>(
 
 	let currentToken = tokenResult.token;
 
-	// Normalize endpoint (ensure leading slash, support /v2/... or v2/...)
 	const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
 	const url = new URL(`${FT_API_BASE_URL}${cleanEndpoint}`);
 
@@ -51,29 +54,45 @@ export async function fetchFtApi<T = unknown>(
 		return headers;
 	};
 
-	try {
-		let res = await fetch(url.toString(), {
-			...options?.fetchOptions,
-			method: options?.fetchOptions?.method || 'GET',
-			headers: createHeaders(currentToken)
-		});
+	let res = await fetch(url.toString(), {
+		...options?.fetchOptions,
+		method: options?.fetchOptions?.method || 'GET',
+		headers: createHeaders(currentToken)
+	});
 
-		// Auto-refresh token on upstream 401
-		if (res.status === 401 && tokenResult.account && tokenResult.authContext) {
-			console.warn(`[42 API] Upstream ${cleanEndpoint} returned 401, refreshing token...`);
-			const refreshedToken = await refresh42OAuthToken(
-				tokenResult.account,
-				tokenResult.authContext
-			);
-			if (refreshedToken) {
-				currentToken = refreshedToken;
-				res = await fetch(url.toString(), {
-					...options?.fetchOptions,
-					method: options?.fetchOptions?.method || 'GET',
-					headers: createHeaders(currentToken)
-				});
-			}
+	if (res.status === 401 && tokenResult.account && tokenResult.authContext) {
+		console.warn(`[42 API] Upstream ${cleanEndpoint} returned 401, refreshing token...`);
+		const refreshedToken = await refresh42OAuthToken(
+			tokenResult.account,
+			tokenResult.authContext
+		);
+		if (refreshedToken) {
+			currentToken = refreshedToken;
+			res = await fetch(url.toString(), {
+				...options?.fetchOptions,
+				method: options?.fetchOptions?.method || 'GET',
+				headers: createHeaders(currentToken)
+			});
 		}
+	}
+
+	// Note: We return raw fetch response (even if !res.ok) so consumers like API proxy can forward the status code
+	// without throwing an unhandled 500 error.
+	if (!res.ok) {
+		const errorBody = await res.clone().text().catch(() => '');
+		console.warn(`[42 API] Upstream ${cleanEndpoint} returned status ${res.status}:`, errorBody);
+	}
+
+	return res;
+}
+
+export async function fetchFtApi<T = unknown>(
+	event: RequestEvent,
+	endpoint: string,
+	options?: FetchFtApiOptions<T>
+): Promise<T> {
+	try {
+		const res = await fetchFtApiResponse(event, endpoint, options);
 
 		if (!res.ok) {
 			const errorBody = await res.text().catch(() => '');
@@ -87,10 +106,9 @@ export async function fetchFtApi<T = unknown>(
 			const parseResult = options.schema.safeParse(rawJson);
 			if (!parseResult.success) {
 				console.warn(
-					`[42 API] Zod validation warning for ${cleanEndpoint}:`,
+					`[42 API] Zod validation warning for ${endpoint}:`,
 					JSON.stringify(parseResult.error.format(), null, 2)
 				);
-				// Resilient fallback to avoid breaking UI on new/unexpected upstream fields
 				return rawJson as T;
 			}
 			return parseResult.data;
@@ -101,7 +119,7 @@ export async function fetchFtApi<T = unknown>(
 		if (err?.status) {
 			throw err;
 		}
-		console.error(`[42 API] Error communicating with ${cleanEndpoint}:`, err);
+		console.error(`[42 API] Error communicating with ${endpoint}:`, err);
 		throw error(502, 'Bad Gateway: Error communicating with 42 API');
 	}
 }

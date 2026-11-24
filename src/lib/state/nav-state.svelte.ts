@@ -4,6 +4,7 @@ class NavState {
 	isCommandOpen = $state(false);
 	isDomainSheetOpen = $state(false);
 	selectedDomain = $state<NavDomain | null>(null);
+	onRefresh = $state<(() => Promise<void> | void) | null>(null);
 
 	openCommand = () => {
 		this.isCommandOpen = true;

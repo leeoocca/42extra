@@ -2,31 +2,30 @@
 	import { Input } from '#lib/components/ui/input/index.js';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import { Badge } from '#lib/components/ui/badge/index.js';
+	import { navState } from '#lib/state/nav-state.svelte.js';
 	import BuildingIcon from '@lucide/svelte/icons/building';
 	import MapPinIcon from '@lucide/svelte/icons/map-pin';
 	import UsersIcon from '@lucide/svelte/icons/users';
 	import ClockIcon from '@lucide/svelte/icons/clock';
 	import SearchIcon from '@lucide/svelte/icons/search';
-	import RefreshCwIcon from '@lucide/svelte/icons/refresh-cw';
 	import CircleAlertIcon from '@lucide/svelte/icons/circle-alert';
 	import ExternalLinkIcon from '@lucide/svelte/icons/external-link';
 	import XIcon from '@lucide/svelte/icons/x';
 	import type { PageData } from './$types';
 	import type { FtCampus } from '#lib/schemas/42.js';
+	import { onMount, onDestroy } from 'svelte';
 
 	let { data }: { data: PageData } = $props();
 
 	let searchQuery = $state('');
 	let filterStatus = $state<'all' | 'active' | 'public'>('all');
 	let sortBy = $state<'name' | 'students' | 'id'>('name');
-	let isRefreshing = $state(false);
 	let refreshError = $state<string | null>(null);
 	let customCampuses = $state<FtCampus[] | null>(null);
 
 	let activeCampuses = $derived(customCampuses ?? data.campuses ?? []);
 
 	async function handleRefresh() {
-		isRefreshing = true;
 		refreshError = null;
 		try {
 			const res = await fetch('/api/v2/campus?page[size]=100&sort=name');
@@ -40,10 +39,18 @@
 		} catch (err: unknown) {
 			const message = err instanceof Error ? err.message : 'Failed to refresh campus directory from 42 API';
 			refreshError = message;
-		} finally {
-			isRefreshing = false;
 		}
 	}
+
+	onMount(() => {
+		navState.onRefresh = handleRefresh;
+	});
+
+	onDestroy(() => {
+		if (navState.onRefresh === handleRefresh) {
+			navState.onRefresh = null;
+		}
+	});
 
 	let filteredCampuses = $derived.by(() => {
 		const q = searchQuery.trim().toLowerCase();
@@ -88,24 +95,12 @@
 
 <div class="space-y-6">
 	<!-- Page Header -->
-	<div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+	<div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b pb-4">
 		<div>
 			<h1 class="text-2xl font-bold tracking-tight text-foreground md:text-3xl">Campuses</h1>
 			<p class="mt-1 text-sm text-muted-foreground">
 				Global network directory of 42 campuses, student populations, and locations.
 			</p>
-		</div>
-		<div class="flex items-center gap-2">
-			<Button
-				variant="outline"
-				size="sm"
-				class="gap-1.5"
-				disabled={isRefreshing}
-				onclick={handleRefresh}
-			>
-				<RefreshCwIcon class="size-3.5 {isRefreshing ? 'animate-spin' : ''}" />
-				<span>{isRefreshing ? 'Syncing...' : 'Sync Directory'}</span>
-			</Button>
 		</div>
 	</div>
 
@@ -177,53 +172,53 @@
 		<!-- Status Filter Pills & Sort Selector -->
 		<div class="flex flex-wrap items-center gap-2">
 			<!-- Filter Pills -->
-			<div class="inline-flex items-center rounded-lg border border-border p-0.5 bg-muted/40">
-				<button
-					type="button"
-					class="rounded-md px-2.5 py-1 text-xs font-medium transition-colors {filterStatus === 'all' ? 'bg-background text-foreground shadow-xs font-semibold' : 'text-muted-foreground hover:text-foreground'}"
+			<div class="inline-flex items-center rounded-lg border border-border p-0.5 bg-muted/40 gap-0.5">
+				<Button
+					variant={filterStatus === 'all' ? 'secondary' : 'ghost'}
+					size="xs"
 					onclick={() => (filterStatus = 'all')}
 				>
 					All ({activeCampuses.length})
-				</button>
-				<button
-					type="button"
-					class="rounded-md px-2.5 py-1 text-xs font-medium transition-colors {filterStatus === 'active' ? 'bg-background text-foreground shadow-xs font-semibold' : 'text-muted-foreground hover:text-foreground'}"
+				</Button>
+				<Button
+					variant={filterStatus === 'active' ? 'secondary' : 'ghost'}
+					size="xs"
 					onclick={() => (filterStatus = 'active')}
 				>
 					Active ({activeCount})
-				</button>
-				<button
-					type="button"
-					class="rounded-md px-2.5 py-1 text-xs font-medium transition-colors {filterStatus === 'public' ? 'bg-background text-foreground shadow-xs font-semibold' : 'text-muted-foreground hover:text-foreground'}"
+				</Button>
+				<Button
+					variant={filterStatus === 'public' ? 'secondary' : 'ghost'}
+					size="xs"
 					onclick={() => (filterStatus = 'public')}
 				>
 					Public ({publicCount})
-				</button>
+				</Button>
 			</div>
 
 			<!-- Sort Selector -->
-			<div class="inline-flex items-center rounded-lg border border-border p-0.5 bg-muted/40">
-				<button
-					type="button"
-					class="rounded-md px-2.5 py-1 text-xs font-medium transition-colors {sortBy === 'name' ? 'bg-background text-foreground shadow-xs font-semibold' : 'text-muted-foreground hover:text-foreground'}"
+			<div class="inline-flex items-center rounded-lg border border-border p-0.5 bg-muted/40 gap-0.5">
+				<Button
+					variant={sortBy === 'name' ? 'secondary' : 'ghost'}
+					size="xs"
 					onclick={() => (sortBy = 'name')}
 				>
 					Name
-				</button>
-				<button
-					type="button"
-					class="rounded-md px-2.5 py-1 text-xs font-medium transition-colors {sortBy === 'students' ? 'bg-background text-foreground shadow-xs font-semibold' : 'text-muted-foreground hover:text-foreground'}"
+				</Button>
+				<Button
+					variant={sortBy === 'students' ? 'secondary' : 'ghost'}
+					size="xs"
 					onclick={() => (sortBy = 'students')}
 				>
 					Students
-				</button>
-				<button
-					type="button"
-					class="rounded-md px-2.5 py-1 text-xs font-medium transition-colors {sortBy === 'id' ? 'bg-background text-foreground shadow-xs font-semibold' : 'text-muted-foreground hover:text-foreground'}"
+				</Button>
+				<Button
+					variant={sortBy === 'id' ? 'secondary' : 'ghost'}
+					size="xs"
 					onclick={() => (sortBy = 'id')}
 				>
 					ID
-				</button>
+				</Button>
 			</div>
 		</div>
 	</div>

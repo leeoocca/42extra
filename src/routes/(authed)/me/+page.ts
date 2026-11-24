@@ -16,12 +16,14 @@ export const load: PageLoad = async ({ fetch }) => {
 		return {
 			profile: data as FtUserMe,
 			title: data?.login ? ['Users', data.login] : 'My Profile',
+			intraUrl: data?.login ? `https://profile.intra.42.fr/users/${data.login}` : null,
 			error: null
 		};
 	} catch (err: any) {
 		return {
 			profile: null as FtUserMe | null,
 			title: 'My Profile',
+			intraUrl: null,
 			error: err?.message || 'Network error while loading profile'
 		};
 	}

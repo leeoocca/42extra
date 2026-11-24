@@ -1,0 +1,28 @@
+{
+	"$schema": "./campus-clusters.schema.json",
+	"campuses": {
+		"berlin": {
+			"campusId": 51,
+			"campusName": "Berlin",
+			"prefixLength": 3,
+			"clusters": [
+				{ "id": 189, "prefix": "c0c", "name": "c0c" },
+				{ "id": 190, "prefix": "c1b", "name": "c1b" },
+				{ "id": 273, "prefix": "c3a", "name": "c3a" },
+				{ "id": 276, "prefix": "c4a", "name": "c4a" },
+				{ "id": 277, "prefix": "c4b", "name": "c4b" },
+				{ "id": 278, "prefix": "c4c", "name": "c4c" }
+			]
+		},
+		"rome": {
+			"campusId": 30,
+			"campusName": "Rome",
+			"prefixLength": 2,
+			"clusters": [
+				{ "id": 74, "prefix": "c1", "name": "Bunker" },
+				{ "id": 75, "prefix": "c2", "name": "C4, pronto a esplodere" },
+				{ "id": 342, "prefix": "c3", "name": "Piccionaia" }
+			]
+		}
+	}
+}
