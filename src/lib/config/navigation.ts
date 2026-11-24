@@ -20,6 +20,7 @@ import ChartColumnIcon from '@lucide/svelte/icons/chart-column';
 import MapPinnedIcon from '@lucide/svelte/icons/map-pinned';
 import UserRoundIcon from '@lucide/svelte/icons/user-round';
 import NewspaperIcon from '@lucide/svelte/icons/newspaper';
+import TerminalIcon from '@lucide/svelte/icons/terminal';
 
 export interface SubNavItem {
 	title: string;
@@ -172,6 +173,12 @@ export const NAV_DOMAINS: NavDomain[] = [
 				href: '/campuses',
 				description: 'Explore all 42 network campuses worldwide',
 				icon: MapPinnedIcon
+			},
+			{
+				title: 'Query',
+				href: '/query',
+				description: 'Fetch arbitrary 42 API endpoints and inspect responses',
+				icon: TerminalIcon
 			}
 		]
 	}

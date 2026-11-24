@@ -11,6 +11,7 @@
 	import SquareArrowLeftExitIcon from '@lucide/svelte/icons/square-arrow-left-exit';
 	import ExternalLinkIcon from '@lucide/svelte/icons/external-link';
 	import CopyCheckIcon from '@lucide/svelte/icons/copy-check';
+	import TerminalIcon from '@lucide/svelte/icons/terminal';
 
 	function handleKeydown(e: KeyboardEvent) {
 		if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
@@ -64,6 +65,10 @@
 		<Command.Separator />
 
 		<Command.Group heading="Quick Actions">
+			<Command.Item onSelect={() => navigateTo('/query')}>
+				<TerminalIcon class="size-4 shrink-0 text-muted-foreground" />
+				<span>42 API Query Tool</span>
+			</Command.Item>
 			<Command.Item
 				onSelect={() => {
 					setMode('light');
