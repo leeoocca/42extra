@@ -1,15 +1,22 @@
 <script lang="ts">
 	import { Badge } from '#lib/components/ui/badge/index.js';
+	import { Button } from '#lib/components/ui/button/index.js';
+	import { getCdnProxyUrl } from '#lib/cdn.js';
 	import ArrowLeftIcon from '@lucide/svelte/icons/arrow-left';
 	import ExternalLinkIcon from '@lucide/svelte/icons/external-link';
 	import ClockIcon from '@lucide/svelte/icons/clock';
 	import MapPinIcon from '@lucide/svelte/icons/map-pin';
 	import UsersIcon from '@lucide/svelte/icons/users';
+	import MessageSquareIcon from '@lucide/svelte/icons/message-square';
+	import StarIcon from '@lucide/svelte/icons/star';
+	import UserIcon from '@lucide/svelte/icons/user';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
 
 	let ev = $derived(data.event);
+	let subscribers = $derived(data.subscribers ?? []);
+	let feedbacks = $derived(data.feedbacks ?? []);
 
 	function formatDate(isoDate?: string | null) {
 		if (!isoDate) return 'N/A';
@@ -35,32 +42,35 @@
 </script>
 
 <div class="space-y-6">
+	<!-- Back button above title -->
+	<div>
+		<Button
+			variant="ghost"
+			size="sm"
+			href="/events"
+			class="h-7 px-2 text-xs text-muted-foreground hover:text-foreground gap-1.5"
+		>
+			<ArrowLeftIcon class="w-3.5 h-3.5" />
+			<span>Back to Events</span>
+		</Button>
+	</div>
+
 	<!-- Top Bar -->
 	<div class="flex items-center justify-between border-b pb-4">
-		<div class="flex items-center gap-3">
-			<a
-				href="/events"
-				class="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-1 border rounded px-2 py-1"
-			>
-				<ArrowLeftIcon class="w-3 h-3" />
-				Back
-			</a>
-
-			<div>
-				<div class="flex items-center gap-2">
-					<h1 class="text-2xl font-bold tracking-tight text-foreground md:text-3xl">
-						{ev?.name || `Event #${data.id}`}
-					</h1>
-					{#if ev?.kind}
-						<Badge variant="outline" class="text-[10px] capitalize px-1.5 py-0">
-							{ev.kind.replace(/_/g, ' ')}
-						</Badge>
-					{/if}
-				</div>
-				<p class="text-xs text-muted-foreground mt-0.5">
-					Event #{data.id}
-				</p>
+		<div>
+			<div class="flex items-center gap-2">
+				<h1 class="text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+					{ev?.name || `Event #${data.id}`}
+				</h1>
+				{#if ev?.kind}
+					<Badge variant="outline" class="text-[10px] capitalize px-1.5 py-0">
+						{ev.kind.replace(/_/g, ' ')}
+					</Badge>
+				{/if}
 			</div>
+			<p class="text-xs text-muted-foreground mt-0.5">
+				Event #{data.id}
+			</p>
 		</div>
 	</div>
 
@@ -151,6 +161,141 @@
 						<Badge variant="secondary" class="text-xs">
 							{theme.name || theme}
 						</Badge>
+					{/each}
+				</div>
+			</div>
+		{/if}
+
+		<!-- Event Participants List (Flat minimal container without nested cards) -->
+		<div class="space-y-3">
+			<div class="flex items-center justify-between">
+				<h2 class="text-base font-semibold tracking-tight text-foreground flex items-center gap-2">
+					<UsersIcon class="w-4 h-4 text-muted-foreground" />
+					<span>Participants ({subscribers.length})</span>
+				</h2>
+				{#if ev.max_people}
+					<span class="text-xs text-muted-foreground">
+						Capacity: {ev.max_people}
+					</span>
+				{/if}
+			</div>
+
+			{#if subscribers.length === 0}
+				<div class="border rounded-md p-6 text-center text-muted-foreground text-xs">
+					No registered participants yet.
+				</div>
+			{:else}
+				<div class="border rounded-md divide-y text-sm">
+					{#each subscribers as item}
+						{@const u = item.user}
+						{@const rawAvatar = u?.image?.link ?? u?.image?.versions?.small}
+						{@const avatarUrl = rawAvatar ? getCdnProxyUrl(rawAvatar) : null}
+						<div class="flex items-center justify-between p-3 hover:bg-muted/30 transition-colors gap-3">
+							<div class="flex items-center gap-3 min-w-0">
+								{#if avatarUrl}
+									<img
+										src={avatarUrl}
+										alt={u?.login ?? 'User'}
+										class="w-8 h-8 rounded-full object-cover border bg-muted shrink-0"
+									/>
+								{:else}
+									<div class="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-xs font-semibold uppercase shrink-0">
+										{u?.login ? u.login.slice(0, 2) : '??'}
+									</div>
+								{/if}
+
+								<div class="min-w-0">
+									<div class="flex items-center gap-2">
+										{#if u?.login}
+											<a
+												href={`/users/${u.login}`}
+												class="font-medium text-foreground hover:underline truncate"
+											>
+												{u.login}
+											</a>
+										{:else}
+											<span class="text-foreground">Student #{item.user_id}</span>
+										{/if}
+
+										{#if u?.['staff?']}
+											<Badge variant="secondary" class="text-[10px] px-1 py-0">Staff</Badge>
+										{/if}
+									</div>
+									{#if u?.usual_full_name || u?.displayname}
+										<p class="text-xs text-muted-foreground truncate">
+											{u.usual_full_name || u.displayname}
+										</p>
+									{/if}
+								</div>
+							</div>
+
+							{#if u?.login}
+								<a
+									href={`/users/${u.login}`}
+									class="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-1 border rounded px-2 py-1"
+								>
+									<span>Profile</span>
+								</a>
+							{/if}
+						</div>
+					{/each}
+				</div>
+			{/if}
+		</div>
+
+		<!-- Event Feedbacks Section -->
+		{#if feedbacks.length > 0}
+			<div class="space-y-3">
+				<div class="flex items-center justify-between">
+					<h2 class="text-base font-semibold tracking-tight text-foreground flex items-center gap-2">
+						<MessageSquareIcon class="w-4 h-4 text-muted-foreground" />
+						<span>Attendee Feedbacks ({feedbacks.length})</span>
+					</h2>
+				</div>
+
+				<div class="border rounded-md divide-y text-sm">
+					{#each feedbacks as fb}
+						<div class="p-3.5 space-y-1.5">
+							<div class="flex items-center justify-between gap-2">
+								<div class="flex items-center gap-2">
+									{#if fb.user?.login}
+										<a href={`/users/${fb.user.login}`} class="font-medium text-xs text-foreground hover:underline">
+											@{fb.user.login}
+										</a>
+									{:else}
+										<span class="text-xs text-muted-foreground">Attendee</span>
+									{/if}
+									{#if fb.created_at}
+										<span class="text-[11px] text-muted-foreground">
+											{formatDate(fb.created_at)}
+										</span>
+									{/if}
+								</div>
+
+								{#if fb.rating !== undefined && fb.rating !== null}
+									<div class="flex items-center gap-1 text-amber-500 font-semibold text-xs">
+										<StarIcon class="w-3.5 h-3.5 fill-current" />
+										<span>{fb.rating}</span>
+									</div>
+								{/if}
+							</div>
+
+							{#if fb.comment}
+								<p class="text-xs text-foreground leading-relaxed whitespace-pre-line">
+									{fb.comment}
+								</p>
+							{/if}
+
+							{#if fb.feedback_details && fb.feedback_details.length > 0}
+								<div class="flex flex-wrap gap-2 pt-1 text-[11px] text-muted-foreground">
+									{#each fb.feedback_details as detail}
+										<span class="border rounded px-1.5 py-0.5 bg-muted/20">
+											{detail.kind}: <strong>{detail.rate}</strong>
+										</span>
+									{/each}
+								</div>
+							{/if}
+						</div>
 					{/each}
 				</div>
 			</div>

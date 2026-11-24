@@ -48,9 +48,6 @@
 	<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b pb-4">
 		<div>
 			<h1 class="text-2xl font-bold tracking-tight text-foreground md:text-3xl">Cursuses</h1>
-			<p class="text-xs text-muted-foreground mt-0.5">
-				List of all 42 educational programs grouped by active status.
-			</p>
 		</div>
 
 		<div class="relative w-full sm:w-64">

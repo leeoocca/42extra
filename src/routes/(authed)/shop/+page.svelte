@@ -48,9 +48,6 @@
 					{campusName}
 				</Badge>
 			</div>
-			<p class="text-xs text-muted-foreground mt-0.5">
-				Redeem coalition points and campus tokens for 42 goodies.
-			</p>
 		</div>
 
 		<div class="flex items-center gap-3">

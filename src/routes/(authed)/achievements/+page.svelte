@@ -89,9 +89,6 @@
 					{unlockedAchievementIds.size} unlocked
 				</Badge>
 			</div>
-			<p class="text-xs text-muted-foreground mt-0.5">
-				Badges, quests, and student milestones across the 42 network.
-			</p>
 		</div>
 
 		<div class="relative w-full sm:w-64">

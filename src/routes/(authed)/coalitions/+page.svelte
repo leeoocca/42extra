@@ -50,9 +50,6 @@
 					{campusName}
 				</Badge>
 			</div>
-			<p class="text-xs text-muted-foreground mt-0.5">
-				Tournament standings and faction scores for your primary campus.
-			</p>
 		</div>
 
 		<span class="text-xs text-muted-foreground">
@@ -139,14 +136,6 @@
 									<div class="font-bold text-base text-foreground">
 										{(coalition.score || 0).toLocaleString()} <span class="text-xs font-normal text-muted-foreground">pts</span>
 									</div>
-									<a
-										href={`https://profile.intra.42.fr/blocs/${bloc.id}/coalitions/${coalition.id}`}
-										target="_blank"
-										rel="noreferrer"
-										class="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-0.5"
-									>
-										intra <ExternalLinkIcon class="w-3 h-3" />
-									</a>
 								</div>
 							</div>
 						{/each}

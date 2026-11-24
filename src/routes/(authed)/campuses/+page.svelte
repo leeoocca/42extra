@@ -98,9 +98,6 @@
 	<div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b pb-4">
 		<div>
 			<h1 class="text-2xl font-bold tracking-tight text-foreground md:text-3xl">Campuses</h1>
-			<p class="mt-1 text-sm text-muted-foreground">
-				Global network directory of 42 campuses, student populations, and locations.
-			</p>
 		</div>
 	</div>
 

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Badge } from '#lib/components/ui/badge/index.js';
+	import { Button } from '#lib/components/ui/button/index.js';
 	import { getCdnProxyUrl } from '#lib/cdn.js';
 	import ArrowLeftIcon from '@lucide/svelte/icons/arrow-left';
 	import CoinsIcon from '@lucide/svelte/icons/coins';
@@ -23,32 +24,35 @@
 </script>
 
 <div class="space-y-6">
+	<!-- Back button above title -->
+	<div>
+		<Button
+			variant="ghost"
+			size="sm"
+			href="/shop"
+			class="h-7 px-2 text-xs text-muted-foreground hover:text-foreground gap-1.5"
+		>
+			<ArrowLeftIcon class="w-3.5 h-3.5" />
+			<span>Back to Shop</span>
+		</Button>
+	</div>
+
 	<!-- Top Bar -->
 	<div class="flex items-center justify-between border-b pb-4">
-		<div class="flex items-center gap-3">
-			<a
-				href="/shop"
-				class="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-1 border rounded px-2 py-1"
-			>
-				<ArrowLeftIcon class="w-3 h-3" />
-				Back
-			</a>
-
-			<div>
-				<div class="flex items-center gap-2">
-					<h1 class="text-2xl font-bold tracking-tight text-foreground md:text-3xl">
-						{prod?.name || `Product #${data.id}`}
-					</h1>
-					{#if prod?.kind}
-						<Badge variant="outline" class="text-[10px] capitalize px-1.5 py-0">
-							{prod.kind}
-						</Badge>
-					{/if}
-				</div>
-				<p class="text-xs text-muted-foreground mt-0.5">
-					Item #{data.id}
-				</p>
+		<div>
+			<div class="flex items-center gap-2">
+				<h1 class="text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+					{prod?.name || `Product #${data.id}`}
+				</h1>
+				{#if prod?.kind}
+					<Badge variant="outline" class="text-[10px] capitalize px-1.5 py-0">
+						{prod.kind}
+					</Badge>
+				{/if}
 			</div>
+			<p class="text-xs text-muted-foreground mt-0.5">
+				Item #{data.id}
+			</p>
 		</div>
 
 		<div class="flex items-center gap-2">

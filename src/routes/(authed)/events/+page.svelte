@@ -11,17 +11,81 @@
 	import UsersIcon from '@lucide/svelte/icons/users';
 	import ExternalLinkIcon from '@lucide/svelte/icons/external-link';
 	import ClockIcon from '@lucide/svelte/icons/clock';
+	import { goto } from '$app/navigation';
+	import { page } from '$app/state';
 	import type { PageData } from './$types';
 	import type { FtEvent } from '#lib/schemas/42.js';
 
 	let { data }: { data: PageData } = $props();
 
+	// Read initial state from URL search params
+	const urlView = page.url.searchParams.get('view');
+	const initialLayout = urlView === 'list' || urlView === 'week' ? urlView : 'week';
+	const urlFilter = page.url.searchParams.get('filter');
+	const initialFilter = urlFilter === 'past' || urlFilter === 'all' || urlFilter === 'upcoming' ? urlFilter : 'upcoming';
+	const urlWeek = Number(page.url.searchParams.get('week'));
+	const initialWeek = !isNaN(urlWeek) && urlWeek !== 0 ? urlWeek : 0;
+
 	let searchQuery = $state('');
-	let viewFilter = $state<'all' | 'upcoming' | 'past'>('upcoming');
-	let layoutMode = $state<'list' | 'week'>('list');
+	let viewFilter = $state<'all' | 'upcoming' | 'past'>(initialFilter);
+	let layoutMode = $state<'list' | 'week'>(initialLayout);
 
 	// Week navigation state (offset in weeks from current week)
-	let weekOffset = $state(0);
+	let weekOffset = $state(initialWeek);
+
+	function updateUrlParams() {
+		const url = new URL(page.url.href);
+		let changed = false;
+
+		// view (layout)
+		if (layoutMode === 'list') {
+			if (url.searchParams.get('view') !== 'list') {
+				url.searchParams.set('view', 'list');
+				changed = true;
+			}
+		} else {
+			if (url.searchParams.has('view')) {
+				url.searchParams.delete('view');
+				changed = true;
+			}
+		}
+
+		// filter
+		if (viewFilter !== 'upcoming') {
+			if (url.searchParams.get('filter') !== viewFilter) {
+				url.searchParams.set('filter', viewFilter);
+				changed = true;
+			}
+		} else {
+			if (url.searchParams.has('filter')) {
+				url.searchParams.delete('filter');
+				changed = true;
+			}
+		}
+
+		// week offset
+		if (layoutMode === 'week' && weekOffset !== 0) {
+			const str = String(weekOffset);
+			if (url.searchParams.get('week') !== str) {
+				url.searchParams.set('week', str);
+				changed = true;
+			}
+		} else {
+			if (url.searchParams.has('week')) {
+				url.searchParams.delete('week');
+				changed = true;
+			}
+		}
+
+		if (changed) {
+			goto(url.href, { replaceState: true, noScroll: true, keepFocus: true } as any);
+		}
+	}
+
+	$effect(() => {
+		// Sync when layoutMode, viewFilter, or weekOffset change
+		updateUrlParams();
+	});
 
 	let campusName = $derived(data.primaryCampus?.name ?? `Campus #${data.primaryCampusId}`);
 
@@ -80,6 +144,31 @@
 	function formatTimeOnly(dateIso: string) {
 		const d = new Date(dateIso);
 		return d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+	}
+
+	function isSameDay(d1: Date, d2: Date) {
+		return (
+			d1.getFullYear() === d2.getFullYear() &&
+			d1.getMonth() === d2.getMonth() &&
+			d1.getDate() === d2.getDate()
+		);
+	}
+
+	function isMultiDayEvent(beginAt: string, endAt: string) {
+		const b = new Date(beginAt);
+		const e = new Date(endAt);
+		return !isSameDay(b, e);
+	}
+
+	function shouldShowTimeOnDay(beginAt: string, endAt: string, currentDayDate: Date) {
+		const b = new Date(beginAt);
+		const isFirstDay = isSameDay(b, currentDayDate);
+		// If multi-day event: only show time on first day
+		if (isMultiDayEvent(beginAt, endAt)) {
+			return isFirstDay;
+		}
+		// Single day event: always show time
+		return true;
 	}
 
 	function getKindVariant(kind: string): 'default' | 'secondary' | 'outline' {
@@ -154,9 +243,6 @@
 					{campusName}
 				</Badge>
 			</div>
-			<p class="text-xs text-muted-foreground mt-0.5">
-				Workshops, talks, and gatherings for your primary campus.
-			</p>
 		</div>
 
 		<div class="flex flex-wrap items-center gap-2">
@@ -293,17 +379,6 @@
 								{event.kind.replace(/_/g, ' ')}
 							</Badge>
 						</div>
-
-						<div class="flex items-center gap-2 shrink-0">
-							<a
-								href={`https://profile.intra.42.fr/events/${event.id}`}
-								target="_blank"
-								rel="noreferrer"
-								class="text-xs text-primary hover:underline inline-flex items-center gap-1 font-medium"
-							>
-								intra <ExternalLinkIcon class="w-3 h-3" />
-							</a>
-						</div>
 					</div>
 
 					<div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-muted-foreground text-xs">
@@ -334,10 +409,10 @@
 			{/each}
 		</div>
 	{:else}
-		<!-- Week Layout (7 Columns, Mon-Sun) -->
-		<div class="grid grid-cols-1 md:grid-cols-7 border rounded-md divide-y md:divide-y-0 md:divide-x overflow-hidden">
+		<!-- Week Layout (7 Columns, Mon-Sun) filling vertical space -->
+		<div class="grid grid-cols-1 md:grid-cols-7 border rounded-md divide-y md:divide-y-0 md:divide-x overflow-hidden min-h-[calc(100vh-16rem)]">
 			{#each currentWeekDays as day}
-				<div class="flex flex-col min-h-[300px] {day.isToday ? 'bg-primary/5' : 'bg-background'}">
+				<div class="flex flex-col h-full {day.isToday ? 'bg-primary/5' : 'bg-background'}">
 					<!-- Day Column Header -->
 					<div class="p-2.5 border-b flex items-center justify-between md:flex-col md:items-start gap-1 {day.isToday ? 'border-b-primary/30 font-semibold' : ''}">
 						<div class="flex items-baseline gap-1.5">
@@ -361,6 +436,7 @@
 							</div>
 						{:else}
 							{#each day.events as event}
+								{@const showTime = shouldShowTimeOnDay(event.begin_at, event.end_at, day.date)}
 								<a
 									href={`/events/${event.id}`}
 									class="block border rounded-md p-2 hover:border-primary/50 hover:bg-muted/40 transition-colors space-y-1 bg-card shadow-2xs"
@@ -369,9 +445,11 @@
 										<Badge variant={getKindVariant(event.kind)} class="text-[10px] px-1.5 py-0 capitalize">
 											{event.kind.replace(/_/g, ' ')}
 										</Badge>
-										<span class="text-[10px] font-medium text-muted-foreground">
-											{formatTimeOnly(event.begin_at)}
-										</span>
+										{#if showTime}
+											<span class="text-[10px] font-medium text-muted-foreground">
+												{formatTimeOnly(event.begin_at)}
+											</span>
+										{/if}
 									</div>
 									<div class="text-xs font-semibold text-foreground line-clamp-2 leading-snug">
 										{event.name}

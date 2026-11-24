@@ -9,6 +9,9 @@
 	import UserIcon from '@lucide/svelte/icons/user';
 	import Building2Icon from '@lucide/svelte/icons/building-2';
 	import LayersIcon from '@lucide/svelte/icons/layers';
+	import HistoryIcon from '@lucide/svelte/icons/history';
+	import * as Avatar from '#lib/components/ui/avatar/index.js';
+	import { getCdnProxyUrl } from '#lib/cdn.js';
 	import type { PageData } from './$types';
 	import type { FtLocation, FtCluster } from '#lib/schemas/42.js';
 	import { navState } from '#lib/state/nav-state.svelte.js';
@@ -25,16 +28,41 @@
 	let errorMsg = $state<string | null>(null);
 	let searchQuery = $state('');
 
+	// Recent user history state
+	let recentLocations = $state<FtLocation[]>([]);
+	let recentPage = $state(1);
+	let isLoadingMoreRecent = $state(false);
+	let hasMoreRecent = $state(true);
+	let recentError = $state<string | null>(null);
+
+	async function fetchRecentLocationsPage(campusId: number, pageNum: number) {
+		const res = await fetch(
+			`/api/v2/campus/${campusId}/locations?sort=-begin_at&page[number]=${pageNum}&page[size]=100`
+		);
+		if (!res.ok) {
+			const err = await res.json().catch(() => null);
+			throw new Error(err?.message || `Failed to fetch recent history (${res.status})`);
+		}
+		const json = await res.json();
+		return Array.isArray(json) ? (json as FtLocation[]) : [];
+	}
+
 	async function loadCampusData(campusId: number) {
 		isLoading = true;
 		errorMsg = null;
+		recentError = null;
+		recentPage = 1;
+		hasMoreRecent = true;
+
 		try {
 			// Fetch active locations dynamically for the active campus
 			const locPromise = fetch(`/api/v2/campus/${campusId}/locations?filter[active]=true&page[size]=100`);
 			// Also fetch /v2/clusters filtered by campus
 			const clusterPromise = fetch(`/api/v2/clusters?filter[campus_id]=${campusId}&page[size]=100`);
+			// Fetch initial page of recent locations
+			const recentPromise = fetchRecentLocationsPage(campusId, 1);
 
-			const [locRes, clusterRes] = await Promise.all([locPromise, clusterPromise]);
+			const [locRes, clusterRes, recentItems] = await Promise.all([locPromise, clusterPromise, recentPromise]);
 
 			if (locRes.ok) {
 				const json = await locRes.json();
@@ -50,12 +78,68 @@
 			} else {
 				clusters = [];
 			}
+
+			recentLocations = recentItems;
+			if (recentItems.length < 100) {
+				hasMoreRecent = false;
+			}
 		} catch (err: any) {
 			errorMsg = err?.message || 'Error loading cluster locations';
 		} finally {
 			isLoading = false;
 		}
 	}
+
+	async function loadMoreRecent() {
+		if (isLoadingMoreRecent || !hasMoreRecent) return;
+		isLoadingMoreRecent = true;
+		recentError = null;
+
+		try {
+			const nextPage = recentPage + 1;
+			const newItems = await fetchRecentLocationsPage(selectedCampusId, nextPage);
+			if (newItems.length === 0) {
+				hasMoreRecent = false;
+			} else {
+				recentLocations = [...recentLocations, ...newItems];
+				recentPage = nextPage;
+				if (newItems.length < 100) {
+					hasMoreRecent = false;
+				}
+			}
+		} catch (err: any) {
+			recentError = err?.message || 'Failed to load more recent campus users';
+		} finally {
+			isLoadingMoreRecent = false;
+		}
+	}
+
+	// Unique recent users: deduplicate by user id (preserving chronological order: latest first)
+	let uniqueRecentUsers = $derived.by(() => {
+		const seenUserIds = new Set<number>();
+		const result: {
+			location: FtLocation;
+			user: NonNullable<FtLocation['user']>;
+			avatarUrl: string | null;
+		}[] = [];
+
+		for (const loc of recentLocations) {
+			if (!loc.user || !loc.user.id) continue;
+			if (seenUserIds.has(loc.user.id)) continue;
+			seenUserIds.add(loc.user.id);
+
+			const rawImg = loc.user.image?.link ?? loc.user.image?.versions?.small;
+			const avatarUrl = rawImg ? (getCdnProxyUrl(rawImg) ?? null) : null;
+
+			result.push({
+				location: loc,
+				user: loc.user,
+				avatarUrl
+			});
+		}
+
+		return result;
+	});
 
 	onMount(() => {
 		loadCampusData(selectedCampusId);
@@ -124,9 +208,6 @@
 					{currentCampusName}
 				</Badge>
 			</div>
-			<p class="text-xs sm:text-sm text-muted-foreground mt-0.5">
-				Active workstation occupancy, seat maps, and campus cluster zones.
-			</p>
 		</div>
 
 		<div class="flex items-center gap-2">
@@ -268,4 +349,102 @@
 			{/each}
 		</div>
 	{/if}
+
+	<!-- Most Recent Unique Users on Campus -->
+	<div class="space-y-3 pt-4 border-t">
+		<div class="flex items-center justify-between">
+			<div class="flex items-center gap-2">
+				<HistoryIcon class="w-4 h-4 text-muted-foreground" />
+				<h2 class="text-base font-semibold tracking-tight text-foreground">
+					Recent Campus Activity
+				</h2>
+				<Badge variant="outline" class="text-xs">
+					{uniqueRecentUsers.length} unique user{uniqueRecentUsers.length === 1 ? '' : 's'}
+				</Badge>
+			</div>
+			{#if recentPage > 1}
+				<span class="text-xs text-muted-foreground">
+					Page {recentPage}
+				</span>
+			{/if}
+		</div>
+
+		{#if uniqueRecentUsers.length === 0}
+			<div class="border rounded-md p-6 text-center text-muted-foreground text-xs">
+				No recent workstation activity recorded for {currentCampusName}.
+			</div>
+		{:else}
+			<div class="border rounded-md divide-y text-sm">
+				{#each uniqueRecentUsers as item}
+					<div class="flex items-center justify-between p-3 hover:bg-muted/30 transition-colors gap-3">
+						<div class="flex items-center gap-3 min-w-0">
+							<Avatar.Root class="size-8 shrink-0">
+								{#if item.avatarUrl}
+									<Avatar.Image src={item.avatarUrl} alt={item.user.login} />
+								{/if}
+								<Avatar.Fallback class="text-xs font-semibold bg-muted uppercase">
+									{item.user.login.slice(0, 2)}
+								</Avatar.Fallback>
+							</Avatar.Root>
+
+							<div class="min-w-0">
+								<div class="flex items-center gap-2">
+									<a
+										href={`/users/${item.user.login}`}
+										class="font-semibold text-foreground hover:underline truncate text-sm"
+									>
+										{item.user.login}
+									</a>
+									{#if item.user.displayname}
+										<span class="hidden sm:inline text-muted-foreground text-xs truncate">
+											{item.user.displayname}
+										</span>
+									{/if}
+								</div>
+								<div class="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
+									<span class="font-mono">{item.location.host}</span>
+									{#if item.location.end_at}
+										<span>&bull;</span>
+										<span>left {formatTimeSince(item.location.end_at)} ago</span>
+									{:else}
+										<span>&bull;</span>
+										<span class="text-emerald-600 font-medium">Currently online</span>
+									{/if}
+								</div>
+							</div>
+						</div>
+
+						<div class="shrink-0 text-right text-xs text-muted-foreground">
+							<span>seen {formatTimeSince(item.location.begin_at)} ago</span>
+						</div>
+					</div>
+				{/each}
+			</div>
+
+			{#if recentError}
+				<div class="border border-destructive/20 bg-destructive/10 text-destructive rounded-md p-2.5 text-xs">
+					{recentError}
+				</div>
+			{/if}
+
+			{#if hasMoreRecent}
+				<div class="flex justify-center pt-2">
+					<Button
+						variant="outline"
+						size="sm"
+						onclick={loadMoreRecent}
+						disabled={isLoadingMoreRecent}
+						class="gap-1.5"
+					>
+						{#if isLoadingMoreRecent}
+							<RefreshCwIcon class="w-3.5 h-3.5 animate-spin" />
+							<span>Loading more users...</span>
+						{:else}
+							<span>Load more users</span>
+						{/if}
+					</Button>
+				</div>
+			{/if}
+		{/if}
+	</div>
 </div>

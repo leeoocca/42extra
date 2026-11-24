@@ -72,7 +72,16 @@ export const FtProjectUserSchema = z
 		marked: z.boolean().default(false),
 		retries: z.number().default(0),
 		created_at: z.string().optional(),
-		updated_at: z.string().optional()
+		updated_at: z.string().optional(),
+		user: z
+			.object({
+				id: z.number(),
+				login: z.string(),
+				displayname: z.string().optional(),
+				image: FtImageSchema.optional()
+			})
+			.loose()
+			.optional()
 	})
 	.loose();
 

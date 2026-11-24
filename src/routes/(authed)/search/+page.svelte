@@ -51,9 +51,6 @@
 <div class="space-y-6">
 	<div class="border-b pb-4">
 		<h1 class="text-2xl font-bold tracking-tight text-foreground md:text-3xl">Peer Search</h1>
-		<p class="text-xs text-muted-foreground mt-0.5">
-			Find students, staff, and alumni across the 42 network.
-		</p>
 	</div>
 
 	<!-- Search bar -->

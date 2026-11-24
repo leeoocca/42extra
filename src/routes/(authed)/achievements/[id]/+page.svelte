@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Badge } from '#lib/components/ui/badge/index.js';
+	import { Button } from '#lib/components/ui/button/index.js';
 	import { getCdnProxyUrl } from '#lib/cdn.js';
 	import ArrowLeftIcon from '@lucide/svelte/icons/arrow-left';
 	import AwardIcon from '@lucide/svelte/icons/award';
@@ -26,38 +27,41 @@
 </script>
 
 <div class="space-y-6">
+	<!-- Back button above title -->
+	<div>
+		<Button
+			variant="ghost"
+			size="sm"
+			href="/achievements"
+			class="h-7 px-2 text-xs text-muted-foreground hover:text-foreground gap-1.5"
+		>
+			<ArrowLeftIcon class="w-3.5 h-3.5" />
+			<span>Back to Achievements</span>
+		</Button>
+	</div>
+
 	<!-- Top Bar -->
 	<div class="flex items-center justify-between border-b pb-4">
-		<div class="flex items-center gap-3">
-			<a
-				href="/achievements"
-				class="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-1 border rounded px-2 py-1"
-			>
-				<ArrowLeftIcon class="w-3 h-3" />
-				Back
-			</a>
-
-			<div>
-				<div class="flex items-center gap-2">
-					<h1 class="text-2xl font-bold tracking-tight text-foreground md:text-3xl">
-						{a?.name || `Achievement #${data.id}`}
-					</h1>
-					{#if isUnlocked}
-						<Badge variant="default" class="text-[10px] px-1.5 py-0 bg-emerald-600">
-							<CheckCircle2Icon class="w-3 h-3 mr-1" />
-							Unlocked
-						</Badge>
-					{:else}
-						<Badge variant="secondary" class="text-[10px] px-1.5 py-0 text-muted-foreground">
-							<LockIcon class="w-2.5 h-2.5 mr-1" />
-							Locked
-						</Badge>
-					{/if}
-				</div>
-				<p class="text-xs text-muted-foreground mt-0.5">
-					Badge #{data.id}
-				</p>
+		<div>
+			<div class="flex items-center gap-2">
+				<h1 class="text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+					{a?.name || `Achievement #${data.id}`}
+				</h1>
+				{#if isUnlocked}
+					<Badge variant="default" class="text-[10px] px-1.5 py-0 bg-emerald-600">
+						<CheckCircle2Icon class="w-3 h-3 mr-1" />
+						Unlocked
+					</Badge>
+				{:else}
+					<Badge variant="secondary" class="text-[10px] px-1.5 py-0 text-muted-foreground">
+						<LockIcon class="w-2.5 h-2.5 mr-1" />
+						Locked
+					</Badge>
+				{/if}
 			</div>
+			<p class="text-xs text-muted-foreground mt-0.5">
+				Badge #{data.id}
+			</p>
 		</div>
 
 		{#if a?.tier && a.tier !== 'none'}

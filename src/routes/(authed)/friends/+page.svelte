@@ -215,9 +215,6 @@
 					{friendsStore.ids.length} saved
 				</Badge>
 			</div>
-			<p class="text-xs sm:text-sm text-muted-foreground mt-0.5">
-				Track fellow students, workstation locations, and import or export your circle as simple JSON.
-			</p>
 		</div>
 
 		<!-- Action buttons -->

@@ -1,0 +1,29 @@
+{
+	"$schema": "./campus-links.schema.json",
+	"links": [
+		{
+			"id": "berlin-notion",
+			"title": "42 Berlin Notion Wiki",
+			"url": "https://notion.42berlin.de",
+			"description": "Student handbook, campus guidelines, facilities, and curriculum documentation",
+			"category": "Documentation",
+			"campus_ids": [51]
+		},
+		{
+			"id": "intra-root",
+			"title": "42 Intranet v2",
+			"url": "https://intra.42.fr",
+			"description": null,
+			"category": null,
+			"campus_ids": []
+		},
+		{
+			"id": "slack-workspace",
+			"title": "Slack 42 Beyond the Code",
+			"url": "https://42beyondthecode.slack.com",
+			"description": null,
+			"category": null,
+			"campus_ids": []
+		}
+	]
+}

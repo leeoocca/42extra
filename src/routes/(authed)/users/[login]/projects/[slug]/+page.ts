@@ -27,7 +27,9 @@ export const load: PageLoad = async ({ params, fetch }) => {
 
 		// 3. Find matching projects_user
 		const allProjects = (user as any).projects_users || [];
-		projectsUser = allProjects.find((p: any) => p.project?.slug === slug || String(p.project?.id) === slug) || null;
+		projectsUser =
+			allProjects.find((p: any) => p.project?.slug === slug || String(p.project?.id) === slug) ||
+			null;
 
 		if (!projectsUser) {
 			error = `@${login} has no registered activity for project "${slug}".`;
@@ -42,7 +44,9 @@ export const load: PageLoad = async ({ params, fetch }) => {
 						teams = teamsData as FtTeam[];
 					}
 				} else {
-					console.warn(`Upstream /users/${login}/projects/${projectId}/teams returned status ${teamsRes.status}`);
+					console.warn(
+						`Upstream /users/${login}/projects/${projectId}/teams returned status ${teamsRes.status}`
+					);
 				}
 			} catch (e) {
 				console.error(`Error loading teams for user ${login} and project ${projectId}:`, e);
@@ -55,6 +59,70 @@ export const load: PageLoad = async ({ params, fetch }) => {
 
 			// Sort teams descending by id (latest attempt first)
 			teams.sort((a, b) => b.id - a.id);
+
+			// Extract unique logins (correctors + team members) to prefetch their avatars/profiles
+			const userLogins = new Set<string>();
+			for (const t of teams) {
+				if (t.users) {
+					for (const u of t.users) {
+						if (u.login) {
+							userLogins.add(u.login);
+						}
+					}
+				}
+				if (t.scale_teams) {
+					for (const st of t.scale_teams) {
+						if (st.corrector?.login) {
+							userLogins.add(st.corrector.login);
+						}
+					}
+				}
+			}
+
+			// Bulk fetch user details if needed
+			const userProfiles: Record<string, { avatar?: string; displayname?: string }> = {};
+			if (user?.login) {
+				const userImg = (user as any).image?.link ?? (user as any).image?.versions?.small;
+				userProfiles[user.login] = {
+					avatar: userImg,
+					displayname: user.usual_full_name || user.displayname || user.login
+				};
+			}
+
+			if (userLogins.size > 0) {
+				try {
+					const loginsArray = Array.from(userLogins).slice(0, 50);
+					const uRes = await fetch(
+						`/api/v2/users?filter[login]=${loginsArray.join(',')}&page[size]=100`
+					);
+					if (uRes.ok) {
+						const uList = await uRes.json();
+						if (Array.isArray(uList)) {
+							for (const cu of uList) {
+								userProfiles[cu.login] = {
+									avatar: cu.image?.link ?? cu.image?.versions?.small,
+									displayname: cu.usual_full_name || cu.displayname || cu.login
+								};
+							}
+						}
+					}
+				} catch (e) {
+					console.warn('Failed to prefetch user profiles:', e);
+				}
+			}
+
+			return {
+				login,
+				slug,
+				user,
+				project,
+				projectsUser,
+				teams,
+				userProfiles: userProfiles as Record<string, { avatar?: string; displayname?: string }>,
+				error,
+				title: project ? `${project.name} - @${login}` : `Project @${login}`,
+				intraUrl: `https://projects.intra.42.fr/${slug}/${login}`
+			};
 		}
 	} catch (e: any) {
 		error = e?.message || 'Error loading user project evaluation details';
@@ -67,8 +135,9 @@ export const load: PageLoad = async ({ params, fetch }) => {
 		project,
 		projectsUser,
 		teams,
+		userProfiles: {} as Record<string, { avatar?: string; displayname?: string }>,
 		error,
 		title: project ? `${project.name} - @${login}` : `Project @${login}`,
-		intraUrl: `https://projects.intra.42.fr/projects/${slug}/users/${login}`
+		intraUrl: `https://projects.intra.42.fr/${slug}/${login}`
 	};
 };
