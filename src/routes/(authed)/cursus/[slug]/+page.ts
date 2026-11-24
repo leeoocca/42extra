@@ -28,7 +28,9 @@ export const load: PageLoad = async ({ params, url, fetch }) => {
 	try {
 		const [cursusRes, projectsRes] = await Promise.all([
 			fetch(`/api/v2/cursus/${slug}`),
-			fetch(`/api/v2/cursus/${slug}/projects?page[number]=${pageNum}&page[size]=${pageSize}&sort=name`)
+			fetch(
+				`/api/v2/cursus/${slug}/projects?page[number]=${pageNum}&page[size]=${pageSize}&sort=name`
+			)
 		]);
 
 		if (!cursusRes.ok) {

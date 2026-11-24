@@ -6,7 +6,9 @@ export const load: PageLoad = async ({ fetch, parent }) => {
 	const primaryCampusId = parentData.primaryCampusId ?? 1;
 
 	try {
-		const res = await fetch(`/api/v2/campus/${primaryCampusId}/events?page[size]=100&sort=-begin_at`);
+		const res = await fetch(
+			`/api/v2/campus/${primaryCampusId}/events?page[size]=100&sort=-begin_at`
+		);
 		if (!res.ok) {
 			const err = await res.json().catch(() => null);
 			return {

@@ -39,8 +39,7 @@ export const auth = betterAuth({
 							profile.name ||
 							'';
 						const imgObj = profile.image as
-							| { link?: string; versions?: { medium?: string; small?: string } }
-							| undefined;
+							{ link?: string; versions?: { medium?: string; small?: string } } | undefined;
 						const image =
 							typeof profile.image === 'string'
 								? profile.image

@@ -30,9 +30,9 @@
 			variant="ghost"
 			size="sm"
 			href="/shop"
-			class="h-7 px-2 text-xs text-muted-foreground hover:text-foreground gap-1.5"
+			class="h-7 gap-1.5 px-2 text-xs text-muted-foreground hover:text-foreground"
 		>
-			<ArrowLeftIcon class="w-3.5 h-3.5" />
+			<ArrowLeftIcon class="h-3.5 w-3.5" />
 			<span>Back to Shop</span>
 		</Button>
 	</div>
@@ -45,60 +45,61 @@
 					{prod?.name || `Product #${data.id}`}
 				</h1>
 				{#if prod?.kind}
-					<Badge variant="outline" class="text-[10px] capitalize px-1.5 py-0">
+					<Badge variant="outline" class="px-1.5 py-0 text-xs capitalize">
 						{prod.kind}
 					</Badge>
 				{/if}
 			</div>
-			<p class="text-xs text-muted-foreground mt-0.5">
+			<p class="mt-0.5 text-xs text-muted-foreground">
 				Item #{data.id}
 			</p>
 		</div>
 
 		<div class="flex items-center gap-2">
-			<span class="font-bold text-base text-foreground">
+			<span class="text-base font-bold text-foreground">
 				{prod?.price ?? 0} ₳
 			</span>
 		</div>
 	</div>
 
 	{#if data.error}
-		<div class="border border-destructive/20 bg-destructive/10 text-destructive rounded-md p-3 text-xs">
+		<div
+			class="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-xs text-destructive"
+		>
 			{data.error}
 		</div>
 	{:else if prod}
 		<!-- Image & Details Layout -->
-		<div class="flex flex-col sm:flex-row gap-6 items-start">
+		<div class="flex flex-col items-start gap-6 sm:flex-row">
 			{#if imageUrl}
-				<div class="border rounded-md p-4 bg-muted/20 shrink-0 self-center sm:self-start">
-					<img
-						src={imageUrl}
-						alt={prod.name}
-						class="w-36 h-36 object-contain"
-						loading="lazy"
-					/>
+				<div class="shrink-0 self-center rounded-md border bg-muted/20 p-4 sm:self-start">
+					<img src={imageUrl} alt={prod.name} class="h-36 w-36 object-contain" loading="lazy" />
 				</div>
 			{/if}
 
-			<div class="space-y-4 flex-1 w-full">
+			<div class="w-full flex-1 space-y-4">
 				<!-- Description List: Product Metadata -->
 				<div class="space-y-2">
-					<h2 class="text-base font-semibold tracking-tight text-foreground">Product Specification</h2>
-					<dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3.5 border rounded-md p-4 text-sm">
+					<h2 class="text-base font-semibold tracking-tight text-foreground">
+						Product Specification
+					</h2>
+					<dl
+						class="grid grid-cols-1 gap-x-6 gap-y-3.5 rounded-md border p-4 text-base sm:grid-cols-2"
+					>
 						<div>
-							<dt class="text-xs text-muted-foreground font-medium">Product ID</dt>
-							<dd class="font-semibold text-foreground mt-0.5">#{prod.id}</dd>
+							<dt class="text-sm font-medium text-muted-foreground">Product ID</dt>
+							<dd class="mt-0.5 font-semibold text-foreground">#{prod.id}</dd>
 						</div>
 
 						<div>
-							<dt class="text-xs text-muted-foreground font-medium">Slug</dt>
-							<dd class="font-mono text-foreground mt-0.5 truncate">{prod.slug || 'N/A'}</dd>
+							<dt class="text-sm font-medium text-muted-foreground">Slug</dt>
+							<dd class="mt-0.5 truncate font-mono text-foreground">{prod.slug || 'N/A'}</dd>
 						</div>
 
 						<div>
-							<dt class="text-xs text-muted-foreground font-medium">Price in Altarians</dt>
-							<dd class="font-semibold text-foreground mt-0.5 flex items-center gap-1.5">
-								<CoinsIcon class="w-3.5 h-3.5 text-amber-500" />
+							<dt class="text-sm font-medium text-muted-foreground">Price in Altarians</dt>
+							<dd class="mt-0.5 flex items-center gap-1.5 font-semibold text-foreground">
+								<CoinsIcon class="h-3.5 w-3.5 text-amber-500" />
 								{prod.price} ₳
 								<span class="text-xs font-normal text-muted-foreground">
 									({canAfford ? 'Affordable' : `Need ${prod.price - userWallet} more ₳`})
@@ -107,30 +108,32 @@
 						</div>
 
 						<div>
-							<dt class="text-xs text-muted-foreground font-medium">Stock Availability</dt>
-							<dd class="text-foreground mt-0.5">
+							<dt class="text-sm font-medium text-muted-foreground">Stock Availability</dt>
+							<dd class="mt-0.5 text-foreground">
 								{#if prod.quantity !== null && prod.quantity !== undefined}
 									{#if prod.quantity > 0}
-										<span class="text-emerald-600 font-semibold">{prod.quantity} available in stock</span>
+										<span class="font-semibold text-emerald-600">
+											{prod.quantity} available in stock
+										</span>
 									{:else}
-										<span class="text-destructive font-medium">Out of stock</span>
+										<span class="font-medium text-destructive">Out of stock</span>
 									{/if}
 								{:else}
-									<span class="text-emerald-600 font-medium">Available</span>
+									<span class="font-medium text-emerald-600">Available</span>
 								{/if}
 							</dd>
 						</div>
 
 						<div>
-							<dt class="text-xs text-muted-foreground font-medium">Your Current Balance</dt>
-							<dd class="text-foreground font-medium mt-0.5">
+							<dt class="text-sm font-medium text-muted-foreground">Your Current Balance</dt>
+							<dd class="mt-0.5 font-medium text-foreground">
 								{userWallet} ₳
 							</dd>
 						</div>
 
 						<div>
-							<dt class="text-xs text-muted-foreground font-medium">Category</dt>
-							<dd class="text-foreground mt-0.5 capitalize">
+							<dt class="text-sm font-medium text-muted-foreground">Category</dt>
+							<dd class="mt-0.5 text-foreground capitalize">
 								{prod.kind || 'Goodies'}
 							</dd>
 						</div>
@@ -140,7 +143,9 @@
 				{#if prod.description}
 					<div class="space-y-2">
 						<h2 class="text-base font-semibold tracking-tight text-foreground">Description</h2>
-						<div class="border rounded-md p-4 text-sm leading-relaxed text-foreground whitespace-pre-line">
+						<div
+							class="rounded-md border p-4 text-sm leading-relaxed whitespace-pre-line text-foreground"
+						>
 							{prod.description}
 						</div>
 					</div>

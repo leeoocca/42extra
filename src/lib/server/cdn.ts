@@ -123,7 +123,10 @@ export async function proxyCdnRequest(event: RequestEvent): Promise<Response> {
 		}
 
 		const cacheControl = upstreamResponse.headers.get('cache-control');
-		responseHeaders.set('Cache-Control', cacheControl || 'private, max-age=86400, stale-while-revalidate=604800');
+		responseHeaders.set(
+			'Cache-Control',
+			cacheControl || 'private, max-age=86400, stale-while-revalidate=604800'
+		);
 
 		return new Response(upstreamResponse.body, {
 			status: upstreamResponse.status,

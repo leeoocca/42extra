@@ -28,7 +28,7 @@
 	<Button
 		size="icon"
 		onclick={navState.openCommand}
-		class="fixed right-5 bottom-6 z-40 size-12 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-transform"
+		class="fixed right-5 bottom-6 z-40 size-12 rounded-full shadow-lg transition-transform hover:scale-105 active:scale-95"
 		aria-label="Search or open command palette"
 	>
 		<SearchIcon class="size-5" />

@@ -11,7 +11,7 @@ export const load: PageLoad = async ({ fetch, parent }) => {
 			const cRes = await fetch('/api/v2/campus?page[size]=100&sort=name');
 			if (cRes.ok) {
 				const cJson = await cRes.json();
-				campuses = Array.isArray(cJson) ? cJson : cJson.campuses ?? [];
+				campuses = Array.isArray(cJson) ? cJson : (cJson.campuses ?? []);
 			}
 		} catch {}
 	}

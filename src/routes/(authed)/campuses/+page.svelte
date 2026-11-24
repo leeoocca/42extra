@@ -34,10 +34,11 @@
 				throw new Error(err?.message || `Refresh failed (${res.status})`);
 			}
 			const json = await res.json();
-			const list = Array.isArray(json) ? json : json.campuses ?? [];
+			const list = Array.isArray(json) ? json : (json.campuses ?? []);
 			customCampuses = list as FtCampus[];
 		} catch (err: unknown) {
-			const message = err instanceof Error ? err.message : 'Failed to refresh campus directory from 42 API';
+			const message =
+				err instanceof Error ? err.message : 'Failed to refresh campus directory from 42 API';
 			refreshError = message;
 		}
 	}
@@ -64,7 +65,8 @@
 			const cityMatch = c.city?.toLowerCase().includes(q);
 			const countryMatch = c.country?.toLowerCase().includes(q);
 			const tzMatch = c.time_zone?.toLowerCase().includes(q);
-			const idMatch = c.id?.toString() === q || (q.startsWith('#') && c.id?.toString() === q.slice(1));
+			const idMatch =
+				c.id?.toString() === q || (q.startsWith('#') && c.id?.toString() === q.slice(1));
 
 			return nameMatch || cityMatch || countryMatch || tzMatch || idMatch;
 		});
@@ -80,22 +82,16 @@
 		});
 	});
 
-	let totalStudents = $derived(
-		activeCampuses.reduce((acc, c) => acc + (c.users_count || 0), 0)
-	);
+	let totalStudents = $derived(activeCampuses.reduce((acc, c) => acc + (c.users_count || 0), 0));
 
-	let activeCount = $derived(
-		activeCampuses.filter((c) => c.active).length
-	);
+	let activeCount = $derived(activeCampuses.filter((c) => c.active).length);
 
-	let publicCount = $derived(
-		activeCampuses.filter((c) => c.public).length
-	);
+	let publicCount = $derived(activeCampuses.filter((c) => c.public).length);
 </script>
 
 <div class="space-y-6">
 	<!-- Page Header -->
-	<div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b pb-4">
+	<div class="flex flex-col gap-3 border-b pb-4 sm:flex-row sm:items-center sm:justify-between">
 		<div>
 			<h1 class="text-2xl font-bold tracking-tight text-foreground md:text-3xl">Campuses</h1>
 		</div>
@@ -107,36 +103,44 @@
 			class="flex items-start gap-3 rounded-lg border border-destructive/20 bg-destructive/10 p-4 text-sm text-destructive"
 			role="alert"
 		>
-			<CircleAlertIcon class="size-4 shrink-0 mt-0.5" />
+			<CircleAlertIcon class="mt-0.5 size-4 shrink-0" />
 			<div class="flex-1">
 				<p class="font-medium">Failed to update campus directory</p>
-				<p class="text-xs text-destructive/90 mt-0.5">{refreshError || data.error}</p>
+				<p class="mt-0.5 text-xs text-destructive/90">{refreshError || data.error}</p>
 			</div>
 		</div>
 	{/if}
 
 	<!-- Compact Network Metrics Toolbar -->
-	<div class="flex flex-wrap items-center gap-2 rounded-xl border border-border bg-card/60 p-3 text-xs text-muted-foreground">
-		<div class="flex items-center gap-1.5 font-medium text-foreground pr-2 sm:border-r sm:border-border/60">
+	<div
+		class="flex flex-wrap items-center gap-2 rounded-xl border border-border bg-card/60 p-3 text-xs text-muted-foreground"
+	>
+		<div
+			class="flex items-center gap-1.5 pr-2 font-medium text-foreground sm:border-r sm:border-border/60"
+		>
 			<BuildingIcon class="size-3.5 text-foreground/80" />
 			<span>Network Summary</span>
 		</div>
 		<div class="flex flex-wrap items-center gap-x-4 gap-y-1">
 			<span>
-				Total: <strong class="tabular-nums font-semibold text-foreground">{activeCampuses.length}</strong>
+				Total: <strong class="font-semibold text-foreground tabular-nums">
+					{activeCampuses.length}
+				</strong>
 			</span>
 			<span class="text-border">•</span>
 			<span>
-				Active: <strong class="tabular-nums font-semibold text-foreground">{activeCount}</strong>
+				Active: <strong class="font-semibold text-foreground tabular-nums">{activeCount}</strong>
 			</span>
 			<span class="text-border">•</span>
 			<span>
-				Students: <strong class="tabular-nums font-semibold text-foreground">{totalStudents.toLocaleString()}</strong>
+				Students: <strong class="font-semibold text-foreground tabular-nums">
+					{totalStudents.toLocaleString()}
+				</strong>
 			</span>
 			{#if activeCampuses.length > 0}
 				<span class="text-border">•</span>
 				<span>
-					Public: <strong class="tabular-nums font-semibold text-foreground">{publicCount}</strong>
+					Public: <strong class="font-semibold text-foreground tabular-nums">{publicCount}</strong>
 				</span>
 			{/if}
 		</div>
@@ -145,20 +149,22 @@
 	<!-- Controls Bar: Search, Filters & Sorting -->
 	<div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
 		<!-- Search Input with Clear Action -->
-		<div class="relative flex-1 max-w-lg">
-			<SearchIcon class="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none" />
+		<div class="relative max-w-lg flex-1">
+			<SearchIcon
+				class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
+			/>
 			<Input
 				type="search"
 				placeholder="Search by campus name, city, country, or ID..."
 				bind:value={searchQuery}
-				class="pl-9 pr-9 h-9 text-sm"
+				class="h-9 pr-9 pl-9 text-sm"
 				aria-label="Search campuses"
 			/>
 			{#if searchQuery}
 				<button
 					type="button"
 					onclick={() => (searchQuery = '')}
-					class="absolute right-2.5 top-1/2 -translate-y-1/2 p-0.5 text-muted-foreground hover:text-foreground rounded-sm transition-colors"
+					class="absolute top-1/2 right-2.5 -translate-y-1/2 rounded-sm p-0.5 text-muted-foreground transition-colors hover:text-foreground"
 					aria-label="Clear search query"
 				>
 					<XIcon class="size-3.5" />
@@ -169,7 +175,9 @@
 		<!-- Status Filter Pills & Sort Selector -->
 		<div class="flex flex-wrap items-center gap-2">
 			<!-- Filter Pills -->
-			<div class="inline-flex items-center rounded-lg border border-border p-0.5 bg-muted/40 gap-0.5">
+			<div
+				class="inline-flex items-center gap-0.5 rounded-lg border border-border bg-muted/40 p-0.5"
+			>
 				<Button
 					variant={filterStatus === 'all' ? 'secondary' : 'ghost'}
 					size="xs"
@@ -194,7 +202,9 @@
 			</div>
 
 			<!-- Sort Selector -->
-			<div class="inline-flex items-center rounded-lg border border-border p-0.5 bg-muted/40 gap-0.5">
+			<div
+				class="inline-flex items-center gap-0.5 rounded-lg border border-border bg-muted/40 p-0.5"
+			>
 				<Button
 					variant={sortBy === 'name' ? 'secondary' : 'ghost'}
 					size="xs"
@@ -231,7 +241,10 @@
 						<!-- Card Top: Name, Location & Status -->
 						<div class="flex items-start justify-between gap-2">
 							<div class="min-w-0 flex-1">
-								<h2 class="font-bold text-base text-foreground tracking-tight truncate" title={campus.name}>
+								<h2
+									class="truncate text-base font-bold tracking-tight text-foreground"
+									title={campus.name}
+								>
 									{campus.name}
 								</h2>
 								<div class="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">
@@ -243,12 +256,15 @@
 							</div>
 							<div class="shrink-0">
 								{#if campus.active}
-									<Badge variant="outline" class="gap-1 border-border/80 text-[11px] font-medium text-foreground">
+									<Badge
+										variant="outline"
+										class="gap-1 border-border/80 text-xs font-medium text-foreground"
+									>
 										<span class="size-1.5 rounded-full bg-emerald-500"></span>
 										<span>Active</span>
 									</Badge>
 								{:else}
-									<Badge variant="outline" class="text-[11px] font-medium text-muted-foreground/70">
+									<Badge variant="outline" class="text-xs font-medium text-muted-foreground/70">
 										Inactive
 									</Badge>
 								{/if}
@@ -256,7 +272,7 @@
 						</div>
 
 						<!-- Details Rows -->
-						<div class="space-y-1.5 pt-2 border-t border-border/60 text-xs text-muted-foreground">
+						<div class="space-y-1.5 border-t border-border/60 pt-2 text-xs text-muted-foreground">
 							{#if campus.users_count !== undefined}
 								<div class="flex items-center justify-between">
 									<span class="flex items-center gap-1.5">
@@ -275,7 +291,10 @@
 										<ClockIcon class="size-3 text-muted-foreground/70" />
 										<span>Timezone</span>
 									</span>
-									<span class="text-[11px] truncate max-w-[170px] tabular-nums" title={campus.time_zone}>
+									<span
+										class="max-w-[170px] truncate text-xs tabular-nums"
+										title={campus.time_zone}
+									>
 										{campus.time_zone}
 									</span>
 								</div>
@@ -284,7 +303,7 @@
 							{#if campus.email_extension}
 								<div class="flex items-center justify-between">
 									<span>Email</span>
-									<span class="text-[11px] text-muted-foreground truncate max-w-[170px]">
+									<span class="max-w-[170px] truncate text-xs text-muted-foreground">
 										@{campus.email_extension}
 									</span>
 								</div>
@@ -293,13 +312,17 @@
 					</div>
 
 					<!-- Card Footer: Website Link and Campus ID -->
-					<div class="mt-4 pt-3 border-t border-border/60 flex items-center justify-between text-xs">
+					<div
+						class="mt-4 flex items-center justify-between border-t border-border/60 pt-3 text-xs"
+					>
 						{#if campus.website}
 							<a
-								href={campus.website.startsWith('http') ? campus.website : `https://${campus.website}`}
+								href={campus.website.startsWith('http')
+									? campus.website
+									: `https://${campus.website}`}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="inline-flex items-center gap-1 text-primary hover:underline font-medium transition-colors"
+								class="inline-flex items-center gap-1 font-medium text-primary transition-colors hover:underline"
 							>
 								<span>Website</span>
 								<ExternalLinkIcon class="size-3" />
@@ -307,19 +330,22 @@
 						{:else}
 							<span class="text-muted-foreground/60">No website</span>
 						{/if}
-						<span class="text-[11px] text-muted-foreground tabular-nums">ID #{campus.id}</span>
+						<span class="text-xs text-muted-foreground tabular-nums">ID #{campus.id}</span>
 					</div>
 				</article>
 			{/each}
 		</div>
 	{:else}
 		<!-- Empty State -->
-		<div class="flex flex-col items-center justify-center rounded-xl border border-dashed border-border bg-card/40 p-12 text-center">
-			<BuildingIcon class="size-10 text-muted-foreground/40 mb-3" />
+		<div
+			class="flex flex-col items-center justify-center rounded-xl border border-dashed border-border bg-card/40 p-12 text-center"
+		>
+			<BuildingIcon class="mb-3 size-10 text-muted-foreground/40" />
 			<h3 class="text-base font-semibold text-foreground">No campuses found</h3>
-			<p class="mt-1 text-sm text-muted-foreground max-w-sm">
+			<p class="mt-1 max-w-sm text-sm text-muted-foreground">
 				{#if searchQuery}
-					No campus matches "<span class="font-medium text-foreground">{searchQuery}</span>". Try searching for another name, city, country, or ID.
+					No campus matches "<span class="font-medium text-foreground">{searchQuery}</span>". Try
+					searching for another name, city, country, or ID.
 				{:else}
 					No campuses match the selected filter criteria.
 				{/if}

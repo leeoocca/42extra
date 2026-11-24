@@ -102,7 +102,7 @@
 						rel="noreferrer"
 						variant="outline"
 						size="sm"
-						class="h-9 px-2.5 text-xs text-muted-foreground hover:text-foreground bg-muted/30"
+						class="h-9 bg-muted/30 px-2.5 text-xs text-muted-foreground hover:text-foreground"
 						title="See this page on 42 Intra"
 					>
 						<ExternalLinkIcon class="size-3.5" />
@@ -113,7 +113,7 @@
 						variant="outline"
 						size="sm"
 						disabled
-						class="h-9 px-2.5 text-xs text-muted-foreground/40 bg-muted/10 cursor-not-allowed opacity-50"
+						class="h-9 cursor-not-allowed bg-muted/10 px-2.5 text-xs text-muted-foreground/40 opacity-50"
 						title="No 42 Intra page associated with this route"
 					>
 						<ExternalLinkIcon class="size-3.5" />
@@ -127,7 +127,7 @@
 					size="sm"
 					onclick={handleRefreshData}
 					disabled={isRefreshing}
-					class="h-9 px-2.5 text-xs text-muted-foreground hover:text-foreground bg-muted/30"
+					class="h-9 bg-muted/30 px-2.5 text-xs text-muted-foreground hover:text-foreground"
 					title="Refresh data"
 					aria-label="Refresh data"
 				>

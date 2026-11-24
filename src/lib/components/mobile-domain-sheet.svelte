@@ -13,13 +13,8 @@
 	}
 </script>
 
-<Sheet.Root
-	bind:open={() => navState.isDomainSheetOpen, (v) => (navState.isDomainSheetOpen = v)}
->
-	<Sheet.Content
-		side="bottom"
-		class="max-h-[85vh] rounded-t-2xl p-0 pb-6 outline-none"
-	>
+<Sheet.Root bind:open={() => navState.isDomainSheetOpen, (v) => (navState.isDomainSheetOpen = v)}>
+	<Sheet.Content side="bottom" class="max-h-[85vh] rounded-t-2xl p-0 pb-6 outline-none">
 		<Sheet.Header class="border-b border-border p-4 pb-3">
 			<div class="mx-auto mb-2 h-1 w-12 rounded-full bg-muted-foreground/30"></div>
 			<Sheet.Title class="text-center text-base font-bold">Navigation</Sheet.Title>
@@ -27,13 +22,15 @@
 		</Sheet.Header>
 
 		<!-- Domains list (only domains, no icons) -->
-		<div class="p-4 space-y-2">
+		<div class="space-y-2 p-4">
 			{#each NAV_DOMAINS as domain (domain.id)}
 				{@const active = isDomainActive(domain, page.url.pathname)}
 				<Button
 					variant={active ? 'secondary' : 'outline'}
 					onclick={() => selectDomain(domain)}
-					class="h-auto w-full justify-between p-3.5 text-sm {active ? 'font-semibold border-primary/40' : 'font-normal'}"
+					class="h-auto w-full justify-between p-3.5 text-sm {active
+						? 'border-primary/40 font-semibold'
+						: 'font-normal'}"
 				>
 					<span>{domain.title}</span>
 					{#if active}

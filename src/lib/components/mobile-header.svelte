@@ -66,7 +66,7 @@
 				rel="noreferrer"
 				variant="outline"
 				size="sm"
-				class="h-7 px-2 text-xs text-muted-foreground hover:text-foreground bg-muted/30"
+				class="h-7 bg-muted/30 px-2 text-xs text-muted-foreground hover:text-foreground"
 				title="See this page on 42 Intra"
 			>
 				<ExternalLinkIcon class="size-3" />
@@ -77,7 +77,7 @@
 				variant="outline"
 				size="sm"
 				disabled
-				class="h-7 px-2 text-xs text-muted-foreground/40 bg-muted/10 cursor-not-allowed opacity-50"
+				class="h-7 cursor-not-allowed bg-muted/10 px-2 text-xs text-muted-foreground/40 opacity-50"
 				title="No 42 Intra page associated with this route"
 			>
 				<ExternalLinkIcon class="size-3" />
@@ -90,7 +90,7 @@
 			size="sm"
 			onclick={handleRefreshData}
 			disabled={isRefreshing}
-			class="h-7 px-1.5 text-xs text-muted-foreground hover:text-foreground bg-muted/30"
+			class="h-7 bg-muted/30 px-1.5 text-xs text-muted-foreground hover:text-foreground"
 			title="Refresh data"
 			aria-label="Refresh data"
 		>
@@ -99,7 +99,7 @@
 
 		<a
 			href="/me"
-			class="flex items-center rounded-full ring-offset-background hover:ring-2 hover:ring-ring hover:ring-offset-1 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 ml-1"
+			class="ml-1 flex items-center rounded-full ring-offset-background hover:ring-2 hover:ring-ring hover:ring-offset-1 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
 			aria-label="Your profile"
 		>
 			<Avatar.Root class="size-7">

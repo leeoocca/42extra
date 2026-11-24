@@ -43,7 +43,9 @@
 			}
 
 			while (hasMore) {
-				const res = await fetch(`/api/v2/users/${data.login}/projects_users?page[number]=${pageNum}&page[size]=${pageSize}&sort=-updated_at`);
+				const res = await fetch(
+					`/api/v2/users/${data.login}/projects_users?page[number]=${pageNum}&page[size]=${pageSize}&sort=-updated_at`
+				);
 				if (!res.ok) {
 					throw new Error(`Failed to stream page ${pageNum} (${res.status})`);
 				}
@@ -154,7 +156,8 @@
 		}
 
 		const avgMark = scoredCount > 0 ? Math.round(totalScore / scoredCount) : 0;
-		const successRate = total > 0 ? Math.round((validatedCount / (validatedCount + failedCount || 1)) * 100) : 0;
+		const successRate =
+			total > 0 ? Math.round((validatedCount / (validatedCount + failedCount || 1)) * 100) : 0;
 
 		return {
 			total,
@@ -174,7 +177,8 @@
 			for (const pu of filteredProjects) {
 				const cursusId = pu.cursus_ids?.[0] ?? null;
 				const cursusInfo = cursusId ? cursusMap.get(cursusId) : undefined;
-				const cursusName = cursusInfo?.name ?? (cursusId ? `Cursus #${cursusId}` : 'Other Curriculum');
+				const cursusName =
+					cursusInfo?.name ?? (cursusId ? `Cursus #${cursusId}` : 'Other Curriculum');
 
 				if (!groups.has(cursusName)) {
 					groups.set(cursusName, {
@@ -239,16 +243,18 @@
 
 <div class="space-y-6">
 	<!-- Top Bar -->
-	<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b pb-4">
+	<div class="flex flex-col justify-between gap-3 border-b pb-4 sm:flex-row sm:items-center">
 		<div>
 			<div class="flex items-center gap-2">
-				<h1 class="text-2xl font-bold tracking-tight text-foreground md:text-3xl">Subscribed Projects</h1>
+				<h1 class="text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+					Subscribed Projects
+				</h1>
 				<Badge variant="outline" class="text-xs">
 					{stats.total} total
 				</Badge>
 				{#if isStreaming}
-					<span class="inline-flex items-center gap-1 text-xs text-muted-foreground animate-pulse">
-						<RefreshCwIcon class="w-3 h-3 animate-spin" />
+					<span class="inline-flex animate-pulse items-center gap-1 text-xs text-muted-foreground">
+						<RefreshCwIcon class="h-3 w-3 animate-spin" />
 						Streaming page {streamProgress.current}...
 					</span>
 				{/if}
@@ -256,9 +262,9 @@
 		</div>
 
 		<!-- Top Header Controls: Grouping & Open/Closed Filter -->
-		<div class="flex items-center gap-2 flex-wrap">
+		<div class="flex flex-wrap items-center gap-2">
 			<!-- Open / Closed Filter -->
-			<div class="flex items-center rounded-md border p-0.5 bg-muted/20 text-xs">
+			<div class="flex items-center rounded-md border bg-muted/20 p-0.5 text-xs">
 				<Button
 					variant={statusFilter === 'all' ? 'secondary' : 'ghost'}
 					size="sm"
@@ -286,7 +292,7 @@
 			</div>
 
 			<!-- Group By Dropdown / Toggle -->
-			<div class="flex items-center rounded-md border p-0.5 bg-muted/20 text-xs">
+			<div class="flex items-center rounded-md border bg-muted/20 p-0.5 text-xs">
 				<Button
 					variant={groupBy === 'cursus' ? 'secondary' : 'ghost'}
 					size="sm"
@@ -308,62 +314,66 @@
 	</div>
 
 	<!-- Stats Overview Bar at the Top (Definition List: No nested cards) -->
-	<dl class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 border rounded-md p-4 text-xs">
+	<dl class="grid grid-cols-2 gap-3 rounded-md border p-4 text-base sm:grid-cols-3 lg:grid-cols-6">
 		<div>
-			<dt class="text-muted-foreground font-medium">Total Registered</dt>
-			<dd class="text-xl font-bold text-foreground mt-0.5">{stats.total}</dd>
+			<dt class="font-medium text-muted-foreground">Total Registered</dt>
+			<dd class="mt-0.5 text-xl font-bold text-foreground">{stats.total}</dd>
 		</div>
 		<div>
-			<dt class="text-muted-foreground font-medium">In Progress (Open)</dt>
-			<dd class="text-xl font-bold text-primary mt-0.5">{stats.inProgressCount}</dd>
+			<dt class="font-medium text-muted-foreground">In Progress (Open)</dt>
+			<dd class="mt-0.5 text-xl font-bold text-primary">{stats.inProgressCount}</dd>
 		</div>
 		<div>
-			<dt class="text-muted-foreground font-medium">Validated</dt>
-			<dd class="text-xl font-bold text-emerald-600 mt-0.5">{stats.validatedCount}</dd>
+			<dt class="font-medium text-muted-foreground">Validated</dt>
+			<dd class="mt-0.5 text-xl font-bold text-emerald-600">{stats.validatedCount}</dd>
 		</div>
 		<div>
-			<dt class="text-muted-foreground font-medium">Failed / Retry</dt>
-			<dd class="text-xl font-bold text-destructive mt-0.5">{stats.failedCount}</dd>
+			<dt class="font-medium text-muted-foreground">Failed / Retry</dt>
+			<dd class="mt-0.5 text-xl font-bold text-destructive">{stats.failedCount}</dd>
 		</div>
 		<div>
-			<dt class="text-muted-foreground font-medium">Average Mark</dt>
-			<dd class="text-xl font-bold text-foreground mt-0.5">{stats.avgMark}</dd>
+			<dt class="font-medium text-muted-foreground">Average Mark</dt>
+			<dd class="mt-0.5 text-xl font-bold text-foreground">{stats.avgMark}</dd>
 		</div>
 		<div>
-			<dt class="text-muted-foreground font-medium">Success Rate</dt>
-			<dd class="text-xl font-bold text-foreground mt-0.5">{stats.successRate}%</dd>
+			<dt class="font-medium text-muted-foreground">Success Rate</dt>
+			<dd class="mt-0.5 text-xl font-bold text-foreground">{stats.successRate}%</dd>
 		</div>
 	</dl>
 
 	<!-- Search & Filter Input Bar -->
 	<div class="flex items-center justify-between gap-3">
 		<div class="relative w-full sm:w-80">
-			<SearchIcon class="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
+			<SearchIcon class="absolute top-2.5 left-2.5 h-3.5 w-3.5 text-muted-foreground" />
 			<Input
 				type="search"
 				placeholder="Filter projects by title or slug..."
 				bind:value={searchQuery}
-				class="pl-8 h-8 text-xs"
+				class="h-8 pl-8 text-xs"
 			/>
 		</div>
 
-		<span class="text-xs text-muted-foreground shrink-0">
+		<span class="shrink-0 text-xs text-muted-foreground">
 			Showing {filteredProjects.length} of {stats.total}
 		</span>
 	</div>
 
 	{#if streamError}
-		<div class="border border-destructive/20 bg-destructive/10 text-destructive rounded-md p-3 text-xs">
+		<div
+			class="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-xs text-destructive"
+		>
 			{streamError}
 		</div>
 	{/if}
 
 	<!-- Grouped Project Sections -->
 	{#if filteredProjects.length === 0}
-		<div class="border rounded-md p-8 text-center text-muted-foreground text-sm space-y-1">
+		<div class="space-y-1 rounded-md border p-8 text-center text-sm text-muted-foreground">
 			<p class="font-semibold text-foreground">No matching projects found</p>
 			<p class="text-xs">
-				{searchQuery ? `No project matching "${searchQuery}".` : 'No subscribed projects match the selected filter.'}
+				{searchQuery
+					? `No project matching "${searchQuery}".`
+					: 'No subscribed projects match the selected filter.'}
 			</p>
 		</div>
 	{:else}
@@ -371,8 +381,8 @@
 			{#each groupedProjectSections as group}
 				<div class="space-y-2">
 					<div class="flex items-center justify-between">
-						<h2 class="text-base font-semibold tracking-tight flex items-center gap-2">
-							<FolderGit2Icon class="w-4 h-4 text-muted-foreground" />
+						<h2 class="flex items-center gap-2 text-base font-semibold tracking-tight">
+							<FolderGit2Icon class="h-4 w-4 text-muted-foreground" />
 							{#if group.slug}
 								<a href={`/cursus/${group.slug}`} class="hover:underline">
 									{group.title}
@@ -386,7 +396,7 @@
 						</span>
 					</div>
 
-					<div class="border rounded-md divide-y text-sm overflow-hidden">
+					<div class="divide-y overflow-hidden rounded-md border text-base">
 						{#each group.projects as item}
 							<ProjectUserRow projectUser={item} login={data.login} showDate={true} />
 						{/each}

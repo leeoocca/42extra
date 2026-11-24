@@ -189,7 +189,8 @@
 
 		return friendUsers.filter((u) => {
 			const loginMatch = u.login?.toLowerCase().includes(q);
-			const nameMatch = u.displayname?.toLowerCase().includes(q) || u.usual_full_name?.toLowerCase().includes(q);
+			const nameMatch =
+				u.displayname?.toLowerCase().includes(q) || u.usual_full_name?.toLowerCase().includes(q);
 			const locMatch = u.location?.toLowerCase().includes(q);
 			return loginMatch || nameMatch || locMatch;
 		});
@@ -207,11 +208,11 @@
 
 <div class="space-y-6">
 	<!-- Page Header -->
-	<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b pb-4">
+	<div class="flex flex-col justify-between gap-3 border-b pb-4 sm:flex-row sm:items-center">
 		<div>
 			<div class="flex items-center gap-2">
 				<h1 class="text-2xl font-bold tracking-tight text-foreground md:text-3xl">Friends</h1>
-				<Badge variant="outline" class="text-xs px-2 py-0.5">
+				<Badge variant="outline" class="px-2 py-0.5 text-xs">
 					{friendsStore.ids.length} saved
 				</Badge>
 			</div>
@@ -219,19 +220,19 @@
 
 		<!-- Action buttons -->
 		<div class="flex items-center gap-2">
-			<Button variant="outline" size="sm" class="gap-1.5 h-8 text-xs" onclick={triggerImport}>
-				<UploadIcon class="w-3.5 h-3.5" />
+			<Button variant="outline" size="sm" class="h-8 gap-1.5 text-xs" onclick={triggerImport}>
+				<UploadIcon class="h-3.5 w-3.5" />
 				<span>Import JSON</span>
 			</Button>
 
 			<Button
 				variant="outline"
 				size="sm"
-				class="gap-1.5 h-8 text-xs"
+				class="h-8 gap-1.5 text-xs"
 				disabled={friendsStore.ids.length === 0}
 				onclick={handleExport}
 			>
-				<DownloadIcon class="w-3.5 h-3.5" />
+				<DownloadIcon class="h-3.5 w-3.5" />
 				<span>Export JSON</span>
 			</Button>
 		</div>
@@ -239,81 +240,105 @@
 
 	<!-- Status / Import feedback alerts -->
 	{#if importSuccess}
-		<div class="border border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-md p-3 text-xs flex items-center justify-between">
+		<div
+			class="flex items-center justify-between rounded-md border border-emerald-500/20 bg-emerald-500/10 p-3 text-xs text-emerald-600 dark:text-emerald-400"
+		>
 			<span>{importSuccess}</span>
-			<Button variant="ghost" size="sm" class="h-6 px-2 text-xs" onclick={() => (importSuccess = null)}>
+			<Button
+				variant="ghost"
+				size="sm"
+				class="h-6 px-2 text-xs"
+				onclick={() => (importSuccess = null)}
+			>
 				Dismiss
 			</Button>
 		</div>
 	{/if}
 
 	{#if importError}
-		<div class="border border-destructive/20 bg-destructive/10 text-destructive rounded-md p-3 text-xs flex items-center justify-between">
+		<div
+			class="flex items-center justify-between rounded-md border border-destructive/20 bg-destructive/10 p-3 text-xs text-destructive"
+		>
 			<span>{importError}</span>
-			<Button variant="ghost" size="sm" class="h-6 px-2 text-xs" onclick={() => (importError = null)}>
+			<Button
+				variant="ghost"
+				size="sm"
+				class="h-6 px-2 text-xs"
+				onclick={() => (importError = null)}
+			>
 				Dismiss
 			</Button>
 		</div>
 	{/if}
 
 	<!-- Add Friend Bar -->
-	<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-		<form onsubmit={handleAddFriend} class="flex gap-2 flex-1 max-w-md">
+	<div class="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
+		<form onsubmit={handleAddFriend} class="flex max-w-md flex-1 gap-2">
 			<div class="relative flex-1">
-				<UserPlusIcon class="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
+				<UserPlusIcon class="absolute top-2.5 left-2.5 h-3.5 w-3.5 text-muted-foreground" />
 				<Input
 					type="text"
 					placeholder="Add friend by login (e.g. raveriss) or ID..."
 					bind:value={addInput}
-					class="pl-8 h-8 text-xs"
+					class="h-8 pl-8 text-xs"
 				/>
 			</div>
-			<Button type="submit" size="sm" class="h-8 text-xs px-3" disabled={isAdding || !addInput.trim()}>
+			<Button
+				type="submit"
+				size="sm"
+				class="h-8 px-3 text-xs"
+				disabled={isAdding || !addInput.trim()}
+			>
 				{isAdding ? 'Adding...' : 'Add Friend'}
 			</Button>
 		</form>
 
 		{#if friendsStore.ids.length > 0}
 			<div class="relative w-full sm:w-64">
-				<SearchIcon class="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
+				<SearchIcon class="absolute top-2.5 left-2.5 h-3.5 w-3.5 text-muted-foreground" />
 				<Input
 					type="search"
 					placeholder="Filter saved friends..."
 					bind:value={searchQuery}
-					class="pl-8 h-8 text-xs"
+					class="h-8 pl-8 text-xs"
 				/>
 			</div>
 		{/if}
 	</div>
 
 	{#if addError}
-		<div class="border border-destructive/20 bg-destructive/10 text-destructive rounded-md p-3 text-xs">
+		<div
+			class="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-xs text-destructive"
+		>
 			{addError}
 		</div>
 	{/if}
 
 	{#if errorMsg}
-		<div class="border border-destructive/20 bg-destructive/10 text-destructive rounded-md p-3 text-xs">
+		<div
+			class="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-xs text-destructive"
+		>
 			{errorMsg}
 		</div>
 	{/if}
 
 	<!-- Friend List -->
 	{#if friendsStore.ids.length === 0}
-		<div class="border rounded-md p-8 text-center text-muted-foreground text-sm space-y-2">
-			<UsersIcon class="w-8 h-8 mx-auto text-muted-foreground/60" />
+		<div class="space-y-2 rounded-md border p-8 text-center text-sm text-muted-foreground">
+			<UsersIcon class="mx-auto h-8 w-8 text-muted-foreground/60" />
 			<p class="font-semibold text-foreground">No friends added yet</p>
-			<p class="text-xs max-w-sm mx-auto">
-				Add peers by their 42 intranet login above, or import a JSON file containing a list of user IDs (e.g. <code class="bg-muted px-1 py-0.5 rounded font-mono text-[11px]">[123, 456]</code>).
+			<p class="mx-auto max-w-sm text-xs">
+				Add peers by their 42 intranet login above, or import a JSON file containing a list of user
+				IDs (e.g. <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">[123, 456]</code>).
 			</p>
 		</div>
 	{:else if isLoading && friendUsers.length === 0}
-		<div class="border rounded-md p-8 text-center text-muted-foreground text-sm space-y-2">
-			<RefreshCwIcon class="w-5 h-5 animate-spin mx-auto text-primary" />
+		<div class="space-y-2 rounded-md border p-8 text-center text-sm text-muted-foreground">
+			<RefreshCwIcon class="mx-auto h-5 w-5 animate-spin text-primary" />
 			<p>Loading {friendsStore.ids.length} friend profiles...</p>
 		</div>
 	{:else if filteredFriends.length === 0}
-		<div class="border rounded-md p-8 text-center text-muted-foreground text-sm space-y-1">
+		<div class="space-y-1 rounded-md border p-8 text-center text-sm text-muted-foreground">
 			<p class="font-semibold text-foreground">No matching friends</p>
 			<p class="text-xs">No saved friend matched "{searchQuery}".</p>
 		</div>
@@ -323,28 +348,32 @@
 				<span>{filteredFriends.length} friend{filteredFriends.length === 1 ? '' : 's'}</span>
 			</div>
 
-			<div class="border rounded-md divide-y text-sm">
+			<div class="divide-y rounded-md border text-base">
 				{#each filteredFriends as friend}
 					{@const avatar = friend.image?.link ?? friend.image?.versions?.small}
 					{@const avatarUrl = avatar ? getCdnProxyUrl(avatar) : null}
-					<div class="flex items-center justify-between p-3.5 hover:bg-muted/30 transition-colors gap-3">
-						<div class="flex items-center gap-3 min-w-0">
+					<div
+						class="flex items-center justify-between gap-3 p-3.5 transition-colors hover:bg-muted/30"
+					>
+						<div class="flex min-w-0 items-center gap-3">
 							<div class="relative shrink-0">
 								{#if avatarUrl}
 									<img
 										src={avatarUrl}
 										alt={friend.login}
-										class="w-9 h-9 rounded-full object-cover border bg-muted"
+										class="h-9 w-9 rounded-full border bg-muted object-cover"
 									/>
 								{:else}
-									<div class="w-9 h-9 rounded-full bg-muted flex items-center justify-center text-xs font-semibold uppercase">
+									<div
+										class="flex h-9 w-9 items-center justify-center rounded-full bg-muted text-xs font-semibold uppercase"
+									>
 										{friend.login.slice(0, 2)}
 									</div>
 								{/if}
 
 								{#if friend.location}
 									<span
-										class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-background"
+										class="absolute right-0 bottom-0 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-background"
 										title={`Online at ${friend.location}`}
 									></span>
 								{/if}
@@ -354,22 +383,24 @@
 								<div class="flex items-center gap-2">
 									<a
 										href={`/users/${friend.login}`}
-										class="font-semibold text-foreground hover:underline truncate"
+										class="truncate font-semibold text-foreground hover:underline"
 									>
 										{friend.login}
 									</a>
 									{#if friend['staff?']}
-										<Badge variant="secondary" class="text-[10px] uppercase px-1 py-0 font-mono">
+										<Badge variant="secondary" class="px-1 py-0 font-mono text-xs uppercase">
 											Staff
 										</Badge>
 									{/if}
 								</div>
-								<div class="flex items-center gap-2 text-xs text-muted-foreground truncate">
+								<div class="flex items-center gap-2 truncate text-xs text-muted-foreground">
 									<span>{friend.usual_full_name || friend.displayname || friend.login}</span>
 									{#if friend.location}
 										<span>&bull;</span>
-										<span class="flex items-center gap-1 font-mono text-emerald-600 dark:text-emerald-400 font-medium">
-											<MapPinIcon class="w-3 h-3" />
+										<span
+											class="flex items-center gap-1 font-mono font-medium text-emerald-600 dark:text-emerald-400"
+										>
+											<MapPinIcon class="h-3 w-3" />
 											{friend.location}
 										</span>
 									{:else}
@@ -380,13 +411,13 @@
 							</div>
 						</div>
 
-						<div class="flex items-center gap-1.5 shrink-0">
+						<div class="flex shrink-0 items-center gap-1.5">
 							<a
 								href={`/users/${friend.login}`}
-								class="inline-flex items-center justify-center h-8 px-2.5 rounded-md border text-xs text-muted-foreground hover:text-foreground hover:bg-accent transition-colors gap-1"
+								class="inline-flex h-8 items-center justify-center gap-1 rounded-md border px-2.5 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
 							>
 								<span>Profile</span>
-								<ArrowRightIcon class="w-3 h-3" />
+								<ArrowRightIcon class="h-3 w-3" />
 							</a>
 
 							<Button
@@ -396,7 +427,7 @@
 								title="Remove friend"
 								onclick={() => handleRemoveFriend(friend.id)}
 							>
-								<Trash2Icon class="w-3.5 h-3.5" />
+								<Trash2Icon class="h-3.5 w-3.5" />
 								<span class="sr-only">Remove friend</span>
 							</Button>
 						</div>

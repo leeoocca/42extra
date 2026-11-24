@@ -48,9 +48,9 @@
 			variant="ghost"
 			size="sm"
 			href="/events"
-			class="h-7 px-2 text-xs text-muted-foreground hover:text-foreground gap-1.5"
+			class="h-7 gap-1.5 px-2 text-xs text-muted-foreground hover:text-foreground"
 		>
-			<ArrowLeftIcon class="w-3.5 h-3.5" />
+			<ArrowLeftIcon class="h-3.5 w-3.5" />
 			<span>Back to Events</span>
 		</Button>
 	</div>
@@ -63,70 +63,76 @@
 					{ev?.name || `Event #${data.id}`}
 				</h1>
 				{#if ev?.kind}
-					<Badge variant="outline" class="text-[10px] capitalize px-1.5 py-0">
+					<Badge variant="outline" class="px-1.5 py-0 text-xs capitalize">
 						{ev.kind.replace(/_/g, ' ')}
 					</Badge>
 				{/if}
 			</div>
-			<p class="text-xs text-muted-foreground mt-0.5">
+			<p class="mt-0.5 text-xs text-muted-foreground">
 				Event #{data.id}
 			</p>
 		</div>
 	</div>
 
 	{#if data.error}
-		<div class="border border-destructive/20 bg-destructive/10 text-destructive rounded-md p-3 text-xs">
+		<div
+			class="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-xs text-destructive"
+		>
 			{data.error}
 		</div>
 	{:else if ev}
 		<!-- Description List: Event Specifications -->
 		<div class="space-y-2">
 			<h2 class="text-base font-semibold tracking-tight text-foreground">Event Information</h2>
-			<dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3.5 border rounded-md p-4 text-sm">
+			<dl
+				class="grid grid-cols-1 gap-x-6 gap-y-3.5 rounded-md border p-4 text-base sm:grid-cols-2 lg:grid-cols-3"
+			>
 				<div>
-					<dt class="text-xs text-muted-foreground font-medium">Event ID</dt>
-					<dd class="font-semibold text-foreground mt-0.5">#{ev.id}</dd>
+					<dt class="text-sm font-medium text-muted-foreground">Event ID</dt>
+					<dd class="mt-0.5 font-semibold text-foreground">#{ev.id}</dd>
 				</div>
 
 				<div>
-					<dt class="text-xs text-muted-foreground font-medium">Event Category</dt>
-					<dd class="text-foreground mt-0.5 capitalize">{ev.kind || 'general'}</dd>
+					<dt class="text-sm font-medium text-muted-foreground">Event Category</dt>
+					<dd class="mt-0.5 text-foreground capitalize">{ev.kind || 'general'}</dd>
 				</div>
 
 				<div>
-					<dt class="text-xs text-muted-foreground font-medium">Location / Room</dt>
-					<dd class="text-foreground mt-0.5 font-medium">
+					<dt class="text-sm font-medium text-muted-foreground">Location / Room</dt>
+					<dd class="mt-0.5 font-medium text-foreground">
 						{ev.location || 'Online / Campus'}
 					</dd>
 				</div>
 
 				<div>
-					<dt class="text-xs text-muted-foreground font-medium">Starts At</dt>
-					<dd class="text-foreground mt-0.5">{formatDate(ev.begin_at)}</dd>
+					<dt class="text-sm font-medium text-muted-foreground">Starts At</dt>
+					<dd class="mt-0.5 text-foreground">{formatDate(ev.begin_at)}</dd>
 				</div>
 
 				<div>
-					<dt class="text-xs text-muted-foreground font-medium">Ends At</dt>
-					<dd class="text-foreground mt-0.5">{formatDate(ev.end_at)}</dd>
+					<dt class="text-sm font-medium text-muted-foreground">Ends At</dt>
+					<dd class="mt-0.5 text-foreground">{formatDate(ev.end_at)}</dd>
 				</div>
 
 				<div>
-					<dt class="text-xs text-muted-foreground font-medium">Total Duration</dt>
-					<dd class="text-foreground mt-0.5">{calculateDuration(ev.begin_at, ev.end_at)}</dd>
+					<dt class="text-sm font-medium text-muted-foreground">Total Duration</dt>
+					<dd class="mt-0.5 text-foreground">{calculateDuration(ev.begin_at, ev.end_at)}</dd>
 				</div>
 
 				<div>
-					<dt class="text-xs text-muted-foreground font-medium">Subscribers</dt>
-					<dd class="text-foreground mt-0.5">
+					<dt class="text-sm font-medium text-muted-foreground">Subscribers</dt>
+					<dd class="mt-0.5 text-foreground">
 						{ev.nbr_subscribers}{ev.max_people ? ` / ${ev.max_people} maximum` : ' attendees'}
 					</dd>
 				</div>
 
 				<div>
-					<dt class="text-xs text-muted-foreground font-medium">Waitlist Status</dt>
-					<dd class="text-foreground mt-0.5">
+					<dt class="text-sm font-medium text-muted-foreground">Waitlist Status</dt>
+					<dd class="mt-0.5 text-foreground">
 						{#if ev.waitlist}
-							<span class="text-amber-600 font-medium">Waitlist active ({ev.waitlist.nbr_users ?? 0} waiting)</span>
+							<span class="font-medium text-amber-600">
+								Waitlist active ({ev.waitlist.nbr_users ?? 0} waiting)
+							</span>
 						{:else}
 							<span class="text-muted-foreground">No waitlist</span>
 						{/if}
@@ -134,9 +140,11 @@
 				</div>
 
 				<div>
-					<dt class="text-xs text-muted-foreground font-medium">Cancellation Rule</dt>
-					<dd class="text-foreground mt-0.5">
-						{ev.prohibition_of_cancellation ? `${ev.prohibition_of_cancellation}h before start` : 'Standard'}
+					<dt class="text-sm font-medium text-muted-foreground">Cancellation Rule</dt>
+					<dd class="mt-0.5 text-foreground">
+						{ev.prohibition_of_cancellation
+							? `${ev.prohibition_of_cancellation}h before start`
+							: 'Standard'}
 					</dd>
 				</div>
 			</dl>
@@ -146,7 +154,9 @@
 		{#if ev.description}
 			<div class="space-y-2">
 				<h2 class="text-base font-semibold tracking-tight text-foreground">Description</h2>
-				<div class="border rounded-md p-4 text-sm leading-relaxed text-foreground whitespace-pre-line break-words [overflow-wrap:anywhere] overflow-x-hidden">
+				<div
+					class="overflow-x-hidden rounded-md border p-4 text-sm leading-relaxed [overflow-wrap:anywhere] break-words whitespace-pre-line text-foreground"
+				>
 					{ev.description}
 				</div>
 			</div>
@@ -169,8 +179,8 @@
 		<!-- Event Participants List (Flat minimal container without nested cards) -->
 		<div class="space-y-3">
 			<div class="flex items-center justify-between">
-				<h2 class="text-base font-semibold tracking-tight text-foreground flex items-center gap-2">
-					<UsersIcon class="w-4 h-4 text-muted-foreground" />
+				<h2 class="flex items-center gap-2 text-base font-semibold tracking-tight text-foreground">
+					<UsersIcon class="h-4 w-4 text-muted-foreground" />
 					<span>Participants ({subscribers.length})</span>
 				</h2>
 				{#if ev.max_people}
@@ -181,25 +191,29 @@
 			</div>
 
 			{#if subscribers.length === 0}
-				<div class="border rounded-md p-6 text-center text-muted-foreground text-xs">
+				<div class="rounded-md border p-6 text-center text-xs text-muted-foreground">
 					No registered participants yet.
 				</div>
 			{:else}
-				<div class="border rounded-md divide-y text-sm">
+				<div class="divide-y rounded-md border text-base">
 					{#each subscribers as item}
 						{@const u = item.user}
 						{@const rawAvatar = u?.image?.link ?? u?.image?.versions?.small}
 						{@const avatarUrl = rawAvatar ? getCdnProxyUrl(rawAvatar) : null}
-						<div class="flex items-center justify-between p-3 hover:bg-muted/30 transition-colors gap-3">
-							<div class="flex items-center gap-3 min-w-0">
+						<div
+							class="flex items-center justify-between gap-3 p-3 transition-colors hover:bg-muted/30"
+						>
+							<div class="flex min-w-0 items-center gap-3">
 								{#if avatarUrl}
 									<img
 										src={avatarUrl}
 										alt={u?.login ?? 'User'}
-										class="w-8 h-8 rounded-full object-cover border bg-muted shrink-0"
+										class="h-8 w-8 shrink-0 rounded-full border bg-muted object-cover"
 									/>
 								{:else}
-									<div class="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-xs font-semibold uppercase shrink-0">
+									<div
+										class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-semibold uppercase"
+									>
 										{u?.login ? u.login.slice(0, 2) : '??'}
 									</div>
 								{/if}
@@ -209,7 +223,7 @@
 										{#if u?.login}
 											<a
 												href={`/users/${u.login}`}
-												class="font-medium text-foreground hover:underline truncate"
+												class="truncate font-medium text-foreground hover:underline"
 											>
 												{u.login}
 											</a>
@@ -218,11 +232,11 @@
 										{/if}
 
 										{#if u?.['staff?']}
-											<Badge variant="secondary" class="text-[10px] px-1 py-0">Staff</Badge>
+											<Badge variant="secondary" class="px-1 py-0 text-xs">Staff</Badge>
 										{/if}
 									</div>
 									{#if u?.usual_full_name || u?.displayname}
-										<p class="text-xs text-muted-foreground truncate">
+										<p class="truncate text-xs text-muted-foreground">
 											{u.usual_full_name || u.displayname}
 										</p>
 									{/if}
@@ -232,7 +246,7 @@
 							{#if u?.login}
 								<a
 									href={`/users/${u.login}`}
-									class="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-1 border rounded px-2 py-1"
+									class="inline-flex items-center gap-1 rounded border px-2 py-1 text-xs text-muted-foreground hover:text-foreground"
 								>
 									<span>Profile</span>
 								</a>
@@ -247,49 +261,54 @@
 		{#if feedbacks.length > 0}
 			<div class="space-y-3">
 				<div class="flex items-center justify-between">
-					<h2 class="text-base font-semibold tracking-tight text-foreground flex items-center gap-2">
-						<MessageSquareIcon class="w-4 h-4 text-muted-foreground" />
+					<h2
+						class="flex items-center gap-2 text-base font-semibold tracking-tight text-foreground"
+					>
+						<MessageSquareIcon class="h-4 w-4 text-muted-foreground" />
 						<span>Attendee Feedbacks ({feedbacks.length})</span>
 					</h2>
 				</div>
 
-				<div class="border rounded-md divide-y text-sm">
+				<div class="divide-y rounded-md border text-base">
 					{#each feedbacks as fb}
-						<div class="p-3.5 space-y-1.5">
+						<div class="space-y-1.5 p-3.5">
 							<div class="flex items-center justify-between gap-2">
 								<div class="flex items-center gap-2">
 									{#if fb.user?.login}
-										<a href={`/users/${fb.user.login}`} class="font-medium text-xs text-foreground hover:underline">
+										<a
+											href={`/users/${fb.user.login}`}
+											class="text-xs font-medium text-foreground hover:underline"
+										>
 											@{fb.user.login}
 										</a>
 									{:else}
 										<span class="text-xs text-muted-foreground">Attendee</span>
 									{/if}
 									{#if fb.created_at}
-										<span class="text-[11px] text-muted-foreground">
+										<span class="text-xs text-muted-foreground">
 											{formatDate(fb.created_at)}
 										</span>
 									{/if}
 								</div>
 
 								{#if fb.rating !== undefined && fb.rating !== null}
-									<div class="flex items-center gap-1 text-amber-500 font-semibold text-xs">
-										<StarIcon class="w-3.5 h-3.5 fill-current" />
+									<div class="flex items-center gap-1 text-xs font-semibold text-amber-500">
+										<StarIcon class="h-3.5 w-3.5 fill-current" />
 										<span>{fb.rating}</span>
 									</div>
 								{/if}
 							</div>
 
 							{#if fb.comment}
-								<p class="text-xs text-foreground leading-relaxed whitespace-pre-line">
+								<p class="text-xs leading-relaxed whitespace-pre-line text-foreground">
 									{fb.comment}
 								</p>
 							{/if}
 
 							{#if fb.feedback_details && fb.feedback_details.length > 0}
-								<div class="flex flex-wrap gap-2 pt-1 text-[11px] text-muted-foreground">
+								<div class="flex flex-wrap gap-2 pt-1 text-xs text-muted-foreground">
 									{#each fb.feedback_details as detail}
-										<span class="border rounded px-1.5 py-0.5 bg-muted/20">
+										<span class="rounded border bg-muted/20 px-1.5 py-0.5">
 											{detail.kind}: <strong>{detail.rate}</strong>
 										</span>
 									{/each}

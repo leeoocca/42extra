@@ -27,7 +27,10 @@ export interface ResolvedClusterGroup {
 /**
  * Returns the campus cluster configuration for a given campus ID or campus name.
  */
-export function getCampusClusterConfig(campusId?: number | null, campusName?: string | null): CampusClusterMapping | null {
+export function getCampusClusterConfig(
+	campusId?: number | null,
+	campusName?: string | null
+): CampusClusterMapping | null {
 	const config = campusClustersData as unknown as CampusClustersConfigFile;
 	if (!config || !config.campuses) return null;
 
@@ -37,7 +40,11 @@ export function getCampusClusterConfig(campusId?: number | null, campusName?: st
 		if (campusId && campusConfig.campusId === campusId) {
 			return campusConfig;
 		}
-		if (normalizedName && (key.toLowerCase() === normalizedName || campusConfig.campusName?.toLowerCase() === normalizedName)) {
+		if (
+			normalizedName &&
+			(key.toLowerCase() === normalizedName ||
+				campusConfig.campusName?.toLowerCase() === normalizedName)
+		) {
 			return campusConfig;
 		}
 	}
@@ -81,12 +88,15 @@ export function groupLocationsByCluster(
 		}
 	}
 
-	const groupsMap = new Map<string, {
-		clusterId?: number;
-		clusterName: string;
-		prefix: string;
-		locations: FtLocation[];
-	}>();
+	const groupsMap = new Map<
+		string,
+		{
+			clusterId?: number;
+			clusterName: string;
+			prefix: string;
+			locations: FtLocation[];
+		}
+	>();
 
 	// Initialize known configured clusters so empty clusters are also present
 	if (campusConfig?.clusters && campusConfig.clusters.length > 0) {
@@ -183,7 +193,9 @@ export function groupLocationsByCluster(
 
 	// Sort locations within each cluster by host
 	for (const group of result) {
-		group.locations.sort((a, b) => (a.host || '').localeCompare(b.host || '', undefined, { numeric: true }));
+		group.locations.sort((a, b) =>
+			(a.host || '').localeCompare(b.host || '', undefined, { numeric: true })
+		);
 	}
 
 	return result;

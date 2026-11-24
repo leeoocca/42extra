@@ -15,9 +15,7 @@
 
 	let { item }: { item: FeedItem } = $props();
 
-	const avatarSrc = $derived(
-		item.actor?.image ? getCdnProxyUrl(item.actor.image) : undefined
-	);
+	const avatarSrc = $derived(item.actor?.image ? getCdnProxyUrl(item.actor.image) : undefined);
 
 	const actorInitials = $derived.by(() => {
 		const name = item.actor?.displayname || item.actor?.login || '?';
@@ -30,13 +28,13 @@
 	{#if item.actor}
 		<a
 			href="/users/{item.actor.login}"
-			class="relative shrink-0 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+			class="relative shrink-0 rounded-full focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
 		>
 			<Avatar.Root class="size-9">
 				{#if avatarSrc}
 					<Avatar.Image src={avatarSrc} alt={item.actor.login} />
 				{/if}
-				<Avatar.Fallback class="text-xs font-semibold bg-muted uppercase">
+				<Avatar.Fallback class="bg-muted text-xs font-semibold uppercase">
 					{actorInitials}
 				</Avatar.Fallback>
 			</Avatar.Root>
@@ -54,13 +52,13 @@
 	{/if}
 
 	<!-- Center: Content -->
-	<div class="flex-1 min-w-0">
+	<div class="min-w-0 flex-1">
 		<!-- Top line: Actor info & actual date -->
-		<div class="flex items-center gap-2 flex-wrap">
+		<div class="flex flex-wrap items-center gap-2">
 			{#if item.actor}
 				<a
 					href="/users/{item.actor.login}"
-					class="text-sm font-semibold text-foreground hover:underline truncate"
+					class="truncate text-base font-semibold text-foreground hover:underline"
 				>
 					{item.actor.displayname || item.actor.login}
 				</a>
@@ -68,36 +66,51 @@
 			{/if}
 
 			<!-- Actual Date Timestamp (aligned to right) -->
-			<span class="text-xs text-muted-foreground tabular-nums ml-auto shrink-0">
+			<span class="ml-auto shrink-0 text-xs text-muted-foreground tabular-nums">
 				{formatActualDate(item.timestamp)}
 			</span>
 		</div>
 
 		<!-- Below: Item Type Badge + Action & Title -->
-		<div class="mt-1 flex items-center gap-2 flex-wrap">
+		<div class="mt-1 flex flex-wrap items-center gap-2">
 			<!-- Kind Tag -->
 			{#if item.kind === 'quest_user'}
-				<Badge variant="outline" class="text-[10px] py-0 px-1.5 h-4.5 gap-1 font-normal text-muted-foreground shrink-0">
+				<Badge
+					variant="outline"
+					class="h-4.5 shrink-0 gap-1 px-1.5 py-0 text-xs font-normal text-muted-foreground"
+				>
 					<CompassIcon class="size-2.5 text-amber-500" />
 					Quest
 				</Badge>
 			{:else if item.kind === 'project_user'}
-				<Badge variant="outline" class="text-[10px] py-0 px-1.5 h-4.5 gap-1 font-normal text-muted-foreground shrink-0">
+				<Badge
+					variant="outline"
+					class="h-4.5 shrink-0 gap-1 px-1.5 py-0 text-xs font-normal text-muted-foreground"
+				>
 					<FolderGit2Icon class="size-2.5 text-emerald-500" />
 					Project
 				</Badge>
 			{:else if item.kind === 'location'}
-				<Badge variant="outline" class="text-[10px] py-0 px-1.5 h-4.5 gap-1 font-normal text-muted-foreground shrink-0">
+				<Badge
+					variant="outline"
+					class="h-4.5 shrink-0 gap-1 px-1.5 py-0 text-xs font-normal text-muted-foreground"
+				>
 					<MonitorIcon class="size-2.5 text-sky-500" />
 					Cluster
 				</Badge>
 			{:else if item.kind === 'achievement_user'}
-				<Badge variant="outline" class="text-[10px] py-0 px-1.5 h-4.5 gap-1 font-normal text-muted-foreground shrink-0">
+				<Badge
+					variant="outline"
+					class="h-4.5 shrink-0 gap-1 px-1.5 py-0 text-xs font-normal text-muted-foreground"
+				>
 					<MedalIcon class="size-2.5 text-purple-500" />
 					Achievement
 				</Badge>
 			{:else if item.kind === 'event'}
-				<Badge variant="outline" class="text-[10px] py-0 px-1.5 h-4.5 gap-1 font-normal text-muted-foreground shrink-0">
+				<Badge
+					variant="outline"
+					class="h-4.5 shrink-0 gap-1 px-1.5 py-0 text-xs font-normal text-muted-foreground"
+				>
 					<CalendarIcon class="size-2.5 text-blue-500" />
 					Event
 				</Badge>
@@ -105,11 +118,11 @@
 
 			<!-- Title / Action -->
 			{#if item.link}
-				<a href={item.link} class="text-sm text-foreground hover:underline">
+				<a href={item.link} class="text-base text-foreground hover:underline">
 					{item.title}
 				</a>
 			{:else}
-				<span class="text-sm text-foreground">
+				<span class="text-base text-foreground">
 					{item.title}
 				</span>
 			{/if}
@@ -121,9 +134,9 @@
 				>
 					<span class="tabular-nums">{item.mark}</span>
 					{#if item.isValidated}
-						<CircleCheckIcon class="size-3.5 text-emerald-500 shrink-0" />
+						<CircleCheckIcon class="size-3.5 shrink-0 text-emerald-500" />
 					{:else}
-						<CircleXIcon class="size-3.5 text-destructive shrink-0" />
+						<CircleXIcon class="size-3.5 shrink-0 text-destructive" />
 					{/if}
 				</span>
 			{/if}
@@ -131,7 +144,7 @@
 
 		<!-- Subtitle / Context Note (strictly upright typography, no italic) -->
 		{#if item.subtitle}
-			<p class="text-xs text-muted-foreground mt-0.5 truncate">
+			<p class="mt-0.5 truncate text-xs text-muted-foreground">
 				{item.subtitle}
 			</p>
 		{/if}
@@ -141,7 +154,7 @@
 	{#if item.link}
 		<a
 			href={item.link}
-			class="shrink-0 p-1 rounded-md text-muted-foreground/60 transition-colors hover:text-foreground self-center focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+			class="shrink-0 self-center rounded-md p-1 text-muted-foreground/60 transition-colors hover:text-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none"
 			aria-label="View details"
 		>
 			<ChevronRightIcon class="size-4" />

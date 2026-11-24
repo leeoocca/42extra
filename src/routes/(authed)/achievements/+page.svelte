@@ -81,7 +81,7 @@
 </script>
 
 <div class="space-y-6">
-	<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b pb-4">
+	<div class="flex flex-col justify-between gap-3 border-b pb-4 sm:flex-row sm:items-center">
 		<div>
 			<div class="flex items-center gap-2">
 				<h1 class="text-2xl font-bold tracking-tight text-foreground md:text-3xl">Achievements</h1>
@@ -92,24 +92,26 @@
 		</div>
 
 		<div class="relative w-full sm:w-64">
-			<SearchIcon class="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
+			<SearchIcon class="absolute top-2.5 left-2.5 h-3.5 w-3.5 text-muted-foreground" />
 			<Input
 				type="search"
 				placeholder="Filter achievements..."
 				bind:value={searchQuery}
-				class="pl-8 h-8 text-xs"
+				class="h-8 pl-8 text-xs"
 			/>
 		</div>
 	</div>
 
 	{#if data.error}
-		<div class="border border-destructive/20 bg-destructive/10 text-destructive rounded-md p-3 text-xs">
+		<div
+			class="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-xs text-destructive"
+		>
 			{data.error}
 		</div>
 	{/if}
 
 	{#if groupedAchievements.length === 0}
-		<div class="border rounded-md p-6 text-center text-muted-foreground text-sm space-y-1">
+		<div class="space-y-1 rounded-md border p-6 text-center text-sm text-muted-foreground">
 			<p class="font-medium">No achievements found</p>
 			<p class="text-xs">
 				{searchQuery ? 'No badge matches your query.' : 'No achievements available.'}
@@ -120,8 +122,8 @@
 			{#each groupedAchievements as group}
 				<div class="space-y-2">
 					<div class="flex items-center justify-between">
-						<h2 class="text-base font-semibold tracking-tight flex items-center gap-2 capitalize">
-							<AwardIcon class="w-4 h-4 text-muted-foreground" />
+						<h2 class="flex items-center gap-2 text-base font-semibold tracking-tight capitalize">
+							<AwardIcon class="h-4 w-4 text-muted-foreground" />
 							{group.title}
 						</h2>
 						<span class="text-xs text-muted-foreground">
@@ -129,22 +131,30 @@
 						</span>
 					</div>
 
-					<div class="border rounded-md divide-y text-sm">
+					<div class="divide-y rounded-md border text-base">
 						{#each group.items as item}
 							{@const isUnlocked = unlockedAchievementIds.has(item.id)}
 							{@const iconUrl = getAchievementImage(item)}
-							<div class="flex items-center justify-between p-3 hover:bg-muted/30 transition-colors gap-3">
-								<div class="flex items-center gap-3 min-w-0">
+							<div
+								class="flex items-center justify-between gap-3 p-3 transition-colors hover:bg-muted/30"
+							>
+								<div class="flex min-w-0 items-center gap-3">
 									{#if iconUrl}
 										<img
 											src={iconUrl}
 											alt={item.name}
-											class="w-8 h-8 object-contain shrink-0 {isUnlocked ? '' : 'opacity-40 grayscale'}"
+											class="h-8 w-8 shrink-0 object-contain {isUnlocked
+												? ''
+												: 'opacity-40 grayscale'}"
 											loading="lazy"
 										/>
 									{:else}
-										<div class="w-8 h-8 rounded border flex items-center justify-center shrink-0 {isUnlocked ? 'text-primary' : 'text-muted-foreground/40'}">
-											<AwardIcon class="w-4 h-4" />
+										<div
+											class="flex h-8 w-8 shrink-0 items-center justify-center rounded border {isUnlocked
+												? 'text-primary'
+												: 'text-muted-foreground/40'}"
+										>
+											<AwardIcon class="h-4 w-4" />
 										</div>
 									{/if}
 
@@ -152,40 +162,46 @@
 										<div class="flex items-center gap-2">
 											<a
 												href={`/achievements/${item.id}`}
-												class="font-semibold text-sm text-foreground hover:underline truncate"
+												class="truncate text-base font-semibold text-foreground hover:underline"
 											>
 												{item.name}
 											</a>
 											{#if item.tier && item.tier !== 'none'}
-												<Badge variant={getTierVariant(item.tier)} class="text-xs px-2 py-0.5 capitalize">
+												<Badge
+													variant={getTierVariant(item.tier)}
+													class="px-2 py-0.5 text-xs capitalize"
+												>
 													{item.tier}
 												</Badge>
 											{/if}
 										</div>
 
 										{#if item.description}
-											<p class="text-muted-foreground text-xs line-clamp-1">
+											<p class="line-clamp-1 text-xs text-muted-foreground">
 												{item.description}
 											</p>
 										{/if}
 									</div>
 								</div>
 
-								<div class="flex items-center gap-2 shrink-0">
+								<div class="flex shrink-0 items-center gap-2">
 									{#if isUnlocked}
-										<Badge variant="default" class="text-xs px-2 py-0.5 bg-emerald-600 hover:bg-emerald-700">
-											<CheckCircle2Icon class="w-3.5 h-3.5 mr-1" />
+										<Badge
+											variant="default"
+											class="bg-emerald-600 px-2 py-0.5 text-xs hover:bg-emerald-700"
+										>
+											<CheckCircle2Icon class="mr-1 h-3.5 w-3.5" />
 											Unlocked
 										</Badge>
 									{:else}
-										<Badge variant="secondary" class="text-xs px-2 py-0.5 text-muted-foreground">
-											<LockIcon class="w-3 h-3 mr-1" />
+										<Badge variant="secondary" class="px-2 py-0.5 text-xs text-muted-foreground">
+											<LockIcon class="mr-1 h-3 w-3" />
 											Locked
 										</Badge>
 									{/if}
 									<a
 										href={`/achievements/${item.id}`}
-										class="text-xs text-muted-foreground hover:text-foreground ml-1"
+										class="ml-1 text-xs text-muted-foreground hover:text-foreground"
 									>
 										&rarr;
 									</a>

@@ -14,7 +14,9 @@ interface CachedAchievement {
 let achievementsCache: Map<number, CachedAchievement> | null = null;
 let achievementsCacheExpiry = 0;
 
-async function getAchievementsMap(event: Parameters<RequestHandler>[0]): Promise<Map<number, CachedAchievement>> {
+async function getAchievementsMap(
+	event: Parameters<RequestHandler>[0]
+): Promise<Map<number, CachedAchievement>> {
 	const now = Date.now();
 	if (achievementsCache && achievementsCacheExpiry > now) {
 		return achievementsCache;

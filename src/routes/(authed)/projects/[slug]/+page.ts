@@ -33,9 +33,7 @@ export const load: PageLoad = async ({ params, fetch, parent }) => {
 		if (projectId) {
 			try {
 				// 1. Global total with page[size]=0
-				const globalPromise = fetch(
-					`/api/v2/projects/${projectId}/projects_users?page[size]=0`
-				);
+				const globalPromise = fetch(`/api/v2/projects/${projectId}/projects_users?page[size]=0`);
 				// 2. Campus total with filter[campus]=:id and page[size]=0
 				const campusPromise = fetch(
 					`/api/v2/projects/${projectId}/projects_users?filter[campus]=${primaryCampusId}&page[size]=0`

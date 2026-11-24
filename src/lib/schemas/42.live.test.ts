@@ -42,7 +42,10 @@ describe('42 API Live Verification', () => {
 			});
 
 			if (!tokenRes.ok) {
-				console.warn('Live API skipped: Client credentials rejected by 42 Intra, status:', tokenRes.status);
+				console.warn(
+					'Live API skipped: Client credentials rejected by 42 Intra, status:',
+					tokenRes.status
+				);
 				ctx.skip();
 				return;
 			}

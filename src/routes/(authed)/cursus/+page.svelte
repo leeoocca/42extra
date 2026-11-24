@@ -45,24 +45,26 @@
 </script>
 
 <div class="space-y-6">
-	<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b pb-4">
+	<div class="flex flex-col justify-between gap-3 border-b pb-4 sm:flex-row sm:items-center">
 		<div>
 			<h1 class="text-2xl font-bold tracking-tight text-foreground md:text-3xl">Cursuses</h1>
 		</div>
 
 		<div class="relative w-full sm:w-64">
-			<SearchIcon class="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
+			<SearchIcon class="absolute top-2.5 left-2.5 h-3.5 w-3.5 text-muted-foreground" />
 			<Input
 				type="search"
 				placeholder="Filter by name, slug, or #id..."
 				bind:value={searchQuery}
-				class="pl-8 h-8 text-xs"
+				class="h-8 pl-8 text-xs"
 			/>
 		</div>
 	</div>
 
 	{#if data.error}
-		<div class="border border-destructive/20 bg-destructive/10 text-destructive rounded-md p-3 text-xs">
+		<div
+			class="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-xs text-destructive"
+		>
 			{data.error}
 		</div>
 	{/if}
@@ -70,8 +72,8 @@
 	<!-- Active Cursuses -->
 	<div class="space-y-2">
 		<div class="flex items-center justify-between">
-			<h2 class="text-base font-semibold tracking-tight flex items-center gap-2 text-foreground">
-				<BookOpenIcon class="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+			<h2 class="flex items-center gap-2 text-base font-semibold tracking-tight text-foreground">
+				<BookOpenIcon class="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
 				Active Programs
 			</h2>
 			<span class="text-xs text-muted-foreground">
@@ -80,34 +82,39 @@
 		</div>
 
 		{#if activeCursuses.length === 0}
-			<p class="text-sm text-muted-foreground p-4 border rounded-md">No active cursus matches your query.</p>
+			<p class="rounded-md border p-4 text-sm text-muted-foreground">
+				No active cursus matches your query.
+			</p>
 		{:else}
-			<div class="border rounded-md divide-y text-sm">
+			<div class="divide-y rounded-md border text-base">
 				{#each activeCursuses as item}
 					<a
 						href={`/cursus/${item.slug}`}
-						class="flex items-center justify-between p-3 hover:bg-muted/30 transition-colors gap-3 group block text-inherit"
+						class="group block flex items-center justify-between gap-3 p-3 text-inherit transition-colors hover:bg-muted/30"
 					>
-						<div class="flex items-center gap-2.5 min-w-0">
-							<span class="text-muted-foreground text-xs shrink-0 w-8">
+						<div class="flex min-w-0 items-center gap-2.5">
+							<span class="w-8 shrink-0 text-xs text-muted-foreground">
 								#{item.id}
 							</span>
-							<span class="font-semibold text-foreground group-hover:underline truncate">
+							<span class="truncate font-semibold text-foreground group-hover:underline">
 								{item.name}
 							</span>
-							<span class="hidden md:inline font-mono text-muted-foreground text-xs truncate">
+							<span class="hidden truncate font-mono text-xs text-muted-foreground md:inline">
 								{item.slug}
 							</span>
 						</div>
 
-						<div class="flex items-center gap-2 shrink-0">
+						<div class="flex shrink-0 items-center gap-2">
 							{#if enrolledCursusIds.has(item.id)}
-								<Badge variant="default" class="text-xs px-2 py-0.5 bg-emerald-600 hover:bg-emerald-700">
-									<CheckCircle2Icon class="w-3 h-3 mr-1" />
+								<Badge
+									variant="default"
+									class="bg-emerald-600 px-2 py-0.5 text-xs hover:bg-emerald-700"
+								>
+									<CheckCircle2Icon class="mr-1 h-3 w-3" />
 									Enrolled
 								</Badge>
 							{/if}
-							<Badge variant="outline" class="text-xs px-2 py-0.5 capitalize">
+							<Badge variant="outline" class="px-2 py-0.5 text-xs capitalize">
 								{item.kind || 'main'}
 							</Badge>
 						</div>
@@ -120,8 +127,10 @@
 	<!-- Deprecated / Archived Cursuses -->
 	<div class="space-y-2 pt-2">
 		<div class="flex items-center justify-between">
-			<h2 class="text-base font-semibold tracking-tight flex items-center gap-2 text-muted-foreground">
-				<ArchiveIcon class="w-4 h-4 text-muted-foreground" />
+			<h2
+				class="flex items-center gap-2 text-base font-semibold tracking-tight text-muted-foreground"
+			>
+				<ArchiveIcon class="h-4 w-4 text-muted-foreground" />
 				Archived / Deprecated
 			</h2>
 			<span class="text-xs text-muted-foreground">
@@ -130,34 +139,36 @@
 		</div>
 
 		{#if archivedCursuses.length === 0}
-			<p class="text-sm text-muted-foreground p-4 border rounded-md">No archived cursus matches your query.</p>
+			<p class="rounded-md border p-4 text-sm text-muted-foreground">
+				No archived cursus matches your query.
+			</p>
 		{:else}
-			<div class="border rounded-md divide-y text-sm opacity-85">
+			<div class="divide-y rounded-md border text-base opacity-85">
 				{#each archivedCursuses as item}
 					<a
 						href={`/cursus/${item.slug}`}
-						class="flex items-center justify-between p-3 hover:bg-muted/30 transition-colors gap-3 group block text-inherit"
+						class="group block flex items-center justify-between gap-3 p-3 text-inherit transition-colors hover:bg-muted/30"
 					>
-						<div class="flex items-center gap-2.5 min-w-0">
-							<span class="text-muted-foreground text-xs shrink-0 w-8">
+						<div class="flex min-w-0 items-center gap-2.5">
+							<span class="w-8 shrink-0 text-xs text-muted-foreground">
 								#{item.id}
 							</span>
-							<span class="font-medium text-foreground group-hover:underline truncate">
+							<span class="truncate font-medium text-foreground group-hover:underline">
 								{item.name}
 							</span>
-							<span class="hidden md:inline font-mono text-muted-foreground text-xs truncate">
+							<span class="hidden truncate font-mono text-xs text-muted-foreground md:inline">
 								{item.slug}
 							</span>
 						</div>
 
-						<div class="flex items-center gap-2 shrink-0">
+						<div class="flex shrink-0 items-center gap-2">
 							{#if enrolledCursusIds.has(item.id)}
-								<Badge variant="secondary" class="text-xs px-2 py-0.5">
-									<CheckCircle2Icon class="w-3 h-3 mr-1" />
+								<Badge variant="secondary" class="px-2 py-0.5 text-xs">
+									<CheckCircle2Icon class="mr-1 h-3 w-3" />
 									Enrolled
 								</Badge>
 							{/if}
-							<Badge variant="secondary" class="text-xs px-2 py-0.5 text-muted-foreground">
+							<Badge variant="secondary" class="px-2 py-0.5 text-xs text-muted-foreground">
 								{item.kind}
 							</Badge>
 						</div>

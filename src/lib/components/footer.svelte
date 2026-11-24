@@ -6,13 +6,13 @@
 	let { intraLink }: Props = $props();
 </script>
 
-<footer class="w-full my-6 text-sm font-light text-center text-muted-foreground">
+<footer class="my-6 w-full text-center text-sm font-light text-muted-foreground">
 	{#if intraLink}
 		<a
 			href={intraLink}
 			target="_blank"
 			rel="noopener noreferrer"
-			class="text-xs hover:underline text-muted-foreground/80 block mb-1"
+			class="mb-1 block text-xs text-muted-foreground/80 hover:underline"
 		>
 			This page on the Intra
 		</a>

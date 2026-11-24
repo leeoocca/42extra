@@ -6,7 +6,9 @@
 </script>
 
 {#if data.error}
-	<div class="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-xs text-destructive">
+	<div
+		class="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-xs text-destructive"
+	>
 		{data.error}
 	</div>
 {:else if data.userProfile}

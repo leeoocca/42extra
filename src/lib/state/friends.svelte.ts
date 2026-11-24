@@ -100,7 +100,10 @@ class FriendsStore {
 	 * Imports an array of IDs from JSON string or parsed object
 	 * Merges or replaces depending on overwrite flag (default: merge)
 	 */
-	importJson(jsonContent: string, overwrite = false): { success: boolean; count: number; error?: string } {
+	importJson(
+		jsonContent: string,
+		overwrite = false
+	): { success: boolean; count: number; error?: string } {
 		try {
 			const parsed = JSON.parse(jsonContent);
 			let incomingIds: number[] = [];
@@ -118,9 +121,7 @@ class FriendsStore {
 				return { success: false, count: 0, error: 'JSON must be a simple array of user IDs' };
 			}
 
-			const newSet = overwrite
-				? new Set(incomingIds)
-				: new Set([...this.ids, ...incomingIds]);
+			const newSet = overwrite ? new Set(incomingIds) : new Set([...this.ids, ...incomingIds]);
 
 			this.ids = Array.from(newSet);
 			this.save();

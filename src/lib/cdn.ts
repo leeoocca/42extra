@@ -28,7 +28,11 @@ export function getCdnProxyUrl(url: unknown): string | undefined {
 	}
 
 	// Already proxied, inline data URI, or local relative path
-	if (targetUrl.startsWith('/api/cdn') || targetUrl.startsWith('data:') || targetUrl.startsWith('/')) {
+	if (
+		targetUrl.startsWith('/api/cdn') ||
+		targetUrl.startsWith('data:') ||
+		targetUrl.startsWith('/')
+	) {
 		return targetUrl;
 	}
 

@@ -22,7 +22,10 @@
 	const urlView = page.url.searchParams.get('view');
 	const initialLayout = urlView === 'list' || urlView === 'week' ? urlView : 'week';
 	const urlFilter = page.url.searchParams.get('filter');
-	const initialFilter = urlFilter === 'past' || urlFilter === 'all' || urlFilter === 'upcoming' ? urlFilter : 'upcoming';
+	const initialFilter =
+		urlFilter === 'past' || urlFilter === 'all' || urlFilter === 'upcoming'
+			? urlFilter
+			: 'upcoming';
 	const urlWeek = Number(page.url.searchParams.get('week'));
 	const initialWeek = !isNaN(urlWeek) && urlWeek !== 0 ? urlWeek : 0;
 
@@ -135,7 +138,11 @@
 	function formatEventDates(beginAt: string, endAt: string) {
 		const b = new Date(beginAt);
 		const e = new Date(endAt);
-		const dateStr = b.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+		const dateStr = b.toLocaleDateString(undefined, {
+			month: 'short',
+			day: 'numeric',
+			year: 'numeric'
+		});
 		const bTime = b.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
 		const eTime = e.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
 		return `${dateStr}, ${bTime} - ${eTime}`;
@@ -190,7 +197,11 @@
 		// Compute start of week (Monday)
 		const day = now.getDay();
 		const diffToMonday = day === 0 ? -6 : 1 - day; // Monday is day 1, Sunday is 0
-		const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() + diffToMonday + weekOffset * 7);
+		const monday = new Date(
+			now.getFullYear(),
+			now.getMonth(),
+			now.getDate() + diffToMonday + weekOffset * 7
+		);
 		monday.setHours(0, 0, 0, 0);
 
 		const days = [];
@@ -205,12 +216,14 @@
 			const dayStart = new Date(d).getTime();
 			const dayEnd = dayStart + 24 * 60 * 60 * 1000;
 
-			const dayEvents = filteredEvents.filter((ev) => {
-				const evBegin = new Date(ev.begin_at).getTime();
-				const evEnd = new Date(ev.end_at).getTime();
-				// Overlaps with day
-				return evBegin < dayEnd && evEnd > dayStart;
-			}).sort((a, b) => new Date(a.begin_at).getTime() - new Date(b.begin_at).getTime());
+			const dayEvents = filteredEvents
+				.filter((ev) => {
+					const evBegin = new Date(ev.begin_at).getTime();
+					const evEnd = new Date(ev.end_at).getTime();
+					// Overlaps with day
+					return evBegin < dayEnd && evEnd > dayStart;
+				})
+				.sort((a, b) => new Date(a.begin_at).getTime() - new Date(b.begin_at).getTime());
 
 			days.push({
 				date: d,
@@ -229,13 +242,17 @@
 		const first = currentWeekDays[0].date;
 		const last = currentWeekDays[6].date;
 		const firstStr = first.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-		const lastStr = last.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+		const lastStr = last.toLocaleDateString(undefined, {
+			month: 'short',
+			day: 'numeric',
+			year: 'numeric'
+		});
 		return `${firstStr} – ${lastStr}`;
 	});
 </script>
 
 <div class="space-y-6">
-	<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b pb-4">
+	<div class="flex flex-col justify-between gap-3 border-b pb-4 sm:flex-row sm:items-center">
 		<div>
 			<div class="flex items-center gap-2">
 				<h1 class="text-2xl font-bold tracking-tight text-foreground md:text-3xl">Campus Events</h1>
@@ -247,7 +264,7 @@
 
 		<div class="flex flex-wrap items-center gap-2">
 			<!-- Layout toggle (List vs Week) -->
-			<div class="inline-flex rounded-lg border p-0.5 bg-muted/40 gap-0.5">
+			<div class="inline-flex gap-0.5 rounded-lg border bg-muted/40 p-0.5">
 				<Button
 					variant={layoutMode === 'list' ? 'secondary' : 'ghost'}
 					size="xs"
@@ -271,7 +288,7 @@
 			</div>
 
 			<!-- Status filter toggle -->
-			<div class="inline-flex rounded-lg border p-0.5 bg-muted/40 gap-0.5">
+			<div class="inline-flex gap-0.5 rounded-lg border bg-muted/40 p-0.5">
 				<Button
 					variant={viewFilter === 'upcoming' ? 'secondary' : 'ghost'}
 					size="xs"
@@ -298,14 +315,14 @@
 	</div>
 
 	<!-- Controls Bar: Search & Week Navigation -->
-	<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+	<div class="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
 		<div class="relative w-full sm:w-64">
-			<SearchIcon class="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
+			<SearchIcon class="absolute top-2.5 left-2.5 h-3.5 w-3.5 text-muted-foreground" />
 			<Input
 				type="search"
 				placeholder="Filter events..."
 				bind:value={searchQuery}
-				class="pl-8 h-8 text-xs"
+				class="h-8 pl-8 text-xs"
 			/>
 		</div>
 
@@ -319,7 +336,7 @@
 					title="Previous week"
 					aria-label="Previous week"
 				>
-					<ChevronLeftIcon class="w-4 h-4" />
+					<ChevronLeftIcon class="h-4 w-4" />
 				</Button>
 
 				<Button
@@ -339,10 +356,10 @@
 					title="Next week"
 					aria-label="Next week"
 				>
-					<ChevronRightIcon class="w-4 h-4" />
+					<ChevronRightIcon class="h-4 w-4" />
 				</Button>
 
-				<span class="text-xs font-medium text-foreground ml-1">
+				<span class="ml-1 text-xs font-medium text-foreground">
 					{weekRangeLabel}
 				</span>
 			</div>
@@ -350,58 +367,64 @@
 	</div>
 
 	{#if data.error}
-		<div class="border border-destructive/20 bg-destructive/10 text-destructive rounded-md p-3 text-xs">
+		<div
+			class="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-xs text-destructive"
+		>
 			{data.error}
 		</div>
 	{/if}
 
 	{#if filteredEvents.length === 0}
-		<div class="border rounded-md p-6 text-center text-muted-foreground text-sm space-y-1">
+		<div class="space-y-1 rounded-md border p-6 text-center text-sm text-muted-foreground">
 			<p class="font-medium">No events found</p>
 			<p class="text-xs">
-				{searchQuery ? 'No event matches your filter.' : `No ${viewFilter} events scheduled for ${campusName}.`}
+				{searchQuery
+					? 'No event matches your filter.'
+					: `No ${viewFilter} events scheduled for ${campusName}.`}
 			</p>
 		</div>
 	{:else if layoutMode === 'list'}
 		<!-- Standard Minimal List Layout -->
-		<div class="border rounded-md divide-y text-sm">
+		<div class="divide-y rounded-md border text-base">
 			{#each filteredEvents as event}
-				<div class="p-3.5 hover:bg-muted/30 transition-colors space-y-1.5">
-					<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-						<div class="flex items-center gap-2 flex-wrap min-w-0">
+				<div class="space-y-1.5 p-3.5 transition-colors hover:bg-muted/30">
+					<div class="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
+						<div class="flex min-w-0 flex-wrap items-center gap-2">
 							<a
 								href={`/events/${event.id}`}
-								class="font-semibold text-base text-foreground hover:underline truncate"
+								class="truncate text-base font-semibold text-foreground hover:underline"
 							>
 								{event.name}
 							</a>
-							<Badge variant={getKindVariant(event.kind)} class="text-xs px-2 py-0.5 capitalize">
+							<Badge variant={getKindVariant(event.kind)} class="px-2 py-0.5 text-xs capitalize">
 								{event.kind.replace(/_/g, ' ')}
 							</Badge>
 						</div>
 					</div>
 
-					<div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-muted-foreground text-xs">
+					<div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
 						<span class="flex items-center gap-1 text-foreground">
-							<ClockIcon class="w-3.5 h-3.5 text-muted-foreground" />
+							<ClockIcon class="h-3.5 w-3.5 text-muted-foreground" />
 							{formatEventDates(event.begin_at, event.end_at)}
 						</span>
 
 						{#if event.location}
 							<span class="flex items-center gap-1">
-								<MapPinIcon class="w-3 h-3" />
+								<MapPinIcon class="h-3 w-3" />
 								{event.location}
 							</span>
 						{/if}
 
 						<span class="flex items-center gap-1">
-							<UsersIcon class="w-3 h-3" />
+							<UsersIcon class="h-3 w-3" />
 							{event.nbr_subscribers}{event.max_people ? ` / ${event.max_people}` : ''} subscribers
 						</span>
 					</div>
 
 					{#if event.description}
-						<p class="text-xs text-muted-foreground/90 line-clamp-2 pt-0.5 break-words [overflow-wrap:anywhere]">
+						<p
+							class="line-clamp-2 pt-0.5 text-xs [overflow-wrap:anywhere] break-words text-muted-foreground/90"
+						>
 							{event.description}
 						</p>
 					{/if}
@@ -410,28 +433,36 @@
 		</div>
 	{:else}
 		<!-- Week Layout (7 Columns, Mon-Sun) filling vertical space -->
-		<div class="grid grid-cols-1 md:grid-cols-7 border rounded-md divide-y md:divide-y-0 md:divide-x overflow-hidden min-h-[calc(100vh-16rem)]">
+		<div
+			class="grid min-h-[calc(100vh-16rem)] grid-cols-1 divide-y overflow-hidden rounded-md border md:grid-cols-7 md:divide-x md:divide-y-0"
+		>
 			{#each currentWeekDays as day}
-				<div class="flex flex-col h-full {day.isToday ? 'bg-primary/5' : 'bg-background'}">
+				<div class="flex h-full flex-col {day.isToday ? 'bg-primary/5' : 'bg-background'}">
 					<!-- Day Column Header -->
-					<div class="p-2.5 border-b flex items-center justify-between md:flex-col md:items-start gap-1 {day.isToday ? 'border-b-primary/30 font-semibold' : ''}">
+					<div
+						class="flex items-center justify-between gap-1 border-b p-2.5 md:flex-col md:items-start {day.isToday
+							? 'border-b-primary/30 font-semibold'
+							: ''}"
+					>
 						<div class="flex items-baseline gap-1.5">
-							<span class="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+							<span class="text-xs font-medium tracking-wider text-muted-foreground uppercase">
 								{day.dayName}
 							</span>
 							<span class="text-sm font-bold {day.isToday ? 'text-primary' : 'text-foreground'}">
 								{day.dayNum}
 							</span>
 						</div>
-						<span class="text-[11px] text-muted-foreground">
+						<span class="text-xs text-muted-foreground">
 							{day.monthName}
 						</span>
 					</div>
 
 					<!-- Day Events Container -->
-					<div class="p-2 flex-1 space-y-2">
+					<div class="flex-1 space-y-2 p-2">
 						{#if day.events.length === 0}
-							<div class="h-full flex items-center justify-center p-3 text-center text-xs text-muted-foreground/50">
+							<div
+								class="flex h-full items-center justify-center p-3 text-center text-xs text-muted-foreground/50"
+							>
 								No events
 							</div>
 						{:else}
@@ -439,24 +470,27 @@
 								{@const showTime = shouldShowTimeOnDay(event.begin_at, event.end_at, day.date)}
 								<a
 									href={`/events/${event.id}`}
-									class="block border rounded-md p-2 hover:border-primary/50 hover:bg-muted/40 transition-colors space-y-1 bg-card shadow-2xs"
+									class="block space-y-1 rounded-md border bg-card p-2 shadow-2xs transition-colors hover:border-primary/50 hover:bg-muted/40"
 								>
 									<div class="flex items-center justify-between gap-1">
-										<Badge variant={getKindVariant(event.kind)} class="text-[10px] px-1.5 py-0 capitalize">
+										<Badge
+											variant={getKindVariant(event.kind)}
+											class="px-1.5 py-0 text-xs capitalize"
+										>
 											{event.kind.replace(/_/g, ' ')}
 										</Badge>
 										{#if showTime}
-											<span class="text-[10px] font-medium text-muted-foreground">
+											<span class="text-xs font-medium text-muted-foreground">
 												{formatTimeOnly(event.begin_at)}
 											</span>
 										{/if}
 									</div>
-									<div class="text-xs font-semibold text-foreground line-clamp-2 leading-snug">
+									<div class="line-clamp-2 text-xs leading-snug font-semibold text-foreground">
 										{event.name}
 									</div>
 									{#if event.location}
-										<div class="text-[11px] text-muted-foreground truncate flex items-center gap-1">
-											<MapPinIcon class="w-2.5 h-2.5 shrink-0" />
+										<div class="flex items-center gap-1 truncate text-xs text-muted-foreground">
+											<MapPinIcon class="h-2.5 w-2.5 shrink-0" />
 											<span class="truncate">{event.location}</span>
 										</div>
 									{/if}

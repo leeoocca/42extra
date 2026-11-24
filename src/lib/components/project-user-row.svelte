@@ -52,11 +52,11 @@
 
 <a
 	href={projectHref}
-	class="flex items-center justify-between p-3.5 gap-3 hover:bg-muted/30 transition-colors group block text-inherit"
+	class="group block flex items-center justify-between gap-3 p-3.5 text-inherit transition-colors hover:bg-muted/30"
 >
 	<div class="min-w-0 space-y-1">
-		<div class="flex items-center gap-2 flex-wrap">
-			<span class="font-semibold text-foreground group-hover:underline truncate">
+		<div class="flex flex-wrap items-center gap-2">
+			<span class="truncate font-semibold text-foreground group-hover:underline">
 				{projectUser.project.name}
 			</span>
 			{#if projectUser.occurrence > 0}
@@ -66,13 +66,13 @@
 			{/if}
 		</div>
 
-		<div class="flex items-center gap-2.5 text-xs text-muted-foreground flex-wrap">
-			<Badge variant={getStatusVariant(projectUser.status)} class="text-[11px] capitalize px-2 py-0.5">
+		<div class="flex flex-wrap items-center gap-2.5 text-xs text-muted-foreground">
+			<Badge variant={getStatusVariant(projectUser.status)} class="px-2 py-0.5 text-xs capitalize">
 				{formatStatus(projectUser.status)}
 			</Badge>
 			{#if showDate && projectUser.updated_at}
 				<span class="flex items-center gap-1">
-					<ClockIcon class="w-3.5 h-3.5" />
+					<ClockIcon class="h-3.5 w-3.5" />
 					updated {formatDate(projectUser.updated_at)}
 				</span>
 			{/if}
@@ -80,16 +80,18 @@
 	</div>
 
 	<!-- Right: Mark & Status Icon (always on the right) -->
-	<div class="flex items-center gap-2 shrink-0">
+	<div class="flex shrink-0 items-center gap-2">
 		{#if projectUser.final_mark !== null && projectUser.final_mark !== undefined}
 			<span
-				class="font-bold text-sm tabular-nums flex items-center gap-1.5 {isValidated ? 'text-emerald-600' : 'text-destructive'}"
+				class="flex items-center gap-1.5 text-base font-bold tabular-nums {isValidated
+					? 'text-emerald-600'
+					: 'text-destructive'}"
 			>
 				<span>{projectUser.final_mark}</span>
 				{#if isValidated}
-					<CheckCircle2Icon class="w-4 h-4 text-emerald-600" />
+					<CheckCircle2Icon class="h-4 w-4 text-emerald-600" />
 				{:else}
-					<XCircleIcon class="w-4 h-4 text-destructive" />
+					<XCircleIcon class="h-4 w-4 text-destructive" />
 				{/if}
 			</span>
 		{/if}

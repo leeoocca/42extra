@@ -119,16 +119,16 @@
 	}
 </script>
 
-<div class="space-y-6 w-full">
+<div class="w-full space-y-6">
 	<!-- Page Header -->
 	<div>
 		<div class="flex items-center gap-2">
 			<h1 class="text-2xl font-bold tracking-tight md:text-3xl">Campus Feed</h1>
-			<Badge variant="secondary" class="font-normal text-xs">
+			<Badge variant="secondary" class="text-xs font-normal">
 				{data.campusName}
 			</Badge>
 		</div>
-		<p class="text-sm text-muted-foreground mt-1">
+		<p class="mt-1 text-base text-muted-foreground">
 			Real-time stream of cluster check-ins, project milestones, quests, and achievements.
 		</p>
 	</div>
@@ -139,83 +139,86 @@
 			variant={activeKindFilter === 'all' ? 'secondary' : 'ghost'}
 			size="sm"
 			onclick={() => (activeKindFilter = 'all')}
-			class="h-7 px-2.5 rounded-full text-xs font-medium gap-1.5"
+			class="h-7 gap-1.5 rounded-full px-2.5 text-xs font-medium"
 		>
 			<span>All</span>
-			<span class="text-[10px] tabular-nums opacity-70">({kindCounts.all})</span>
+			<span class="text-xs tabular-nums opacity-70">({kindCounts.all})</span>
 		</Button>
 
 		<Button
 			variant={activeKindFilter === 'project_user' ? 'secondary' : 'ghost'}
 			size="sm"
 			onclick={() => (activeKindFilter = 'project_user')}
-			class="h-7 px-2.5 rounded-full text-xs font-medium gap-1.5"
+			class="h-7 gap-1.5 rounded-full px-2.5 text-xs font-medium"
 		>
 			<span>Projects</span>
-			<span class="text-[10px] tabular-nums opacity-70">({kindCounts.project_user})</span>
+			<span class="text-xs tabular-nums opacity-70">({kindCounts.project_user})</span>
 		</Button>
 
 		<Button
 			variant={activeKindFilter === 'location' ? 'secondary' : 'ghost'}
 			size="sm"
 			onclick={() => (activeKindFilter = 'location')}
-			class="h-7 px-2.5 rounded-full text-xs font-medium gap-1.5"
+			class="h-7 gap-1.5 rounded-full px-2.5 text-xs font-medium"
 		>
 			<span>Clusters</span>
-			<span class="text-[10px] tabular-nums opacity-70">({kindCounts.location})</span>
+			<span class="text-xs tabular-nums opacity-70">({kindCounts.location})</span>
 		</Button>
 
 		<Button
 			variant={activeKindFilter === 'quest_user' ? 'secondary' : 'ghost'}
 			size="sm"
 			onclick={() => (activeKindFilter = 'quest_user')}
-			class="h-7 px-2.5 rounded-full text-xs font-medium gap-1.5"
+			class="h-7 gap-1.5 rounded-full px-2.5 text-xs font-medium"
 		>
 			<span>Quests</span>
-			<span class="text-[10px] tabular-nums opacity-70">({kindCounts.quest_user})</span>
+			<span class="text-xs tabular-nums opacity-70">({kindCounts.quest_user})</span>
 		</Button>
 
 		<Button
 			variant={activeKindFilter === 'achievement_user' ? 'secondary' : 'ghost'}
 			size="sm"
 			onclick={() => (activeKindFilter = 'achievement_user')}
-			class="h-7 px-2.5 rounded-full text-xs font-medium gap-1.5"
+			class="h-7 gap-1.5 rounded-full px-2.5 text-xs font-medium"
 		>
 			<span>Achievements</span>
-			<span class="text-[10px] tabular-nums opacity-70">({kindCounts.achievement_user})</span>
+			<span class="text-xs tabular-nums opacity-70">({kindCounts.achievement_user})</span>
 		</Button>
 
 		<Button
 			variant={activeKindFilter === 'event' ? 'secondary' : 'ghost'}
 			size="sm"
 			onclick={() => (activeKindFilter = 'event')}
-			class="h-7 px-2.5 rounded-full text-xs font-medium gap-1.5"
+			class="h-7 gap-1.5 rounded-full px-2.5 text-xs font-medium"
 		>
 			<span>Events</span>
-			<span class="text-[10px] tabular-nums opacity-70">({kindCounts.event})</span>
+			<span class="text-xs tabular-nums opacity-70">({kindCounts.event})</span>
 		</Button>
 	</div>
 
 	<!-- Error Alert if any -->
 	{#if errorMessage}
-		<div class="rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-xs text-destructive flex items-center justify-between">
+		<div
+			class="flex items-center justify-between rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-xs text-destructive"
+		>
 			<span>{errorMessage}</span>
-			<Button variant="ghost" size="sm" class="h-6 text-[11px]" onclick={refreshFeed}>
-				Retry
-			</Button>
+			<Button variant="ghost" size="sm" class="h-6 text-xs" onclick={refreshFeed}>Retry</Button>
 		</div>
 	{/if}
 
 	<!-- Feed Stream Container -->
-	<div class="rounded-xl border border-border overflow-hidden">
+	<div class="overflow-hidden rounded-xl border border-border">
 		{#if filteredItems.length === 0}
 			<div class="p-12 text-center">
-				<div class="mx-auto flex size-10 items-center justify-center rounded-full border border-border text-muted-foreground mb-3">
+				<div
+					class="mx-auto mb-3 flex size-10 items-center justify-center rounded-full border border-border text-muted-foreground"
+				>
 					<CalendarClockIcon class="size-5" />
 				</div>
 				<h3 class="text-sm font-semibold text-foreground">No activity in this window</h3>
-				<p class="text-xs text-muted-foreground mt-1 max-w-sm mx-auto">
-					No {activeKindFilter !== 'all' ? activeKindFilter.replace('_', ' ') : 'campus'} events were found for the selected time range. Try loading earlier activity below.
+				<p class="mx-auto mt-1 max-w-sm text-xs text-muted-foreground">
+					No {activeKindFilter !== 'all' ? activeKindFilter.replace('_', ' ') : 'campus'} events were
+					found for the selected time range. Try loading earlier activity below.
 				</p>
 			</div>
 		{:else}
@@ -235,7 +238,7 @@
 				size="sm"
 				onclick={loadMore}
 				disabled={isLoadingMore}
-				class="gap-2 h-9 px-4 text-xs font-medium"
+				class="h-9 gap-2 px-4 text-xs font-medium"
 			>
 				{#if isLoadingMore}
 					<Loader2Icon class="size-3.5 animate-spin" />

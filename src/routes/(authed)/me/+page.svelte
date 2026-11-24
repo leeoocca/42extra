@@ -41,7 +41,9 @@
 </script>
 
 {#if refreshError || data.error}
-	<div class="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-xs text-destructive">
+	<div
+		class="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-xs text-destructive"
+	>
 		{refreshError || data.error}
 	</div>
 {:else if activeProfile}

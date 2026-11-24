@@ -54,23 +54,30 @@
 	</div>
 
 	<!-- Search bar -->
-	<form onsubmit={handleSearch} class="flex gap-2 max-w-md">
+	<form onsubmit={handleSearch} class="flex max-w-md gap-2">
 		<div class="relative flex-1">
-			<SearchIcon class="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
+			<SearchIcon class="absolute top-2.5 left-2.5 h-3.5 w-3.5 text-muted-foreground" />
 			<Input
 				type="search"
 				placeholder="Search by student login (e.g. raveriss)..."
 				bind:value={query}
-				class="pl-8 h-8 text-xs"
+				class="h-8 pl-8 text-xs"
 			/>
 		</div>
-		<Button type="submit" size="sm" class="h-8 text-xs px-3" disabled={isSearching || !query.trim()}>
+		<Button
+			type="submit"
+			size="sm"
+			class="h-8 px-3 text-xs"
+			disabled={isSearching || !query.trim()}
+		>
 			{isSearching ? 'Searching...' : 'Search'}
 		</Button>
 	</form>
 
 	{#if errorMsg}
-		<div class="border border-destructive/20 bg-destructive/10 text-destructive rounded-md p-3 text-xs">
+		<div
+			class="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-xs text-destructive"
+		>
 			{errorMsg}
 		</div>
 	{/if}
@@ -85,25 +92,29 @@
 			</div>
 
 			{#if results.length === 0}
-				<div class="border rounded-md p-6 text-center text-muted-foreground text-xs">
+				<div class="rounded-md border p-6 text-center text-xs text-muted-foreground">
 					No peer found matching "{query}".
 				</div>
 			{:else}
-				<div class="border rounded-md divide-y text-sm">
+				<div class="divide-y rounded-md border text-base">
 					{#each results as user}
 						{@const avatar = user.image?.link ?? user.image?.versions?.small}
 						{@const avatarUrl = avatar ? getCdnProxyUrl(avatar) : null}
-						<div class="flex items-center justify-between p-3.5 hover:bg-muted/30 transition-colors gap-3">
-							<div class="flex items-center gap-3 min-w-0">
+						<div
+							class="flex items-center justify-between gap-3 p-3.5 transition-colors hover:bg-muted/30"
+						>
+							<div class="flex min-w-0 items-center gap-3">
 								{#if avatarUrl}
 									<img
 										src={avatarUrl}
 										alt={user.login}
-										class="w-9 h-9 rounded-full border object-cover shrink-0"
+										class="h-9 w-9 shrink-0 rounded-full border object-cover"
 										loading="lazy"
 									/>
 								{:else}
-									<div class="w-9 h-9 rounded-full border bg-muted flex items-center justify-center font-bold text-xs shrink-0">
+									<div
+										class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border bg-muted text-xs font-bold"
+									>
 										{user.login?.slice(0, 2).toUpperCase()}
 									</div>
 								{/if}
@@ -112,23 +123,23 @@
 									<div class="flex items-center gap-2">
 										<a
 											href={`/users/${user.login}`}
-											class="font-semibold text-sm text-foreground hover:underline font-mono"
+											class="font-mono text-base font-semibold text-foreground hover:underline"
 										>
 											@{user.login}
 										</a>
 										{#if user.displayname}
-											<span class="text-muted-foreground text-xs truncate">
+											<span class="truncate text-xs text-muted-foreground">
 												({user.displayname})
 											</span>
 										{/if}
 										{#if user['staff?']}
-											<Badge variant="default" class="text-xs px-1.5 py-0">Staff</Badge>
+											<Badge variant="default" class="px-1.5 py-0 text-xs">Staff</Badge>
 										{/if}
 									</div>
 
 									{#if user.location}
-										<div class="flex items-center gap-1 text-xs text-emerald-600 font-mono mt-0.5">
-											<MapPinIcon class="w-3.5 h-3.5" />
+										<div class="mt-0.5 flex items-center gap-1 font-mono text-xs text-emerald-600">
+											<MapPinIcon class="h-3.5 w-3.5" />
 											{user.location}
 										</div>
 									{/if}
@@ -137,9 +148,9 @@
 
 							<a
 								href={`/users/${user.login}`}
-								class="text-xs text-primary hover:underline inline-flex items-center gap-1 shrink-0 font-medium"
+								class="inline-flex shrink-0 items-center gap-1 text-xs font-medium text-primary hover:underline"
 							>
-								profile <ArrowRightIcon class="w-3.5 h-3.5" />
+								profile <ArrowRightIcon class="h-3.5 w-3.5" />
 							</a>
 						</div>
 					{/each}

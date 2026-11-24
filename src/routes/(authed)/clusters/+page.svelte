@@ -14,6 +14,7 @@
 	import { navState } from '#lib/state/nav-state.svelte.js';
 	import { groupLocationsByCluster, getCampusClusterConfig } from '#lib/config/clusters.js';
 	import { onMount } from 'svelte';
+	import { formatTimeSince } from '#lib/time.ts';
 
 	let { data }: { data: PageData } = $props();
 
@@ -66,7 +67,9 @@
 
 		try {
 			// Fetch active locations dynamically for the active campus
-			const locPromise = fetch(`/api/v2/campus/${campusId}/locations?filter[active]=true&page[size]=100`);
+			const locPromise = fetch(
+				`/api/v2/campus/${campusId}/locations?filter[active]=true&page[size]=100`
+			);
 			// Also fetch /v2/clusters filtered by campus for grouping lookup
 			const clusterPromise = fetch(`/api/v2/clusters?filter[campus_id]=${campusId}&page[size]=100`);
 
@@ -209,24 +212,15 @@
 	let clusterGroups = $derived.by(() => {
 		return groupLocationsByCluster(filteredLocations, campusConfig, clusters);
 	});
-
-	function formatTimeSince(isoDate: string) {
-		const ms = Date.now() - new Date(isoDate).getTime();
-		const mins = Math.floor(ms / 60000);
-		if (mins < 60) return `${mins}m`;
-		const hours = Math.floor(mins / 60);
-		const remMins = mins % 60;
-		return `${hours}h ${remMins}m`;
-	}
 </script>
 
 <div class="space-y-6">
 	<!-- Top Bar -->
-	<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b pb-4">
+	<div class="flex flex-col justify-between gap-3 border-b pb-4 sm:flex-row sm:items-center">
 		<div>
 			<div class="flex items-center gap-2">
 				<h1 class="text-2xl font-bold tracking-tight text-foreground md:text-3xl">Clusters</h1>
-				<Badge variant="outline" class="text-xs px-2 py-0.5">
+				<Badge variant="outline" class="px-2 py-0.5 text-xs">
 					{currentCampusName}
 				</Badge>
 			</div>
@@ -238,11 +232,12 @@
 				<select
 					value={selectedCampusId}
 					onchange={handleCampusChange}
-					class="h-8 rounded-md border border-input bg-background px-2.5 py-1 text-xs font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+					class="h-8 rounded-md border border-input bg-background px-2.5 py-1 text-xs font-medium focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none"
 				>
 					{#each data.campuses as c}
 						<option value={c.id}>
-							{c.name} {c.id === data.initialCampusId ? '(Primary)' : ''}
+							{c.name}
+							{c.id === data.initialCampusId ? '(Primary)' : ''}
 						</option>
 					{/each}
 				</select>
@@ -251,20 +246,20 @@
 	</div>
 
 	<!-- Search & Summary bar -->
-	<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+	<div class="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
 		<div class="relative w-full sm:w-72">
-			<SearchIcon class="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
+			<SearchIcon class="absolute top-2.5 left-2.5 h-3.5 w-3.5 text-muted-foreground" />
 			<Input
 				type="search"
 				placeholder="Filter host or login..."
 				bind:value={searchQuery}
-				class="pl-8 h-8 text-xs"
+				class="h-8 pl-8 text-xs"
 			/>
 		</div>
 
 		<div class="flex items-center gap-2 text-xs text-muted-foreground">
 			<span class="flex items-center gap-1">
-				<MonitorIcon class="w-3.5 h-3.5" />
+				<MonitorIcon class="h-3.5 w-3.5" />
 				{locations.length} occupied workstation{locations.length === 1 ? '' : 's'}
 			</span>
 			<span>&bull;</span>
@@ -273,21 +268,25 @@
 	</div>
 
 	{#if errorMsg}
-		<div class="border border-destructive/20 bg-destructive/10 text-destructive rounded-md p-3 text-xs">
+		<div
+			class="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-xs text-destructive"
+		>
 			{errorMsg}
 		</div>
 	{/if}
 
 	{#if isLoading && locations.length === 0}
-		<div class="border rounded-md p-8 text-center text-muted-foreground text-sm space-y-2">
-			<RefreshCwIcon class="w-5 h-5 animate-spin mx-auto text-primary" />
+		<div class="space-y-2 rounded-md border p-8 text-center text-sm text-muted-foreground">
+			<RefreshCwIcon class="mx-auto h-5 w-5 animate-spin text-primary" />
 			<p>Loading workstation occupancy for {currentCampusName}...</p>
 		</div>
 	{:else if clusterGroups.length === 0}
-		<div class="border rounded-md p-8 text-center text-muted-foreground text-sm space-y-1">
+		<div class="space-y-1 rounded-md border p-8 text-center text-sm text-muted-foreground">
 			<p class="font-semibold text-foreground">No active workstations</p>
 			<p class="text-xs">
-				{searchQuery ? 'No matching host or login found.' : `No logged-in students currently detected in ${currentCampusName}.`}
+				{searchQuery
+					? 'No matching host or login found.'
+					: `No logged-in students currently detected in ${currentCampusName}.`}
 			</p>
 		</div>
 	{:else}
@@ -295,11 +294,16 @@
 			{#each clusterGroups as cluster}
 				<div class="space-y-2">
 					<div class="flex items-center justify-between">
-						<h2 class="text-base font-semibold tracking-tight text-foreground flex items-center gap-2">
-							<LayoutGridIcon class="w-4 h-4 text-muted-foreground" />
+						<h2
+							class="flex items-center gap-2 text-base font-semibold tracking-tight text-foreground"
+						>
+							<LayoutGridIcon class="h-4 w-4 text-muted-foreground" />
 							<span>{cluster.clusterName.replace(/^cluster\s+/i, '')}</span>
 							{#if cluster.prefix && cluster.clusterName.toLowerCase() !== cluster.prefix.toLowerCase()}
-								<Badge variant="outline" class="font-mono text-[10px] uppercase font-normal px-1.5 py-0">
+								<Badge
+									variant="outline"
+									class="px-1.5 py-0 font-mono text-xs font-normal uppercase"
+								>
 									{cluster.prefix}
 								</Badge>
 							{/if}
@@ -310,15 +314,21 @@
 					</div>
 
 					{#if cluster.locations.length === 0}
-						<div class="border rounded-md p-4 text-center text-muted-foreground text-xs bg-muted/10">
+						<div
+							class="rounded-md border bg-muted/10 p-4 text-center text-xs text-muted-foreground"
+						>
 							No active workstations in this cluster.
 						</div>
 					{:else}
-						<div class="border rounded-md divide-y text-sm">
+						<div class="divide-y rounded-md border text-base">
 							{#each cluster.locations as loc}
-								<div class="flex items-center justify-between p-3 hover:bg-muted/30 transition-colors gap-3">
-									<div class="flex items-center gap-3 min-w-0">
-										<div class="flex items-center gap-1 font-mono font-semibold text-foreground text-sm shrink-0">
+								<div
+									class="flex items-center justify-between gap-3 p-3 transition-colors hover:bg-muted/30"
+								>
+									<div class="flex min-w-0 items-center gap-3">
+										<div
+											class="flex shrink-0 items-center gap-1 font-mono text-sm font-semibold text-foreground"
+										>
 											{#each formatHost(loc.host) as part}
 												<span>{part}</span>
 											{/each}
@@ -327,12 +337,12 @@
 										{#if loc.user}
 											{@const rawImg = loc.user.image?.link ?? loc.user.image?.versions?.small}
 											{@const avatarUrl = rawImg ? (getCdnProxyUrl(rawImg) ?? null) : null}
-											<div class="flex items-center gap-3 min-w-0">
+											<div class="flex min-w-0 items-center gap-3">
 												<Avatar.Root class="size-8 shrink-0">
 													{#if avatarUrl}
 														<Avatar.Image src={avatarUrl} alt={loc.user.login} />
 													{/if}
-													<Avatar.Fallback class="text-xs font-semibold bg-muted uppercase">
+													<Avatar.Fallback class="bg-muted text-xs font-semibold uppercase">
 														{loc.user.login.slice(0, 2)}
 													</Avatar.Fallback>
 												</Avatar.Root>
@@ -341,12 +351,12 @@
 													<div class="flex items-center gap-2">
 														<a
 															href={`/users/${loc.user.login}`}
-															class="font-semibold text-foreground hover:underline truncate text-sm"
+															class="truncate text-sm font-semibold text-foreground hover:underline"
 														>
 															{loc.user.login}
 														</a>
 														{#if loc.user.displayname}
-															<span class="hidden sm:inline text-muted-foreground text-xs truncate">
+															<span class="hidden truncate text-xs text-muted-foreground sm:inline">
 																{loc.user.displayname}
 															</span>
 														{/if}
@@ -354,7 +364,7 @@
 												</div>
 											</div>
 										{:else}
-											<span class="text-muted-foreground text-xs">Occupied</span>
+											<span class="text-xs text-muted-foreground">Occupied</span>
 										{/if}
 									</div>
 
@@ -371,10 +381,10 @@
 	{/if}
 
 	<!-- Most Recent Unique Users on Campus -->
-	<div class="space-y-3 pt-4 border-t">
+	<div class="space-y-3 border-t pt-4">
 		<div class="flex items-center justify-between">
 			<div class="flex items-center gap-2">
-				<HistoryIcon class="w-4 h-4 text-muted-foreground" />
+				<HistoryIcon class="h-4 w-4 text-muted-foreground" />
 				<h2 class="text-base font-semibold tracking-tight text-foreground">
 					Recent Campus Activity
 				</h2>
@@ -392,11 +402,11 @@
 		</div>
 
 		{#if !hasRequestedRecent}
-			<div class="border border-dashed rounded-md p-6 text-center text-muted-foreground text-xs space-y-3 bg-muted/10">
-				<p class="font-medium text-foreground text-sm">
-					Explore Past Activity
-				</p>
-				<p class="max-w-md mx-auto text-muted-foreground">
+			<div
+				class="space-y-3 rounded-md border border-dashed bg-muted/10 p-6 text-center text-xs text-muted-foreground"
+			>
+				<p class="text-sm font-medium text-foreground">Explore Past Activity</p>
+				<p class="mx-auto max-w-md text-muted-foreground">
 					View students recently logged in to workstations at {currentCampusName}.
 				</p>
 				<div class="flex items-center justify-center pt-1">
@@ -408,34 +418,36 @@
 						class="gap-1.5"
 					>
 						{#if isLoadingRecent}
-							<RefreshCwIcon class="w-3.5 h-3.5 animate-spin" />
+							<RefreshCwIcon class="h-3.5 w-3.5 animate-spin" />
 							<span>Loading recent activity...</span>
 						{:else}
-							<HistoryIcon class="w-3.5 h-3.5 text-muted-foreground" />
+							<HistoryIcon class="h-3.5 w-3.5 text-muted-foreground" />
 							<span>Load Recent Activity</span>
 						{/if}
 					</Button>
 				</div>
 			</div>
 		{:else if isLoadingRecent && uniqueRecentUsers.length === 0}
-			<div class="border rounded-md p-8 text-center text-muted-foreground text-xs space-y-2">
-				<RefreshCwIcon class="w-4 h-4 animate-spin mx-auto text-primary" />
+			<div class="space-y-2 rounded-md border p-8 text-center text-xs text-muted-foreground">
+				<RefreshCwIcon class="mx-auto h-4 w-4 animate-spin text-primary" />
 				<p>Loading recent activity for {currentCampusName}...</p>
 			</div>
 		{:else if uniqueRecentUsers.length === 0}
-			<div class="border rounded-md p-6 text-center text-muted-foreground text-xs">
+			<div class="rounded-md border p-6 text-center text-xs text-muted-foreground">
 				No recent workstation activity recorded for {currentCampusName}.
 			</div>
 		{:else}
-			<div class="border rounded-md divide-y text-sm">
+			<div class="divide-y rounded-md border text-base">
 				{#each uniqueRecentUsers as item}
-					<div class="flex items-center justify-between p-3 hover:bg-muted/30 transition-colors gap-3">
-						<div class="flex items-center gap-3 min-w-0">
+					<div
+						class="flex items-center justify-between gap-3 p-3 transition-colors hover:bg-muted/30"
+					>
+						<div class="flex min-w-0 items-center gap-3">
 							<Avatar.Root class="size-8 shrink-0">
 								{#if item.avatarUrl}
 									<Avatar.Image src={item.avatarUrl} alt={item.user.login} />
 								{/if}
-								<Avatar.Fallback class="text-xs font-semibold bg-muted uppercase">
+								<Avatar.Fallback class="bg-muted text-xs font-semibold uppercase">
 									{item.user.login.slice(0, 2)}
 								</Avatar.Fallback>
 							</Avatar.Root>
@@ -444,17 +456,17 @@
 								<div class="flex items-center gap-2">
 									<a
 										href={`/users/${item.user.login}`}
-										class="font-semibold text-foreground hover:underline truncate text-sm"
+										class="truncate text-sm font-semibold text-foreground hover:underline"
 									>
 										{item.user.login}
 									</a>
 									{#if item.user.displayname}
-										<span class="hidden sm:inline text-muted-foreground text-xs truncate">
+										<span class="hidden truncate text-xs text-muted-foreground sm:inline">
 											{item.user.displayname}
 										</span>
 									{/if}
 								</div>
-								<div class="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
+								<div class="mt-0.5 flex items-center gap-2 text-xs text-muted-foreground">
 									<div class="flex items-center gap-1 font-mono">
 										{#each formatHost(item.location.host) as part}
 											<span>{part}</span>
@@ -465,7 +477,7 @@
 										<span>left {formatTimeSince(item.location.end_at)} ago</span>
 									{:else}
 										<span>&bull;</span>
-										<span class="text-emerald-600 font-medium">Currently online</span>
+										<span class="font-medium text-emerald-600">Currently online</span>
 									{/if}
 								</div>
 							</div>
@@ -479,7 +491,9 @@
 			</div>
 
 			{#if recentError}
-				<div class="border border-destructive/20 bg-destructive/10 text-destructive rounded-md p-2.5 text-xs">
+				<div
+					class="rounded-md border border-destructive/20 bg-destructive/10 p-2.5 text-xs text-destructive"
+				>
 					{recentError}
 				</div>
 			{/if}
@@ -494,7 +508,7 @@
 						class="gap-1.5"
 					>
 						{#if isLoadingMoreRecent}
-							<RefreshCwIcon class="w-3.5 h-3.5 animate-spin" />
+							<RefreshCwIcon class="h-3.5 w-3.5 animate-spin" />
 							<span>Loading more users...</span>
 						{:else}
 							<span>Load more users</span>

@@ -1,6 +1,11 @@
 import { error, type RequestEvent } from '@sveltejs/kit';
 import { getUserBearerToken, refresh42OAuthToken } from './tokens.ts';
-import { FtUserMeSchema, FtCampusListSchema, type FtUserMe, type FtCampus } from '#lib/schemas/42.ts';
+import {
+	FtUserMeSchema,
+	FtCampusListSchema,
+	type FtUserMe,
+	type FtCampus
+} from '#lib/schemas/42.ts';
 import type { z } from 'zod';
 
 const FT_API_BASE_URL = 'https://api.intra.42.fr';
@@ -62,10 +67,7 @@ export async function fetchFtApiResponse(
 
 	if (res.status === 401 && tokenResult.account && tokenResult.authContext) {
 		console.warn(`[42 API] Upstream ${cleanEndpoint} returned 401, refreshing token...`);
-		const refreshedToken = await refresh42OAuthToken(
-			tokenResult.account,
-			tokenResult.authContext
-		);
+		const refreshedToken = await refresh42OAuthToken(tokenResult.account, tokenResult.authContext);
 		if (refreshedToken) {
 			currentToken = refreshedToken;
 			res = await fetch(url.toString(), {
@@ -79,7 +81,10 @@ export async function fetchFtApiResponse(
 	// Note: We return raw fetch response (even if !res.ok) so consumers like API proxy can forward the status code
 	// without throwing an unhandled 500 error.
 	if (!res.ok) {
-		const errorBody = await res.clone().text().catch(() => '');
+		const errorBody = await res
+			.clone()
+			.text()
+			.catch(() => '');
 		console.warn(`[42 API] Upstream ${cleanEndpoint} returned status ${res.status}:`, errorBody);
 	}
 

@@ -29,17 +29,13 @@
 
 	let avatarUrl = $derived.by(() => {
 		const raw =
-			profile?.image?.link ??
-			profile?.image?.versions?.medium ??
-			profile?.image?.versions?.small;
+			profile?.image?.link ?? profile?.image?.versions?.medium ?? profile?.image?.versions?.small;
 		return raw ? (getCdnProxyUrl(raw) ?? null) : null;
 	});
 
 	let largeAvatarUrl = $derived.by(() => {
 		const raw =
-			profile?.image?.versions?.large ??
-			profile?.image?.link ??
-			profile?.image?.versions?.medium;
+			profile?.image?.versions?.large ?? profile?.image?.link ?? profile?.image?.versions?.medium;
 		return raw ? (getCdnProxyUrl(raw) ?? null) : null;
 	});
 
@@ -88,7 +84,7 @@
 				variant="ghost"
 				size="sm"
 				href={backHref}
-				class="h-7 px-2 text-xs text-muted-foreground hover:text-foreground gap-1.5"
+				class="h-7 gap-1.5 px-2 text-xs text-muted-foreground hover:text-foreground"
 			>
 				<ArrowLeftIcon class="h-3.5 w-3.5" />
 				<span>{backLabel}</span>
@@ -123,10 +119,7 @@
 			<div>
 				<div class="flex items-center gap-2">
 					<h1 class="text-2xl font-bold tracking-tight text-foreground md:text-3xl">
-						{profile?.usual_full_name ||
-							profile?.displayname ||
-							profile?.login ||
-							'User Profile'}
+						{profile?.usual_full_name || profile?.displayname || profile?.login || 'User Profile'}
 					</h1>
 					{#if profile?.login}
 						<Badge variant="outline" class="font-mono text-xs">
@@ -153,14 +146,14 @@
 				<Button
 					variant={isFriend ? 'secondary' : 'outline'}
 					size="sm"
-					class="gap-1.5 h-8 text-xs shrink-0"
+					class="h-8 shrink-0 gap-1.5 text-xs"
 					onclick={() => profile?.id && friendsStore.toggleFriend(profile.id)}
 				>
 					{#if isFriend}
-						<UserMinusIcon class="w-3.5 h-3.5 text-muted-foreground" />
+						<UserMinusIcon class="h-3.5 w-3.5 text-muted-foreground" />
 						<span>Remove Friend</span>
 					{:else}
-						<UserPlusIcon class="w-3.5 h-3.5" />
+						<UserPlusIcon class="h-3.5 w-3.5" />
 						<span>Add Friend</span>
 					{/if}
 				</Button>
@@ -172,31 +165,31 @@
 	<div class="space-y-2">
 		<h2 class="text-base font-semibold tracking-tight text-foreground">Record Details</h2>
 		<dl
-			class="grid grid-cols-1 gap-x-6 gap-y-3.5 rounded-md border p-4 text-sm sm:grid-cols-2 lg:grid-cols-3"
+			class="grid grid-cols-1 gap-x-6 gap-y-3.5 rounded-md border p-4 text-base sm:grid-cols-2 lg:grid-cols-3"
 		>
 			<div>
-				<dt class="text-xs font-medium text-muted-foreground">Login</dt>
+				<dt class="text-sm font-medium text-muted-foreground">Login</dt>
 				<dd class="mt-0.5 font-mono font-semibold text-foreground">
 					{profile?.login || 'N/A'}
 				</dd>
 			</div>
 
 			<div>
-				<dt class="text-xs font-medium text-muted-foreground">Email</dt>
+				<dt class="text-sm font-medium text-muted-foreground">Email</dt>
 				<dd class="mt-0.5 truncate font-medium text-foreground">
 					{profile?.email || 'N/A'}
 				</dd>
 			</div>
 
 			<div>
-				<dt class="text-xs font-medium text-muted-foreground">Kind</dt>
+				<dt class="text-sm font-medium text-muted-foreground">Kind</dt>
 				<dd class="mt-0.5 font-medium text-foreground capitalize">
 					{profile?.kind || 'student'}
 				</dd>
 			</div>
 
 			<div>
-				<dt class="text-xs font-medium text-muted-foreground">Primary Campus</dt>
+				<dt class="text-sm font-medium text-muted-foreground">Primary Campus</dt>
 				<dd class="mt-0.5 font-medium text-foreground">
 					<a href="/campuses" class="hover:underline">
 						{primaryCampus}
@@ -205,7 +198,7 @@
 			</div>
 
 			<div>
-				<dt class="text-xs font-medium text-muted-foreground">Active Workstation</dt>
+				<dt class="text-sm font-medium text-muted-foreground">Active Workstation</dt>
 				<dd class="mt-0.5">
 					{#if profile?.location}
 						<a
@@ -223,35 +216,35 @@
 			</div>
 
 			<div>
-				<dt class="text-xs font-medium text-muted-foreground">Pool</dt>
+				<dt class="text-sm font-medium text-muted-foreground">Pool</dt>
 				<dd class="mt-0.5 font-medium text-foreground">
 					{poolDisplay}
 				</dd>
 			</div>
 
 			<div>
-				<dt class="text-xs font-medium text-muted-foreground">Wallet Balance</dt>
+				<dt class="text-sm font-medium text-muted-foreground">Wallet Balance</dt>
 				<dd class="mt-0.5 font-semibold text-foreground">
 					{profile?.wallet ?? 0} ₳
 				</dd>
 			</div>
 
 			<div>
-				<dt class="text-xs font-medium text-muted-foreground">Evaluation Points</dt>
+				<dt class="text-sm font-medium text-muted-foreground">Evaluation Points</dt>
 				<dd class="mt-0.5 font-semibold text-foreground">
 					{profile?.correction_point ?? 0} points
 				</dd>
 			</div>
 
 			<div>
-				<dt class="text-xs font-medium text-muted-foreground">Created</dt>
+				<dt class="text-sm font-medium text-muted-foreground">Created</dt>
 				<dd class="mt-0.5 text-muted-foreground">
 					{formatDate(profile?.created_at)}
 				</dd>
 			</div>
 
 			<div>
-				<dt class="text-xs font-medium text-muted-foreground">Status Flags</dt>
+				<dt class="text-sm font-medium text-muted-foreground">Status Flags</dt>
 				<dd class="mt-0.5 flex flex-wrap items-center gap-2">
 					{#if profile?.['staff?']}
 						<Badge variant="default" class="px-2 py-0.5 text-xs">Staff</Badge>
@@ -271,9 +264,9 @@
 			</div>
 
 			<div>
-				<dt class="text-xs font-medium text-muted-foreground">Total Achievements</dt>
+				<dt class="text-sm font-medium text-muted-foreground">Total Achievements</dt>
 				<dd class="mt-0.5 font-medium text-foreground">
-					<a href="/achievements" class="hover:underline text-primary">
+					<a href="/achievements" class="text-primary hover:underline">
 						{profile?.achievements?.length ?? 0} badges unlocked &rarr;
 					</a>
 				</dd>
@@ -289,13 +282,13 @@
 				No enrolled cursus recorded.
 			</p>
 		{:else}
-			<div class="divide-y rounded-md border text-sm">
+			<div class="divide-y rounded-md border text-base">
 				{#each profile.cursus_users as cu}
 					{@const cursusHref = cu.cursus?.slug ? `/cursus/${cu.cursus.slug}` : null}
 					{#if cursusHref}
 						<a
 							href={cursusHref}
-							class="flex items-center justify-between gap-3 p-3.5 transition-colors hover:bg-muted/30 group block text-inherit"
+							class="group block flex items-center justify-between gap-3 p-3.5 text-inherit transition-colors hover:bg-muted/30"
 						>
 							<div class="min-w-0 space-y-0.5">
 								<div class="flex items-center gap-2">
@@ -353,7 +346,7 @@
 			<h2 class="text-base font-semibold tracking-tight text-foreground">
 				Projects ({profile.projects_users.length})
 			</h2>
-			<div class="divide-y rounded-md border text-sm">
+			<div class="divide-y rounded-md border text-base">
 				{#each profile.projects_users as p}
 					<ProjectUserRow projectUser={p} login={profile.login} showDate={false} />
 				{/each}

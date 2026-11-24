@@ -33,9 +33,9 @@
 			variant="ghost"
 			size="sm"
 			href="/achievements"
-			class="h-7 px-2 text-xs text-muted-foreground hover:text-foreground gap-1.5"
+			class="h-7 gap-1.5 px-2 text-xs text-muted-foreground hover:text-foreground"
 		>
-			<ArrowLeftIcon class="w-3.5 h-3.5" />
+			<ArrowLeftIcon class="h-3.5 w-3.5" />
 			<span>Back to Achievements</span>
 		</Button>
 	</div>
@@ -48,18 +48,18 @@
 					{a?.name || `Achievement #${data.id}`}
 				</h1>
 				{#if isUnlocked}
-					<Badge variant="default" class="text-[10px] px-1.5 py-0 bg-emerald-600">
-						<CheckCircle2Icon class="w-3 h-3 mr-1" />
+					<Badge variant="default" class="bg-emerald-600 px-1.5 py-0 text-xs">
+						<CheckCircle2Icon class="mr-1 h-3 w-3" />
 						Unlocked
 					</Badge>
 				{:else}
-					<Badge variant="secondary" class="text-[10px] px-1.5 py-0 text-muted-foreground">
-						<LockIcon class="w-2.5 h-2.5 mr-1" />
+					<Badge variant="secondary" class="px-1.5 py-0 text-xs text-muted-foreground">
+						<LockIcon class="mr-1 h-2.5 w-2.5" />
 						Locked
 					</Badge>
 				{/if}
 			</div>
-			<p class="text-xs text-muted-foreground mt-0.5">
+			<p class="mt-0.5 text-xs text-muted-foreground">
 				Badge #{data.id}
 			</p>
 		</div>
@@ -72,59 +72,64 @@
 	</div>
 
 	{#if data.error}
-		<div class="border border-destructive/20 bg-destructive/10 text-destructive rounded-md p-3 text-xs">
+		<div
+			class="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-xs text-destructive"
+		>
 			{data.error}
 		</div>
 	{:else if a}
-		<div class="flex flex-col sm:flex-row gap-6 items-start">
+		<div class="flex flex-col items-start gap-6 sm:flex-row">
 			{#if iconUrl}
-				<div class="border rounded-md p-4 bg-muted/20 shrink-0 self-center sm:self-start {isUnlocked ? '' : 'opacity-40 grayscale'}">
-					<img
-						src={iconUrl}
-						alt={a.name}
-						class="w-24 h-24 object-contain"
-						loading="lazy"
-					/>
+				<div
+					class="shrink-0 self-center rounded-md border bg-muted/20 p-4 sm:self-start {isUnlocked
+						? ''
+						: 'opacity-40 grayscale'}"
+				>
+					<img src={iconUrl} alt={a.name} class="h-24 w-24 object-contain" loading="lazy" />
 				</div>
 			{/if}
 
-			<div class="space-y-4 flex-1 w-full">
+			<div class="w-full flex-1 space-y-4">
 				<!-- Description List: Achievement Metadata -->
 				<div class="space-y-2">
-					<h2 class="text-base font-semibold tracking-tight text-foreground">Badge Specification</h2>
-					<dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3.5 border rounded-md p-4 text-sm">
+					<h2 class="text-base font-semibold tracking-tight text-foreground">
+						Badge Specification
+					</h2>
+					<dl
+						class="grid grid-cols-1 gap-x-6 gap-y-3.5 rounded-md border p-4 text-base sm:grid-cols-2"
+					>
 						<div>
-							<dt class="text-xs text-muted-foreground font-medium">Achievement ID</dt>
-							<dd class="font-semibold text-foreground mt-0.5">#{a.id}</dd>
+							<dt class="text-sm font-medium text-muted-foreground">Achievement ID</dt>
+							<dd class="mt-0.5 font-semibold text-foreground">#{a.id}</dd>
 						</div>
 
 						<div>
-							<dt class="text-xs text-muted-foreground font-medium">Category / Kind</dt>
-							<dd class="text-foreground mt-0.5 capitalize font-medium">{a.kind || 'general'}</dd>
+							<dt class="text-sm font-medium text-muted-foreground">Category / Kind</dt>
+							<dd class="mt-0.5 font-medium text-foreground capitalize">{a.kind || 'general'}</dd>
 						</div>
 
 						<div>
-							<dt class="text-xs text-muted-foreground font-medium">Tier Ranking</dt>
-							<dd class="text-foreground mt-0.5 capitalize font-medium">{a.tier || 'standard'}</dd>
+							<dt class="text-sm font-medium text-muted-foreground">Tier Ranking</dt>
+							<dd class="mt-0.5 font-medium text-foreground capitalize">{a.tier || 'standard'}</dd>
 						</div>
 
 						<div>
-							<dt class="text-xs text-muted-foreground font-medium">Your Unlock Status</dt>
-							<dd class="font-semibold text-foreground mt-0.5">
+							<dt class="text-sm font-medium text-muted-foreground">Your Unlock Status</dt>
+							<dd class="mt-0.5 font-semibold text-foreground">
 								{isUnlocked ? 'Completed & Awarded' : 'Not yet achieved'}
 							</dd>
 						</div>
 
 						<div>
-							<dt class="text-xs text-muted-foreground font-medium">Visibility</dt>
-							<dd class="text-foreground mt-0.5">
+							<dt class="text-sm font-medium text-muted-foreground">Visibility</dt>
+							<dd class="mt-0.5 text-foreground">
 								{a.visible ? 'Publicly visible' : 'Hidden / Secret'}
 							</dd>
 						</div>
 
 						<div>
-							<dt class="text-xs text-muted-foreground font-medium">Success Criteria</dt>
-							<dd class="text-foreground mt-0.5">
+							<dt class="text-sm font-medium text-muted-foreground">Success Criteria</dt>
+							<dd class="mt-0.5 text-foreground">
 								{a.nbr_of_success ? `${a.nbr_of_success} times required` : 'One-time unlock'}
 							</dd>
 						</div>
@@ -133,8 +138,10 @@
 
 				{#if a.description}
 					<div class="space-y-2">
-						<h2 class="text-base font-semibold tracking-tight text-foreground">Requirement & Lore</h2>
-						<div class="border rounded-md p-4 text-sm leading-relaxed text-foreground">
+						<h2 class="text-base font-semibold tracking-tight text-foreground">
+							Requirement & Lore
+						</h2>
+						<div class="rounded-md border p-4 text-sm leading-relaxed text-foreground">
 							{a.description}
 						</div>
 					</div>
