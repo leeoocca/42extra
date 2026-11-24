@@ -88,6 +88,33 @@ export function groupLocationsByCluster(
 		locations: FtLocation[];
 	}>();
 
+	// Initialize known configured clusters so empty clusters are also present
+	if (campusConfig?.clusters && campusConfig.clusters.length > 0) {
+		for (const cl of campusConfig.clusters) {
+			const cleanPrefix = cl.prefix.trim().toLowerCase();
+			groupsMap.set(cleanPrefix, {
+				clusterId: cl.id,
+				clusterName: cl.name,
+				prefix: cleanPrefix,
+				locations: []
+			});
+		}
+	} else if (apiClusters) {
+		// Only use API clusters if campus has no explicit static cluster config
+		for (const cl of apiClusters) {
+			const cleanName = cl.name.trim();
+			const key = cleanName.toLowerCase();
+			if (!groupsMap.has(key)) {
+				groupsMap.set(key, {
+					clusterId: cl.id,
+					clusterName: cleanName,
+					prefix: key,
+					locations: []
+				});
+			}
+		}
+	}
+
 	for (const loc of locations) {
 		const host = (loc.host || 'unknown').trim().toLowerCase();
 		let matchedPrefix = '';

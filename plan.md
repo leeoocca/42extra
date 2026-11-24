@@ -5,7 +5,7 @@
     - events
 - learn
   - projects
-    - by sttatus: active
+    - by status: active
     - slack link
     - users
     - stats
@@ -56,6 +56,12 @@ active nav indicators
 [x] branding and page title
 [x] redirect to
 [x] this page on intra
+username / project
+username / cursus
+user locations
+user quests (with length)
+user achievements
+review back to links
 
 ---
 

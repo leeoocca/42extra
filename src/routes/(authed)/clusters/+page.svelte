@@ -6,9 +6,6 @@
 	import LayoutGridIcon from '@lucide/svelte/icons/layout-grid';
 	import RefreshCwIcon from '@lucide/svelte/icons/refresh-cw';
 	import MonitorIcon from '@lucide/svelte/icons/monitor';
-	import UserIcon from '@lucide/svelte/icons/user';
-	import Building2Icon from '@lucide/svelte/icons/building-2';
-	import LayersIcon from '@lucide/svelte/icons/layers';
 	import HistoryIcon from '@lucide/svelte/icons/history';
 	import * as Avatar from '#lib/components/ui/avatar/index.js';
 	import { getCdnProxyUrl } from '#lib/cdn.js';
@@ -31,9 +28,20 @@
 	// Recent user history state
 	let recentLocations = $state<FtLocation[]>([]);
 	let recentPage = $state(1);
+	let isLoadingRecent = $state(false);
 	let isLoadingMoreRecent = $state(false);
+	let hasRequestedRecent = $state(false);
 	let hasMoreRecent = $state(true);
 	let recentError = $state<string | null>(null);
+
+	function formatHost(host: string): string[] {
+		if (!host) return [];
+		const trimmed = host.trim();
+		if (trimmed.length === 6) {
+			return [trimmed.slice(0, 2), trimmed.slice(2, 4), trimmed.slice(4, 6)];
+		}
+		return [trimmed];
+	}
 
 	async function fetchRecentLocationsPage(campusId: number, pageNum: number) {
 		const res = await fetch(
@@ -51,18 +59,18 @@
 		isLoading = true;
 		errorMsg = null;
 		recentError = null;
+		recentLocations = [];
 		recentPage = 1;
+		hasRequestedRecent = false;
 		hasMoreRecent = true;
 
 		try {
 			// Fetch active locations dynamically for the active campus
 			const locPromise = fetch(`/api/v2/campus/${campusId}/locations?filter[active]=true&page[size]=100`);
-			// Also fetch /v2/clusters filtered by campus
+			// Also fetch /v2/clusters filtered by campus for grouping lookup
 			const clusterPromise = fetch(`/api/v2/clusters?filter[campus_id]=${campusId}&page[size]=100`);
-			// Fetch initial page of recent locations
-			const recentPromise = fetchRecentLocationsPage(campusId, 1);
 
-			const [locRes, clusterRes, recentItems] = await Promise.all([locPromise, clusterPromise, recentPromise]);
+			const [locRes, clusterRes] = await Promise.all([locPromise, clusterPromise]);
 
 			if (locRes.ok) {
 				const json = await locRes.json();
@@ -78,15 +86,29 @@
 			} else {
 				clusters = [];
 			}
-
-			recentLocations = recentItems;
-			if (recentItems.length < 100) {
-				hasMoreRecent = false;
-			}
 		} catch (err: any) {
 			errorMsg = err?.message || 'Error loading cluster locations';
 		} finally {
 			isLoading = false;
+		}
+	}
+
+	async function loadInitialRecent() {
+		hasRequestedRecent = true;
+		isLoadingRecent = true;
+		recentError = null;
+
+		try {
+			const items = await fetchRecentLocationsPage(selectedCampusId, 1);
+			recentLocations = items;
+			recentPage = 1;
+			if (items.length < 100) {
+				hasMoreRecent = false;
+			}
+		} catch (err: any) {
+			recentError = err?.message || 'Failed to load recent campus activity';
+		} finally {
+			isLoadingRecent = false;
 		}
 	}
 
@@ -228,30 +250,6 @@
 		</div>
 	</div>
 
-	<!-- Campus Clusters (/v2/clusters) if defined -->
-	{#if clusters.length > 0}
-		<div class="space-y-2">
-			<h2 class="text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
-				<LayersIcon class="w-3.5 h-3.5" />
-				Campus Cluster Zones ({clusters.length})
-			</h2>
-			<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
-				{#each clusters as cl}
-					<div class="border rounded-md p-2.5 bg-muted/20 space-y-0.5">
-						<span class="font-semibold text-xs text-foreground block truncate">
-							{cl.name}
-						</span>
-						{#if cl.description}
-							<p class="text-[11px] text-muted-foreground truncate">
-								{cl.description}
-							</p>
-						{/if}
-					</div>
-				{/each}
-			</div>
-		</div>
-	{/if}
-
 	<!-- Search & Summary bar -->
 	<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
 		<div class="relative w-full sm:w-72">
@@ -299,7 +297,7 @@
 					<div class="flex items-center justify-between">
 						<h2 class="text-base font-semibold tracking-tight text-foreground flex items-center gap-2">
 							<LayoutGridIcon class="w-4 h-4 text-muted-foreground" />
-							<span>{cluster.clusterName.toLowerCase().startsWith('cluster') ? cluster.clusterName : `Cluster ${cluster.clusterName}`}</span>
+							<span>{cluster.clusterName.replace(/^cluster\s+/i, '')}</span>
 							{#if cluster.prefix && cluster.clusterName.toLowerCase() !== cluster.prefix.toLowerCase()}
 								<Badge variant="outline" class="font-mono text-[10px] uppercase font-normal px-1.5 py-0">
 									{cluster.prefix}
@@ -311,40 +309,62 @@
 						</span>
 					</div>
 
-					<div class="border rounded-md divide-y text-sm">
-						{#each cluster.locations as loc}
-							<div class="flex items-center justify-between p-3 hover:bg-muted/30 transition-colors gap-3">
-								<div class="flex items-center gap-3 min-w-0">
-									<span class="font-mono font-semibold text-foreground text-sm w-24 shrink-0">
-										{loc.host}
-									</span>
-
-									{#if loc.user}
-										<div class="flex items-center gap-2 truncate">
-											<UserIcon class="w-4 h-4 text-muted-foreground shrink-0" />
-											<a
-												href={`/users/${loc.user.login}`}
-												class="font-medium text-foreground hover:underline truncate"
-											>
-												{loc.user.login}
-											</a>
-											{#if loc.user.displayname}
-												<span class="hidden sm:inline text-muted-foreground text-xs truncate">
-													({loc.user.displayname})
-												</span>
-											{/if}
+					{#if cluster.locations.length === 0}
+						<div class="border rounded-md p-4 text-center text-muted-foreground text-xs bg-muted/10">
+							No active workstations in this cluster.
+						</div>
+					{:else}
+						<div class="border rounded-md divide-y text-sm">
+							{#each cluster.locations as loc}
+								<div class="flex items-center justify-between p-3 hover:bg-muted/30 transition-colors gap-3">
+									<div class="flex items-center gap-3 min-w-0">
+										<div class="flex items-center gap-1 font-mono font-semibold text-foreground text-sm shrink-0">
+											{#each formatHost(loc.host) as part}
+												<span>{part}</span>
+											{/each}
 										</div>
-									{:else}
-										<span class="text-muted-foreground italic text-xs">Occupied</span>
-									{/if}
-								</div>
 
-								<div class="flex items-center gap-2 shrink-0 text-muted-foreground text-xs">
-									<span>logged in {formatTimeSince(loc.begin_at)}</span>
+										{#if loc.user}
+											{@const rawImg = loc.user.image?.link ?? loc.user.image?.versions?.small}
+											{@const avatarUrl = rawImg ? (getCdnProxyUrl(rawImg) ?? null) : null}
+											<div class="flex items-center gap-3 min-w-0">
+												<Avatar.Root class="size-8 shrink-0">
+													{#if avatarUrl}
+														<Avatar.Image src={avatarUrl} alt={loc.user.login} />
+													{/if}
+													<Avatar.Fallback class="text-xs font-semibold bg-muted uppercase">
+														{loc.user.login.slice(0, 2)}
+													</Avatar.Fallback>
+												</Avatar.Root>
+
+												<div class="min-w-0">
+													<div class="flex items-center gap-2">
+														<a
+															href={`/users/${loc.user.login}`}
+															class="font-semibold text-foreground hover:underline truncate text-sm"
+														>
+															{loc.user.login}
+														</a>
+														{#if loc.user.displayname}
+															<span class="hidden sm:inline text-muted-foreground text-xs truncate">
+																{loc.user.displayname}
+															</span>
+														{/if}
+													</div>
+												</div>
+											</div>
+										{:else}
+											<span class="text-muted-foreground text-xs">Occupied</span>
+										{/if}
+									</div>
+
+									<div class="shrink-0 text-right text-xs text-muted-foreground">
+										<span>{formatTimeSince(loc.begin_at)}</span>
+									</div>
 								</div>
-							</div>
-						{/each}
-					</div>
+							{/each}
+						</div>
+					{/if}
 				</div>
 			{/each}
 		</div>
@@ -358,18 +378,51 @@
 				<h2 class="text-base font-semibold tracking-tight text-foreground">
 					Recent Campus Activity
 				</h2>
-				<Badge variant="outline" class="text-xs">
-					{uniqueRecentUsers.length} unique user{uniqueRecentUsers.length === 1 ? '' : 's'}
-				</Badge>
+				{#if hasRequestedRecent}
+					<Badge variant="outline" class="text-xs">
+						{uniqueRecentUsers.length} unique user{uniqueRecentUsers.length === 1 ? '' : 's'}
+					</Badge>
+				{/if}
 			</div>
-			{#if recentPage > 1}
+			{#if hasRequestedRecent && recentPage > 1}
 				<span class="text-xs text-muted-foreground">
 					Page {recentPage}
 				</span>
 			{/if}
 		</div>
 
-		{#if uniqueRecentUsers.length === 0}
+		{#if !hasRequestedRecent}
+			<div class="border border-dashed rounded-md p-6 text-center text-muted-foreground text-xs space-y-3 bg-muted/10">
+				<p class="font-medium text-foreground text-sm">
+					Explore Past Activity
+				</p>
+				<p class="max-w-md mx-auto text-muted-foreground">
+					View students recently logged in to workstations at {currentCampusName}.
+				</p>
+				<div class="flex items-center justify-center pt-1">
+					<Button
+						variant="outline"
+						size="sm"
+						onclick={loadInitialRecent}
+						disabled={isLoadingRecent}
+						class="gap-1.5"
+					>
+						{#if isLoadingRecent}
+							<RefreshCwIcon class="w-3.5 h-3.5 animate-spin" />
+							<span>Loading recent activity...</span>
+						{:else}
+							<HistoryIcon class="w-3.5 h-3.5 text-muted-foreground" />
+							<span>Load Recent Activity</span>
+						{/if}
+					</Button>
+				</div>
+			</div>
+		{:else if isLoadingRecent && uniqueRecentUsers.length === 0}
+			<div class="border rounded-md p-8 text-center text-muted-foreground text-xs space-y-2">
+				<RefreshCwIcon class="w-4 h-4 animate-spin mx-auto text-primary" />
+				<p>Loading recent activity for {currentCampusName}...</p>
+			</div>
+		{:else if uniqueRecentUsers.length === 0}
 			<div class="border rounded-md p-6 text-center text-muted-foreground text-xs">
 				No recent workstation activity recorded for {currentCampusName}.
 			</div>
@@ -402,7 +455,11 @@
 									{/if}
 								</div>
 								<div class="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
-									<span class="font-mono">{item.location.host}</span>
+									<div class="flex items-center gap-1 font-mono">
+										{#each formatHost(item.location.host) as part}
+											<span>{part}</span>
+										{/each}
+									</div>
 									{#if item.location.end_at}
 										<span>&bull;</span>
 										<span>left {formatTimeSince(item.location.end_at)} ago</span>
@@ -415,7 +472,7 @@
 						</div>
 
 						<div class="shrink-0 text-right text-xs text-muted-foreground">
-							<span>seen {formatTimeSince(item.location.begin_at)} ago</span>
+							<span>{formatTimeSince(item.location.begin_at)}</span>
 						</div>
 					</div>
 				{/each}

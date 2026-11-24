@@ -30,11 +30,12 @@ describe('Campus Clusters grouping and sorting', () => {
 
 		const groups = groupLocationsByCluster(locations, berlinConfig);
 
-		// Sorted by prefix if available, then name
-		expect(groups.map((g) => g.prefix)).toEqual(['c0c', 'c1b', 'c4b', 'c4c']);
-		expect(groups.map((g) => g.clusterName)).toEqual(['c0c', 'c1b', 'c4b', 'c4c']);
-		expect(groups[0].locations[0].host).toBe('c0c1r1');
-		expect(groups[1].locations[0].host).toBe('c1b5c2');
+		// Configured clusters are all included (empty ones too), sorted by prefix then name
+		expect(groups.map((g) => g.prefix)).toEqual(['c0c', 'c1b', 'c3a', 'c4a', 'c4b', 'c4c']);
+		expect(groups.map((g) => g.clusterName)).toEqual(['c0c', 'c1b', 'c3a', 'c4a', 'c4b', 'c4c']);
+		const activeGroups = groups.filter((g) => g.locations.length > 0);
+		expect(activeGroups[0].locations[0].host).toBe('c0c1r1');
+		expect(activeGroups[1].locations[0].host).toBe('c1b5c2');
 	});
 
 	it('groups Rome workstations by custom cluster names (Bunker, C4, Piccionaia) and sorts by prefix (c1, c2, c3)', () => {
