@@ -29,7 +29,7 @@
 	}
 </script>
 
-<div class={cn('flex flex-col gap-6', className)} bind:this={ref} {...restProps}>
+<div class={cn('flex flex-col gap-8', className)} bind:this={ref} {...restProps}>
 	<div class="flex flex-col items-center gap-2 text-center">
 		<div class="flex flex-col items-center gap-2 font-medium">
 			<div class="flex size-8 items-center justify-center rounded-md">
@@ -41,9 +41,11 @@
 	</div>
 	<Button
 		variant="outline"
-		class="flex justify-center gap-1"
+		size="lg"
+		class="mx-auto flex w-fit justify-center gap-1 p-5 text-lg"
 		onclick={handleSignIn}
 		disabled={isLoading}
+		autofocus
 	>
 		{#if isLoading}
 			<span>Signing in...</span>
