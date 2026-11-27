@@ -12,11 +12,16 @@ export const GET: RequestHandler = async (event) => {
 	// cleanly instead of crashing the server handler with a 500 error.
 	if (!res.ok) {
 		const errBody = await res.text().catch(() => '');
+		const errorHeaders = new Headers({
+			'Content-Type': 'application/json'
+		});
+		const retryAfter = res.headers.get('retry-after');
+		if (retryAfter) {
+			errorHeaders.set('Retry-After', retryAfter);
+		}
 		return new Response(errBody, {
 			status: res.status,
-			headers: {
-				'Content-Type': 'application/json'
-			}
+			headers: errorHeaders
 		});
 	}
 

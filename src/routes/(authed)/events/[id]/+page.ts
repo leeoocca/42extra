@@ -36,6 +36,20 @@ export interface EventFeedbackItem {
 	}>;
 }
 
+async function fetchArray<T>(
+	fetchFn: typeof fetch,
+	url: string
+): Promise<T[]> {
+	try {
+		const res = await fetchFn(url);
+		if (!res.ok) return [];
+		const json = await res.json();
+		return Array.isArray(json) ? json : [];
+	} catch {
+		return [];
+	}
+}
+
 export const load: PageLoad = async ({ params, fetch }) => {
 	const id = params.id;
 
@@ -45,8 +59,8 @@ export const load: PageLoad = async ({ params, fetch }) => {
 			const err = await res.json().catch(() => null);
 			return {
 				event: null as any,
-				subscribers: [] as EventUserItem[],
-				feedbacks: [] as EventFeedbackItem[],
+				subscribers: Promise.resolve([] as EventUserItem[]),
+				feedbacks: Promise.resolve([] as EventFeedbackItem[]),
 				id,
 				error: err?.message || `Failed to load event ${id} (${res.status})`,
 				title: ['Events', id],
@@ -56,32 +70,13 @@ export const load: PageLoad = async ({ params, fetch }) => {
 
 		const eventData = await res.json();
 
-		// Fetch event participants (events_users) and feedbacks in parallel
-		const [usersRes, feedbacksRes] = await Promise.all([
-			fetch(`/api/v2/events/${id}/events_users?page[size]=100`),
-			fetch(`/api/v2/events/${id}/feedbacks?page[size]=100`)
-		]);
-
-		let subscribers: EventUserItem[] = [];
-		if (usersRes.ok) {
-			const uJson = await usersRes.json();
-			if (Array.isArray(uJson)) {
-				subscribers = uJson;
-			}
-		}
-
-		let feedbacks: EventFeedbackItem[] = [];
-		if (feedbacksRes.ok) {
-			const fJson = await feedbacksRes.json();
-			if (Array.isArray(fJson)) {
-				feedbacks = fJson;
-			}
-		}
-
 		return {
 			event: eventData,
-			subscribers,
-			feedbacks,
+			subscribers: fetchArray<EventUserItem>(fetch, `/api/v2/events/${id}/users?page[size]=100`),
+			feedbacks: fetchArray<EventFeedbackItem>(
+				fetch,
+				`/api/v2/events/${id}/feedbacks?page[size]=100`
+			),
 			id,
 			error: null,
 			title: ['Events', eventData?.name || id],
@@ -90,8 +85,8 @@ export const load: PageLoad = async ({ params, fetch }) => {
 	} catch (err: any) {
 		return {
 			event: null as any,
-			subscribers: [] as EventUserItem[],
-			feedbacks: [] as EventFeedbackItem[],
+			subscribers: Promise.resolve([] as EventUserItem[]),
+			feedbacks: Promise.resolve([] as EventFeedbackItem[]),
 			id,
 			error: err?.message || `Network error while loading event ${id}`,
 			title: ['Events', id],
