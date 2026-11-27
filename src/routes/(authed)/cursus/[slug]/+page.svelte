@@ -13,14 +13,33 @@
 	let { data }: { data: PageData } = $props();
 
 	let c = $derived(data.cursus);
+	let initialProjects = $state<CursusProjectItem[]>([]);
+	let pagination = $state({ page: 1, pageSize: 30, total: 0, totalPages: 1 });
+	let isLoadingInitial = $state(true);
 	let extraProjects = $state<CursusProjectItem[]>([]);
-	let currentPage = $state(data.pagination.page);
+	let currentPage = $state(1);
 	let isLoadingMore = $state(false);
 	let loadMoreError = $state<string | null>(null);
 
-	let allProjects = $derived([...(data.projects ?? []), ...extraProjects]);
+	$effect(() => {
+		let active = true;
+		isLoadingInitial = true;
+		extraProjects = [];
+		data.projectsData.then((payload) => {
+			if (!active) return;
+			initialProjects = payload.projects;
+			pagination = payload.pagination;
+			currentPage = payload.pagination.page;
+			isLoadingInitial = false;
+		});
+		return () => {
+			active = false;
+		};
+	});
+
+	let allProjects = $derived([...initialProjects, ...extraProjects]);
 	let totalLoaded = $derived(allProjects.length);
-	let hasMore = $derived(totalLoaded < data.pagination.total);
+	let hasMore = $derived(totalLoaded < pagination.total);
 
 	async function handleLoadMore() {
 		if (isLoadingMore || !hasMore) return;
@@ -30,7 +49,7 @@
 		const nextPage = currentPage + 1;
 		try {
 			const res = await fetch(
-				`/api/v2/cursus/${data.slug}/projects?page[number]=${nextPage}&page[size]=${data.pagination.pageSize}&sort=name`
+				`/api/v2/cursus/${data.slug}/projects?page[number]=${nextPage}&page[size]=${pagination.pageSize}&sort=name`
 			);
 			if (res.ok) {
 				const newProjects = await res.json();
@@ -224,15 +243,19 @@
 					<h2 class="text-base font-semibold tracking-tight text-foreground">
 						Projects in this Cursus
 					</h2>
-					<span class="text-xs text-muted-foreground">({data.pagination.total} total)</span>
+					<span class="text-xs text-muted-foreground">({pagination.total} total)</span>
 				</div>
 
 				<div class="text-xs text-muted-foreground">
-					<span>Loaded {totalLoaded} of {data.pagination.total}</span>
+					<span>Loaded {totalLoaded} of {pagination.total}</span>
 				</div>
 			</div>
 
-			{#if allProjects.length === 0}
+			{#if isLoadingInitial}
+				<div class="rounded-md border py-8 text-center text-sm text-muted-foreground">
+					Loading projects...
+				</div>
+			{:else if allProjects.length === 0}
 				<div class="rounded-md border py-8 text-center text-sm text-muted-foreground">
 					No projects found for this cursus.
 				</div>
@@ -322,7 +345,7 @@
 								<RefreshCwIcon class="h-3.5 w-3.5 animate-spin text-primary" />
 								<span>Loading more...</span>
 							{:else}
-								<span>Load More ({data.pagination.total - totalLoaded} remaining)</span>
+								<span>Load More ({pagination.total - totalLoaded} remaining)</span>
 							{/if}
 						</Button>
 					</div>

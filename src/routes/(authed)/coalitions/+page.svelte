@@ -24,9 +24,22 @@
 		return map;
 	});
 
+	let blocs = $state<FtBloc[] | null>(null);
+
+	$effect(() => {
+		let active = true;
+		blocs = null;
+		data.blocs.then((list) => {
+			if (active) blocs = list;
+		});
+		return () => {
+			active = false;
+		};
+	});
+
 	// Sort coalitions within each bloc by score descending
 	let blocsWithSortedCoalitions = $derived.by(() => {
-		const list = data.blocs ?? [];
+		const list = blocs ?? [];
 		return list
 			.filter((b) => b.coalitions && b.coalitions.length > 0)
 			.map((b) => ({
@@ -67,7 +80,11 @@
 		</div>
 	{/if}
 
-	{#if blocsWithSortedCoalitions.length === 0}
+	{#if blocs === null && !data.error}
+		<div class="rounded-md border p-6 text-center text-xs text-muted-foreground">
+			Loading coalitions...
+		</div>
+	{:else if blocsWithSortedCoalitions.length === 0}
 		<div class="space-y-1 rounded-md border p-6 text-center text-sm text-muted-foreground">
 			<p class="font-medium">No coalitions found</p>
 			<p class="text-xs">No active coalition tournament blocs are assigned to {campusName}.</p>

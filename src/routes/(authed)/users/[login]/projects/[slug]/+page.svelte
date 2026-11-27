@@ -19,6 +19,19 @@
 
 	let { data }: { data: PageData } = $props();
 
+	let userProfiles = $state<Record<string, { avatar?: string; displayname?: string }>>({});
+
+	$effect(() => {
+		let active = true;
+		userProfiles = {};
+		data.userProfiles.then((p) => {
+			if (active) userProfiles = p;
+		});
+		return () => {
+			active = false;
+		};
+	});
+
 	let pu = $derived(data.projectsUser);
 	let projectName = $derived(data.project?.name || pu?.project?.name || data.slug);
 	let isExam = $derived(data.project?.exam ?? false);
@@ -223,7 +236,7 @@
 									</span>
 									<div class="flex flex-wrap items-center gap-2">
 										{#each team.users as u}
-											{@const uProfile = data.userProfiles?.[u.login]}
+											{@const uProfile = userProfiles?.[u.login]}
 											{@const memberAvatar = uProfile?.avatar
 												? getCdnProxyUrl(uProfile.avatar)
 												: null}
@@ -265,12 +278,12 @@
 											{@const flagName = st.flag?.name || (hasHighMark ? 'Ok' : '')}
 											{@const correctorLogin = st.corrector?.login}
 											{@const correctorProfile = correctorLogin
-												? data.userProfiles?.[correctorLogin]
+												? userProfiles?.[correctorLogin]
 												: null}
 											{@const correctorAvatar = correctorProfile?.avatar
 												? getCdnProxyUrl(correctorProfile.avatar)
 												: null}
-											{@const studentProfile = data.userProfiles?.[data.login]}
+											{@const studentProfile = userProfiles?.[data.login]}
 											{@const studentAvatar = studentProfile?.avatar
 												? getCdnProxyUrl(studentProfile.avatar)
 												: null}

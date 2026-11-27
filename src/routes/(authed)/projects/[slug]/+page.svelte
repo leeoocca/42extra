@@ -15,6 +15,19 @@
 
 	let { data }: { data: PageData } = $props();
 
+	let totals = $state<{ globalTotal: number; campusTotal: number } | null>(null);
+
+	$effect(() => {
+		let active = true;
+		totals = null;
+		data.totals.then((t) => {
+			if (active) totals = t;
+		});
+		return () => {
+			active = false;
+		};
+	});
+
 	let p = $derived(data.project);
 	let activeSession = $derived(p?.project_sessions?.[0]);
 
@@ -322,7 +335,7 @@
 					>
 						<span>Global</span>
 						<Badge variant="outline" class="h-4 px-1 py-0 font-mono text-xs tabular-nums">
-							{data.globalTotal}
+							{totals?.globalTotal ?? '…'}
 						</Badge>
 					</Button>
 					<Button
@@ -334,7 +347,7 @@
 					>
 						<span>{data.primaryCampusName}</span>
 						<Badge variant="outline" class="h-4 px-1 py-0 font-mono text-xs tabular-nums">
-							{data.campusTotal}
+							{totals?.campusTotal ?? '…'}
 						</Badge>
 					</Button>
 				</div>
@@ -359,7 +372,7 @@
 							<UsersIcon class="h-3.5 w-3.5 text-muted-foreground" />
 							<span>Load Global Students</span>
 							<Badge variant="secondary" class="px-1.5 py-0 font-mono text-xs tabular-nums">
-								{data.globalTotal}
+								{totals?.globalTotal ?? '…'}
 							</Badge>
 						</Button>
 						<Button
@@ -370,7 +383,7 @@
 						>
 							<span>Load {data.primaryCampusName} Students</span>
 							<Badge variant="secondary" class="px-1.5 py-0 font-mono text-xs tabular-nums">
-								{data.campusTotal}
+								{totals?.campusTotal ?? '…'}
 							</Badge>
 						</Button>
 					</div>

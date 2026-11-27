@@ -1,6 +1,38 @@
 import type { PageLoad } from './$types';
 import type { FtUserMe, FtProjectUser, FtTeam, FtProjectDetails } from '#lib/schemas/42.js';
 
+type UserProfileMap = Record<string, { avatar?: string; displayname?: string }>;
+
+async function fetchUserProfiles(
+	fetchFn: typeof fetch,
+	baseProfiles: UserProfileMap,
+	userLogins: Set<string>
+): Promise<UserProfileMap> {
+	const profiles: UserProfileMap = { ...baseProfiles };
+	if (userLogins.size === 0) return profiles;
+
+	try {
+		const loginsArray = Array.from(userLogins).slice(0, 50);
+		const uRes = await fetchFn(
+			`/api/v2/users?filter[login]=${loginsArray.join(',')}&page[size]=100`
+		);
+		if (uRes.ok) {
+			const uList = await uRes.json();
+			if (Array.isArray(uList)) {
+				for (const cu of uList) {
+					profiles[cu.login] = {
+						avatar: cu.image?.link ?? cu.image?.versions?.small,
+						displayname: cu.usual_full_name || cu.displayname || cu.login
+					};
+				}
+			}
+		}
+	} catch (e) {
+		console.warn('Failed to prefetch user profiles:', e);
+	}
+	return profiles;
+}
+
 export const load: PageLoad = async ({ params, fetch }) => {
 	const { login, slug } = params;
 
@@ -79,36 +111,14 @@ export const load: PageLoad = async ({ params, fetch }) => {
 				}
 			}
 
-			// Bulk fetch user details if needed
-			const userProfiles: Record<string, { avatar?: string; displayname?: string }> = {};
+			// Bulk fetch user details asynchronously so teams render immediately
+			const baseProfiles: UserProfileMap = {};
 			if (user?.login) {
 				const userImg = (user as any).image?.link ?? (user as any).image?.versions?.small;
-				userProfiles[user.login] = {
+				baseProfiles[user.login] = {
 					avatar: userImg,
 					displayname: user.usual_full_name || user.displayname || user.login
 				};
-			}
-
-			if (userLogins.size > 0) {
-				try {
-					const loginsArray = Array.from(userLogins).slice(0, 50);
-					const uRes = await fetch(
-						`/api/v2/users?filter[login]=${loginsArray.join(',')}&page[size]=100`
-					);
-					if (uRes.ok) {
-						const uList = await uRes.json();
-						if (Array.isArray(uList)) {
-							for (const cu of uList) {
-								userProfiles[cu.login] = {
-									avatar: cu.image?.link ?? cu.image?.versions?.small,
-									displayname: cu.usual_full_name || cu.displayname || cu.login
-								};
-							}
-						}
-					}
-				} catch (e) {
-					console.warn('Failed to prefetch user profiles:', e);
-				}
 			}
 
 			return {
@@ -118,7 +128,7 @@ export const load: PageLoad = async ({ params, fetch }) => {
 				project,
 				projectsUser,
 				teams,
-				userProfiles: userProfiles as Record<string, { avatar?: string; displayname?: string }>,
+				userProfiles: fetchUserProfiles(fetch, baseProfiles, userLogins),
 				error,
 				title: project ? `${project.name} - @${login}` : `Project @${login}`,
 				intraUrl: `https://projects.intra.42.fr/${slug}/${login}`
@@ -135,7 +145,7 @@ export const load: PageLoad = async ({ params, fetch }) => {
 		project,
 		projectsUser,
 		teams,
-		userProfiles: {} as Record<string, { avatar?: string; displayname?: string }>,
+		userProfiles: Promise.resolve({} as UserProfileMap),
 		error,
 		title: project ? `${project.name} - @${login}` : `Project @${login}`,
 		intraUrl: `https://projects.intra.42.fr/${slug}/${login}`
