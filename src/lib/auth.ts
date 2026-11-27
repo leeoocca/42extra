@@ -30,7 +30,7 @@ export const auth = betterAuth({
 					authorizationUrl: 'https://api.intra.42.fr/oauth/authorize',
 					tokenUrl: 'https://api.intra.42.fr/oauth/token',
 					userInfoUrl: 'https://api.intra.42.fr/v2/me',
-					scopes: ['public'],
+					scopes: ['public', 'profile', 'projects'],
 					mapProfileToUser: async (profile) => {
 						const name =
 							(profile.usual_full_name as string | undefined) ||
